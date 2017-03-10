@@ -1,0 +1,10 @@
+<resources>
+	<!-- CONSTANTS & KEYS -->
+	<string name="mapbox_access_token" translatable="false">pk.eyJ1IjoibWljaGFsbXVyaW4iLCJhIjoiY2l3YWZuemVzMDAycjJ6azQwcDRpa2l1MiJ9.YuN9x2llF7LRWVI7lrnTCQ</string>
+
+	<!-- STRINGS -->
+
+	<string name="app_name">SDK Demo</string>
+	<string name="title_activity_maps">Map</string>
+	<string name="title_activity_list">List</string>
+</resources>

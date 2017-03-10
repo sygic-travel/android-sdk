@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+android {
+	compileSdkVersion 25
+	buildToolsVersion "25.0.2"
+
+	defaultConfig {
+		minSdkVersion 15
+		targetSdkVersion 25
+		versionCode 1
+		versionName "1.0"
+
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+}
+
+dependencies {
+// http request, api calls
+	compile 'com.squareup.retrofit2:retrofit:2.1.0'
+	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+	compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+	compile 'com.google.code.gson:gson:2.4'
+
+	// promises
+	compile 'org.jdeferred:jdeferred-core:1.2.4'
+	compile 'org.jdeferred:jdeferred-android-aar:1.2.4@aar'
+
+	// local lib files
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+
+	// DI - Dagger
+	compile "com.google.dagger:dagger:2.9"
+	annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+	provided 'javax.annotation:jsr250-api:1.0'
+
+	// test
+	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	testCompile 'junit:junit:4.12'
+}
