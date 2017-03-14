@@ -21,7 +21,7 @@ class Detail {
 }
 */
 
-public class Detail {
+public class Detail extends Place{ // shall we do this? (extends Place)
 	public static final String ADDRESS = "address";
 	public static final String ADMISSION = "admission";
 	public static final String DESCRIPTION = "description";
