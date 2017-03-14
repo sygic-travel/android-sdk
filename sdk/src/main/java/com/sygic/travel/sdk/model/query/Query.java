@@ -27,22 +27,24 @@ public class Query {
 	public static final String PARENT = "parent";
 	public static final String QUADKEYS = "quadkeys";
 	public static final String MAP_SPREAD = "map_spread";
+	public static final String MAP_TILE = "map_tile";
 	public static final String LIMIT = "limit";
+	public static final String LEVEL = "level";
 
 	@SerializedName(QUERY)
-	private int query;
+	private String query;
 
 	@SerializedName(BOUNDS)
-	private int bounds;
+	private String bounds;
 
 	@SerializedName(CATEGORIES)
-	private int categories;
+	private String categories;
 
 	@SerializedName(TAGS)
-	private int tags;
+	private String tags;
 
 	@SerializedName(PARENT)
-	private int parent;
+	private String parent;
 
 	@SerializedName(QUADKEYS)
 	private int quadkeys;
@@ -50,12 +52,18 @@ public class Query {
 	@SerializedName(MAP_SPREAD)
 	private int mapSpread;
 
+	@SerializedName(MAP_TILE)
+	private String mapTile;
+
 	@SerializedName(LIMIT)
 	private int limit;
 
+	@SerializedName(LEVEL)
+	private String level;
+
 	public Query(){}
 
-	public Query(int query, int bounds, int categories, int tags, int parent, int quadkeys, int mapSpread, int limit) {
+	public Query(String query, String bounds, String categories, String tags, String parent, int quadkeys, int mapSpread, String mapTile, String level, int limit) {
 		this.query = query;
 		this.bounds = bounds;
 		this.categories = categories;
@@ -63,46 +71,48 @@ public class Query {
 		this.parent = parent;
 		this.quadkeys = quadkeys;
 		this.mapSpread = mapSpread;
+		this.mapTile = mapTile;
 		this.limit = limit;
+		this.level = level;
 	}
 
-	public int getQuery() {
+	public String getQuery() {
 		return query;
 	}
 
-	public void setQuery(int query) {
+	public void setQuery(String query) {
 		this.query = query;
 	}
 
-	public int getBounds() {
+	public String getBounds() {
 		return bounds;
 	}
 
-	public void setBounds(int bounds) {
+	public void setBounds(String bounds) {
 		this.bounds = bounds;
 	}
 
-	public int getCategories() {
+	public String getCategories() {
 		return categories;
 	}
 
-	public void setCategories(int categories) {
+	public void setCategories(String categories) {
 		this.categories = categories;
 	}
 
-	public int getTags() {
+	public String getTags() {
 		return tags;
 	}
 
-	public void setTags(int tags) {
+	public void setTags(String tags) {
 		this.tags = tags;
 	}
 
-	public int getParent() {
+	public String getParent() {
 		return parent;
 	}
 
-	public void setParent(int parent) {
+	public void setParent(String parent) {
 		this.parent = parent;
 	}
 
@@ -128,5 +138,21 @@ public class Query {
 
 	public void setLimit(int limit) {
 		this.limit = limit;
+	}
+
+	public String getMapTile() {
+		return mapTile;
+	}
+
+	public void setMapTile(String mapTile) {
+		this.mapTile = mapTile;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 }

@@ -22,7 +22,6 @@ public interface StApi {
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("/places")
 	Call<List<Place>> getPlaces(
-		@Path("apiKey") String apiKey,
 		@Query("query") String query,
 		@Query("level") String level,
 		@Query("categories") String categories,

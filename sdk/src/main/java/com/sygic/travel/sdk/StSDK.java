@@ -3,6 +3,7 @@ package com.sygic.travel.sdk;
 import com.sygic.travel.sdk.contentProvider.api.ServiceGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.model.place.Place;
+import com.sygic.travel.sdk.model.query.Query;
 
 import java.io.File;
 import java.util.List;
@@ -36,19 +37,21 @@ public class StSDK {
 
 	//TODO replace for Query class which was create in defferent branch
 	public void getPlaces(
-		String query,
-		String level,
-		String categories,
-		String mapTile,
-		int mapSpread,
-		String bounds,
-		String tags,
-		String parent,
-		int limit,
+		Query query,
 		Callback<List<Place>> back
 	){
-//		Call<List<Place>> call = stApi.getPlaces(query, level, categories, mapTile, mapSpread, bounds, tags, parent, limit);
-//		call.enqueue(back);
+		Call<List<Place>> call = stApi.getPlaces(
+			query.getQuery(),
+			query.getLevel(),
+			query.getCategories(),
+			query.getMapTile(),
+			query.getMapSpread(),
+			query.getBounds(),
+			query.getTags(),
+			query.getParent(),
+			query.getLimit()
+		);
+		call.enqueue(back);
 	}
 	/********************************************
 	 *  		PRIVATE MEMBERS & METHODS
