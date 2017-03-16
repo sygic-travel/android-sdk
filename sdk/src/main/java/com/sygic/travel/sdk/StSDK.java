@@ -1,7 +1,10 @@
 package com.sygic.travel.sdk;
 
+import android.content.Context;
+
 import com.sygic.travel.sdk.contentProvider.api.ServiceGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -22,7 +25,6 @@ public class StSDK {
 	 ********************************************/
 
 	public static volatile StSDK instance = null;
-	private File cacheDir; //TODO
 
 	public static StSDK getInstance() {
 		if (instance == null) {
@@ -35,12 +37,11 @@ public class StSDK {
 		return instance;
 	}
 
-	//TODO replace for Query class which was create in defferent branch
 	public void getPlaces(
 		Query query,
 		Callback<List<Place>> back
 	){
-		Call<List<Place>> call = stApi.getPlaces(
+		Call<List<Place>> call = getStApi().getPlaces(
 			query.getQuery(),
 			query.getLevel(),
 			query.getCategories(),
@@ -53,21 +54,28 @@ public class StSDK {
 		);
 		call.enqueue(back);
 	}
+
+	public Detail/* TODO ?Place?*/ getPlaceDetailed(String guid){
+		//TODO
+		return null;
+	}
+
 	/********************************************
 	 *  		PRIVATE MEMBERS & METHODS
 	 ********************************************/
 
 	private StApi stApi;
-	
+	private File cacheDir;
+
 	private StSDK() {
-		initialize();
 	}
 
 	/**
 	 * This method should initialize all necessary objects
 	 */
-	private void initialize() {
-		getStApi();
+	public static void initialize(String xApiKey, Context context) {
+		ServiceGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
+		StSDK.getInstance().setCacheDir(context.getCacheDir());
 	}
 
 	/**
@@ -79,12 +87,12 @@ public class StSDK {
 	 */
 	private StApi getStApi() {
 		if(stApi == null){
-			stApi = ServiceGenerator.createService(StApi.class);
+			stApi = ServiceGenerator.createService(StApi.class, cacheDir);
 		}
 		return stApi;
 	}
 
-	public File getCacheDir() {
-		return cacheDir;
+	private void setCacheDir(File cacheDir) {
+		this.cacheDir = cacheDir;
 	}
 }

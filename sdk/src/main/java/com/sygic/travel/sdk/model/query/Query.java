@@ -47,23 +47,23 @@ public class Query {
 	private String parent;
 
 	@SerializedName(QUADKEYS)
-	private int quadkeys;
+	private Integer quadkeys;
 
 	@SerializedName(MAP_SPREAD)
-	private int mapSpread;
+	private Integer mapSpread;
 
 	@SerializedName(MAP_TILE)
 	private String mapTile;
 
 	@SerializedName(LIMIT)
-	private int limit;
+	private Integer limit;
 
 	@SerializedName(LEVEL)
 	private String level;
 
 	public Query(){}
 
-	public Query(String query, String bounds, String categories, String tags, String parent, int quadkeys, int mapSpread, String mapTile, String level, int limit) {
+	public Query(String query, String bounds, String categories, String tags, String parent, Integer quadkeys, Integer mapSpread, String mapTile, String level, Integer limit) {
 		this.query = query;
 		this.bounds = bounds;
 		this.categories = categories;
@@ -116,27 +116,27 @@ public class Query {
 		this.parent = parent;
 	}
 
-	public int getQuadkeys() {
+	public Integer getQuadkeys() {
 		return quadkeys;
 	}
 
-	public void setQuadkeys(int quadkeys) {
+	public void setQuadkeys(Integer quadkeys) {
 		this.quadkeys = quadkeys;
 	}
 
-	public int getMapSpread() {
+	public Integer getMapSpread() {
 		return mapSpread;
 	}
 
-	public void setMapSpread(int mapSpread) {
+	public void setMapSpread(Integer mapSpread) {
 		this.mapSpread = mapSpread;
 	}
 
-	public int getLimit() {
+	public Integer getLimit() {
 		return limit;
 	}
 
-	public void setLimit(int limit) {
+	public void setLimit(Integer limit) {
 		this.limit = limit;
 	}
 

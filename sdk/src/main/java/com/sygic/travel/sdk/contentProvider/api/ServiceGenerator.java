@@ -1,11 +1,14 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
+import android.app.Application;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sygic.travel.sdk.StEnvironment;
 import com.sygic.travel.sdk.StSDK;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -20,47 +23,32 @@ import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.API_BASE_URL
 
 public class ServiceGenerator {
 
-//	private static final String USER_AGENT = "User-Agent";
-//	private static final String STA_USER_AGENT = "Sygic Travel Android";
-
-	//	private static Interceptor userAgentInterceptor = new Interceptor() {
-//		@Override
-//		public Response intercept(Chain chain) throws IOException {
-//			Request original = chain.request();
-//
-//			Request request = original.newBuilder()
-//				.addHeader(USER_AGENT, STA_USER_AGENT)
-//				.method(original.method(), original.body())
-//				.build();
-//
-//			return chain.proceed(request);
-//		}
-	//	};
-
-	public static <S> S createService(Class<S> serviceClass) {
-		return buildRetrofit().create(serviceClass);
-	}
-
 	public static AuthorizationInterceptor authorizationInterceptor = new AuthorizationInterceptor();
-
 	public static LocaleInterceptor localeInterceptor = new LocaleInterceptor();
-
 	private static Interceptor loggingInterceptor = new HttpLoggingInterceptor()
 		.setLevel(getHttpLoggingInterceptorLevel());
+	private static OkHttpClient httpClient;
 
-	public static Retrofit buildRetrofit(){
-		return builder.client(httpClient).build();
+	public static <S> S createService(Class<S> serviceClass, File cacheDir) {
+		return buildRetrofit(cacheDir).create(serviceClass);
 	}
 
+	public static Retrofit buildRetrofit(File cacheDir){
+		return builder.client(getHttpClient(cacheDir)).build();
+	}
 
-	private static OkHttpClient httpClient = new OkHttpClient().newBuilder()
-		.addInterceptor(loggingInterceptor)
-		.addInterceptor(localeInterceptor)
-//		.addInterceptor(userAgentInterceptor)
-		.addInterceptor(authorizationInterceptor)
-		.cache(new Cache(StSDK.getInstance().getCacheDir(), 10 * 1024 * 1024))
-		.readTimeout(60, TimeUnit.SECONDS)
-		.build();
+	private static OkHttpClient getHttpClient(File cacheDir) {
+		if(httpClient == null){
+			httpClient = new OkHttpClient().newBuilder()
+				.addInterceptor(loggingInterceptor)
+				.addInterceptor(localeInterceptor)
+				.addInterceptor(authorizationInterceptor)
+				.cache(new Cache(cacheDir, 10 * 1024 * 1024))
+				.readTimeout(60, TimeUnit.SECONDS)
+				.build();
+		}
+		return httpClient;
+	}
 
 	private static Gson apiGson = new GsonBuilder()
 		.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)

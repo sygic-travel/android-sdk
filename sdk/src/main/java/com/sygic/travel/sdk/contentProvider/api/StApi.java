@@ -20,27 +20,27 @@ public interface StApi {
 	/*******************************************************************************/
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("/places")
+	@GET("places")
 	Call<List<Place>> getPlaces(
 		@Query("query") String query,
 		@Query("level") String level,
 		@Query("categories") String categories,
 		@Query("map_tile") String MapTile,
-		@Query("map_spread") int MapSpread,
+		@Query("map_spread") Integer MapSpread,
 		@Query("bounds") String bounds,
 		@Query("tags") String tags,
 		@Query("parent") String parent,
-		@Query("limit") int limit
+		@Query("limit") Integer limit
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("/place-details/{place_guid}")
+	@GET("place-details/{place_guid}")
 	Call<Detail> getPlaceDetailed(
 		@Path("place_guid") String placeGuid
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("/places/{place_guid}/media")
+	@GET("places/{place_guid}/media")
 	Call<List<Place>> getPlaceMedia(
 		@Path("place_guid") String placeGuid
 	);

@@ -2,6 +2,7 @@ package com.sygic.travel.sdkdemo;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,6 +11,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
+import com.sygic.travel.sdk.model.place.Place;
+import com.sygic.travel.sdk.model.query.Query;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,5 +53,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+
+		/*******************************************************************
+		 * Simple usage of SDK
+		 *******************************************************************/
+		Query query = new Query(
+			null, null, "eating", null, "city:1", null, null, null, null, 20
+		);
+		Callback back = new Callback<List<Place>>() {
+			@Override
+			public void onResponse(Call call, Response response) {
+				Log.d("TEST_APP", "onResponse");
+			}
+
+			@Override
+			public void onFailure(Call call, Throwable t) {
+				Log.d("TEST_APP", "onFailure");
+			}
+		};
+
+		String userXApiKey = "qBei674Bdt5lk2rTkphqP1jiXC7M96HR26BFNSGw"; //TODO only for testing
+		StSDK.initialize(userXApiKey, this);
+		StSDK.getInstance().getPlaces(query, back);
+		/********************************************************************/
 	}
 }
