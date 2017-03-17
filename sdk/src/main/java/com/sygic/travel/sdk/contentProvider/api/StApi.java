@@ -14,6 +14,7 @@ public interface StApi {
 
 	String PLACES_API_CALL = "places_api_call";
 	String DETAIL_API_CALL = "detail_api_call";
+	String MEDIA_API_CALL = "media_api_call";
 
 	/*******************************************************************************/
 	/*                                     GET                                     */

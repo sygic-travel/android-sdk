@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApi.DETAIL_API_CALL;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 
@@ -34,6 +35,9 @@ public class StCallback<T> implements retrofit2.Callback<T> {
 				break;
 			case DETAIL_API_CALL:
 				ret = stResponse.getData().getPlace();
+				break;
+			case MEDIA_API_CALL:
+				ret = stResponse.getData().getMedia();
 				break;
 			default:
 				ret = null;

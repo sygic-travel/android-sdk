@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.model;
 
+import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class StResponse {
 	public class Data {
 		private List<Place> places;
 		private Place place;
+		private List<Media> media;
 
 		public List<Place> getPlaces() {
 			return places;
@@ -39,6 +41,10 @@ public class StResponse {
 
 		public Place getPlace() {
 			return place;
+		}
+
+		public List<Media> getMedia() {
+			return media;
 		}
 	}
 }

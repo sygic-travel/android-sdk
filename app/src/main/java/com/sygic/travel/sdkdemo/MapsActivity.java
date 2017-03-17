@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
+import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -60,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		Callback<List<Place>> placesBack = new Callback<List<Place>>() {
 			@Override
 			public void onSuccess(List<Place> data) {
-				Log.d("TEST_APP", "Places: onResponse");
+				Log.d("TEST_APP", "Places: onSuccess");
 			}
 
 			@Override
@@ -82,10 +83,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			}
 		};
 
+		Callback<Media> mediaBack = new Callback<Media>() {
+			@Override
+			public void onSuccess(Media data) {
+				Log.d("TEST_APP", "Media: onSuccess");
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				Log.d("TEST_APP", "Media: onFailure");
+			}
+		};
+
 		String userXApiKey = "qBei674Bdt5lk2rTkphqP1jiXC7M96HR26BFNSGw"; //TODO only for testing
 		StSDK.initialize(userXApiKey, this);
 		StSDK.getInstance().getPlaces(query, placesBack);
 		StSDK.getInstance().getPlaceDetailed("poi:447", detailBack);
+		StSDK.getInstance().getPlaceMedia("poi:447", mediaBack);
 		/********************************************************************/
 	}
 }

@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.contentProvider.api.ServiceGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.StResponse;
+import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -18,7 +19,7 @@ import retrofit2.Call;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.*;
 
 /**
- * This class provides public methods for user. It is starting point of app aswell and it initialize
+ * This class provides public methods for user, it is starting point of app and it initialize
  * all inner ?structures?.
  */
 public class StSDK {
@@ -66,6 +67,12 @@ public class StSDK {
 		call.enqueue(stCallback);
 	}
 
+
+	public void getPlaceMedia(String guid, Callback<Media> back){
+		Call<StResponse> call = getStApi().getPlaceDetailed(guid);
+		StCallback<StResponse> stCallback = new StCallback<>(back, MEDIA_API_CALL);
+		call.enqueue(stCallback);
+	}
 	/********************************************
 	 *  		PRIVATE MEMBERS & METHODS
 	 ********************************************/
