@@ -1,4 +1,6 @@
-package com.sygic.travel.sdk.contentProvider.api;
+package com.sygic.travel.sdk.contentProvider.api.interceptors;
+
+import com.sygic.travel.sdk.contentProvider.api.SupportedLanguages;
 
 import java.io.IOException;
 

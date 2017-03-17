@@ -27,6 +27,7 @@ class Place {
 	 tier: int
 	 categories: array<string>
 	 parents: array<string>
+	 detail: Detail
  }
  */
 
@@ -46,6 +47,7 @@ public class Place {
 	public static final String TIER = "tier";
 	public static final String CATEGORIES = "categories";
 	public static final String PARENTS = "parents";
+	public static final String DETAIL = "detail";
 
 	@SerializedName(GUID)
 	private String guid;
@@ -91,6 +93,9 @@ public class Place {
 
 	@SerializedName(PARENTS)
 	private List<String> parents;
+
+	@SerializedName(DETAIL)
+	private Detail detail;
 
 	public Place(){
 	}
@@ -213,5 +218,13 @@ public class Place {
 
 	public void setParents(List<String> parents) {
 		this.parents = parents;
+	}
+
+	public Detail getDetail() {
+		return detail;
+	}
+
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 }

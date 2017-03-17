@@ -2,9 +2,11 @@ package com.sygic.travel.sdk;
 
 import android.content.Context;
 
+import com.sygic.travel.sdk.contentProvider.api.StCallback;
 import com.sygic.travel.sdk.contentProvider.api.ServiceGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
-import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.contentProvider.api.Callback;
+import com.sygic.travel.sdk.model.StResponse;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -12,7 +14,8 @@ import java.io.File;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
+
+import static com.sygic.travel.sdk.contentProvider.api.StApi.*;
 
 /**
  * This class provides public methods for user. It is starting point of app aswell and it initialize
@@ -41,7 +44,7 @@ public class StSDK {
 		Query query,
 		Callback<List<Place>> back
 	){
-		Call<List<Place>> call = getStApi().getPlaces(
+		Call<StResponse> call = getStApi().getPlaces(
 			query.getQuery(),
 			query.getLevel(),
 			query.getCategories(),
@@ -52,12 +55,15 @@ public class StSDK {
 			query.getParent(),
 			query.getLimit()
 		);
-		call.enqueue(back);
+
+		StCallback<StResponse> stCallback = new StCallback<>(back, PLACES_API_CALL);
+		call.enqueue(stCallback);
 	}
 
-	public Detail/* TODO ?Place?*/ getPlaceDetailed(String guid){
-		//TODO
-		return null;
+	public void getPlaceDetailed(String guid, Callback<Place> back){
+		Call<StResponse> call = getStApi().getPlaceDetailed(guid);
+		StCallback<StResponse> stCallback = new StCallback<>(back, DETAIL_API_CALL);
+		call.enqueue(stCallback);
 	}
 
 	/********************************************

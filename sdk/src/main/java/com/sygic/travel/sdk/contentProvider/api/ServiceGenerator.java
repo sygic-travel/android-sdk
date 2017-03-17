@@ -1,12 +1,11 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import android.app.Application;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sygic.travel.sdk.StEnvironment;
-import com.sygic.travel.sdk.StSDK;
+import com.sygic.travel.sdk.contentProvider.api.interceptors.AuthorizationInterceptor;
+import com.sygic.travel.sdk.contentProvider.api.interceptors.LocaleInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +42,7 @@ public class ServiceGenerator {
 				.addInterceptor(loggingInterceptor)
 				.addInterceptor(localeInterceptor)
 				.addInterceptor(authorizationInterceptor)
+//				.addInterceptor(apiResponseInterceptor)
 				.cache(new Cache(cacheDir, 10 * 1024 * 1024))
 				.readTimeout(60, TimeUnit.SECONDS)
 				.build();

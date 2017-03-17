@@ -11,14 +11,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
+import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -60,21 +57,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		Query query = new Query(
 			null, null, "eating", null, "city:1", null, null, null, null, 20
 		);
-		Callback back = new Callback<List<Place>>() {
+		Callback<List<Place>> placesBack = new Callback<List<Place>>() {
 			@Override
-			public void onResponse(Call call, Response response) {
-				Log.d("TEST_APP", "onResponse");
+			public void onSuccess(List<Place> data) {
+				Log.d("TEST_APP", "Places: onResponse");
 			}
 
 			@Override
-			public void onFailure(Call call, Throwable t) {
-				Log.d("TEST_APP", "onFailure");
+			public void onFailure(Throwable t) {
+				Log.d("TEST_APP", "Places: onFailure");
+				t.printStackTrace();
+			}
+		};
+
+		Callback<Place> detailBack = new Callback<Place>() {
+			@Override
+			public void onSuccess(Place data) {
+				Log.d("TEST_APP", "Detail: onSuccess");
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				Log.d("TEST_APP", "Detail: onFailure");
 			}
 		};
 
 		String userXApiKey = "qBei674Bdt5lk2rTkphqP1jiXC7M96HR26BFNSGw"; //TODO only for testing
 		StSDK.initialize(userXApiKey, this);
-		StSDK.getInstance().getPlaces(query, back);
+		StSDK.getInstance().getPlaces(query, placesBack);
+		StSDK.getInstance().getPlaceDetailed("poi:447", detailBack);
 		/********************************************************************/
 	}
 }

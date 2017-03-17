@@ -1,9 +1,6 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import com.sygic.travel.sdk.model.place.Detail;
-import com.sygic.travel.sdk.model.place.Place;
-
-import java.util.List;
+import com.sygic.travel.sdk.model.StResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,18 +12,21 @@ import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.CONTENT_TYPE
 
 public interface StApi {
 
+	String PLACES_API_CALL = "places_api_call";
+	String DETAIL_API_CALL = "detail_api_call";
+
 	/*******************************************************************************/
 	/*                                     GET                                     */
 	/*******************************************************************************/
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places")
-	Call<List<Place>> getPlaces(
+	Call<StResponse> getPlaces(
 		@Query("query") String query,
 		@Query("level") String level,
 		@Query("categories") String categories,
-		@Query("map_tile") String MapTile,
-		@Query("map_spread") Integer MapSpread,
+		@Query("map_tile") String mapTile,
+		@Query("map_spread") Integer mapSpread,
 		@Query("bounds") String bounds,
 		@Query("tags") String tags,
 		@Query("parent") String parent,
@@ -35,13 +35,13 @@ public interface StApi {
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("place-details/{place_guid}")
-	Call<Detail> getPlaceDetailed(
+	Call<StResponse> getPlaceDetailed(
 		@Path("place_guid") String placeGuid
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{place_guid}/media")
-	Call<List<Place>> getPlaceMedia(
+	Call<StResponse> getPlaceMedia(
 		@Path("place_guid") String placeGuid
 	);
 }
