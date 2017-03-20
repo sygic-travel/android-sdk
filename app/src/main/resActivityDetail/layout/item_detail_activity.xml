@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:custom="http://schemas.android.com/apk/res-auto"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/cl_item_detail_main"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/app_bar_layout"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+		<android.support.design.widget.CollapsingToolbarLayout
+			android:id="@+id/collapsing"
+			android:layout_width="match_parent"
+			app:expandedTitleTextAppearance="@android:color/transparent"
+			android:layout_height="match_parent"
+			app:contentScrim="@color/toolbar_grey"
+			custom:titleEnabled="false"
+			app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				app:layout_collapseMode="parallax">
+
+				<TextView
+					android:id="@+id/tv_marker_icon"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:textSize="256dp"
+					android:gravity="center"/>
+
+				<com.facebook.drawee.view.SimpleDraweeView
+					android:id="@+id/sdv_detail_photo"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:adjustViewBounds="true"
+					android:scaleType="centerCrop"
+					android:contentDescription="@string/cd_detail_photo"
+					custom:fadeDuration="@integer/photo_fade_in_duration"
+					android:clickable="true"/>
+
+				<VideoView
+					android:id="@+id/vv_item_detail_video_preview"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:clickable="true"/>
+
+				<View
+					android:id="@+id/v_item_detail_media_overlay"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/toolbar_gradient"
+					android:layout_gravity="bottom"
+					android:clickable="true"/>
+
+				<ImageView
+					android:id="@+id/iv_item_detail_play_video_preview"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:clickable="true"
+					android:contentDescription="@string/cd_play_premium_video"
+					android:src="@drawable/ic_media_play"
+					android:padding="16dp"
+					android:visibility="gone"/>
+
+				<ImageView
+					android:id="@+id/iv_item_detail_360_content_indicator"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="bottom|left|start"
+					android:contentDescription="@string/cd_360_content_indicator"
+					android:src="@drawable/ic_media_video_360_large"
+					android:paddingLeft="16dp"
+					android:paddingBottom="0dp"
+					android:visibility="gone"/>
+
+			</FrameLayout>
+
+
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+				app:layout_collapseMode="pin"
+				android:background="?android:attr/selectableItemBackground"
+				android:theme="@style/ItemDetailToolbarTheme"/>
+
+		</android.support.design.widget.CollapsingToolbarLayout>
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v4.widget.NestedScrollView
+				android:id="@+id/sv_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
+			android:id="@+id/ll_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:orientation="vertical">
+
+		</LinearLayout>
+	</android.support.v4.widget.NestedScrollView>
+
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/fab_detail"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="@dimen/activity_horizontal_margin"
+		android:src="@drawable/detail_added_to_day"
+		app:layout_anchor="@id/app_bar_layout"
+		android:elevation="1dp"
+		android:visibility="gone"
+		app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

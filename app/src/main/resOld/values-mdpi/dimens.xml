@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="marker_dot">8px</dimen>
+	<dimen name="marker_small">12px</dimen>
+	<dimen name="marker_small_flagged">14px</dimen>
+	<dimen name="marker_medium">24px</dimen>
+	<dimen name="marker_medium_flagged">32px</dimen>
+	<dimen name="marker_big">36px</dimen>
+	<dimen name="marker_popular">54px</dimen>
+	<dimen name="marker_bed">12px</dimen>
+
+	<dimen name="marker_margin_small">10px</dimen>
+	<dimen name="marker_margin_medium">20px</dimen>
+	<dimen name="marker_margin_big">30px</dimen>
+	<dimen name="marker_margin_popular">40px</dimen>
+
+	<dimen name="compass_position">110px</dimen>
+
+	<dimen name="star_list_size">38px</dimen>
+	<dimen name="hotel_rating_star_height">15px</dimen>
+
+	<dimen name="add_item_stroke_width">1.5px</dimen>
+	<dimen name="add_day_number_size">20sp</dimen>
+
+	<dimen name="corner_radius">2dp</dimen>
+	<dimen name="action_bar_logo_padding_left">6dp</dimen>
+
+	<dimen name="temperature_font_size">100sp</dimen>
+
+	<dimen name="cursor_width">0.75dp</dimen>
+
+	<dimen name="google_play_button_width">187px</dimen>
+	<dimen name="google_play_button_height">61px</dimen>
+
+	<dimen name="tab_selected_indicator_height">3px</dimen>
+	<dimen name="tab_selected_indicator_height_hidden">-5px</dimen>
+
+	<dimen name="itinerary_activity_border_width">2px</dimen>
+
+	<dimen name="city_pass_width">90px</dimen>
+	<dimen name="city_pass_height">60px</dimen>
+
+	<dimen name="drawer_width">240dp</dimen>
+
+	<dimen name="nps_rating_scale_height">45px</dimen>
+
+	<dimen name="default_bullet_size">6px</dimen>
+	<dimen name="default_bullet_margin">5px</dimen>
+	<dimen name="bullet_margin">10px</dimen>
+
+	<dimen name="city_pass_stroke_width">3px</dimen>
+
+	<dimen name="search_progress_size">21px</dimen>
+	<!-- photo sizes -->
+	<dimen name="itinerary_item">60px</dimen>
+	<dimen name="list_item">80px</dimen>
+	<dimen name="participant_height">55px</dimen>
+	<dimen name="user_photo_size">85px</dimen>
+
+	<!-- margins -->
+	<dimen name="margin_lr_sygic_travel_button">27dp</dimen>
+	<dimen name="margin_lr_google_plus_button">24dp</dimen>
+
+
+	<!-- paddings -->
+	<dimen name="day_detail_title_left_padding">20dp</dimen>
+	<dimen name="day_detail_title_right_padding">20dp</dimen>
+	<dimen name="weather_no_data_padding">30dp</dimen>
+	<dimen name="list_item_text_padding">8dp</dimen>
+
+</resources>

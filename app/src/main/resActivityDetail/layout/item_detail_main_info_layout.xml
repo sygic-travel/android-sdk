@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical">
+
+		<!-- Disabling but not removing. One day it will be there for sure -->
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/tv_item_marker"
+			android:textSize="@dimen/list_item"
+			android:layout_margin="16dp"
+			android:visibility="gone"/>
+
+		<TextView
+			android:id="@+id/tv_item_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			style="@style/black_font_large_style"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:paddingTop="16dp"
+			android:textStyle="bold"/>
+
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/tv_local_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="@dimen/text_size_medium"
+		android:textColor="@color/item_detail_tags"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"/>
+
+	<LinearLayout
+		android:id="@+id/ll_detail_hotel_rating"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingTop="16dp"
+		android:paddingLeft="16dp"
+		android:orientation="horizontal"
+		android:visibility="gone"/>
+
+	<TextView
+		android:id="@+id/tv_estimated_rating"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="16dp"
+		android:textColor="@color/hotel_star_rating"
+		android:visibility="gone"
+		android:text="@string/unofficial_rating"/>
+
+	<RelativeLayout
+		android:id="@+id/rl_time_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:background="@color/item_detail_times"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/tv_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:textSize="@dimen/text_size_small_medium"
+			android:layout_toLeftOf="@+id/tv_duration"
+			android:ellipsize="end"
+			android:paddingLeft="16dp"
+			android:paddingTop="16dp"
+			android:paddingBottom="16dp"/>
+
+		<ImageView
+			android:id="@+id/sdv_link_icon"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:scaleType="centerInside"
+			android:src="@drawable/ic_opening_hours"
+			android:padding="10dp"
+			android:background="@drawable/detail_link_icon_bg"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_margin="10dp"/>
+
+		<TextView
+			android:id="@id/tv_duration"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_small_medium"
+			android:layout_toLeftOf="@id/sdv_link_icon"
+			android:layout_centerVertical="true"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/rl_note"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/item_detail_note_bg"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/tv_note"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_small_medium"
+			android:textColor="@color/item_detail_note_text"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/iv_note_icon"
+			android:padding="16dp"/>
+
+		<ImageView
+			android:id="@id/iv_note_icon"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:scaleType="centerInside"
+			android:padding="10dp"
+			android:background="@drawable/detail_link_icon_bg"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:src="@drawable/ic_add_note"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"/>
+
+	</RelativeLayout>
+
+	<TextView
+		android:id="@+id/tv_description"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		style="@style/grey_font_small_medium_style"
+		android:lineSpacingMultiplier="1.5"/>
+
+	<TextView
+		android:id="@+id/tv_translate"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/translate"
+		style="@style/text_view_link_style"
+		android:textSize="@dimen/text_size_small_medium"
+		android:clickable="true"
+		android:visibility="gone"
+		android:layout_margin="16dp"/>
+
+	<LinearLayout
+		android:id="@+id/ll_attribution"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp"
+		android:visibility="gone">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			style="@style/grey_font_small_medium_style"
+			android:text="@string/translated_by"/>
+
+		<ImageView
+			android:id="@+id/iv_atribution"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="8dp"
+			android:src="@drawable/google_translation_attribution"/>
+
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/tv_attribution_perex_provider"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:visibility="gone"
+		android:textStyle="italic"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:paddingRight="16dp"
+		android:layout_gravity="right"
+		style="@style/grey_font_small_medium_style"
+		android:text="@string/item_detail_wikipedia"/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_alignParentBottom="true"
+		android:background="@color/item_detail_divider"/>
+</LinearLayout>

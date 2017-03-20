@@ -1,0 +1,250 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tripomatic.ui.activity.customPlace.CustomPlaceActivity"
+	android:id="@+id/custom_place_main_layout"
+	android:background="@color/default_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:animateLayoutChanges="true">
+
+	<include
+		layout="@layout/toolbar"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/til_custom_place_name"
+				style="@style/form_edit_layout_style"
+				android:hint="@string/custom_place_hint_name">
+
+				<EditText
+					android:id="@+id/custom_place_name"
+					android:inputType="textMultiLine"
+					style="@style/form_edit_style"
+					android:layout_marginBottom="1dp"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/til_custom_place_description"
+				style="@style/form_edit_layout_style"
+				android:hint="@string/custom_place_hint_description">
+
+				<EditText
+					android:id="@+id/custom_place_description"
+					android:inputType="textMultiLine"
+					style="@style/form_edit_style"
+					android:layout_marginBottom="1dp"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/til_custom_place_address"
+				style="@style/form_edit_layout_style"
+				android:hint="@string/custom_place_address">
+
+				<EditText
+					android:id="@+id/et_custom_place_address"
+					android:maxLines="1"
+					android:imeActionLabel="Save"
+					style="@style/form_edit_style"
+					android:layout_marginBottom="1dp"
+					android:inputType="text"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<RelativeLayout
+				android:id="@+id/custom_place_categories_layout"
+				android:layout_width="match_parent"
+				android:visibility="gone"
+				android:layout_height="wrap_content"
+				android:background="@drawable/form_item_selector"
+				android:clickable="true"
+				android:layout_marginBottom="1dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_centerVertical="true"
+					android:paddingLeft="20dp"
+					android:layout_toLeftOf="@+id/custom_place_categories_arrow">
+
+					<TextView
+						android:id="@+id/custom_place_categories_title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/custom_place_categories"/>
+
+					<TextView
+						android:id="@+id/custom_place_categories"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						style="@style/blue_font_small_style"
+						android:maxLines="1"
+						android:ellipsize="end"
+						android:visibility="gone"/>
+				</LinearLayout>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingTop="20dp"
+					android:paddingBottom="20dp"
+					android:visibility="invisible"/>
+
+				<ImageView
+					android:id="@+id/custom_place_categories_arrow"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/gray_arrow_right"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:padding="20dp"/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/custom_place_advanced"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:clickable="true"
+				android:background="@drawable/form_item_selector"
+				android:layout_marginBottom="1dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/custom_place_advanced"
+					android:background="@drawable/color_transparent"
+					android:padding="16dp"
+					android:layout_marginBottom="1dp"/>
+
+				<ImageView
+					android:id="@+id/custom_place_advanced_arrow"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/gray_arrow_right"
+					android:background="@drawable/color_transparent"
+					android:contentDescription="@string/cd_advanced_custom_place_info"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="16dp"/>
+
+			</RelativeLayout>
+
+			<LinearLayout
+				android:id="@+id/custom_place_advanced_form"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:visibility="gone">
+
+				<android.support.design.widget.TextInputLayout
+					android:id="@+id/til_custom_place_web_links"
+					style="@style/form_edit_layout_style"
+					android:hint="@string/custom_place_hint_web_link">
+
+					<EditText
+						android:id="@+id/custom_place_web_links"
+						android:inputType="textUri|textMultiLine"
+						style="@style/form_edit_style"
+						android:layout_marginBottom="1dp"/>
+
+				</android.support.design.widget.TextInputLayout>
+
+				<android.support.design.widget.TextInputLayout
+					android:id="@+id/til_custom_place_phone"
+					style="@style/form_edit_layout_style"
+					android:hint="@string/custom_place_hint_phone">
+
+					<EditText
+						android:id="@+id/custom_place_phone"
+						android:inputType="phone|textMultiLine"
+						style="@style/form_edit_style"
+						android:layout_marginBottom="1dp"/>
+
+				</android.support.design.widget.TextInputLayout>
+
+				<android.support.design.widget.TextInputLayout
+					android:id="@+id/til_custom_place_email"
+					style="@style/form_edit_layout_style"
+					android:hint="@string/custom_place_hint_email">
+
+					<EditText
+						android:id="@+id/custom_place_email"
+						android:inputType="textEmailAddress|textMultiLine"
+						style="@style/form_edit_style"
+						android:layout_marginBottom="1dp"/>
+
+				</android.support.design.widget.TextInputLayout>
+
+				<android.support.design.widget.TextInputLayout
+					android:id="@+id/til_custom_place_opening_hours"
+					style="@style/form_edit_layout_style"
+					android:hint="@string/custom_place_hint_opening_hours">
+
+					<EditText
+						android:id="@+id/custom_place_opening_hours"
+						android:inputType="textMultiLine"
+						style="@style/form_edit_style"
+						android:layout_marginBottom="1dp"/>
+
+				</android.support.design.widget.TextInputLayout>
+
+				<android.support.design.widget.TextInputLayout
+					android:id="@+id/til_custom_place_admission"
+					style="@style/form_edit_layout_style"
+					android:hint="@string/custom_place_hint_admission">
+
+					<EditText
+						android:id="@+id/custom_place_admission"
+						android:inputType="textMultiLine"
+						style="@style/form_edit_style"
+						android:layout_marginBottom="1dp"/>
+
+				</android.support.design.widget.TextInputLayout>
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<Space
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"/>
+
+				<Button
+					android:id="@+id/custom_place_create"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:background="@drawable/blue_button"
+					android:text="@string/save"
+					android:layout_marginTop="16dp"
+					android:layout_marginBottom="16dp"
+					android:textAllCaps="false"
+					style="@style/white_font_medium_style"/>
+
+				<Space
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"/>
+
+			</LinearLayout>
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>

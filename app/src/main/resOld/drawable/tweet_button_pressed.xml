@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+
+	<gradient
+		android:startColor="@color/twitter_grey_2"
+		android:endColor="@color/twitter_grey_3"
+		android:angle="270"/>
+
+	<corners
+		android:radius="@dimen/corner_radius"/>
+
+	<stroke
+		android:width="@dimen/add_item_stroke_width"
+		android:color="@color/twitter_blue"/>
+
+</shape>

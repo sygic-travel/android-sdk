@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="st_white">#fffffffe</color>
+	<color name="st_blue_dark">#ff0077aa</color>
+
+	<color name="st_blue">#348ce3</color>
+	<color name="st_blue_light">#ff00d7ff</color>
+	<color name="st_blue_alpha">#e20099dd</color>
+	<color name="st_blue_pressed">#ff1567B8</color>
+	<color name="st_blue_hints">#770099dd</color>
+	<color name="st_blue_tab_pressed">#4d0099dd</color>
+	<color name="st_dark_font_grey">#ff323232</color>
+	<color name="st_darker_grey">#ff5c5c5c</color>
+	<color name="transport_icon_greyblack">#ff525252</color>
+	<color name="st_grey">#ff7e7e7e</color>
+	<color name="st_lighter_grey">#ffe6e6e6</color>
+	<color name="st_almost_white_grey">#fff9f9f9</color>
+	<color name="st_emerald">#ff25d096</color>
+	<color name="st_lime">#ffb8dc3c</color>
+	<color name="st_orange">#fff48430</color>
+	<color name="st_orange_light">#ffffbc48</color>
+	<color name="st_yellow">#FFC109</color>
+	<color name="st_orange_alpha">#e2f48430</color>
+	<color name="st_shadow_start">#aae6e6e6</color>
+	<color name="st_shadow_end">#09e6e6e6</color>
+	<color name="st_downloaded">#96BA2F</color>
+	<color name="st_downloading">#DA7129</color>
+	<color name="st_downloaded_pressed">#83A329</color>
+	<color name="st_downloading_pressed">#BF6324</color>
+
+	<color name="snackbar_action_color">#ff009688</color>
+
+	<color name="note_background">#ffece9e4</color>
+	<color name="default_background">#fff4f4f4</color>
+
+	<color name="menu_text_dark">#ff505050</color>
+	<color name="menu_background_inactive">#ffF5F5F5</color>
+	<color name="menu_label_grey">#ff737373</color>
+	<color name="menu_text_header_grey">#ff7B7B7B</color>
+	<color name="menu_text_header_grey_lighter">#ffCFCFCF</color>
+
+	<color name="grey_custom_place">#ffE3E4E4</color>
+
+	<color name="dark_background">#ff505050</color>
+	<color name="dark_background_alpha">#e2505050</color>
+	<color name="list_item_pressed">#66a9a9a9</color>
+	<color name="form_item_pressed">#8833b5e5</color>
+	<color name="new_trip_wizard_gray">#ffbfbfbf</color>
+	<color name="suggested_background">#F6F6F6</color>
+	<color name="activity_gray">#ffd9d9d9</color>
+	<color name="hotel_tag_green">#ff5cdc83</color>
+	<color name="bookable_tag_red">#ffb8352a</color>
+	<color name="action_done_pressed_background">#ff20aae1</color>
+
+	<color name="green_popular">#ffB2D53C</color>
+
+	<color name="add_item_stroke">#ffd2d2d2</color>
+	<color name="add_item_background">#ffe7e7e7</color>
+
+	<color name="action_bar_bottom_border">#ff0078b9</color>
+	<color name="menu_header_background">#ff646464</color>
+	<color name="trip_home_itinerary_pressed">#ffe1e1e1</color>
+	<color name="trip_home_action_pressed">#44e1e1e1</color>
+	<color name="hotel_star_rating">#ffE2C032</color>
+	<color name="toolbar_itinerary_button">#FF737F8F</color>
+
+	<!-- Facebook colors -->
+	<color name="facebook_button">#ff3b5998</color>
+	<color name="facebook_button_pressed">#ff8b9dc3</color>
+
+	<color name="grey_button">#ffdadada</color>
+	<color name="grey_button_pressed">#ff8a8a8a</color>
+
+	<color name="showcase_active_page">#ffFFFFFF</color>
+	<color name="showcase_inactive_page">#33000000</color>
+
+	<color name="cross_status_download">#ffc4c4c4</color>
+
+	<color name="delete_red_alpha">#77e05f4d</color>
+	<color name="trash_red">#ffe74c3c</color>
+	<color name="trash_red_pressed">#CA4234</color>
+	<color name="white">#ffffffff</color>
+	<color name="white_alpha">#aaffffff</color>
+	<color name="white_welcome_alpha">#dfffffff</color>
+	<color name="white_attribution_alpha">#a1ffffff</color>
+	<color name="blue_dark">#ff0E5E9B</color>
+	<color name="pager_blue">#ffccebf8</color>
+
+	<color name="destination_shadow_start">#a6000000</color>
+	<color name="destination_shadow_end">#33000000</color>
+
+	<color name="card_shadow_start">#bb222222</color>
+
+	<color name="favorite_red">#fffa5252</color>
+	<color name="btn_black">#ff000000</color>
+
+	<color name="transculent_status_bar">#44505050</color>
+
+	<!-- twitter colours -->
+	<color name="twitter_blue">#ff55acee</color>
+	<color name="twitter_dark_font">#ff292f33</color>
+	<color name="twitter_grey_5">#ff66757f</color>
+	<color name="twitter_grey_4">#ff8899a6</color>
+	<color name="twitter_grey_3">#ffccd6dd</color>
+	<color name="twitter_grey_2">#ffe1e8ed</color>
+	<color name="twitter_grey_1">#fff5f8fa</color>
+
+	<!-- Day detail -->
+	<color name="day_detail_hotel_green">#ffA6C72E</color>
+
+	<!-- Tutorial background-->
+	<color name="premium_showcase_page_one">#1283E5</color>
+	<color name="premium_showcase_page_two">#17A9DC</color>
+	<color name="premium_showcase_page_three">#148799</color>
+
+	<!-- REBRANDING -->
+	<color name="toolbar_grey">#5d6b7d</color>
+	<color name="rebranding_light">#f1f8ff</color>
+	<color name="main_black">#2f3d44</color>
+	<color name="text_grey">#767676</color>
+	<color name="rating_grey">#a0afbe</color>
+	<color name="trip_home_blue">#94badf</color>
+	<color name="login_gradient_blue">#b9d1e9</color>
+	<color name="universal_menu_filters">#8d9099</color>
+	<color name="status_bar">#4d5968</color>
+	<color name="trip_home_color">#f6f6f6</color>
+	<color name="light_blue">#0583ff</color>
+	<color name="light_blue_pressed">#0EB0FF</color>
+	<color name="white_70_alpha">#B3FFFFFF</color>
+
+
+	<!-- map markers highlights -->
+	<color name="st_blue_highlight">#771177F1</color>
+	<color name="st_orange_highlight">#77F0610E</color>
+	<color name="white_highlight">#77ffffff</color>
+	<color name="favorite_red_highlight">#77EF28EC</color>
+
+	<color name="rating_yellow">#fff7f3da</color>
+	<color name="rating_blue">#ffe6f2ff</color>
+
+	<!-- map markers colors -->
+	<color name="sleeping">#98c15e</color>
+	<color name="sightseeing">#e66761</color>
+	<color name="other">#9cadd3</color>
+	<color name="shopping">#f1c459</color>
+	<color name="sports">#60a96c</color>
+	<color name="traveling">#6280e9</color>
+	<color name="going_out">#d95b94</color>
+	<color name="hiking">#c68f60</color>
+	<color name="discovering">#7e828d</color>
+	<color name="eating">#f19d36</color>
+	<color name="playing">#65cbe9</color>
+	<color name="relaxing">#9258e9</color>
+	<color name="in_trip">#1168f1</color>
+	<color name="today">#f0560e</color>
+	<color name="favorite">#ed4891</color>
+
+	<color name="item_detail_note_bg">#fffee2</color>
+	<color name="item_detail_note_text">#6a6f2c</color>
+	<color name="item_detail_times">#e5f6fe</color>
+	<color name="item_detail_flags">#f67f23</color>
+	<color name="item_detail_divider">#e1e1e1</color>
+	<color name="thick_divider_color">#f7f7f4</color>
+	<color name="item_detail_light_gray">#c6c5ca</color>
+	<color name="item_detail_circle_background">#f6f6f6</color>
+	<color name="item_detail_tags">#a4a4a4</color>
+
+	<color name="gyg_price_color">#99000000</color>
+
+	<color name="black_overlay">#66000000</color>
+
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/about_tripomatic_main_layout"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:animateLayoutChanges="true"
+	android:background="@color/default_background">
+
+	<include
+		layout="@layout/toolbar"/>
+
+	<ProgressBar
+		android:id="@+id/progress_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:indeterminate="false"
+		style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+		android:visibility="gone"/>
+
+	<WebView
+		android:id="@+id/about_tripomatic_web"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="@string/cd_about_sygic_travel_web"/>
+
+</LinearLayout>

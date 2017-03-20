@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ll_edit_trip_main_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<include layout="@layout/toolbar"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/default_background">
+
+		<LinearLayout
+			android:id="@+id/ll_edit_trip_settings"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:background="@color/default_background"
+			android:layout_alignParentTop="true"
+			android:layout_above="@+id/btn_edit_trip_apply_changes"
+			android:animateLayoutChanges="true">
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/til_edit_trip_name"
+				style="@style/form_edit_layout_style_landscape"
+				android:hint="@string/hint_trip_name">
+
+				<EditText
+					android:id="@+id/et_edit_trip_name"
+					style="@style/form_edit_style"
+					android:layout_width="match_parent"
+					android:inputType="text"
+					android:maxLines="10"
+					android:ellipsize="start"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<LinearLayout
+				android:id="@+id/ll_edit_trip_privacy"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:background="@android:color/white"
+				android:layout_marginBottom="1dp"
+				android:paddingBottom="@dimen/general_activity_padding_margin">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/trip_privacy"
+					style="@style/black_font_small_style"
+					android:layout_marginLeft="@dimen/padding_edge"
+					android:layout_marginBottom="@dimen/general_activity_padding_margin"
+					android:layout_marginTop="@dimen/general_activity_padding_margin"/>
+
+				<RadioGroup
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingLeft="@dimen/padding_edge">
+
+					<RadioButton
+						android:id="@+id/rbtn_edit_trip_private"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						style="@style/black_font_small_style"
+						android:text="@string/privacy_private"
+						android:paddingLeft="@dimen/general_activity_padding_margin"
+						android:paddingRight="@dimen/general_activity_padding_margin"
+						android:layout_marginBottom="8dp"/>
+
+					<RadioButton
+						android:id="@+id/rbtn_edit_trip_shareable"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						style="@style/black_font_small_style"
+						android:text="@string/privacy_shareable"
+						android:paddingLeft="@dimen/general_activity_padding_margin"
+						android:paddingRight="@dimen/general_activity_padding_margin"/>
+
+				</RadioGroup>
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/ll_edit_trip_date_switch"
+				android:orientation="horizontal"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@android:color/white"
+				android:foreground="?android:attr/selectableItemBackground"
+				android:clickable="true"
+				android:layout_marginBottom="1dp">
+
+				<TextView
+					android:text="@string/dates_known"
+					style="@style/form_label_style"/>
+
+				<Switch
+					android:id="@+id/sw_edit_trip_dates"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="@dimen/general_activity_padding_margin"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/ll_edit_trip_dates"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<LinearLayout
+					android:id="@+id/ll_edit_trip_start_date"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:background="@android:color/white"
+					android:foreground="?android:attr/selectableItemBackground"
+					android:clickable="true"
+					android:visibility="visible">
+
+					<TextView
+						android:text="@string/start_date"
+						style="@style/form_label_style"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+					<TextView
+						android:id="@+id/tv_edit_trip_start_date"
+						style="@style/form_value_style"/>
+
+				</LinearLayout>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@android:color/white"
+					android:text="@string/end_date_info"
+					android:paddingLeft="@dimen/padding_edge"
+					android:paddingBottom="@dimen/general_activity_padding_margin"
+					android:paddingRight="@dimen/padding_edge"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<Button
+			android:id="@+id/btn_edit_trip_apply_changes"
+			style="@style/blue_button_wide_style"
+			android:text="@string/edit_trip_save"
+			android:layout_marginTop="@dimen/general_activity_padding_margin"
+			android:layout_marginBottom="@dimen/general_activity_padding_margin"
+			android:layout_alignParentBottom="true"
+			android:textAllCaps="false"/>
+
+	</RelativeLayout>
+</LinearLayout>

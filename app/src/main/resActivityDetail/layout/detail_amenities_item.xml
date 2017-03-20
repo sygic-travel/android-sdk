@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tv_detail_amenities_item"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	style="@style/black_font_activity_detail"
+	android:drawableLeft="@drawable/detail_wifi"
+	android:drawablePadding="@dimen/activity_detail_padding"
+	android:paddingTop="@dimen/activity_detail_half_padding"
+	android:paddingBottom="@dimen/activity_detail_half_padding"
+	android:text="@string/hotel_filters_wifi"
+	android:contentDescription="@string/cd_wifi"
+	android:visibility="visible"
+	android:gravity="center_vertical"/>

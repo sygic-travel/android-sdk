@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/categories_main_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ListView
+		android:id="@+id/categories_list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:choiceMode="singleChoice"
+		android:clickable="false"
+		android:focusable="false"
+		android:layout_above="@+id/categories_line"/>
+
+	<View
+		android:id="@+id/categories_line"
+		android:layout_width="match_parent"
+		android:layout_height="1px"
+		android:background="@color/activity_gray"
+		android:layout_above="@+id/categories_done"/>
+
+	<Button
+		android:id="@+id/categories_done"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/done"
+		android:layout_alignParentBottom="true"
+		style="?android:attr/buttonBarButtonStyle"
+		android:textAllCaps="false"/>
+
+</RelativeLayout>

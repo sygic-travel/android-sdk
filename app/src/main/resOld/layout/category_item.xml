@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/category_item_layout"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TextView
+		android:id="@+id/category_name"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		style="@style/black_font_small_style"
+		android:padding="15dp"/>
+
+	<CheckBox
+		android:id="@+id/category_check"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingRight="15dp"
+		android:clickable="false"
+		android:focusable="false"/>
+
+</LinearLayout>

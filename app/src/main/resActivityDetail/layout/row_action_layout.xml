@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ll_container"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:id="@+id/rl_link_root"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?android:attr/selectableItemBackground">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true"
+			android:layout_toLeftOf="@+id/ll_row"
+			android:padding="16dp">
+
+			<TextView
+				android:id="@+id/tv_link_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAllCaps="true"
+				android:ellipsize="end"
+				android:lines="1"
+				android:textSize="@dimen/text_size_small_medium"/>
+
+			<TextView
+				android:id="@+id/tv_subtext"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:lines="1"
+				android:textSize="@dimen/text_size_small"
+				android:textColor="@color/item_detail_tags"
+				android:visibility="gone"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@id/ll_row"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true">
+			<TextView
+				android:id="@+id/tv_link_count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:visibility="gone"
+				android:textSize="@dimen/text_size_small_medium"
+				android:layout_margin="16dp"/>
+
+			<ImageView
+				android:id="@+id/iv_fodors"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:visibility="gone"
+				android:src="@drawable/fodors_logo"
+				android:layout_margin="16dp"/>
+
+			<ImageView
+				android:id="@+id/sdv_link_icon"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:scaleType="centerInside"
+				android:padding="10dp"
+				android:background="@drawable/detail_link_icon_bg"
+				android:layout_marginRight="10dp"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="10dp"/>
+
+		</LinearLayout>
+
+		<View
+			android:id="@+id/bottom_divider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_alignParentBottom="true"
+			android:background="@color/item_detail_divider"/>
+	</RelativeLayout>
+
+</LinearLayout>

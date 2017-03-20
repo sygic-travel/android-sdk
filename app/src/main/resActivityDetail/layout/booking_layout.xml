@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingBottom="@dimen/activity_detail_padding"
+		android:paddingLeft="@dimen/activity_detail_padding"
+		android:paddingRight="@dimen/activity_detail_padding">
+
+	<RelativeLayout
+			android:id="@+id/rl_detail_score_rating"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:paddingTop="@dimen/activity_detail_padding"
+			android:paddingBottom="@dimen/activity_detail_padding"
+			android:gravity="center_vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/review_score"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:textAllCaps="true"
+				style="@style/black_font_medium_style"/>
+
+			<TextView
+				android:id="@+id/tv_detail_score_rating"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toLeftOf="@+id/tv_detail_score_rating_value"
+				android:paddingRight="@dimen/activity_detail_padding"
+				android:layout_centerVertical="true"/>
+
+			<TextView
+				android:id="@id/tv_detail_score_rating_value"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/detail_rating"
+				style="@style/blue_font_medium_style"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:background="@drawable/tag_blue_border"
+				android:includeFontPadding="false"
+				android:padding="5dp"/>
+
+		</RelativeLayout>
+
+		<Button
+			android:id="@+id/btn_book"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/blue_button_style"
+			android:text="@string/item_detail_see_available_rooms"/>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/booking_logo"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="@dimen/activity_detail_padding"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/detail_from"/>
+
+
+				<TextView
+					android:id="@+id/tv_price"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="@color/st_blue"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/hotels_slash_night"/>
+			</LinearLayout>
+		</RelativeLayout>
+
+		<TextView
+			android:id="@+id/price_guarantee"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="@string/price_guarantee"/>
+
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/item_detail_divider"/>
+
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/dl_drawer"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:id="@+id/about_tripomatic_main_layout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:animateLayoutChanges="true"
+			android:background="@color/default_background">
+
+			<include
+				layout="@layout/toolbar"/>
+
+			<ProgressBar
+				android:id="@+id/progress_bar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:indeterminate="false"
+				style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+				android:visibility="gone"/>
+
+			<WebView
+				android:id="@+id/about_tripomatic_web"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/cd_about_sygic_travel_web"/>
+
+		</LinearLayout>
+
+	</FrameLayout>
+
+	<android.support.design.widget.NavigationView
+		android:id="@+id/nv_navigation_drawer"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:background="@android:color/white" />
+
+</android.support.v4.widget.DrawerLayout>

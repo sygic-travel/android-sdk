@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:paddingLeft="16dp"
+	android:background="?android:attr/selectableItemBackground">
+
+	<LinearLayout
+		android:id="@+id/ll_content"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_toLeftOf="@+id/iv_arrow"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/tv_reference_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingRight="16dp"
+			android:textSize="@dimen/text_size_small_medium"
+			android:textStyle="bold"
+			android:layout_marginTop="8dp"
+			android:paddingBottom="4dp"/>
+
+		<LinearLayout
+			android:id="@+id/ll_price"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="8dp">
+
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/detail_from"
+				android:textSize="@dimen/text_size_small"
+				android:paddingRight="8dp"/>
+
+			<TextView
+				android:id="@+id/tv_reference_price"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/text_size_small"
+				android:textColor="@color/st_blue"/>
+
+
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/tv_reference_flags"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_micro"
+			android:paddingRight="16dp"
+			android:layout_marginBottom="8dp"
+			android:textColor="@color/item_detail_flags"/>
+
+	</LinearLayout>
+
+	<ImageView
+		android:id="@id/iv_arrow"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:src="@drawable/ic_arrow_point_to_right"
+		android:layout_alignParentRight="true"
+		android:paddingRight="16dp"
+		android:paddingLeft="8dp"/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/item_detail_divider"
+		android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

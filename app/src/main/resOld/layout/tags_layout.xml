@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_tags"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_tag_popular"
+        style="@style/white_font_micro_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/tag_green"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:text="@string/hotels_popular"/>
+
+</LinearLayout>

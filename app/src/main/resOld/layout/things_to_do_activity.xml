@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/things_to_do_main_layout"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/default_background">
+
+	<include
+		layout="@layout/toolbar"/>
+
+	<LinearLayout
+		android:id="@+id/filter_label_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/things_to_do_filter_label"
+			style="@style/filter_label_style"
+			android:gravity="center_vertical"/>
+
+		<Button
+			android:id="@+id/things_to_do_filter_reset"
+			style="@style/filter_reset_style"
+			android:stateListAnimator="@null"
+			android:text="@string/filter_reset"/>
+
+	</LinearLayout>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/rv_things_to_do_recycler"
+		android:scrollbars="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<TextView
+		android:id="@+id/things_to_do_no_items_found"
+		style="@style/no_items_found_style"
+		android:text="@string/filters_no_items_found"/>
+
+</LinearLayout>
