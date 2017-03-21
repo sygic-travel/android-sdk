@@ -7,12 +7,9 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tripomatic.R;
-import com.tripomatic.SygicTravel;
-import com.tripomatic.contentProvider.db.dao.reference.ReferenceDaoImpl;
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.tripReference.TripReferenceActivity;
-import com.tripomatic.utilities.references.ReferenceWrapper;
+
+import com.sygic.travel.sdk.model.place.Reference;
+import com.sygic.travel.sdkdemo.R;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -246,18 +243,5 @@ public class ItemDetailReferenceUtils {
 		} else {
 			return 0;
 		}
-	}
-
-	public static List<Reference> getByIds(List<Integer> ids, String guid, SygicTravel sygicTravel){
-		List<Reference> references = new ArrayList<>();
-		ReferenceDaoImpl referenceDao = sygicTravel.getOrm().getReferenceDaoImpl();
-		if(ids != null){
-			try {
-				references = referenceDao.getReferenceListByIds(ids, guid);
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return references;
 	}
 }

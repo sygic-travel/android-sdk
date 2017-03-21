@@ -6,21 +6,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.skobbler.ngx.routing.SKRouteInfo;
-import com.tripomatic.R;
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.itemDetail.fragment.ItemDetailFragmentFactories;
-import com.tripomatic.utilities.physics.Distance;
-import com.tripomatic.utilities.physics.Duration;
-import com.tripomatic.utilities.references.ItemDetailReferenceUtils;
-import com.tripomatic.utilities.references.ReferenceWrapper;
+import com.sygic.travel.sdk.model.place.Reference;
+import com.sygic.travel.sdkdemo.R;
+
+import itemDetail.Duration;
+import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.ReferenceWrapper;
+import itemDetail.fragment.ItemDetailFragmentFactories;
+
 
 public class SimpleLinkController implements ItemDetailSubview {
 	private ItemDetailSubviewModel dependenciesData;
 	private View rootView;
 	private TextView tvTitle, tvCount, tvSubtext;
 	private ImageView ivIcon;
-	private Distance distance;
 	private String navInfoPattern;
 
 	public SimpleLinkController(ItemDetailSubviewModel dependenciesData) {
@@ -67,7 +66,6 @@ public class SimpleLinkController implements ItemDetailSubview {
 			}
 
 			case ItemDetailSubviewModel.LAT_LNG_DRIVE:{
-				distance = new Distance(activity);
 				loadDrive(activity);
 				break;
 			}
@@ -96,21 +94,6 @@ public class SimpleLinkController implements ItemDetailSubview {
 				//activity.navigateToPoi(new SKCoordinate(llModel.getLng(), llModel.getLat()));
 			}
 		});
-	}
-
-	public void renderRoute(SKRouteInfo routeInfo){
-		navInfoPattern = "%s, %s";
-
-		if(routeInfo != null) {
-			rootView.setVisibility(View.VISIBLE);
-			distance.setDistanceInMeters(routeInfo.getDistance());
-			Duration duration = new Duration(routeInfo.getEstimatedTime());
-			renderCount(
-				String.format(navInfoPattern, distance.getFormattedDistance(), duration.getShortFormattedDuration())
-			);
-		} else {
-			rootView.setVisibility(View.GONE);
-		}
 	}
 
 	private void renderDuration(ItemDetailFragmentFactories factories) {

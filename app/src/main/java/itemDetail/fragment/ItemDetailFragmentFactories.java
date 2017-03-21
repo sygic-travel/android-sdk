@@ -7,14 +7,7 @@ import android.net.MailTo;
 import android.net.Uri;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
-import com.tripomatic.SygicTravel;
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.itemDetail.ItemDetailActivity;
-import com.tripomatic.ui.activity.referenceList.ReferencesListActivity;
-import com.tripomatic.utilities.LocaleDate;
-import com.tripomatic.utilities.map.marker.MarkerMapper;
-import com.tripomatic.utilities.physics.Duration;
+import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,8 +70,6 @@ public class ItemDetailFragmentFactories {
 					Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(phoneUri));
 					activity.startActivity(phoneIntent);
 				} catch(Exception exception){
-					Crashlytics.logException(exception);
-					Crashlytics.log(activity.getTitle() + " - phone number exception");
 				}
 			}
 		};
@@ -103,8 +94,6 @@ public class ItemDetailFragmentFactories {
 				try {
 					startEmailContent(email, "", "");
 				} catch(Exception exception){
-					Crashlytics.logException(exception);
-					Crashlytics.log(activity.getTitle() + " - email exception");
 				}
 			}
 		};

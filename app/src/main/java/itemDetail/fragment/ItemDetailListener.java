@@ -1,6 +1,7 @@
 package itemDetail.fragment;
 
-import com.tripomatic.contentProvider.db.pojo.Reference;
+
+import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.List;
 

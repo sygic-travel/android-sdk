@@ -12,6 +12,7 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
+import itemDetail.ItemDetailReferenceUtils;
 import itemDetail.fragment.ItemDetailFragmentFactories;
 
 public class MultipleReferencesController extends ReferenceController{

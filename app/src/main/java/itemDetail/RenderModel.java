@@ -1,20 +1,22 @@
 package itemDetail;
 
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.itemDetail.subviews.AttributionModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.BasicExpandableElement;
-import com.tripomatic.ui.activity.itemDetail.subviews.BookingModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.ItemDetailSubviewModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.LatLngModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.MainInfoModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.MultipleReferencesModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.SimpleDetailModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.TagsWrapperModel;
-import com.tripomatic.utilities.references.ItemDetailReferenceUtils;
+
+
+import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import itemDetail.subviews.AttributionModel;
+import itemDetail.subviews.BasicExpandableElement;
+import itemDetail.subviews.BookingModel;
+import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.LatLngModel;
+import itemDetail.subviews.MainInfoModel;
+import itemDetail.subviews.MultipleReferencesModel;
+import itemDetail.subviews.SimpleDetailModel;
+import itemDetail.subviews.TagsWrapperModel;
 
 public class RenderModel {
 	public static final String REFERENCE = "reference";

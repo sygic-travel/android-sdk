@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tripomatic.R;
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.itemDetail.fragment.ItemDetailFragmentFactories;
-import com.tripomatic.utilities.references.ItemDetailReferenceUtils;
-import com.tripomatic.utilities.references.ReferenceWrapper;
+import com.sygic.travel.sdk.model.place.Reference;
+import com.sygic.travel.sdkdemo.R;
+
+import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.ReferenceWrapper;
+import itemDetail.fragment.ItemDetailFragmentFactories;
 
 public class ExternalLinksExpandableController extends ExpandableElementController {
 	public Runnable onLeadCreatedRunnable;

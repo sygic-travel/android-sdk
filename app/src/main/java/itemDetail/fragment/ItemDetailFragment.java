@@ -8,17 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.tripomatic.R;
-import com.tripomatic.contentProvider.db.pojo.Feature;
-import com.tripomatic.contentProvider.db.pojo.HotelDetail;
-import com.tripomatic.contentProvider.db.pojo.PlaceDetail;
-import com.tripomatic.contentProvider.db.pojo.Reference;
-import com.tripomatic.ui.activity.itemDetail.ReferenceTypeComparator;
-import com.tripomatic.ui.activity.itemDetail.RenderModel;
-import com.tripomatic.ui.activity.itemDetail.TypedReferenceList;
-import com.tripomatic.ui.activity.itemDetail.subviews.BookingModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.ItemDetailSubviewModel;
-import com.tripomatic.ui.activity.itemDetail.subviews.MainInfoModel;
+import com.sygic.travel.sdk.model.place.Place;
+import com.sygic.travel.sdk.model.place.Reference;
+import com.sygic.travel.sdkdemo.R;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,22 +19,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.FACEBOOK;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.OFFICIAL;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.PARKING;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.PASS;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.RENT;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.SIMPLE_LINK;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TABLE;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TICKET;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TOUR;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TRANSFER;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.WIKI;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.isListableType;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.normalizeReferenceType;
+import itemDetail.ReferenceTypeComparator;
+import itemDetail.RenderModel;
+import itemDetail.TypedReferenceList;
+import itemDetail.subviews.BookingModel;
+import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.MainInfoModel;
+
+import static itemDetail.ItemDetailReferenceUtils.*;
+
 
 public class ItemDetailFragment extends Fragment {
-	private Feature feature;
+	private Place feature;
 	private String guid;
 	private ItemDetailFragmentFactories factories;
 	private Activity activity;

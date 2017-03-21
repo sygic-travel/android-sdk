@@ -1,17 +1,12 @@
 package itemDetail;
 
-import com.tripomatic.contentProvider.db.pojo.Reference;
+
+import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.List;
 
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.*;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.PASS;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.RENT;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TABLE;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TICKET;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TOUR;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.TRANSFER;
-import static com.tripomatic.utilities.references.ItemDetailReferenceUtils.normalizeReferenceType;
+import static itemDetail.ItemDetailReferenceUtils.*;
+
 
 public class TypedReferenceList {
 	private List<Reference> referenceList;

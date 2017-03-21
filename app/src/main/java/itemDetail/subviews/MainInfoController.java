@@ -15,21 +15,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.tripomatic.R;
-import com.tripomatic.contentProvider.db.pojo.UserData;
-import com.tripomatic.ui.activity.itemDetail.ItemDetailActivity;
-import com.tripomatic.ui.activity.itemDetail.fragment.ItemDetailFragmentFactories;
-import com.tripomatic.utilities.Utils;
-import com.tripomatic.utilities.physics.Duration;
-import com.tripomatic.utilities.promise.PromisesManager;
-import com.tripomatic.utilities.references.ItemDetailReferenceUtils;
+import com.sygic.travel.sdkdemo.R;
+
 
 import org.jdeferred.DoneCallback;
 import org.jdeferred.FailCallback;
 
+import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.toBeDeleted.PromisesManager;
+import itemDetail.toBeDeleted.Utils;
 import retrofit2.Call;
 
 public class MainInfoController implements ItemDetailSubview {
@@ -211,14 +208,13 @@ public class MainInfoController implements ItemDetailSubview {
 						Toast.LENGTH_SHORT
 					)
 						.show();
-					Crashlytics.log(result.getMessage());
 				}
 			};
 		}
 		return failCallback;
 	}
 
-	public void updateTimeNote(
+	/*public void updateTimeNote(
 		ItemDetailActivity activity,
 		String userTimes,
 		UserData userData,
@@ -280,7 +276,7 @@ public class MainInfoController implements ItemDetailSubview {
 		} else {
 			tvDuration.setText(durationText);
 		}
-	}
+	}*/
 
 	private void renderHotelRating(Activity activity) {
 		if(mainInfoModel.getStars() > 0) {

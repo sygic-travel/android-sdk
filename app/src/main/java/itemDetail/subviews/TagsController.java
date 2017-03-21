@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tripomatic.R;
-import com.tripomatic.ui.activity.itemDetail.fragment.ItemDetailFragmentFactories;
+import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
+
+import itemDetail.fragment.ItemDetailFragmentFactories;
 
 public class TagsController implements ItemDetailSubview {
 	private List<String> tags;

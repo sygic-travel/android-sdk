@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.sygic.travel.sdkdemo.R;
 
 import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.ReviewScoreRating;
 import itemDetail.fragment.ItemDetailFragmentFactories;
 
 
@@ -36,7 +37,8 @@ public class BookingController implements ItemDetailSubview {
 		tvPriceGuarantee = (TextView) rootView.findViewById(R.id.price_guarantee);
 		tvPriceGuarantee.setMovementMethod(LinkMovementMethod.getInstance());
 
-		tvPrice.setText(" " + CurrenciesLoader.getValueInCurrencyString(bookingModel.getPrice()));
+		//tvPrice.setText(" " + CurrenciesLoader.getValueInCurrencyString(bookingModel.getPrice()));
+		tvPrice.setText(" " + (bookingModel.getPrice()));
 		btnBook.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

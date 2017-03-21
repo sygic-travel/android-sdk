@@ -16,7 +16,11 @@ import android.widget.TextView;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
+import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.ReferenceWrapper;
 import itemDetail.fragment.ItemDetailFragmentFactories;
+
+import static itemDetail.ItemDetailReferenceUtils.*;
 
 
 public class ReferenceController implements ItemDetailSubview{
@@ -50,7 +54,8 @@ public class ReferenceController implements ItemDetailSubview{
 	){
 		String mainType = normalizeReferenceType(reference.getType());
 		String dashFrom = " - " + activity.getString(R.string.detail_from) + " ";
-		String priceWithCurrency = CurrenciesLoader.getValueInCurrencyString(reference.getPrice());
+		String priceWithCurrency = reference.getPrice() + "";
+		//String priceWithCurrency = CurrenciesLoader.getValueInCurrencyString(reference.getPrice());
 		String price = reference.getPrice() == 0 ? "" : dashFrom + priceWithCurrency;
 
 

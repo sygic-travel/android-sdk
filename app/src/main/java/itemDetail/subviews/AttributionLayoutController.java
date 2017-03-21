@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.sygic.travel.sdkdemo.R;
 
 import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.toBeDeleted.Utils;
 
 
 public class AttributionLayoutController implements ItemDetailSubview {
