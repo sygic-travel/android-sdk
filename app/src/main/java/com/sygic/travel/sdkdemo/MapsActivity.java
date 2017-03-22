@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -22,6 +23,7 @@ import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
@@ -36,7 +38,7 @@ public class MapsActivity
 	private PermissionsUtils permissionsUtils;
 
 	private Callback<List<Place>> placesCallback;
-	private List<Marker> placesMarkers;
+	private HashMap<String, Marker> placeMarkers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class MapsActivity
 		mMap = googleMap;
 
 		placesCallback = getPlacesCallback();
-		placesMarkers = new ArrayList<>();
+		placeMarkers = new HashMap<>();
 
 		LatLng sydney = new LatLng(51.5116983, -0.1205079);
 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
@@ -71,10 +73,6 @@ public class MapsActivity
 
 		enableMyLocation();
 		loadPlaces();
-
-//		StSDK.getInstance().getPlaceDetailed("poi:447", detailBack);
-//		StSDK.getInstance().getPlaceMedia("poi:447", mediaBack);
-		/********************************************************************/
 	}
 
 	private void enableMyLocation() {
@@ -91,7 +89,7 @@ public class MapsActivity
 
 	private void loadPlaces(){
 		Query query = new Query(
-			null, getBoundsString(), "sightseeing", null, "city:1", null, null, null, null, 20
+			null, getBoundsString(), "sightseeing", null, "city:1", null, null, null, null, 50
 		);
 		StSDK.getInstance().getPlaces(query, placesCallback);
 	}
@@ -107,21 +105,39 @@ public class MapsActivity
 	private void showPlacesOnMap(List<Place> places) {
 		removeMarkers();
 		for(Place place : places) {
-			placesMarkers.add(mMap.addMarker(
+			if(placeMarkers.keySet().contains(place.getGuid())){
+				continue;
+			}
+			placeMarkers.put(place.getGuid(), mMap.addMarker(
 				new MarkerOptions()
 					.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 					.title(place.getName())
 					.snippet(place.getPerex())
 			));
+
+			if(placeMarkers.size() >= 50){
+				break;
+			}
 		}
 	}
 
 	private void removeMarkers() {
-		if(placesMarkers != null){
-			for(Marker placesMarker : placesMarkers) {
-				placesMarker.remove();
+		if(placeMarkers != null){
+			List<String> removedMarkers = new ArrayList<>();
+			LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+
+			for(String key : placeMarkers.keySet()) {
+				Marker placeMarker = placeMarkers.get(key);
+
+				if(!bounds.contains(placeMarker.getPosition())) {
+					placeMarker.remove();
+					removedMarkers.add(key);
+				}
 			}
-			placesMarkers.clear();
+
+			for(String removedMarker : removedMarkers) {
+				placeMarkers.remove(removedMarker);
+			}
 		}
 	}
 
