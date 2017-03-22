@@ -21,12 +21,12 @@ class Place {
 	 boundingBox: BoundingBox
 	 perex: string
 	 url: string
-	 photoUrl: string
+	 thumbnailUrl: string
 	 price: Price
 	 marker: string
 	 tier: int
 	 categories: array<string>
-	 parents: array<string>
+	 parentsGuids: array<string>
 	 detail: Detail
  }
  */
@@ -46,7 +46,7 @@ public class Place {
 	public static final String MARKER = "marker";
 	public static final String TIER = "tier";
 	public static final String CATEGORIES = "categories";
-	public static final String PARENTS = "parents";
+	public static final String PARENTS = "parentsGuids";
 	public static final String DETAIL = "detail";
 
 	@SerializedName(GUID)
@@ -77,7 +77,7 @@ public class Place {
 	private String url;
 
 	@SerializedName(PHOTO_URL)
-	private String photoUrl;
+	private String thumbnailUrl;
 
 	@SerializedName(PRICE)
 	private Price price;
@@ -92,10 +92,7 @@ public class Place {
 	private List<String> categories;
 
 	@SerializedName(PARENTS)
-	private List<String> parents;
-
-	@SerializedName(DETAIL)
-	private Detail detail;
+	private List<String> parentsGuids;
 
 	public Place(){
 	}
@@ -172,12 +169,12 @@ public class Place {
 		this.url = url;
 	}
 
-	public String getPhotoUrl() {
-		return photoUrl;
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
 	}
 
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 
 	public Price getPrice() {
@@ -212,19 +209,11 @@ public class Place {
 		this.categories = categories;
 	}
 
-	public List<String> getParents() {
-		return parents;
+	public List<String> getParentsGuids() {
+		return parentsGuids;
 	}
 
-	public void setParents(List<String> parents) {
-		this.parents = parents;
-	}
-
-	public Detail getDetail() {
-		return detail;
-	}
-
-	public void setDetail(Detail detail) {
-		this.detail = detail;
+	public void setParentsGuids(List<String> parentsGuids) {
+		this.parentsGuids = parentsGuids;
 	}
 }

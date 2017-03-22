@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -71,9 +72,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			}
 		};
 
-		Callback<Place> detailBack = new Callback<Place>() {
+		Callback<Detail> detailBack = new Callback<Detail>() {
 			@Override
-			public void onSuccess(Place data) {
+			public void onSuccess(Detail data) {
 				Log.d("TEST_APP", "Detail: onSuccess");
 			}
 

@@ -1,6 +1,8 @@
 package com.sygic.travel.sdk.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.List;
@@ -31,16 +33,25 @@ public class StResponse {
 	 * Only one of attributes should have assigned value
 	 */
 	public class Data {
+		public static final String PLACE = "place";
+		public static final String MEDIA = "media";
+		public static final String PLACES = "places";
+
+		@SerializedName(PLACES)
 		private List<Place> places;
-		private Place place;
+
+		@SerializedName(PLACE)
+		private Detail detail;
+
+		@SerializedName(MEDIA)
 		private List<Media> media;
 
 		public List<Place> getPlaces() {
 			return places;
 		}
 
-		public Place getPlace() {
-			return place;
+		public Detail getDetail() {
+			return detail;
 		}
 
 		public List<Media> getMedia() {

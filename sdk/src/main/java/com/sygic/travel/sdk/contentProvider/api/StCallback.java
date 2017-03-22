@@ -34,7 +34,7 @@ public class StCallback<T> implements retrofit2.Callback<T> {
 				ret = stResponse.getData().getPlaces();
 				break;
 			case DETAIL_API_CALL:
-				ret = stResponse.getData().getPlace();
+				ret = stResponse.getData().getDetail();
 				break;
 			case MEDIA_API_CALL:
 				ret = stResponse.getData().getMedia();
