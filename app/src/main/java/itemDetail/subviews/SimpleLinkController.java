@@ -144,7 +144,7 @@ public class SimpleLinkController implements ItemDetailSubview {
 		}
 
 		renderCount(multipleReferencesModel.getOtherReferences().size() + "");
-		rootView.setOnClickListener(factories.getOnReferenceListClickListener(multipleReferencesModel.getOtherReferences()));
+		rootView.setOnClickListener(factories.getOnReferenceListClickListener());
 	}
 
 	private void renderReference(final Activity activity) {

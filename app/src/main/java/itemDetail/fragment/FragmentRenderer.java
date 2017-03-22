@@ -44,7 +44,6 @@ public class FragmentRenderer {
 		return new Runnable() {
 			@Override
 			public void run() {
-				LinearLayout llContent = (LinearLayout) activity.findViewById(R.id.ll_content);
 				llContent.removeAllViews();
 
 				for(RenderModelEntry renderModelEntry : renderModel.getData()){

@@ -3,6 +3,7 @@ package itemDetail;
 
 
 import com.sygic.travel.sdk.model.place.Reference;
+import com.sygic.travel.sdk.model.place.TagStats;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,7 +75,7 @@ public class RenderModel {
 		data.add(new RenderModelEntry(BOOKING, bookingModel));
 	}
 
-	public void addTags(List<String> tags){
+	public void addTags(List<TagStats> tags){
 		data.add(new RenderModelEntry(TAGS_LAYOUT, new TagsWrapperModel(tags)));
 	}
 

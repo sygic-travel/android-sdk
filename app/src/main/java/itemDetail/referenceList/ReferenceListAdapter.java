@@ -19,18 +19,15 @@ import itemDetail.ItemDetailReferenceUtils;
 public class ReferenceListAdapter extends RecyclerView.Adapter<ReferenceListAdapter.ReferenceViewHolder> {
 	private List<Reference> references;
 	private ReferenceViewHolder.ReferenceClick referenceClick;
-	private SharedPreferences sharedPreferences;
 	private Resources resources;
 
 	public ReferenceListAdapter(
 		List<Reference> references,
 		ReferenceViewHolder.ReferenceClick referenceClick,
-		SharedPreferences sharedPreferences,
 		Resources resources
 	) {
 		this.references = references;
 		this.referenceClick = referenceClick;
-		this.sharedPreferences = sharedPreferences;
 		this.resources = resources;
 	}
 
@@ -55,7 +52,7 @@ public class ReferenceListAdapter extends RecyclerView.Adapter<ReferenceListAdap
 			holder.llPrice.setVisibility(View.GONE);
 		}
 		holder.tvTitle.setText(reference.getTitle());
-		holder.tvPrice.setText(CurrenciesLoader.getValueInCurrencyString(reference.getPrice()));
+		holder.tvPrice.setText(reference.getPrice() + "");
 		ItemDetailReferenceUtils.renderReferenceFlags(reference, holder.tvFlags, resources);
 		holder.root.setOnClickListener(new View.OnClickListener() {
 			@Override

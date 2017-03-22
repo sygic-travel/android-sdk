@@ -39,6 +39,18 @@
 			android:name=".ListActivity"
 			android:label="@string/title_activity_list">
 		</activity>
+
+		<activity
+			android:name="itemDetail.referenceList.ReferencesListActivity"
+			android:theme="@style/Theme.SygicTravel.ActionBar"
+			android:label="@string/title_activity_list">
+		</activity>
+
+		<activity
+			android:name="itemDetail.TripReferenceActivity"
+			android:theme="@style/Theme.SygicTravel.ActionBar"
+			android:label="@string/title_activity_list">
+		</activity>
 	</application>
 
 </manifest>

@@ -12,6 +12,12 @@ import com.sygic.travel.sdk.model.place.Reference;
 import java.util.ArrayList;
 import java.util.List;
 
+import itemDetail.Duration;
+import itemDetail.ItemDetailConstants;
+import itemDetail.MarkerMapper;
+import itemDetail.referenceList.ReferencesListActivity;
+import itemDetail.toBeDeleted.LocaleDate;
+
 public class ItemDetailFragmentFactories {
 	private final ItemDetailListener listener;
 	private Activity activity;
@@ -40,19 +46,14 @@ public class ItemDetailFragmentFactories {
 		return typeface;
 	}
 
-	public View.OnClickListener getOnReferenceListClickListener(final List<Reference> references){
-		final ArrayList<Integer> ids = new ArrayList<>();
-		for(Reference reference : references){
-			ids.add(reference.getId());
-		}
+	public View.OnClickListener getOnReferenceListClickListener(){
 
 		return new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent(activity, ReferencesListActivity.class);
-				intent.putIntegerArrayListExtra(ReferencesListActivity.REFERENCES_GUIDS, ids);
-				intent.putExtra(ItemDetailActivity.FEATURE_TITLE, fragment.getFeature().getName());
-				intent.putExtra(SygicTravel.GUID, fragment.getFeature().getGuid());
+				intent.putExtra(ItemDetailConstants.FEATURE_TITLE, fragment.getFeature().getName());
+				intent.putExtra(ItemDetailConstants.GUID, fragment.getFeature().getGuid());
 				activity.startActivity(intent);
 			}
 		};
@@ -109,8 +110,8 @@ public class ItemDetailFragmentFactories {
 			Intent mailIntent = getEmailIntent(mailTo.getTo(), subject, message, mailTo.getCc());
 			activity.startActivity(mailIntent);
 		} catch(Exception exception){
-			Crashlytics.logException(exception);
-			Crashlytics.log(activity.getTitle() + " - no email intent");
+			//Crashlytics.logException(exception);
+			//Crashlytics.log(activity.getTitle() + " - no email intent");
 		}
 	}
 

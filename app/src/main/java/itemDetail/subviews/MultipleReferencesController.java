@@ -40,7 +40,7 @@ public class MultipleReferencesController extends ReferenceController{
 
 		renderType();
 
-		rlLinkRoot.setOnClickListener(factories.getOnReferenceListClickListener(otherReferences));
+		rlLinkRoot.setOnClickListener(factories.getOnReferenceListClickListener());
 
 		llContent.addView(referenceView);
 		renderReference(activity);

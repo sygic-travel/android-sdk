@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sygic.travel.sdk.model.place.TagStats;
 import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 import itemDetail.fragment.ItemDetailFragmentFactories;
 
 public class TagsController implements ItemDetailSubview {
-	private List<String> tags;
+	private List<TagStats> tags;
 	private TextView tvTags;
 	private View rootView;
 
@@ -27,7 +28,7 @@ public class TagsController implements ItemDetailSubview {
 		StringBuilder builder = new StringBuilder();
 		builder.append(" ");
 		for(int i = 0 ; i < tags.size() ; i++){
-			builder.append(tags.get(i).toUpperCase());
+			builder.append(tags.get(i).getName().toUpperCase());
 			if(i < tags.size() - 1){
 				builder.append(" \u2022 ");
 			}

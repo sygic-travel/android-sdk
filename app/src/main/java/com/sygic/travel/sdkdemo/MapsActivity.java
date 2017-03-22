@@ -1,5 +1,6 @@
 package com.sygic.travel.sdkdemo;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -101,6 +102,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		StSDK.getInstance().getPlaces(query, placesBack);
 		StSDK.getInstance().getPlaceDetailed("poi:447", detailBack);
 		StSDK.getInstance().getPlaceMedia("poi:447", mediaBack);
+
+		startActivity(new Intent(this, ListActivity.class));
 		/********************************************************************/
 	}
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
@@ -30,7 +31,7 @@ import static itemDetail.ItemDetailReferenceUtils.*;
 
 
 public class ItemDetailFragment extends Fragment {
-	private Place feature;
+	private Detail feature;
 	private String guid;
 	private ItemDetailFragmentFactories factories;
 	private Activity activity;
@@ -58,7 +59,7 @@ public class ItemDetailFragment extends Fragment {
 
 	}
 
-	public void loadWithFeature(Feature feature){
+	public void loadWithFeature(Detail feature){
 		this.feature = feature;
 		guid = feature.getGuid();
 	}
@@ -74,41 +75,39 @@ public class ItemDetailFragment extends Fragment {
 		RenderModel renderModel = new RenderModel();
 		String type;
 		Boolean isListable;
-		PlaceDetail placeDetail = feature.getPlaceDetail();
-		HotelDetail hotelDetail = feature.getHotelDetail();
 
 		renderModel.addMainInfo(
 			new MainInfoModel(
 				feature.getName(),
-				feature.getText(),
-				feature.getOriginalName(),
+				feature.getDescription().getText(),
+				"picovina",//feature.getOriginalName(),
 				factories.getMarkerMapper().getMarkerInfo(activity, feature.getMarker()).getCode(),
 				guid,
-				feature.getPerexTranslationProvider(),
-				feature.getPerexProvider(),
-				feature.getPerexLink(),
+				feature.getDescription().getTranslationProvider(),
+				feature.getDescription().getProvider(),
+				feature.getDescription().getUrl(),
 				feature.getGuid().contains("hotel:"),
-				feature.isEstimated(),
-				feature.getStarRating(),
-				feature.isTranslated()
+				false,//feature.isEstimated(),
+				5,//feature.getStarRating(),
+				true//feature.isTranslated()
 			)
 		);
 
-		if(feature.getFodorsDescription() != null){
+		/*if(feature.getFodorsDescription() != null){
 			renderModel.addSimpleLink(getString(R.string.detail_read_more), ItemDetailSubviewModel.FODORS);
-		}
+		}*/
 
 		renderModel.addDivider();
 
-		if(feature.getGuid().contains("hotel:")) {
+		/*if(feature.getGuid().contains("hotel:")) {
 			BookingModel bookingModel = new BookingModel(
 				(float) feature.getCustomerRating(),
-				feature.getPriceValue(),
+				feature.getPrice(),
 				feature.getGatewayUrl(),
 				feature.getName()
 			);
 			renderModel.addBooking(bookingModel);
-		}
+		}*/
 
 		if(feature.getReferences() != null) {
 
@@ -170,14 +169,17 @@ public class ItemDetailFragment extends Fragment {
 
 		renderModel.addDivider();
 
-		if(placeDetail != null) {
+		if(feature.getAdmission() != null) {
 			renderModel.addBasicExpandableElement(
-				placeDetail.getAdmission(),
+				feature.getAdmission(),
 				getString(R.string.item_detail_admission),
 				R.drawable.ic_admission
 			);
+		}
+
+		if(feature.getOpeningHours() != null){
 			renderModel.addBasicExpandableElement(
-				placeDetail.getOpeningHours(),
+				feature.getOpeningHours(),
 				getString(R.string.custom_place_hint_opening_hours),
 				R.drawable.ic_opening_hours
 			);
@@ -187,29 +189,24 @@ public class ItemDetailFragment extends Fragment {
 			renderModel.addDuration(feature.getDuration(), getString(R.string.duration));
 		}
 
-		if(placeDetail != null){
+		if(feature.getAddress() != null){
 			renderModel.addBasicExpandableElement(
-				placeDetail.getAddress(),
+				feature.getAddress(),
 				getString(R.string.custom_place_address),
 				R.drawable.ic_address
 			);
 		}
 
-		if(hotelDetail != null){
-			renderModel.addBasicExpandableElement(
-				hotelDetail.getAddress(),
-				getString(R.string.custom_place_address),
-				R.drawable.ic_address
-			);
-		}
-
-		renderModel.addNavigationRow(true, feature.getLat(), feature.getLng());
+		renderModel.addNavigationRow(true, feature.getLocation().getLat(), feature.getLocation().getLng());
 
 		renderModel.addDivider();
 
-		if(placeDetail != null) {
-			renderModel.addSimpleLink(placeDetail.getEmail(), ItemDetailSubviewModel.EMAIL);
-			renderModel.addSimpleLink(placeDetail.getPhone(), ItemDetailSubviewModel.PHONE_NUMBER);
+		if(feature.getEmail() != null) {
+			renderModel.addSimpleLink(feature.getEmail(), ItemDetailSubviewModel.EMAIL);
+		}
+
+		if(feature.getPhone() != null){
+			renderModel.addSimpleLink(feature.getPhone(), ItemDetailSubviewModel.PHONE_NUMBER);
 		}
 
 		addSingleReference(renderModel, FACEBOOK, singleReferences);
@@ -222,9 +219,9 @@ public class ItemDetailFragment extends Fragment {
 
 		renderModel.addSimpleLink(getString(R.string.add_note), ItemDetailSubviewModel.ADD_NOTE);
 
-		renderModel.addTags(feature.getTagsValues());
+		renderModel.addTags(feature.getTags());
 
-		renderModel.addAttribution(feature.getAttributionModel());
+		//renderModel.addAttribution(feature.getm());
 
 		activity.runOnUiThread(
 			renderer.getRenderContent(
@@ -246,7 +243,7 @@ public class ItemDetailFragment extends Fragment {
 		}
 	}
 
-	public Feature getFeature(){
+	public Detail getFeature(){
 		return feature;
 	}
 

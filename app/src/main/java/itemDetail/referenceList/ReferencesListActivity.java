@@ -2,62 +2,77 @@ package itemDetail.referenceList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 
+import com.sygic.travel.sdk.StSDK;
+import com.sygic.travel.sdk.contentProvider.api.Callback;
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
+import itemDetail.ItemDetailConstants;
 import itemDetail.ItemDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
+import itemDetail.Screen;
+import itemDetail.toBeDeleted.Utils;
 
-public class ReferencesListActivity extends AppCompatActivity {
-	public static final String REFERENCES_GUIDS = "referencesGuids";
-
-	private List<Integer> ids;
+public class ReferencesListActivity extends Screen {
 	private String guid;
 	private List<Reference> references;
 	private ReferenceListAdapter adapter;
 	private RecyclerView rvReferences;
 
+
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reference_list_activity);
-		//setToolbar();
-		//supportActionBar.setDisplayHomeAsUpEnabled(true);
+		setToolbar();
+		supportActionBar.setDisplayHomeAsUpEnabled(true);
 
-		if(getIntent().hasExtra(ItemDetailActivity.FEATURE_TITLE)){
-			supportActionBar.setTitle(getIntent().getStringExtra(ItemDetailActivity.FEATURE_TITLE));
+		if(getIntent().hasExtra(ItemDetailConstants.FEATURE_TITLE)){
+			supportActionBar.setTitle(getIntent().getStringExtra(ItemDetailConstants.FEATURE_TITLE));
 		} else {
 			supportActionBar.setTitle("");
 		}
 
-		if(getIntent().hasExtra(REFERENCES_GUIDS) && getIntent().hasExtra(SygicTravel.GUID)){
-			ids = getIntent().getIntegerArrayListExtra(REFERENCES_GUIDS);
-			guid = getIntent().getStringExtra(SygicTravel.GUID);
-			if(ids != null){
-				references = ItemDetailReferenceUtils.getByIds(ids, guid, sygicTravel);
+		Callback<Detail> detailBack = new Callback<Detail>() {
+			@Override
+			public void onSuccess(Detail data) {
+				references = data.getReferences();
+				proceedWithLoadedReferences();
 			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				showErrorAndFinish();
+			}
+		};
+
+		if(getIntent().hasExtra(ItemDetailConstants.GUID)){
+			guid = getIntent().getStringExtra(ItemDetailConstants.GUID);
+			StSDK.getInstance().getPlaceDetailed(guid, detailBack);
 		} else {
-			Toast.makeText(this, "Did not get reference ids", Toast.LENGTH_LONG).show();
-			finish();
-			return;
+			showErrorAndFinish();
 		}
 
+
+
+
+	}
+
+	private void proceedWithLoadedReferences(){
 		adapter = new ReferenceListAdapter(
 			references,
 			getReferenceClick(),
-			sygicTravel.getOrm(),
-			sygicTravel.getTracker(),
-			getSharedPreferences(
-				SygicTravel.TOM_PREFERENCES,
-				0
-			),
 			getResources()
 		);
 		rvReferences = (RecyclerView)findViewById(R.id.rv_references);
@@ -65,6 +80,11 @@ public class ReferencesListActivity extends AppCompatActivity {
 		rvReferences.setAdapter(adapter);
 	}
 
+	private void showErrorAndFinish(){
+		Toast.makeText(this, "Did not get reference ids", Toast.LENGTH_LONG).show();
+		finish();
+		return;
+	}
 
 
 	private ReferenceListAdapter.ReferenceViewHolder.ReferenceClick getReferenceClick(){
@@ -73,7 +93,6 @@ public class ReferencesListActivity extends AppCompatActivity {
 			public void referenceClicked(Reference reference) {
 				ItemDetailReferenceUtils.showReferenceUrl(
 					ReferencesListActivity.this,
-					sygicTravel,
 					new ReferenceWrapper(reference),
 					ItemDetailReferenceUtils.DETAIL
 				);

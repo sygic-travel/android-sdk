@@ -1,19 +1,21 @@
 package itemDetail.subviews;
 
+import com.sygic.travel.sdk.model.place.TagStats;
+
 import java.util.List;
 
 public class TagsWrapperModel implements ItemDetailSubviewModel{
-	private List<String> tags;
+	private List<TagStats> tags;
 
-	public TagsWrapperModel(List<String> tags) {
+	public TagsWrapperModel(List<TagStats> tags) {
 		this.tags = tags;
 	}
 
-	public List<String> getTags() {
+	public List<TagStats> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(List<TagStats> tags) {
 		this.tags = tags;
 	}
 
