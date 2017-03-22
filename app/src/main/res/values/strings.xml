@@ -1,10 +1,20 @@
 <resources>
-	<!-- CONSTANTS & KEYS -->
-	<string name="mapbox_access_token" translatable="false">pk.eyJ1IjoibWljaGFsbXVyaW4iLCJhIjoiY2l3YWZuemVzMDAycjJ6azQwcDRpa2l1MiJ9.YuN9x2llF7LRWVI7lrnTCQ</string>
-
-	<!-- STRINGS -->
-
 	<string name="app_name">SDK Demo</string>
 	<string name="title_activity_maps">Map</string>
 	<string name="title_activity_list">List</string>
+
+	<string name="settings">Settings</string>
+
+	<!--Permissions-->
+	<string name="permissions">Permissions</string>
+	<!--Permissions-->
+	<string name="permissions_location">Location Permission</string>
+	<!--Permissions-->
+	<string name="need_permissions">Sygic Travel needs permission.</string>
+	<!--Permissions-->
+	<string name="permissions_granted">Permission has now been granted.</string>
+	<!--Permissions-->
+	<string name="permissions_not_granted">Permission has not been granted.</string>
+	<!--Permissions-->
+	<string name="permissions_location_explanation">Location needed to show what\'s around and for navigation.</string>
 </resources>
