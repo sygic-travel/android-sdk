@@ -8,6 +8,7 @@ import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.StResponse;
 import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -61,7 +62,7 @@ public class StSDK {
 		call.enqueue(stCallback);
 	}
 
-	public void getPlaceDetailed(String guid, Callback<Place> back){
+	public void getPlaceDetailed(String guid, Callback<Detail> back){
 		Call<StResponse> call = getStApi().getPlaceDetailed(guid);
 		StCallback<StResponse> stCallback = new StCallback<>(back, DETAIL_API_CALL);
 		call.enqueue(stCallback);

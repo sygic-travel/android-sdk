@@ -1,6 +1,9 @@
 package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
+import com.sygic.travel.sdk.model.media.Media;
+
+import java.util.List;
 
 /**
  * Created by michal.murin on 16.2.2017.
@@ -21,7 +24,7 @@ class Detail {
 }
 */
 
-public class Detail { // shall we do this? (extends Place)
+public class Detail extends Place { // shall we do this? (extends Place)
 	public static final String ADDRESS = "address";
 	public static final String ADMISSION = "admission";
 	public static final String DESCRIPTION = "description";
@@ -40,7 +43,7 @@ public class Detail { // shall we do this? (extends Place)
 	private String admission;
 
 	@SerializedName(DESCRIPTION)
-	private String description;
+	private Description description;
 
 	@SerializedName(EMAIL)
 	private String email;
@@ -55,13 +58,13 @@ public class Detail { // shall we do this? (extends Place)
 	private String phone;
 
 	@SerializedName(MAIN_MEDIA)
-	private String mainMedia;
+	private Media mainMedia;
 
 	@SerializedName(REFERENCES)
-	private String references;
+	private List<Reference> references;
 
 	@SerializedName(TAGS)
-	private String tags;
+	private List<TagStats> tags;
 
 	public Detail() {
 	}
@@ -82,11 +85,11 @@ public class Detail { // shall we do this? (extends Place)
 		this.admission = admission;
 	}
 
-	public String getDescription() {
+	public Description getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(Description description) {
 		this.description = description;
 	}
 
@@ -122,27 +125,27 @@ public class Detail { // shall we do this? (extends Place)
 		this.phone = phone;
 	}
 
-	public String getMainMedia() {
+	public Media getMainMedia() {
 		return mainMedia;
 	}
 
-	public void setMainMedia(String mainMedia) {
+	public void setMainMedia(Media mainMedia) {
 		this.mainMedia = mainMedia;
 	}
 
-	public String getReferences() {
+	public List<Reference> getReferences() {
 		return references;
 	}
 
-	public void setReferences(String references) {
+	public void setReferences(List<Reference> references) {
 		this.references = references;
 	}
 
-	public String getTags() {
+	public List<TagStats> getTags() {
 		return tags;
 	}
 
-	public void setTags(String tags) {
+	public void setTags(List<TagStats> tags) {
 		this.tags = tags;
 	}
 }
