@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import com.google.gson.JsonElement;
+import com.sygic.travel.sdk.model.StResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -8,116 +8,41 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static com.sygic.travel.sdk.contentProvider.api.ApiClient.CONTENT_TYPE_JSON;
-
-/**
- * Created by michal.murin on 16.2.2017.
- */
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TYPE_JSON;
 
 public interface StApi {
+
+	String PLACES_API_CALL = "places_api_call";
+	String DETAIL_API_CALL = "detail_api_call";
+	String MEDIA_API_CALL = "media_api_call";
 
 	/*******************************************************************************/
 	/*                                     GET                                     */
 	/*******************************************************************************/
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("{apiKey}/items/{guid}")
-	Call<JsonElement> getItem(
-		@Path("apiKey") String apiKey,
-		@Path("guid") String guid
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("{apiKey}/items/")
-	Call<JsonElement> getItems(
-		@Path("apiKey") String apiKey,
-		@Query("guid") String guid
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("{apiKey}/locations/search")
-	Call<JsonElement> getLocation(
-		@Path("apiKey") String apiKey,
-		@Query("q") String query
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("{apiKey}/destinations/search")
-	Call<JsonElement> getDestination(
-		@Path("apiKey") String apiKey,
-		@Query("lat") float lat,
-		@Query("lng") float lng
-	);
-
-	@GET("{apiKey}/exchange-rates")
-	Call<JsonElement> getExchangeRates(
-		@Path("apiKey") String apiKey
-	);
-
-	@GET("{apiVersion}/{apiKey}/media/{guid}")
-	Call<JsonElement> getMedia(
-		@Path("apiVersion") String apiVersion,
-		@Path("apiKey") String apiKey,
-		@Path("guid") String guid
-	);
-
-	/*******************************************************************************/
-	/*                                     CDN                                     */
-	/*******************************************************************************/
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("features/")
-	Call<JsonElement> getFeaturesForList(
-		@Query("type") String type,
-		@Query("tags") String tags,
-		@Query("limit") String limit,
-		@Query("categories") String categories,
-		@Query("customer_rating") String customerRating,
-		@Query("star_rating.value") String starRating,
-		@Query("price.value") String price,
-		@Query("parent") String parent
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("features/")
-	Call<JsonElement> getFeaturesForMap(
-		@Query("type") String type,
-		@Query("map_tile") String map_tile,
-		@Query("map_spread") String map_spread,
-		@Query("tags") String tags,
-		@Query("limit") String limit,
-		@Query("categories") String categories,
-		@Query("customer_rating") String customerRating,
-		@Query("star_rating.value") String starRating,
-		@Query("price.value") String price
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("features/")
-	Call<JsonElement> getFeaturesForSearch(
-		@Query("type") String type,
+	@GET("places")
+	Call<StResponse> getPlaces(
 		@Query("query") String query,
-		@Query("location") String location,
-		@Query("limit") int limit,
-		@Query("parent") String parent
-	);
-
-	@Headers(CONTENT_TYPE_JSON)
-	@GET("features-stats/")
-	Call<JsonElement> getFeatureStats(
-		@Query("map_tile_bounds") String map_tile,
-		@Query("parent") String parent,
-		@Query("type") String type,
-		@Query("tags") String tags,
+		@Query("level") String level,
 		@Query("categories") String categories,
-		@Query("customer_rating") String customerRating,
-		@Query("star_rating.value") String starRating,
-		@Query("price.value") String price
+		@Query("map_tile") String mapTile,
+		@Query("map_spread") Integer mapSpread,
+		@Query("bounds") String bounds,
+		@Query("tags") String tags,
+		@Query("parent") String parent,
+		@Query("limit") Integer limit
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("items/{guid}")
-	Call<JsonElement> getItem(
-		@Path("guid") String guid
+	@GET("place-details/{place_guid}")
+	Call<StResponse> getPlaceDetailed(
+		@Path("place_guid") String placeGuid
+	);
+
+	@Headers(CONTENT_TYPE_JSON)
+	@GET("places/{place_guid}/media")
+	Call<StResponse> getPlaceMedia(
+		@Path("place_guid") String placeGuid
 	);
 }

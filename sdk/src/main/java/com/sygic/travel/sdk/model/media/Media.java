@@ -12,19 +12,17 @@ import java.util.List;
 public class Media {
 	public static final String GUID = "guid";
 	public static final String TYPE = "type";
-	public static final String URL_TEMPLATE = "type";
-	public static final String PREVIEW_URL_TEMPLATE = "type";
-	public static final String PREVIEW_URL = "type";
-	public static final String URL = "type";
-	public static final String CREATED_AT = "type";
-	public static final String CREATED_BY = "type";
-	public static final String LAT = "type";
-	public static final String LNG = "type";
-	public static final String LOCATION = "type";
-	public static final String ORIGINAL = "type";
-	public static final String ATTRIBUTION = "type";
-	public static final String SOURCE = "type";
-	public static final String SUITABILITY = "type";
+	public static final String URL_TEMPLATE = "url_template";
+	public static final String URL = "url";
+	public static final String CREATED_AT = "created_at";
+	public static final String CREATED_BY = "created_by";
+	public static final String LAT = "lat";
+	public static final String LNG = "lng";
+	public static final String LOCATION = "location";
+	public static final String ORIGINAL = "original";
+	public static final String ATTRIBUTION = "attribution";
+	public static final String SOURCE = "source";
+	public static final String SUITABILITY = "suitability";
 
 	@SerializedName(GUID)
 	private String guid;
@@ -34,12 +32,6 @@ public class Media {
 
 	@SerializedName(URL_TEMPLATE)
 	private String urlTemplate;
-
-	@SerializedName(PREVIEW_URL_TEMPLATE)
-	private String previewUrlTemplate;
-
-	@SerializedName(PREVIEW_URL)
-	private String previewUrl;
 
 	@SerializedName(URL)
 	private String url;
@@ -96,22 +88,6 @@ public class Media {
 
 	public void setUrlTemplate(String urlTemplate) {
 		this.urlTemplate = urlTemplate;
-	}
-
-	public String getPreviewUrlTemplate() {
-		return previewUrlTemplate;
-	}
-
-	public void setPreviewUrlTemplate(String previewUrlTemplate) {
-		this.previewUrlTemplate = previewUrlTemplate;
-	}
-
-	public Object getPreviewUrl() {
-		return previewUrl;
-	}
-
-	public void setPreviewUrl(String previewUrl) {
-		this.previewUrl = previewUrl;
 	}
 
 	public String getUrl() {
