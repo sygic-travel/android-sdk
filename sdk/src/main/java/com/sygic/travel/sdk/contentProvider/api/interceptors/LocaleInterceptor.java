@@ -8,7 +8,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.API_VERSION;
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_VERSION;
 
 /**
  * Created by michal.murin on 16.2.2017.

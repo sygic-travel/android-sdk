@@ -8,7 +8,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.CONTENT_TYPE_JSON;
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TYPE_JSON;
 
 public interface StApi {
 

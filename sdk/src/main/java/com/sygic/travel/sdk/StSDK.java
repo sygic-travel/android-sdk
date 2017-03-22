@@ -3,7 +3,7 @@ package com.sygic.travel.sdk;
 import android.content.Context;
 
 import com.sygic.travel.sdk.contentProvider.api.StCallback;
-import com.sygic.travel.sdk.contentProvider.api.ServiceGenerator;
+import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.StResponse;
@@ -87,7 +87,7 @@ public class StSDK {
 	 * This method should initialize all necessary objects
 	 */
 	public static void initialize(String xApiKey, Context context) {
-		ServiceGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
+		StApiGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
 		StSDK.getInstance().setCacheDir(context.getCacheDir());
 	}
 
@@ -100,7 +100,7 @@ public class StSDK {
 	 */
 	private StApi getStApi() {
 		if(stApi == null){
-			stApi = ServiceGenerator.createService(StApi.class, cacheDir);
+			stApi = StApiGenerator.createStApi(StApi.class, cacheDir);
 		}
 		return stApi;
 	}

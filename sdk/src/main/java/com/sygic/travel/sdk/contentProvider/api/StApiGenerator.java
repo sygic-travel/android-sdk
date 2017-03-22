@@ -17,10 +17,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.API_BASE_URL;
-import static com.sygic.travel.sdk.contentProvider.api.ApiConstants.API_BASE_URL_ALPHA;
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL;
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL_ALPHA;
 
-public class ServiceGenerator {
+public class StApiGenerator {
 
 	public static AuthorizationInterceptor authorizationInterceptor = new AuthorizationInterceptor();
 	public static LocaleInterceptor localeInterceptor = new LocaleInterceptor();
@@ -28,11 +28,11 @@ public class ServiceGenerator {
 		.setLevel(getHttpLoggingInterceptorLevel());
 	private static OkHttpClient httpClient;
 
-	public static <S> S createService(Class<S> serviceClass, File cacheDir) {
-		return buildRetrofit(cacheDir).create(serviceClass);
+	public static <S> S createStApi(Class<S> apiClass, File cacheDir) {
+		return buildRetrofit(cacheDir).create(apiClass);
 	}
 
-	public static Retrofit buildRetrofit(File cacheDir){
+	private static Retrofit buildRetrofit(File cacheDir){
 		return builder.client(getHttpClient(cacheDir)).build();
 	}
 
