@@ -7,20 +7,14 @@
 
 	<color name="default_background">#fff4f4f4</color>
 
-	<color name="menu_text_dark">#ff505050</color>
-	<color name="menu_text_header_grey">#ff7B7B7B</color>
-
-	<color name="menu_header_background">#ff646464</color>
 	<color name="hotel_star_rating">#ffE2C032</color>
 
 	<!-- Facebook colors -->
 
 	<color name="grey_button">#ffdadada</color>
-	<color name="grey_button_pressed">#ff8a8a8a</color>
 
 	<color name="white">#ffffffff</color>
 	<color name="white_alpha">#aaffffff</color>
-	<color name="blue_dark">#ff0E5E9B</color>
 
 	<!-- twitter colours -->
 
@@ -58,7 +52,5 @@
 	<color name="thick_divider_color">#f7f7f4</color>
 	<color name="item_detail_circle_background">#f6f6f6</color>
 	<color name="item_detail_tags">#a4a4a4</color>
-
-	<color name="black_overlay">#66000000</color>
 
 </resources>

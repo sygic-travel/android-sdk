@@ -7,8 +7,6 @@
 
 	<dimen name="activity_detail_content_text_size">18sp</dimen>
 
-	<dimen name="line_spacing">2dp</dimen>
-
 
 	<!--<dimen name="nps_rating_scale_height">135px</dimen>-->
 </resources>
