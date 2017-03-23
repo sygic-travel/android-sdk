@@ -189,29 +189,6 @@
 		<item name="android:textColor">@color/st_blue_hints</item>
 	</style>
 
-	<!-- twitter font styles -->
-
-	<!-- orange font styles -->
-
-	<!-- red font styles -->
-
-	<!-- weather font styles -->
-
-	<style name="blue_weather_icon_font_style">
-		<item name="android:textSize">50sp</item>
-		<item name="android:textColor">@color/st_blue</item>
-	</style>
-
-	<style name="grey_weather_icon_font_style">
-		<item name="android:textSize">40sp</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="white_font_weather_temperature_style">
-		<item name="android:textSize">@dimen/temperature_font_size</item>
-		<item name="android:textColor">@android:color/white</item>
-	</style>
-
 	<!-- link style -->
 	<style name="text_view_link_style">
 		<item name="android:textColor">@drawable/text_view_link</item>

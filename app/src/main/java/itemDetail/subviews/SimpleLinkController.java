@@ -69,20 +69,8 @@ public class SimpleLinkController implements ItemDetailSubview {
 				loadDrive(activity);
 				break;
 			}
-
-			case ItemDetailSubviewModel.FODORS:{
-				renderFodors(factories);
-				break;
-			}
 		}
 		llContent.addView(rootView);
-	}
-
-	private void renderFodors(ItemDetailFragmentFactories factories){
-		String title = ((SimpleDetailModel) dependenciesData).getData();
-		show(title, R.drawable.ic_read);
-		rootView.findViewById(R.id.iv_fodors).setVisibility(View.VISIBLE);
-		rootView.setOnClickListener(factories.getOnFodorsClickListener());
 	}
 
 	private void loadDrive(final Activity activity) {

@@ -25,7 +25,6 @@ import org.jdeferred.FailCallback;
 
 import itemDetail.ItemDetailReferenceUtils;
 import itemDetail.fragment.ItemDetailFragmentFactories;
-import itemDetail.toBeDeleted.PromisesManager;
 import itemDetail.toBeDeleted.Utils;
 import retrofit2.Call;
 
@@ -48,7 +47,6 @@ public class MainInfoController implements ItemDetailSubview {
 	private TextView tvEstimatedRating;
 	private MainInfoModel mainInfoModel;
 	private Call<JsonElement> translationCall;
-	private PromisesManager promisesManager;
 	private View.OnClickListener translateListener;
 	private DoneCallback<JsonObject> doneCallback;
 	private FailCallback failCallback;
@@ -77,23 +75,7 @@ public class MainInfoController implements ItemDetailSubview {
 		llHotelRating = (LinearLayout) rootView.findViewById(R.id.ll_detail_hotel_rating);
 		tvEstimatedRating = (TextView) rootView.findViewById(R.id.tv_estimated_rating);
 
-		//translationCall = sygicTravel.getStApiCdn().getItemAutoTranslation(mainInfoModel.getGuid());
-		//promisesManager = sygicTravel.getPromisesManager();
-		checkTranslation(activity);
-
 		tvTitle.setText(mainInfoModel.getTitle());
-		if(mainInfoModel.getTitle().equals(mainInfoModel.getLocalTitle())){
-			tvLocalTitle.setVisibility(View.GONE);
-		} else {
-			tvLocalTitle.setText(mainInfoModel.getLocalTitle());
-		}
-
-		if(mainInfoModel.isHotel()){
-			renderHotelRating(activity);
-		} else {
-			llHotelRating.setVisibility(View.GONE);
-			tvEstimatedRating.setVisibility(View.GONE);
-		}
 
 		tvMarker.setTypeface(factories.getTypeface());
 		tvMarker.setText(mainInfoModel.getMarkerId());
@@ -141,178 +123,5 @@ public class MainInfoController implements ItemDetailSubview {
 				drawState.setColor(ContextCompat.getColor(activity, R.color.text_grey));
 			}
 		};
-	}
-
-	private void checkTranslation(Activity activity){
-		if(mainInfoModel.isTranslated() &&
-			mainInfoModel.getPerexTranslationProvider() != null &&
-			mainInfoModel.getPerexTranslationProvider().equals(GOOGLE)
-		){
-			llAtribution.setVisibility(View.VISIBLE);
-		}
-		if(!mainInfoModel.isTranslated()
-			&& Utils.isOnline(activity)
-			&& mainInfoModel.getPerex() != null
-			&& !mainInfoModel.getPerex().isEmpty()
-		){
-			tvTranslate.setVisibility(View.VISIBLE);
-			tvTranslate.setOnClickListener(getTranslateListener());
-		}
-	}
-
-	private View.OnClickListener getTranslateListener(){
-		if(translateListener == null){
-			translateListener = new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					promisesManager
-						.when(translationCall)
-						.done(getDoneCallback())
-						.fail(getFailCallback());
-				}
-			};
-		}
-		return translateListener;
-	}
-
-	private DoneCallback<JsonObject> getDoneCallback(){
-		if(doneCallback == null) {
-			doneCallback = new DoneCallback<JsonObject>() {
-				@Override
-				public void onDone(JsonObject result) {
-					try {
-						JsonObject translation = result.getAsJsonObject("translation");
-						tvPerex.setText(translation.getAsJsonPrimitive("description").getAsString());
-						String perexAtribution = result.getAsJsonPrimitive("provider").getAsString();
-						if(perexAtribution != null && perexAtribution.equals(GOOGLE)){
-							llAtribution.setVisibility(View.VISIBLE);
-						}
-						tvTranslate.setVisibility(View.GONE);
-					} catch(Exception exception) {
-						getFailCallback().onFail(exception);
-					}
-				}
-			};
-		}
-		return doneCallback;
-	}
-
-	private FailCallback<Exception> getFailCallback(){
-		if(failCallback == null){
-			failCallback = new FailCallback<Exception>() {
-				@Override
-				public void onFail(Exception result) {
-					Toast.makeText(
-						tvTranslate.getContext(),
-						R.string.translation_api_error,
-						Toast.LENGTH_SHORT
-					)
-						.show();
-				}
-			};
-		}
-		return failCallback;
-	}
-
-	/*public void updateTimeNote(
-		ItemDetailActivity activity,
-		String userTimes,
-		UserData userData,
-		boolean inTrip,
-		boolean today,
-		int durationSeconds,
-		View.OnClickListener onUserDataClickListener
-	){
-		if(
-				userData.getStart() == null &&
-				(
-					durationSeconds == userData.getDuration() ||
-					userData.getDuration() == 0
-				) &&
-				!inTrip
-			) {
-			rlTime.setVisibility(View.GONE);
-		} else {
-			String durationText;
-			Duration duration;
-
-			if(userData.getDuration() == 0){
-				duration = new Duration(durationSeconds);
-			} else {
-				duration = new Duration(userData.getDuration());
-			}
-			durationText = duration.getShortFormattedDuration();
-
-
-			rlTime.setVisibility(View.VISIBLE);
-			if(userData.getStart() != null){
-				showTime(activity.getString(R.string.item_detail_scheduled_time), userTimes);
-			} else if(today){
-				showTime(activity.getString(R.string.detail_today), durationText);
-			} else if(inTrip){
-				showTime(activity.getString(R.string.hotel_filters_in_trip), durationText);
-			} else {
-				showTime(activity.getString(R.string.duration), durationText);
-			}
-		}
-
-		if(userData.getNote() == null){
-			rlNote.setVisibility(View.GONE);
-		} else {
-			rlNote.setVisibility(View.VISIBLE);
-			tvNote.setText(userData.getNote());
-		}
-
-		if(!mainInfoModel.isHotel()) {
-			rlTime.setOnClickListener(onUserDataClickListener);
-		}
-		rlNote.setOnClickListener(onUserDataClickListener);
-	}
-
-	private void showTime(String text, String durationText) {
-		tvTime.setText(text);
-		if(mainInfoModel.isHotel()) {
-			tvDuration.setText("");
-		} else {
-			tvDuration.setText(durationText);
-		}
-	}*/
-
-	private void renderHotelRating(Activity activity) {
-		if(mainInfoModel.getStars() > 0) {
-			llHotelRating.setVisibility(View.VISIBLE);
-			if(mainInfoModel.isEstimated()) {
-				renderRating(activity, llHotelRating, mainInfoModel.getStars(), R.drawable.fake_star_hotel);
-				tvEstimatedRating.setVisibility(View.VISIBLE);
-			} else {
-				renderRating(activity, llHotelRating, mainInfoModel.getStars(), R.drawable.hotel_star_rating);
-				tvEstimatedRating.setVisibility(View.GONE);
-			}
-		} else {
-			llHotelRating.setVisibility(View.GONE);
-			tvEstimatedRating.setVisibility(View.GONE);
-		}
-	}
-
-	private void renderRating(Activity activity, LinearLayout ratingBar, float rating, int starId){
-		boolean addHalfStar = false;
-		int numberOfStars = (int) rating;
-
-		if(rating - (float) numberOfStars > 0f){
-			addHalfStar = true;
-		}
-
-		for(int i = 0; i < numberOfStars; i++){
-			ImageView star = new ImageView(activity);
-			star.setImageResource(starId);
-			star.setPadding(0, 0, Utils.dp2px(5, activity), 0);
-			ratingBar.addView(star);
-		}
-
-		if(addHalfStar){
-			ImageView halfStar = new ImageView(activity);
-			halfStar.setImageResource(R.drawable.detail_star_half);
-			ratingBar.addView(halfStar);
-		}
 	}
 }

@@ -6,8 +6,6 @@
 
 	<dimen name="corner_radius">3dp</dimen>
 
-	<dimen name="temperature_font_size">130sp</dimen>
-
 	<!-- photo sizes -->
 	<dimen name="list_item">160px</dimen>
 

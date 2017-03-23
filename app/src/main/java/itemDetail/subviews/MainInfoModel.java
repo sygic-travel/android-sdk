@@ -1,13 +1,10 @@
 package itemDetail.subviews;
 
 public class MainInfoModel implements ItemDetailSubviewModel {
-	private String title, perex, localTitle;
+	private String title, perex;
 	private String markerId, guid, perexTranslationProvider;
 	private String perexProvider, perexLink;
 
-	private boolean isHotel, estimated;
-	private float stars;
-	private boolean isTranslated;
 
 	public MainInfoModel(
 		String title,
@@ -25,16 +22,11 @@ public class MainInfoModel implements ItemDetailSubviewModel {
 	) {
 		this.title = title;
 		this.perex = perex;
-		this.localTitle = localTitle;
 		this.markerId = markerId;
 		this.guid = guid;
 		this.perexTranslationProvider = perexTranslationProvider;
 		this.perexProvider = perexProvider;
 		this.perexLink = perexLink;
-		this.isHotel = isHotel;
-		this.estimated = estimated;
-		this.stars = stars;
-		this.isTranslated = isTranslated;
 	}
 
 	@Override
@@ -74,52 +66,12 @@ public class MainInfoModel implements ItemDetailSubviewModel {
 		this.perex = perex;
 	}
 
-	public String getLocalTitle() {
-		return localTitle;
-	}
-
-	public void setLocalTitle(String localTitle) {
-		this.localTitle = localTitle;
-	}
-
 	public String getMarkerId() {
 		return markerId;
 	}
 
 	public void setMarkerId(String markerId) {
 		this.markerId = markerId;
-	}
-
-	public boolean isHotel() {
-		return isHotel;
-	}
-
-	public void setHotel(boolean hotel) {
-		isHotel = hotel;
-	}
-
-	public boolean isEstimated() {
-		return estimated;
-	}
-
-	public void setEstimated(boolean estimated) {
-		this.estimated = estimated;
-	}
-
-	public float getStars() {
-		return stars;
-	}
-
-	public void setStars(float stars) {
-		this.stars = stars;
-	}
-
-	public boolean isTranslated() {
-		return isTranslated;
-	}
-
-	public void setTranslated(boolean translated) {
-		isTranslated = translated;
 	}
 
 	public String getGuid() {

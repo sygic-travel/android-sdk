@@ -7,16 +7,9 @@ import android.net.MailTo;
 import android.net.Uri;
 import android.view.View;
 
-import com.sygic.travel.sdk.model.place.Reference;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import itemDetail.Duration;
 import itemDetail.ItemDetailConstants;
 import itemDetail.MarkerMapper;
 import itemDetail.referenceList.ReferencesListActivity;
-import itemDetail.toBeDeleted.LocaleDate;
 
 public class ItemDetailFragmentFactories {
 	private final ItemDetailListener listener;
@@ -26,17 +19,11 @@ public class ItemDetailFragmentFactories {
 	private View.OnClickListener userDataActivityListener;
 	private MarkerMapper markerMapper;
 	private FragmentRenderer fragmentRenderer;
-	private LocaleDate localeDate;
 
 	public ItemDetailFragmentFactories(Activity activity, ItemDetailFragment fragment, ItemDetailListener listener) {
 		this.activity = activity;
 		this.fragment = fragment;
 		this.listener = listener;
-	}
-
-	public void setActivityAndFragment(Activity activity, ItemDetailFragment fragment){
-		this.activity = activity;
-		this.fragment = fragment;
 	}
 
 	public Typeface getTypeface() {
@@ -125,15 +112,6 @@ public class ItemDetailFragmentFactories {
 		return intent;
 	}
 
-	public View.OnClickListener getOnFodorsClickListener() {
-		return new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				listener.onFodorsClick();
-			}
-		};
-	}
-
 	public MarkerMapper getMarkerMapper(){
 		if(markerMapper == null) {
 			markerMapper = new MarkerMapper();
@@ -147,29 +125,6 @@ public class ItemDetailFragmentFactories {
 		}
 		return fragmentRenderer;
 	}
-	public String getUserTimes(Integer start, int duration) {
-		LocaleDate localeDate = getLocaleDate();
-		if(start != null){
-			Duration startDuration = new Duration(start);
-			Duration endDuration;
-			int endInSeconds = start + duration;
-			endInSeconds = endInSeconds % Duration.SECONDS_PER_DAY;
-			endDuration = new Duration(endInSeconds);
-
-			return
-				localeDate.getLocaleTime(startDuration.getDigitalClockFormat(), "HH:mm") + " - " +
-					localeDate.getLocaleTime(endDuration.getDigitalClockFormat(), "HH:mm");
-		} else {
-			return "";
-		}
-	}
-
-	private LocaleDate getLocaleDate(){
-		if(localeDate == null){
-			localeDate = new LocaleDate(activity);
-		}
-		return localeDate;
-	}
 
 	public Runnable getAfterRenderRunnable(){
 		return new Runnable() {
@@ -179,14 +134,4 @@ public class ItemDetailFragmentFactories {
 			}
 		};
 	}
-
-	public Runnable getOnLeadCreatedRunnable(final Reference reference){
-		return new Runnable() {
-			@Override
-			public void run() {
-				listener.onLeadCreated(reference);
-			}
-		};
-	}
-
 }

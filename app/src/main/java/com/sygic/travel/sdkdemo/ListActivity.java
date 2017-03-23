@@ -29,27 +29,7 @@ public class ListActivity extends AppCompatActivity {
 			}
 
 			@Override
-			public boolean isFull() {
-				return false;
-			}
-
-			@Override
 			public void onUserDataClick() {
-
-			}
-
-			@Override
-			public void onFodorsClick() {
-
-			}
-
-			@Override
-			public void onReferencesListClick(List<String> referenceIds) {
-
-			}
-
-			@Override
-			public void onLeadCreated(Reference reference) {
 
 			}
 		});
