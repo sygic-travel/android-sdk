@@ -1,576 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="emulator_detected">Sygic Travel will not start on generic devices, like emulator.</string>
-
 	<!-- ************************************************************************************** -->
 	<!--                                  LABELS AND TITLES                                     -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Label -->
-	<string name="my_trips">My Trips</string>
 	<!-- Label -->
-	<string name="itinerary">Itinerary</string>
 	<!-- Label -->
-	<string name="places">Places</string>
 	<!-- Label -->
-	<string name="sign_in">Sign in</string>
 	<!-- Label -->
-	<string name="sign_in_create_account">Sign in/Create Account</string>
 	<!-- Label -->
-	<string name="sign_up">Sign up</string>
 	<!-- Label -->
-	<string name="map">Map</string>
 	<!-- Label -->
-	<string name="new_trip">New Trip</string>
 	<!-- Label -->
-	<string name="new_trip_details">Trip Details</string>
 	<!-- Label -->
-	<string name="arrival_place_title">Place of Arrival</string>
 	<!-- Label -->
-	<string name="download_offline_maps">Offline Data</string>
 	<!-- Label -->
-	<string name="offline_guides_list">Offline Maps</string>
 	<!-- Label -->
-	<string name="feedback">Submit Feedback</string>
 	<!-- Label -->
-	<string name="about_sygic_travel">About Sygic Travel</string>
 	<!-- Label -->
-	<string name="showcase">Let\'s get started</string>
 	<!-- Label -->
-	<string name="edit_trip">Edit Trip</string>
 	<!-- Label -->
-	<string name="hotels">Hotels</string>
 	<!-- Label -->
-	<string name="custom_place">Custom Place</string>
 	<!-- Label -->
-	<string name="custom_places">Custom Places</string>
 	<!-- Label -->
-	<string name="custom_hotels">Custom Hotels</string>
 	<!-- Label -->
-	<string name="tours_and_activities">Tours &amp; Activities</string>
 	<!-- Label -->
-	<string name="day_detail">Day Detail</string>
 	<!-- Label -->
-	<string name="car_rental">Car Rental</string>
 	<!-- Label -->
-	<string name="trip_home">Trip</string>
 	<!-- Label -->
-	<string name="add_destination">Add Destination</string>
 	<!-- Label -->
-	<string name="edit_day">Edit</string>
 	<!-- Label -->
-	<string name="weather_forecast">Weather Forecast</string>
 	<!-- Label -->
-	<string name="user_data">Times and Note</string>
 	<!-- Label -->
-	<string name="user_account">User Account</string>
 	<!-- Label -->
-	<string name="sygic_travel_premium">Sygic Travel Premium</string>
 	<!-- Label -->
-	<string name="premium_purchased_title">Premium Purchased</string>
 	<!-- Label -->
-	<string name="premium_active_title">Premium Active</string>
 	<!-- Label -->
-	<string name="gallery">Gallery</string>
 	<!-- Label -->
-	<string name="search">Search</string>
 	<!-- Label -->
-	<string name="reviews">Picked Reviews</string>
 	<!-- Label -->
-	<string name="uploadPhoto">Upload Photo</string>
 	<!-- Label -->
-	<string name="video_premium">Video about Premium</string>
 	<!-- Label -->
-	<string name="categories_show_all">Show all</string>
 	<!-- Label -->
-	<string name="filters">Filters</string>
 	<!-- Label -->
-	<string name="filters_reset">Reset all filters</string>
 	<!-- Label -->
-	<string name="hotel_filters">Hotel filters</string>
 	<!-- Label -->
-	<string name="filter_menu">Filters</string>
 	<!-- Label -->
-	<string name="template_detail_title">Template Detail</string>
 	<!-- Label -->
-	<string name="new_trip_create_account">Create Account</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                      GENERALS                                          -->
 	<!-- ************************************************************************************** -->
 
-	<string name="loading">Loading…</string>
-	<string name="searching">Searching…</string>
-	<string name="removing">Removing…</string>
-	<string name="ok">OK</string>
-	<string name="share_via">Share via</string>
-	<string name="share">Share</string>
-	<string name="unfollow">Unfollow Trip</string>
-	<string name="share_sygic_travel">Share Sygic Travel</string>
-	<string name="share_check_out">Check out my awesome trip\u0020</string>
-	<string name="drawer_open">Open navigation drawer</string>
-	<string name="drawer_close">Close navigation drawer</string>
-	<string name="add_day_to_trip">Add day to the trip</string>
-	<string name="add_activity_to_day">Add activity to day</string>
-	<string name="add_day">Add day</string>
 	<string name="call">Call</string>
 	<string name="show_in_browser">Show in browser</string>
-	<string name="review_score_title">Review Score</string>
-	<string name="add">Add</string>
-	<string name="ADD">ADD</string>
-	<string name="remove">Remove</string>
-	<string name="save">Save</string>
-	<string name="continue_label">Continue</string>
-	<string name="rate">"Rate!"</string>
-	<string name="connection_unavailable">Connection unavailable!</string>
 	<string name="by">by</string>
-	<string name="delete">Delete</string>
-	<string name="following">Following</string>
-	<string name="read_only">Read only</string>
-	<string name="apartment">Apartment</string>
-	<string name="hostel">Hostel</string>
-	<string name="hotel">Hotel</string>
-	<string name="place">Place</string>
-	<string name="contacts">Contacts</string>
-	<string name="res_default">default</string>
-	<string name="yes">Yes</string>
-	<string name="no">No</string>
-	<string name="error">Error</string>
-	<string name="later">Later</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     PERMISSIONS                                        -->
 	<!-- ************************************************************************************** -->
 
 	<!--Permissions-->
-	<string name="permissions">Permissions</string>
 	<!--Permissions-->
-	<string name="permissions_location">Location Permission</string>
 	<!--Permissions-->
-	<string name="permissions_contacts">Contacts Permission</string>
 	<!--Permissions-->
-	<string name="permissions_storage">Storage Permission</string>
 	<!--Permissions-->
-	<string name="need_permissions">Sygic Travel needs permission.</string>
 	<!--Permissions-->
-	<string name="permissions_granted">Permission has now been granted.</string>
 	<!--Permissions-->
-	<string name="permissions_not_granted">Permission has not been granted.</string>
 	<!--Permissions-->
-	<string name="permissions_location_explanation">Location needed to show what\'s around and for navigation.</string>
 	<!--Permissions-->
-	<string name="permissions_contacts_explanation">We use your contacts so that you can share trips with your friends.</string>
 	<!--Permissions-->
-	<string name="permissions_storage_explanation">We store photos, maps and other data for faster and offline access.</string>
 	<!--Permissions-->
-	<string name="permissions_location_dialog_explanation">Sygic Travel needs your location to show you what\'s best around and help you navigate in your destination.</string>
 	<!--Permissions-->
-	<string name="permissions_contacts_dialog_explanation">You can easily invite people from your contacts to your trip.</string>
 	<!--Permissions-->
-	<string name="permissions_storage_dialog_explanation">Sygic Travel needs access to your storage to save photos, maps and other data for faster and offline access.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                 CONTENT DESCRIPTORS                                    -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_activity_image">Activity Image</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_trip_image">Trip Photo</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_trip_share">Share trip</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_trip_options">Trip Options</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_welcome">welcome screen picture</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_destinations_button">Select destination button</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_menu_item">Menu item</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_offline_package_image">Offline package image</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_offline_package_downloaded_image">Offline package already downloaded</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_offline_progress_bar">Downloading and unpacking progress bar</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_offline_package_name">Offline package name</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_offline_package_size">Offline package size</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
 	<string name="cd_about_sygic_travel_web">About Sygic Travel</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_advanced_custom_place_info">Advanced custom place information</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_one_day_in_add_to_trip_calendar">One day in add to trip calendar</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_car_rental_title_image">Car rental title image</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_add_item_hotel_indicator">Indicates, that there is a hotel added in that day</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_trip_home_itinerary">Itinerary</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_previous">Previous</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_next">Next</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_google_play">Opens Sygic Travel in Google Play</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_directions_type_icon">Directions type icon</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_day_detail_no_weather_data">No weather information for this day available</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_wifi">Free Wifi</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_web_page">Activity web page</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_wiki">Wikipedia web</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_facebook">Facebook page</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_twitter">Twitter</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_phone">Phone number</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_address">Address</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_email">Email address</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_add_day">Add day to trip</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_create_trip_in_current_location">Create trip in current location</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_destination_photo">Destination photo</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_remove_destination">Remove destination</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_navigation_info">Navigation information - estimated distance and time to arrival.</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_in_trip_or_favorite_list_item">Icon that indicates whether this item is in trip, or in favorites.</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_detail_photo">Photo of the activity</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_show_more">Show more</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_user_account_photo">User photo</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_map_filter_label">Map filter label</string>
 
-	<string name="cd_gallery_photo">Gallery photo</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_search_no_results">No results found!</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_detail_ticket">"Buy city pass"</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_love_title_image">Title image</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_play_premium_video">Play video</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_360_content_indicator">This item has 360 media content</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_rating_dialog_image">Rating dialog image</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_cancel_download">Cancel download</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_settings">Application settings</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_gallery_thumb">Gallery thumbnail photo</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_gallery_media_type_icon">Gallery item type icon</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_clear_arrival_place">Clear arrival place</string>
 	<!-- Accesibility Content Descriptors - not shown in UI -->
-	<string name="cd_clear_accommodation">Gallery accommodation</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                 WELCOME AND SHOWCASE                                   -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Welcome and Showcase strings -->
-	<string name="create_trip">Create a new trip</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="welcome_question">Already have an account? </string>
 	<!-- Welcome and Showcase strings -->
-	<string name="welcome_sign_in"><u>Sign in</u></string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_first_message">Find cool things to see &amp; do on your trips. Anywhere around the world. With powerful search and filtering.</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_second_message">Create a day-by-day travel itinerary for your trip. Let us factor in the travel time and instantly see how demanding each day is going to be.</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_third_message">Follow your daily plan and never lose your way with built-in walking guidance. Add offline capability (available with Sygic Travel Premium) and enjoy your trip.</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_first_title">Discover awesome places</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_second_title">Plan with super powers</string>
 	<!-- Welcome and Showcase strings -->
-	<string name="onboarding_third_title">Enjoy your trip. Even offline.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     SIGN IN/UP                                         -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Connect and sign up/in strings -->
-	<string name="use_your_email">Or use your e-mail</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="create_account">Create account</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="sign_out">Sign out</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="email">Email</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="sign_up_conditions">By signing up, you confirm that you have read, understood and agreed with</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="terms_and_conditions"><u>Sygic Travel Terms and Conditions</u></string>
 	<!-- Connect and sign up/in strings -->
-	<string name="hint_name">Full name</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="hint_password">Password</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="hint_email">Email</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="signing_in_progress_title">Signing in…</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="signing_up_progress_title">Signing up…</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="signing_out_progress_title">Signing out…</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="sign_out_are_you_sure">Are you sure you want to sign out?</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="sign_out_i_am_sure">Sign out</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="forgot_password">Forgot your password?</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="reset_password">Reset password</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="reset_password_confirmation">We\'ve sent you an email with a link to reset your password.</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="fb_login_email_required_title">Email required</string>
 	<!-- Connect and sign up/in strings -->
-	<string name="fb_login_email_required_message">We need your email in order to sign you in. Do you want to grant the permission now?</string>
 
 	<!-- Plurals -->
-	<plurals name="day">
-		<item quantity="one">day</item>
-		<item quantity="other">days</item>
-	</plurals>
 
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_offline">Signing in is not available offline.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_undefined_error">Unexpected error while logging in. Sorry about that. Please try again. If the problem persists, please contact our support team for help.</string>
 
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_name_required">Please fill in your name.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_email_required">Please fill in your email address.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_password_required">Please fill in your password.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_short_username">The username is too short. It must be at least %1$d characters long.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_short_password">The password is too short. It must be at least %1$d characters long.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_invalid_email_format">Invalid email entered. Please make sure that you have typed it in correctly.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_invalid_api_key">Your session has expired, thus you have been signed out.</string>
 
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_invalid_input_data">Invalid email entered. Please make sure that you have typed it in correctly.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_invalid_credentials">Invalid email or password. Please make sure that you have entered your credentials correctly and try again.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_use_sso_credentials">Since you have upgraded to the new Sygic Account, your old Sygic Travel account password is no longer valid. Please use the password for your new Sygic Account.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_invalid_auth_code_token">Unexpected error while logging in. Sorry about that. Please try again. If the problem persists, please contact our support team for help.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_email_registered">A Sygic Account with this email already exists. Continue to sign-in. You can also reset your password in case you forgot it.</string>
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_input_sso_unknown_email">No account with this email found. Please make sure that you have entered it correctly.</string>
 
 	<!-- Connect and sign up/in error -->
-	<string name="error_sso_google_failed">Cannot connect to Google services. Sorry about that. Please try again. If the problem persists, please contact our support team for help.</string>
-
-	<string name="hours">" hours"</string>
-	<string name="one_hour">"1 hour"</string>
-	<string name="trip_share">Share Trip</string>
-	<string name="trip_edit">Edit Trip</string>
-	<string name="empty_trash">Empty Trash</string>
-	<string name="remove_destination">Remove destination</string>
-	<string name="remove_destination_are_you_sure">"Are you sure you want to remove %1$s from your trip?"</string>
-	<string name="this_destination">this destination</string>
-	<string name="no_trips_in_trash">"No trips in this\ncategory."</string>
-	<string name="no_trips_in_category">"Nothing to show here.\nWanna plan something new?"</string>
-	<string name="main_drawer_premium_active">Premium account is active</string>
-	<string name="create_trip_requires_internet">This action requires internet connection. Please connect to the internet.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                ITINERARY AND DAY DETAIL                                -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Itinerary and day detail -->
-	<string name="day_detail_day_is_empty">No plans for this day</string>
 	<!-- Itinerary and day detail -->
-	<string name="day_detail_add_new">Add new</string>
 	<!-- Itinerary and day detail -->
-	<string name="day_detail_day">Day</string>
 	<!-- Itinerary and day detail -->
-	<string name="day_added_to_itinerary">New day has been added to the itinerary</string>
 	<!-- Itinerary and day detail -->
-	<string name="day_detail_hotel">Hotel</string>
 	<!-- Itinerary and day detail -->
-	<string name="action_edit_day">Edit day</string>
 	<!-- Itinerary and day detail -->
-	<string name="action_show_day_on_map">Show day on map</string>
 	<!-- Itinerary and day detail -->
-	<string name="weather_forecast_not_available">Weather forecast\nnot available</string>
 	<!-- Itinerary and day detail -->
-	<string name="day_removed_from_itinerary">Day has been removed from the itinerary</string>
 	<!-- Itinerary and day detail -->
-	<string name="custom_place_deleted">Custom place has been deleted</string>
 	<!-- Itinerary and day detail -->
-	<string name="join_login_error">Log in to join the trip!</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                   NEW TRIP WIZARD                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- New Trip Wizard -->
-	<string name="finish_creating_trip">Create a new trip</string>
 	<!-- New Trip Wizard -->
-	<string name="dates_known">Dates known</string>
 	<!-- New Trip Wizard -->
-	<string name="dates_wrong">Trip cannot end before it starts.</string>
 	<!-- New Trip Wizard -->
-	<string name="too_long_trip">Trip is too long (80 days is maximum).</string>
 	<!-- New Trip Wizard -->
-	<string name="top_destinations">SUGGESTED DESTINATIONS</string>
 	<!-- New Trip Wizard -->
-	<string name="start_date">Start date</string>
 	<!-- New Trip Wizard -->
-	<string name="end_date">End date</string>
 	<!-- New Trip Wizard -->
-	<string name="dates_destination">Destination</string>
 	<!-- New Trip Wizard -->
-    <string name="dates_not_set_notification">Some features of Sygic Travel work better with known dates.
-		Please set your start date as soon as you know it.</string>
 	<!-- New Trip Wizard -->
-    <string name="dates_can_be_modified_notification">You can define the length of your trip by adding
-		days later in Itinerary.</string>
 	<!-- New Trip Wizard -->
-	<string name="create_trip_in_current_location">Create trip in my current location</string>
 	<!-- New Trip Wizard -->
-	<string name="unknown_current_location">Your current location is unknown. Enable GPS and wait for your current location.</string>
 	<!-- New Trip Wizard -->
-	<string name="empty_trip">Empty trip</string>
 	<!-- New Trip Wizard -->
-	<string name="empty_trip_description">Start with an empty trip and build your own itinerary.</string>
 	<!-- New Trip Wizard -->
-	<string name="tap_to_set">Tap to set</string>
 	<!-- New Trip Wizard -->
-	<string name="arrival_place">Place of arrival</string>
 	<!-- New Trip Wizard -->
-	<string name="accommodation">Accommodation</string>
 	<!-- New Trip Wizard -->
-	<string name="optional">optional</string>
 	<!-- New Trip Wizard -->
-	<string name="new_trip_create_account_message">With a free Sygic Travel account you will be able to edit your trips on the web, share trips with people going with you and sync trips across all your devices.</string>
 	<!-- New Trip Wizard -->
-	<string name="create_free_account_now">Create free account</string>
 	<!-- New Trip Wizard -->
-	<string name="skip">Skip</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                      MY TRIPS                                          -->
 	<!-- ************************************************************************************** -->
 
 	<!-- My Trips -->
-	<string-array name="trip_categories">
-		<item>SCHEDULED</item>
-		<item>PAST</item>
-		<item>TRASH</item>
-	</string-array>
 	<!-- My Trips -->
-	<string name="trips_category_today">Today</string>
 	<!-- My Trips -->
-	<string name="trips_category_upcoming">Upcoming</string>
 	<!-- My Trips -->
-	<string name="trips_category_wishlist">Wishlist</string>
 	<!-- My Trips -->
-	<string name="loading_trips">Loading trips&#8230;</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                   ACTIVITY DETAIL                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Activity detail -->
-	<string name="action_user_note_and_times">Set/edit time or note</string>
 	<!-- Activity detail -->
-	<string name="action_user_note">Set/edit note</string>
 	<!-- Activity detail -->
-	<string name="action_user_times">Set/edit time</string>
 	<!-- Activity detail -->
-	<string name="action_add_favorite">Add to favorites</string>
 	<!-- Activity detail -->
-	<string name="action_remove_favorite">Remove from favorites</string>
 	<!-- Activity detail -->
-	<string name="action_show_on_map">Show on map</string>
 	<!-- Activity detail -->
-	<string name="action_navigate_to_poi">Navigate</string>
 	<!-- Activity detail -->
-	<string name="action_report_problem">Report problem</string>
 	<!-- Activity detail -->
-	<string name="detail_add_to_trip">Add to trip</string>
 	<!-- Activity detail -->
-	<string name="detail_in_trip">In trip</string>
 	<!-- Activity detail -->
-	<string name="detail_today">Today</string>
 	<!-- Activity detail -->
-	<string name="detail_tomorrow">Tomorrow</string>
 	<!-- Activity detail -->
-	<string name="detail_multiple_days">Multiple days</string>
 	<!-- Activity detail -->
-	<string name="detail_day">Day</string>
 	<!-- Activity detail -->
-	<string name="detail_book_now">BOOK NOW</string>
 	<!-- Activity detail -->
-	<string name="detail_buy_now">BUY NOW</string>
 	<!-- Activity detail -->
-	<string name="detail_buy_ticket">BUY TICKET</string>
 	<!-- Activity detail -->
-	<string name="detail_at_booking">at Booking.com</string>
 	<!-- Activity detail -->
-	<string name="detail_at_viator">at Viator.com</string>
 	<!-- Activity detail -->
-	<string name="detail_per_night">per night</string>
 	<!-- Activity detail -->
 	<string name="detail_from">from</string>
 	<!-- Activity detail -->
-	<string name="detail_price_from">Price from</string>
 	<!-- Activity detail -->
-	<string name="detail_related_tours">Related Tours &amp; Activities</string>
 	<!-- Activity detail -->
-	<string name="detail_amenities">Amenities</string>
 	<!-- Activity detail -->
 	<string name="detail_rating">Rating</string>
 	<!-- Activity detail -->
-	<string name="detail_phone">Phone</string>
 	<!-- Activity detail -->
-	<string name="today">Today</string>
 	<!-- Activity detail -->
-	<string name="tomorrow">Tomorrow</string>
 	<!-- Activity detail -->
-	<string name="yesterday">Yesterday</string>
 	<!-- Activity detail -->
-	<string name="hint_search_destination">Search</string>
 	<!-- Activity detail -->
-	<string name="add_hotel_to_all_nights">Add to all nights</string>
 	<!-- Activity detail -->
-	<string name="add_hotel_description">(Replaces any existing hotels)</string>
 	<!-- Activity detail -->
 	<string name="detail_photo_attribution">"Photo: "</string>
 	<!-- Activity detail -->
-	<string name="want_to_add_destination">"Add %1$s as another destination to your trip?"</string>
 	<!-- Activity detail -->
 	<string name="review_score_wonderful">Wonderful</string>
 	<!-- Activity detail -->
@@ -580,32 +298,17 @@
 	<!-- Activity detail -->
 	<string name="review_score_pleasant">Pleasant</string>
 	<!-- Activity detail -->
-	<string name="detail_save">"Save $%.2f!"</string>
 	<!-- Activity detail -->
-	<string name="detail_departure_times">Departure times</string>
 	<!-- Activity detail -->
-	<plurals name="detail_reviews_count">
-		<item quantity="one">%1$d review</item>
-		<item quantity="other">%1$d reviews</item>
-	</plurals>
 	<!-- Activity detail -->
-	<string name="detail_reviews">Reviews</string>
 	<!-- Activity detail -->
-	<string name="detail_city_pass_applicable">APPLICABLE</string>
 	<!-- Activity detail -->
-	<string name="detail_scheduled_on">Scheduled on</string>
 	<!-- Activity detail -->
-	<string name="detail_read_more">Read more</string>
 	<!-- Activity detail -->
-	<string name="detail_show_more_tours">Show more</string>
 	<!-- Activity detail -->
-	<string name="no_photo_available">No photo available</string>
 	<!-- Activity detail -->
-	<string name="detail_estimated_time_spent">(estimated time spent)</string>
 	<!-- Activity detail -->
-	<string name="my_position">My position</string>
 	<!-- Activity detail -->
-	<string name="copyright_fodors">Copyright © 2015 Fodor’s Travel, a division of Internet Brands, Inc.  All rights reserved.  Fodor’s and the Fodor’s logo are registered trademarks of Internet Brands, Inc.</string>
 
 	<string name="translate"><u>Translate</u></string>
 	<!-- ************************************************************************************** -->
@@ -613,298 +316,165 @@
 	<!-- ************************************************************************************** -->
 
 	<!-- Offline data -->
-	<string name="offline_download">Download</string>
 	<!-- Offline data -->
-	<string name="offline_description">"Get this package to use the app offline in %1$s."</string>
 	<!-- Offline data -->
-	<string name="offline_description_2">Purchase Sygic Travel Premium to get more content for all available destinations.</string>
 	<!-- Offline data -->
-	<string name="offline_about">About Offline Maps</string>
 	<!-- Offline data -->
-	<string name="offline_downloading_progress">"Downloading %.1f%%"</string>
 	<!-- Offline data -->
-	<string name="offline_unzipping_progress">"Unzipping %.1f%%"</string>
 	<!-- Offline data -->
-	<string name="offline_retrieving_download_info">Retrieving download info…</string>
 	<!-- Offline data -->
-	<string name="offline_buy">Buy</string>
 	<!-- Offline data -->
-	<string name="delete_trash_bin_text">Drop here to delete.</string>
 	<!-- Offline data -->
-	<string name="delete_offline_data">Delete offline data</string>
 	<!-- Offline data -->
-	<string name="delete_offline_data_are_you_sure">"Are you sure you want to delete all offline data for %1$s?"</string>
 	<!-- Offline data -->
-	<string name="offline_delete_success">Offline data folder was successfully deleted.</string>
 	<!-- Offline data -->
-	<string name="offline_delete_fail">A problem has occurred while deleting the offline data folder.</string>
 	<!-- Offline data -->
-	<string name="offline_no_connection_notification">"You are offline. Connect to the internet to\ndownload the offline map."</string>
 	<!-- Offline data -->
-	<string name="sygic_travel_updated">Sygic Travel Updated!</string>
 	<!-- Offline data -->
-	<string name="outdated_guides_alert_message">Your offline content is outdated. Please re-download the outdated offline maps to ensure that you can use the app offline.</string>
 	<!-- Offline data -->
-	<string name="offline_package_list_item_hidden_delete_text">%1$d#%2$s</string>
 	<!-- Offline data -->
-	<string name="download_success">Download successful</string>
 	<!-- Offline data -->
-	<string name="download_paused">Download paused</string>
 	<!-- Offline data -->
-	<string name="download_pending">Download pending</string>
 	<!-- Offline data -->
-	<string name="download_cancelled">Download cancelled</string>
 	<!-- Offline data -->
-	<string name="download_failed">Download failed</string>
 	<!-- Offline data -->
-	<string name="unzip_failed">Unzipping offline data file failed</string>
 	<!-- Offline data -->
-	<string name="initializing_try_again_later">An error occurred. Please, try again.</string>
-
-	<string name="insufficient_storage_error">There\'s not enough storage on your device. Please, free up at least %1$d %2$s and try again.</string>
-
-	<string name="mobile_data_warning_dialog_title">Mobile Data Connection</string>
-	<string name="mobile_data_warning_dialog_message">You are connected via Mobile Data. Downloading this package can incur additional charges. Do you want to proceed?</string>
 
 	<!-- Package status -->
-	<string name="package_status_download">DOWNLOAD</string>
 	<!-- Package status -->
-	<string name="package_status_downloading">DOWNLOADING</string>
 	<!-- Package status -->
-	<string name="package_status_downloaded">DOWNLOADED</string>
 	<!-- Package status -->
-	<string name="package_status_unzipping">UNZIPPING</string>
 	<!-- Package status -->
-	<string name="package_status_open_map">OPEN MAP</string>
 	<!-- Package status -->
-	<string name="package_status_update">UPDATE</string>
 	<!-- Premium button -->
-	<string name="premium_button_get_premium">GET PREMIUM</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                      EDIT TRIP                                         -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Edit Trip -->
-	<string name="hint_trip_name">Trip name</string>
 	<!-- Edit Trip -->
-	<string name="edit_trip_save">Save</string>
 	<!-- Edit Trip -->
-	<string name="edit_my_trip_to">"Trip to "</string>
 	<!-- Edit Trip -->
-	<string name="reset">Reset</string>
 	<!-- Edit Trip -->
-	<string name="reset_trip_are_you_sure">Are you sure you want to reset your trip? All the data in your trip will be deleted.</string>
 	<!-- Edit Trip -->
-	<string name="destinations">Destinations</string>
 	<!-- Edit Trip -->
-	<string name="edit_trip_edited">Your trip was successfully edited</string>
 	<!-- Edit Trip -->
-	<string name="edit_trip_no_changes">No changes have been made</string>
 	<!-- Edit Trip -->
-	<string name="action_edit_destinations">Edit destinations</string>
 	<!-- Edit Trip -->
-	<string name="trip_privacy">Trip privacy</string>
 	<!-- Edit Trip -->
-	<string name="privacy_private">Private</string>
 	<!-- Edit Trip -->
-	<string name="privacy_private_explain">Only you can access your private trips.</string>
 	<!-- Edit Trip -->
-	<string name="privacy_shareable">Shareable</string>
 	<!-- Edit Trip -->
-	<string name="privacy_shareable_explain">Anyone who has the link can view your shareable trip.</string>
 	<!-- Edit Trip -->
 	<string name="add_note">Add note</string>
 	<!-- Edit Trip -->
-	<string name="trip_read_only_cannot_edit">Sorry, you are not allowed to modify this trip.</string>
 	<!-- Edit Trip -->
-	<string name="participants">Participants</string>
 	<!-- Edit Trip -->
-	<string name="trip_not_active">Sorry, trip is not active.</string>
 	<!-- Edit Trip -->
-	<string name="trip_read_only_cannot_share_private_trip">The owner of this trip has not allowed you to share it.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                    ERROR MESSAGES                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Error messages -->
-	<string name="error_load_scheduled_trips">Failed to load scheduled trips!</string>
 	<!-- Error messages -->
-	<string name="error_load_past_trips">Failed to load past trips!</string>
 	<!-- Error messages -->
-	<string name="error_load_trash_trips">Failed to load trips in trash!</string>
 	<!-- Error messages -->
-	<string name="error_change_trip">Failed to change current trip!</string>
 	<!-- Error messages -->
-	<string name="error_load_trip_dates">Failed to load trip dates!</string>
 	<!-- Error messages -->
-	<string name="error_load_itinerary">Failed to load trip itinerary!</string>
 	<!-- Error messages -->
-	<string name="error_load_itinerary_day">Failed to load trip day!</string>
 	<!-- Error messages -->
-	<string name="error_add_day_to_itinerary">Failed to add day to the itinerary!</string>
 	<!-- Error messages -->
-	<string name="error_remove_day_from_itinerary">Failed to remove day from the itinerary!</string>
 	<!-- Error messages -->
-	<string name="error_delete_custom_place">Failed to delete custom place!</string>
 	<!-- Error messages -->
-	<string name="error_add_day_to_trip_calendar">Failed to add day to the trip!</string>
 	<!-- Error messages -->
-	<string name="error_add_hotel_to_all_days">Failed to add hotel to all days!</string>
 	<!-- Error messages -->
-	<string name="error_add_activity_to_trip">Failed to add an activity to the trip!</string>
 	<!-- Error messages -->
-	<string name="error_remove_activity_from_trip">Failed to remove activity from the trip!</string>
 	<!-- Error messages -->
-	<string name="error_add_hotel_to_trip">Failed to add hotel to the trip!</string>
 	<!-- Error messages -->
-	<string name="error_remove_hotel_from_trip">Failed to remove hotel from the trip!</string>
 	<!-- Error messages -->
-	<string name="error_add_bookable_to_trip">Failed to add bookable activity to the trip!</string>
 	<!-- Error messages -->
-	<string name="error_remove_bookable_from_trip">Failed to remove bookable activity from the trip!</string>
 	<!-- Error messages -->
-	<string name="error_load_edit_trip_information">Failed to load trip information!</string>
 	<!-- Error messages -->
-	<string name="error_load_destinations">Failed to load trip destinations!</string>
 	<!-- Error messages -->
-	<string name="error_load_trip_home">Failed to load trip!</string>
 	<!-- Error messages -->
-	<string name="error_load_list_data">Failed to load list!</string>
 	<!-- Error messages -->
-	<string name="error_edit_trip">Failed to edit trip!</string>
 	<!-- Error messages -->
-	<string name="error_add_destination">Failed to add destination to the trip!</string>
 	<!-- Error messages -->
-	<string name="error_remove_destination">Failed to remove destination from the trip!</string>
 	<!-- Error messages -->
-	<string name="error_load_new_trip_destinations">Failed to load list of destinations!</string>
 	<!-- Error messages -->
-	<string name="error_new_trip_no_destinations">Failed to choose destination, try to reload list!</string>
 	<!-- Error messages -->
-	<string name="error_load_detail">Detail is not available at this moment.</string>
 	<!-- Error messages -->
 	<string name="error_content_not_available_offline">Content is not available offline!</string>
 	<!-- Error messages -->
-	<string name="error_create_custom_poi">Failed to create custom place!</string>
 	<!-- Error messages -->
-	<string name="error_edit_custom_poi">Failed to edit custom place!</string>
 	<!-- Error messages -->
-	<string name="error_move_trip_to_trash">Failed to move the trip to the trash!</string>
 	<!-- Error messages -->
-	<string name="error_restore_trip">Failed to restore the trip!</string>
 	<!-- Error messages -->
-	<string name="error_empty_the_trash">Failed to delete trips from the trash!</string>
 	<!-- Error messages -->
-	<string name="error_custom_place_missing_name">Missing name.</string>
 	<!-- Error messages -->
-	<string name="error_custom_place_invalid_address">Missing address.</string>
 	<!-- Error messages -->
-	<string name="error_custom_place_invalid_address_message">Address not found. Please check your input and try again. Hint: You can enter GPS coordinates as well.</string>
 	<!-- Error messages -->
-	<string name="error_custom_place_invalid_url_format">Invalid web link url.</string>
 	<!-- Error messages -->
-	<string name="error_custom_place_invalid_mail_format">Invalid email address.</string>
 	<!-- Error messages -->
-	<string name="error_add_calendar">Failed to load trip calendar!</string>
 	<!-- Error messages -->
-	<string name="error_create_trip_in_current_location">Failed to create trip in your current location!</string>
 	<!-- Error messages -->
-	<string name="error_add_to_favorites">Failed to add activity to your favorites!</string>
 	<!-- Error messages -->
-	<string name="error_remove_from_favorites">Failed to remove activity from your favorites!</string>
 	<!-- Error messages -->
-	<string name="error_edit_user_data">Failed to edit user data!</string>
 	<!-- Error messages -->
-	<string name="error_get_user_data">Failed to load user data!</string>
 	<!-- Error messages -->
-	<string name="error_get_user_account_info">Failed to load user account details!</string>
 	<!-- Error messages -->
-	<string name="error_get_gallery">Gallery is not available at the moment.</string>
 	<!-- gallery -->
-	<string name="error_loading_video_360">Error while loading the video.</string>
 	<!-- Error messages -->
 	<string name="error_dynamic_content">Menu item is not available at this moment.</string>
 	<!-- Error messages -->
-	<string name="error_failed_to_unfollow">Failed to unfollow trip!</string>
 	<!-- Error messages -->
 	<string name="error_no_default_browser">Unable to open in web browser application.</string>
 	<!-- Error messages -->
-	<string name="more_more_error_toast">Range more - more is nondeterministic.</string>
 	<!-- Error messages -->
-	<string name="error_application_not_found">Application was not found</string>
 	<!-- Error messages -->
-	<string name="error_mixpanel_exception">Mixpanel exception</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       FILTERS                                          -->
 	<!-- ************************************************************************************** -->
 
 	<!-- filters -->
-	<string name="categories">Filters</string>
 	<!-- filters -->
-	<string name="hotel_filters_all">All</string>
 	<!-- filters -->
-	<string name="hotel_filters_in_trip">In Trip</string>
 	<!-- filters -->
-	<string name="hotel_filters_favorites">Favorites</string>
 	<!-- filters -->
-	<string name="hotel_filters_popular">Popular</string>
 	<!-- filters -->
-	<string name="hotel_filters_rating">Star Rating</string>
 	<!-- filters -->
-	<string name="hotel_filters_price">Price Range</string>
 	<!-- filters -->
-	<string name="hotel_filters_wifi">Free Wi-Fi</string>
 	<!-- filters -->
-	<string name="stars">stars</string>
 	<!-- filters -->
-	<string name="number_picker_wrong_values">First value must be lower or equal to second value.</string>
 	<!-- filters -->
-	<string name="filters_no_items_found">No items found</string>
 	<!-- filters -->
-	<string name="filter_hotels_action_title">Filter the hotels</string>
 	<!-- filters -->
-	<string name="filters_label_in_trip_days">Days</string>
 	<!-- filters -->
-	<string name="filter_reset">Reset</string>
 	<!-- filters -->
-	<string name="filters_active">Filters active</string>
 	<!-- filters -->
-	<string name="tags">TAGS</string>
 	<!-- filters -->
-	<string name="popular_amenities">POPULAR AMENITIES</string>
 	<!-- filters -->
-	<string name="lodging_types">LODGING TYPES</string>
 
 	<!-- GYG filter -->
-	<string name="date">Set date</string>
 	<!-- GYG filter -->
-	<string name="any">Any</string>
 	<!-- GYG filter -->
-	<string name="full_day">Full day</string>
 	<!-- GYG filter -->
-	<string name="multi_day">Multi-day</string>
 	<!-- GYG filter -->
-	<string name="popularity">Popularity</string>
 	<!-- GYG filter -->
-	<string name="no_items_found_gyg">No tours found for the current destination on the selected day. Try changing the filters.</string>
 	<!-- GYG filter -->
-	<string name="edit_filter">Edit filter</string>
 	<!-- GYG filter -->
-	<string name="reviews_gyg">reviews</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                  HOTELS AND VIATOR                                     -->
 	<!-- ************************************************************************************** -->
 
 	<!-- hotels -->
-	<string name="per_night">per night</string>
 	<!-- hotels -->
 	<string name="hotels_slash_night">/night</string>
 	<!-- hotels -->
-	<string name="hotels_popular">POPULAR</string>
 	<!-- hotels -->
 	<string name="unofficial_rating">Unofficial stars</string>
 
@@ -912,146 +482,84 @@
 	<string name="duration">Duration</string>
 
 	<!--GYG-->
-	<string name="sort_by">Sort by</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       DIALOGS                                          -->
 	<!-- ************************************************************************************** -->
 
 	<!-- dialogs -->
-	<string name="cancel">Cancel</string>
 	<!-- dialogs -->
-	<string name="close">Close</string>
 	<!-- dialogs -->
-	<string name="done">OK</string>
 	<!-- dialogs -->
-	<string name="DONE">Done</string>
 	<!-- dialogs -->
-	<string name="discard">Discard</string>
 	<!-- dialogs -->
-	<string name="move_trip_to_trash_are_you_sure">Are you sure you want to move this trip to trash?</string>
 	<!-- dialogs -->
-	<string name="move_trip_to_trash">Move to trash</string>
 	<!-- dialogs -->
-	<string name="move_trip_to_trash_i_am_sure">Move to trash</string>
 	<!-- dialogs -->
-	<string name="restore_trip_are_you_sure">Are you sure you want to restore this trip?</string>
 	<!-- dialogs -->
-	<string name="unfollow_trip_are_you_sure">Are you sure you want to unfollow this trip?</string>
 	<!-- dialogs -->
-	<string name="shareable_trip_are_you_sure">This trip is private. Sharing it will make it available to anyone having its link.</string>
 	<!-- dialogs -->
-	<string name="restore_trip">Restore trip</string>
 	<!-- dialogs -->
-	<string name="unfollow_trip">Unfollow trip</string>
 	<!-- dialogs -->
-	<string name="shareable_trip">Private trip</string>
 	<!-- dialogs -->
-	<string name="shareable_trip_i_am_sure">Share</string>
 	<!-- dialogs -->
-	<string name="unfollow_trip_i_am_sure">Unfollow</string>
 	<!-- dialogs -->
-	<string name="restore_trip_i_am_sure">Restore</string>
 	<!-- dialogs -->
-	<string name="delete_day_are_you_sure">Are you sure you want to delete this day from your itinerary?</string>
 	<!-- dialogs -->
-	<string name="delete_day">Delete day</string>
 	<!-- dialogs -->
-	<string name="delete_day_i_am_sure">Delete</string>
 	<!-- dialogs -->
-	<string name="remove_activity_are_you_sure">Are you sure you want to remove this activity from this day?</string>
 	<!-- dialogs -->
-	<string name="remove_activity">Remove activity</string>
 	<!-- dialogs -->
-	<string name="remove_activity_i_am_sure">Remove</string>
 	<!-- dialogs -->
-	<string name="feedback_subject">Feedback from Android user</string>
 	<!-- dialogs -->
-	<string name="feedback_email">team@travel.sygic.com</string>
 	<!-- dialogs -->
-	<string name="feedback_send">Send Feedback</string>
 	<!-- dialogs -->
-	<string name="cd_hint_image">Hint image</string>
 	<!-- dialogs -->
-	<string name="empty_trash_are_you_sure">This will delete all trips in trash. Are you sure?</string>
 	<!-- dialogs -->
-	<string name="empty_trash_i_am_sure">Empty Trash</string>
 	<!-- dialogs -->
-	<string name="book_now">Book now</string>
 	<!-- dialogs -->
-	<string name="send_link">Send link</string>
 	<!-- dialogs -->
-	<string name="not_now">Not now</string>
 	<!-- dialogs -->
-	<string name="book_hotel_dialog_message">Do you want to book this hotel now?</string>
 	<!-- dialogs -->
-	<string name="book_activity_dialog_message">Do you want to book this activity now?</string>
 	<!-- dialogs -->
-	<string name="add_new">Add New</string>
 	<!-- dialogs -->
-	<string name="sign_in_dialog_text">Do a one-tap sign in to backup your trip and sync it across all your devices. It\'s free!</string>
 	<!-- dialogs -->
-	<string name="sign_in_dialog_later">Remind me later</string>
 	<!-- dialogs -->
-	<string name="sign_in_dialog_upload">You must be a registered user to upload new photos.</string>
 	<!-- dialogs -->
-	<string name="sign_in_dialog_custom_place">You must register to be able to suggest places.</string>
 	<!-- dialogs -->
-	<string name="sign_in_dialog_not_now">Not now</string>
 	<!-- dialogs -->
-	<string name="turn_on_gps">Turn on GPS</string>
 	<!-- dialogs -->
-	<string name="turn_on_gps_message">GPS provider is not enabled. Do you want to enable it?</string>
 	<!-- dialogs -->
-	<string name="enable">Enable</string>
 	<!-- dialogs -->
-	<string name="discard_changes">Discard changes</string>
 	<!-- dialogs -->
-	<string name="discard_changes_are_you_sure">Are you sure you want to discard the changes you\'ve made?</string>
 	<!-- dialogs -->
-	<string name="delete_custom_place">Delete custom place</string>
 	<!-- dialogs -->
-	<string name="delete_custom_place_are_you_sure">Are you sure you want to delete this custom place?</string>
 	<!-- dialogs -->
-	<string name="allow">Allow</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                        HINTS                                           -->
 	<!-- ************************************************************************************** -->
 
 	<!-- hints -->
-	<string name="hint_activities">Items are sorted by popularity. Use filters and search to narrow down the list.</string>
 	<!-- hints -->
-	<string name="hint_itinerary">Welcome to your itinerary! Tap any day to start planning your trip. Drag and drop any day to delete it from your itinerary.</string>
 	<!-- hints -->
-	<string name="hint_detail">Use the button to add an item to your itinerary. Tap again to delete or add to another day.</string>
 	<!-- hints -->
-	<string name="hint_edit">Drag and drop items to edit your itinerary.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     CUSTOM PLACE                                       -->
 	<!-- ************************************************************************************** -->
 
 	<!-- custom place -->
-	<string name="action_edit_custom_place_label">Edit custom place</string>
 	<!-- custom place -->
-	<string name="action_delete_custom_place_label">Delete custom place</string>
 	<!-- custom place -->
-	<string name="custom_place_hint_name">Name</string>
 	<!-- custom place -->
-	<string name="custom_place_hint_description">Description</string>
 	<!-- custom place -->
 	<string name="custom_place_address">Address</string>
 	<!-- custom place -->
-	<string name="custom_place_suggest_this">Suggest this to other travelers</string>
 	<!-- custom place -->
-	<string name="custom_place_suggest_label">Please help our content team by filling out as much as you can.</string>
 	<!-- custom place -->
-	<string name="custom_place_hint_message">Any message for our content team?</string>
 	<!-- custom place -->
-	<string name="custom_place_advanced">Advanced</string>
 	<!-- custom place -->
-	<string name="custom_place_hint_web_link">Web links</string>
 	<!-- custom place -->
 	<string name="custom_place_hint_phone">Phone number</string>
 	<!-- custom place -->
@@ -1059,606 +567,328 @@
 	<!-- custom place -->
 	<string name="custom_place_hint_opening_hours">Opening hours</string>
 	<!-- custom place -->
-	<string name="custom_place_hint_admission">Admissions</string>
 	<!-- custom place -->
-	<string name="custom_place_categories">Categories</string>
 	<!-- custom place -->
-	<string name="custom_place_opening_template">Mon: \nTue: \nWed: \nThu: \nFri: \nSat: \nSun: \n</string>
 	<!-- custom place -->
-	<string name="custom_place_address_not_available">Address is not available</string>
 	<!-- custom place -->
-	<string name="custom_place_obtaining_address">Obtaining address…</string>
 	<!-- custom place -->
-	<string name="error_dates_activity_without_extras">Something went wrong. I did not get params.</string>
 	<!-- custom place -->
-	<string name="error_failed_to_set_current_trip">Failed to set current trip id.</string>
 	<!-- custom place -->
-	<string name="custom_place_marked_delete">This place is marked as deleted.</string>
 	<!-- custom place -->
-	<string name="custom_place_cannot_delete">You can not delete this custom place.</string>
 	<!-- custom place -->
-	<string name="custom_place_cannot_edit_is_deleted">You can not edit this custom place. It is marked as deleted.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                      CAR RENTAL                                        -->
 	<!-- ************************************************************************************** -->
 
 	<!-- car rental -->
-	<string name="car_rental_pick_up">Pick up</string>
 	<!-- car rental -->
-	<string name="car_rental_drop_off">Drop off</string>
 	<!-- car rental -->
-	<string name="car_rental_drivers_age">Driver\'s age 25–70</string>
 	<!-- car rental -->
-	<string name="car_rental_hint_drivers_age">Driver\'s age</string>
 	<!-- car rental -->
-	<string name="car_rental_search">Search</string>
 	<!-- car rental -->
-	<string name="car_rental_full_search_1">Need more options?</string>
 	<!-- car rental -->
-	<string name="car_rental_full_search_2"><u>Show full search form</u></string>
 	<!-- car rental -->
-	<string name="car_rental_default_time">11:30</string>
 	<!-- car rental -->
-	<string name="car_rental_title">Rent a car in</string>
 	<!-- car rental -->
-	<string name="car_rental_default_age">24</string>
 	<!-- car rental -->
-	<string name="car_rental_pick_up_place">Pick up place</string>
 	<!-- car rental -->
-	<string name="car_rental_city_center">(center)</string>
 	<!-- car rental -->
-	<string name="car_rental_city_center_no_destination">City center</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                         MAP                                            -->
 	<!-- ************************************************************************************** -->
 
 	<!-- map -->
-	<string name="current_position_not_found_yet">Current position has not been found yet.</string>
-	<string name="navigation_button_overview">Overview</string>
-	<string name="navigation_button_recenter">Re-center</string>
-	<string name="error_map_not_initialized">The map was not initialized correctly.</string>
 	<!-- ************************************************************************************** -->
 	<!--                                      TRIP HOME                                         -->
 	<!-- ************************************************************************************** -->
 
 	<!-- trip home -->
-	<string name="trip_home_trip_starts_in">starts in</string>
 	<!-- trip home -->
-	<string name="trip_home_trip_starts_today">starts today!</string>
 	<!-- trip home -->
-	<string name="trip_home_trip_starts_tomorrow">starts tomorrow!</string>
 	<!-- trip home -->
-	<string name="trip_home_trip_already_started">has already started!</string>
 	<!-- trip home -->
-	<string name="of">of</string>
 	<!-- trip home -->
-	<string name="destination_added_to_trip">Destination successfully added to trip!</string>
 	<!-- trip home -->
-	<string name="your_trip">Your trip</string>
 	<!-- trip home -->
-	<string name="unfollow_trip_succesfull">Trip was successfully unfollowed.</string>
 	<!-- trip home -->
-	<string name="navigation_not_available_title">Navigation not available</string>
 	<!-- trip home -->
-	<string name="navigation_not_available_message">Distance from your current location is too large.</string>
 	<!-- trip home -->
-	<string name="end_date_info">To adjust the length of your trip, add or remove days in Itinerary.</string>
 	<!-- ************************************************************************************** -->
 	<!--                             DOWNLOAD SYGIC TRAVEL DIALOG                                 -->
 	<!-- ************************************************************************************** -->
 
 	<!-- download sygic travel dialog -->
-	<string name="download_sygic_travel_title">Download Sygic Travel</string>
 	<!-- download sygic travel dialog -->
-	<string name="download_sygic_travel_message_part_1">"This app is limited to %1$s only."</string>
 	<!-- download sygic travel dialog -->
-	<string name="download_sygic_travel_message_part_2">Download the full-fledged Sygic Travel app for free and plan your trips all around the world.</string>
 	<!-- download sygic travel dialog -->
-	<string name="download_sygic_travel_not_now">Not Now</string>
 	<!-- download sygic travel dialog -->
-	<string name="error_custom_place_invalid_form_data">Invalid form data</string>
 	<!-- download sygic travel dialog -->
-	<string name="title_activity_activity_detail">ActivityDetailActivity</string>
 	<!-- download sygic travel dialog -->
-	<string name="one_destination">one destination</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                    REPORT PROBLEM                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Report problem -->
-	<string name="report_problem_subject">"Report problem with "</string>
 	<!-- Report problem -->
-	<string name="report_problem_item_name">"Item name: "</string>
 	<!-- Report problem -->
-	<string name="report_problem_item_id">"Item ID: "</string>
 	<!-- Report problem -->
-	<string name="report_problem_more_info">Please provide more information (optional).</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                   NOTES AND TIMES                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Notes and times -->
-	<string name="note">Note</string>
 	<!-- Notes and times -->
-	<string name="start">Start</string>
 	<!-- Notes and times -->
-	<string name="end">End</string>
 	<!-- Notes and times -->
-	<string name="set_time">Set time</string>
 	<!-- Notes and times -->
-	<string name="not_set">Not set</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       PREMIUM                                          -->
 	<!-- ************************************************************************************** -->
 
 	<!-- premium -->
-	<string name="action_logout">Logout</string>
 	<!-- premium -->
-	<string name="premium_label">Premium Account</string>
 	<!-- premium -->
-	<string name="premium_explore_label">Explore Sygic Travel Premium</string>
 	<!-- premium -->
-	<string name="premium_expires_on">"Expires on %1$s"</string>
 	<!-- premium -->
-	<string name="premium_expired_on">"Expired on "</string>
 	<!-- premium -->
-	<string name="premium_unlimited">Purchased</string>
 	<!-- premium -->
-	<string name="premium_buy">Sygic Travel\nPremium</string>
 	<!-- premium -->
-	<string name="premium_buy_package">"%1$s\nOffline Map"</string>
 	<!-- premium -->
-	<string name="premium_already_purchased">PURCHASED</string>
 	<!-- premium -->
-	<string name="premium_single_maps">Get Map for Single Destination</string>
 	<!-- premium -->
-	<string name="premium_text">Get unlimited worldwide offline maps with search and walking guidance. Read premium content by Fodor\'s Travel.</string>
 	<!-- premium -->
-	<string name="premium_showcase_first">Use the app offline anywhere in the world.</string>
 	<!-- premium -->
-	<string name="premium_showcase_second">Get offline walking navigation and search.</string>
 	<!-- premium -->
-	<string name="premium_showcase_third">Read lots of detailed practical information, sourced from Fodor\'s Travel.</string>
 	<!-- premium -->
-	<string name="premium_showcase_first_title">Unlimited offline maps</string>
 	<!-- premium -->
-	<string name="premium_showcase_second_title">Offline guidance and more</string>
 	<!-- premium -->
-	<string name="premium_showcase_third_title">Premium content</string>
 	<!-- premium -->
-	<string name="premium_activated_title">Premium Activated</string>
 	<!-- premium -->
-	<string name="premium_activated_message">Your Premium account on Sygic Travel has been activated.</string>
 	<!-- premium -->
-	<string name="premium_expired_title">Premium Expired</string>
 	<!-- premium -->
-	<string name="premium_expired_message">Your Premium account on Sygic Travel has expired.</string>
 	<!-- premium -->
-	<string name="premium_expiration_title">Premium Expiration</string>
 	<!-- premium -->
-	<string name="premium_expiration_message">"Your Premium account on Sygic Travel expires in %1$d days."</string>
 	<!-- premium -->
-	<string name="premium_purchased">Premium purchased</string>
 	<!-- premium -->
-	<string name="premium_active">Premium active</string>
 	<!-- premium -->
-	<string name="premium_purchased_authenticated">Thank you for supporting Sygic Travel! You can now enjoy all of it.</string>
 	<!-- premium -->
-	<string name="premium_purchased_not_authenticated">You are ready to go! Sign in or create an account to use Premium on all of your devices.</string>
 	<!-- premium -->
-	<string name="anonymous_user">Anonymous user</string>
 	<!-- premium -->
-	<string name="premium_faq">Premium FAQ</string>
 	<!-- premium -->
-	<string name="premium_ask_support">Ask Support</string>
 	<!-- premium -->
-	<string name="premium_ask_support_subject">Sygic Travel Premium - Android</string>
 	<!-- premium -->
-	<string name="download_maps">Download maps</string>
 	<!-- premium -->
-	<string name="premium_purchased_continue">Continue without downloading</string>
 	<!-- premium -->
-	<string name="premium_not_available">Premium is not available at this moment. Please try again later.</string>
 	<!-- premium -->
-	<string name="premium_video_offline">You need an internet connection to watch the video.</string>
 	<!-- premium -->
-	<string name="get_premium_and_explore_more">Get Premium and explore more</string>
 	<!-- premium -->
-	<string name="upgrade_to_premium">Upgrade to Premium to remove ads.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       GALLERY                                          -->
 	<!-- ************************************************************************************** -->
 
 	<!-- gallery -->
-	<string name="gallery_source_label">"Source: "</string>
 	<!-- gallery -->
-	<string name="gallery_author_label">"Author: "</string>
 	<!-- gallery -->
-	<string name="gallery_better_photo">Can you take a better photo?</string>
 	<!-- gallery -->
-	<string name="vr_video_activity_lift_device">Please lift your device and hold it vertically</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       SEARCH                                           -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Search -->
-	<string-array name="search_categories">
-		<item>Places</item>
-		<item>Hotels</item>
-		<item>Address</item>
-	</string-array>
 	<!-- Search -->
-	<string name="search_at_least_three_characters">Enter at least 3 characters\nto search.</string>
 	<!-- Search -->
-	<string name="search_no_results_found">Ooops! No results found.</string>
 	<!-- Search -->
-	<string name="search_swipe_next">Swipe to search in another category</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                    RATING DIALOG                                       -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Rating dialog -->
-	<string name="rating_dialog_title">Gift for you!</string>
 	<!-- Rating dialog -->
-	<string name="rating_dialog_message_top">"Experience popular places around the world thanks to our immersive 360° videos. Available now in 20+ destinations including Barcelona, Prague or Istanbul."</string>
 	<!-- Rating dialog -->
-	<string name="rating_dialog_message_bottom">Love your gifts? Please rate our app so we can give you more.</string>
 	<!-- Rating dialog -->
-	<string name="rating_leave_a_rating">Leave a rating</string>
 	<!-- Rating dialog -->
-	<string name="share_text">"I'm using Sygic Travel to plan my trips.\nhttp://travel.sygic.com/"</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                    FEEDBACK DIALOG                                       -->
 	<!-- ************************************************************************************** -->
 
 	<!-- Feedback dialog -->
-	<string name="feedback_dialog_title">Happy with our app?</string>
 	<!-- Feedback dialog -->
-	<string name="feedback_dialog_happy_message">Please help others discover this app by leaving a review.</string>
 	<!-- Feedback dialog -->
-	<string name="feedback_dialog_not_really_message">Please take a minute to tell us more so we can improve.</string>
 	<!-- Feedback dialog -->
-	<string name="feedback_dialog_happy_title">That\'s great, thanks!</string>
 	<!-- Feedback dialog -->
-	<string name="happy">Happy</string>
 	<!-- Feedback dialog -->
-	<string name="feedback_dialog_not_really_title">Sorry to hear that</string>
 	<!-- Feedback dialog -->
-	<string name="not_really">Not really</string>
 	<!-- Feedback dialog -->
-	<string name="rate_now">Rate now</string>
 	<!-- Feedback dialog -->
-	<string name="tell_us_more">Tell us more</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     UPLOAD PHOTO                                       -->
 	<!-- ************************************************************************************** -->
 
 	<!-- upload photo -->
-	<string name="photo_picker_title">Choose a photo</string>
 	<!-- upload photo -->
-	<string name="upload_photo_button">Upload photo</string>
 	<!-- upload photo -->
-	<string name="upload_photo_faq_button"><u>User Photos FAQ</u></string>
 	<!-- upload photo -->
-	<string name="upload_photo_information">Once uploaded, this photo will be publicly available on the internet with a Creative Commons license and an appropriate attribution.</string>
 	<!-- upload photo -->
-	<string name="upload_notification_uploading">Uploading&#8230;</string>
 	<!-- upload photo -->
-	<string name="upload_notification_success">Upload successful!</string>
 	<!-- upload photo -->
-	<string name="upload_notification_failed">Upload failed!</string>
 	<!-- upload photo -->
-	<string name="upload_faq">User Photos FAQ</string>
 	<!-- upload photo -->
-	<string name="upload_pick_photo">Pick a photo</string>
 	<!-- upload photo -->
-	<string name="upload_pick_another_photo">Pick another photo</string>
 	<!-- upload photo -->
-	<string name="upload_bad_file">Problem with displaying image. File format may not be supported - file must be image.</string>
 	<!-- upload photo -->
-	<string name="upload_image_too_small">The image is too small. Minimal size is 600x600 pixels.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                        SHARE                                           -->
 	<!-- ************************************************************************************** -->
 
 	<!-- share poi/hotel/ba -->
-	<string name="share_poi">"Check out %1$s on Sygic Travel."</string>
 	<!-- share poi/hotel/ba -->
-	<string name="share_hotel">Check out this hotel I found on Sygic Travel.</string>
 	<!-- share poi/hotel/ba -->
-	<string name="share_bookable_activity">Check out this tour I found on Sygic Travel.</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                  CONFLICT RESOLVER                                     -->
 	<!-- ************************************************************************************** -->
 
 	<!-- conflict resolver -->
-	<string name="resolve_conflict_title">Resolve conflict</string>
 	<!-- conflict resolver -->
-	<string name="resolve_conflict_message">A newer version of \"%1$s\" edited by %2$s on %3$s is available on the server and your pending local changes cannot be merged. Choose a version to keep.</string>
 	<!-- conflict resolver -->
-	<string name="resolve_conflict_server">Server</string>
 	<!-- conflict resolver -->
-	<string name="resolve_conflict_local">Local</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                       TEMPLATES                                        -->
 	<!-- ************************************************************************************** -->
 
 	<!-- template -->
-	<string name="template">Template</string>
 	<!-- template -->
-	<string name="choose_template">Choose template</string>
 	<!-- template -->
-	<string name="template_detail">Template detail</string>
 	<!-- template -->
-	<string name="continue_without_template">Continue without template</string>
 	<!-- template -->
-	<string name="map_marker_error_message">Error getting map markers</string>
 	<!-- template -->
-	<string name="list_items_error_message">Error getting list of items</string>
 	<!-- template -->
-	<string name="available_templates">Available templates</string>
 	<!-- template -->
-	<string name="use_this_template">Use this template</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                  DATA DELTED DIALOG                                    -->
 	<!-- ************************************************************************************** -->
 
 	<!-- data deleted dialog -->
-	<string name="dialog_data_deleted_title">Important notice</string>
 	<!-- data deleted dialog -->
-	<string name="dialog_data_deleted_subtitle">Your offline data needs to be downloaded again.</string>
 	<!-- data deleted dialog -->
-	<string name="dialog_data_deleted_message">This update brings brand new vector-based map to Sygic Travel. Unfortunately, we had to delete your previously downloaded offline maps. In order to use the app offline, you\'ll have to download the offline maps again. Sorry about that.</string>
 	<!-- data deleted dialog -->
-	<string name="dialog_data_deleted_download_maps">Download Maps</string>
 
-	<string name="no_hotels_offline">Hotels are not available offline</string>
-	<string name="no_tours_offline">Tours are not available offline</string>
-	<string name="bringing_life_to_maps">Bringing life to maps</string>
-	<string name="try_our_other_apps">Try our other apps:</string>
-	<string name="gps_navigation">GPS Navigation</string>
-	<string name="family_locator">Family Locator</string>
-	<string name="full_day_warning">You have more than 12 hours planned for this day</string>
-	<string name="template_detail_error">Unable to load template detail</string>
-	<string name="where_are_you_going">Where are you going?</string>
 	<string name="price_guarantee">Covered by booking.com <a href="http://www.booking.com/content/terms.en-gb.html?aid=339773">Best Price Guarantee</a></string>
-	<string name="detect_location">Tap to detect your location</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                   FILTER CATEGORIES                                    -->
 	<!-- ************************************************************************************** -->
 
 	<!-- filters - translate as "Category" -->
-	<string name="sightseeing">Sightseeing</string>
 	<!-- filters - translate as "Category" -->
-	<string name="shopping">Shopping</string>
 	<!-- filters - translate as "Category" -->
-	<string name="eating">Restaurants</string>
 	<!-- filters - translate as "Category" -->
-	<string name="playing">Family</string>
 	<!-- filters - translate as "Category" -->
-	<string name="traveling">Transport</string>
 	<!-- filters - translate as "Category" -->
-	<string name="going_out">Nightlife</string>
 	<!-- filters - translate as "Category" -->
-	<string name="hiking">Outdoors</string>
 	<!-- filters - translate as "Category" -->
-	<string name="sports">Sports</string>
 	<!-- filters - translate as "Category" -->
-	<string name="relaxing">Relaxation</string>
 	<!-- filters - translate as "Category" -->
-	<string name="discovering">Museums</string>
 	<!-- filters - translate as "Category" -->
-	<string name="sleeping">Accommodation</string>
 	<!-- filters -->
-	<string name="stars_cap">Stars</string>
 	<!-- filters -->
-	<string name="price">Price</string>
 	<!-- filters -->
 	<string name="review_score">Review Score</string>
-
-	<string name="next">Next</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                  DESTINATION TYPES                                     -->
 	<!-- ************************************************************************************** -->
 
 	<!-- destination types -->
-	<string name="dt_continent">continent</string>
 	<!-- destination types -->
-	<string name="dt_country">country</string>
 	<!-- destination types -->
-	<string name="dt_region">region</string>
 	<!-- destination types -->
-	<string name="dt_city">city</string>
 	<!-- destination types -->
-	<string name="dt_place">place</string>
 	<!-- destination types -->
-	<string name="dt_hotel">hotel</string>
 	<!-- destination types -->
-	<string name="dt_address">address</string>
 	<!-- destination types -->
-	<string name="dt_island">island</string>
 	<!-- destination types -->
-	<string name="dt_town">town</string>
 	<!-- destination types -->
-	<string name="dt_village">village</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     WEATHER TYPES                                      -->
 	<!-- ************************************************************************************** -->
 
 	<!-- weather types -->
-	<string name="broken_clouds">Broken clouds</string>
 	<!-- weather types -->
-	<string name="clear_sky">Clear sky</string>
 	<!-- weather types -->
-	<string name="drizzle">Drizzle</string>
 	<!-- weather types -->
-	<string name="dust_whirls">Dust whirls</string>
 	<!-- weather types -->
-	<string name="extreme_conditions">Extreme conditions</string>
 	<!-- weather types -->
-	<string name="extreme_windy">Extreme windy</string>
 	<!-- weather types -->
-	<string name="few_clouds">Few clouds</string>
 	<!-- weather types -->
-	<string name="fog">Fog</string>
 	<!-- weather types -->
-	<string name="heavy_rain">Heavy rain</string>
 	<!-- weather types -->
-	<string name="hurricane">Hurricane</string>
 	<!-- weather types -->
-	<string name="light_rain">Light rain</string>
 	<!-- weather types -->
-	<string name="mist">Mist</string>
 	<!-- weather types -->
-	<string name="overcast_clouds">Overcast clouds</string>
 	<!-- weather types -->
-	<string name="rain">Rain</string>
 	<!-- weather types -->
-	<string name="scattered_clouds">Scattered clouds</string>
 	<!-- weather types -->
-	<string name="sleet">Sleet</string>
 	<!-- weather types -->
-	<string name="snow">Snow</string>
 	<!-- weather types -->
-	<string name="sunrise">Sunrise</string>
 	<!-- weather types -->
-	<string name="sunset">Sunset</string>
 	<!-- weather types -->
-	<string name="thunderstorm">Thunderstorm</string>
 	<!-- weather types -->
-	<string name="tornado">Tornado</string>
 	<!-- weather types -->
-	<string name="tropical_storm">Tropical storm</string>
 	<!-- weather types -->
-	<string name="weather">Weather</string>
 	<!-- weather types -->
-	<string name="with_drizzle">with drizzle</string>
 	<!-- weather types -->
-	<string name="with_heavy_drizzle">with heavy drizzle</string>
 	<!-- weather types -->
-	<string name="with_heavy_rain">with heavy rain</string>
 	<!-- weather types -->
-	<string name="with_light_drizzle">with light drizzle</string>
 	<!-- weather types -->
-	<string name="with_light_rain">with light rain</string>
 	<!-- weather types -->
-	<string name="with_rain">with rain</string>
 
 	<!-- ************************************************************************************** -->
 	<!--                                     PREFERENCES                                        -->
 	<!-- ************************************************************************************** -->
 
 	<!-- preferences -->
-	<string name="settings">Settings</string>
 	<!-- preferences -->
-	<string name="preferences">Preferences</string>
 	<!-- preferences -->
-	<string name="pref_group_units">Units</string>
 
 	<!-- Distance -->
-	<string name="pref_distance_key">pref_key_distance</string>
 	<!-- Distance -->
-	<string name="pref_distance_unit">Distance</string>
 	<!-- Distance -->
-	<string name="pref_distance_unit_dialog_title">Distance unit</string>
 	<!-- Distance -->
-	<string-array name="pref_array_destination_unit">
-		<item>Kilometers</item>
-		<item>Miles</item>
-	</string-array>
 	<!-- Distance -->
-	<string-array name="pref_array_destination_unit_ev">
-		<item>kilometers</item>
-		<item>miles</item>
-	</string-array>
 	<!-- Distance -->
-	<string name="pref_kilometers">kilometers</string>
 	<!-- Distance -->
-	<string name="pref_miles">miles</string>
 
 	<!-- Temperature -->
-	<string name="pref_temperature_unit">Temperature</string>
 	<!-- Temperature -->
-	<string name="pref_temperature_unit_dialog_title">Temperature unit</string>
 	<!-- Temperature -->
-	<string-array name="pref_array_temperature_unit">
-		<item>Celsius</item>
-		<item>Fahrenheit</item>
-	</string-array>
 	<!-- Temperature -->
-	<string-array name="pref_array_temperature_unit_ev">
-		<item>Celsius</item>
-		<item>Fahrenheit</item>
-	</string-array>
 	<!-- Temperature -->
-	<string name="pref_celsius">Celsius</string>
 	<!-- Temperature -->
-	<string name="pref_fahrenheit">Fahrenheit</string>
 
 	<!-- Navigation app -->
-	<string name="pref_navigation_unit">Navigation app</string>
 	<!-- Navigation app -->
-	<string name="pref_navigation_unit_dialog_title">Select navigation app</string>
 	<!-- Navigation app -->
-	<string-array name="pref_array_navigation_unit">
-		<item>Sygic navigation</item>
-		<item>Other</item>
-	</string-array>
-	<string-array name="pref_array_navigation_unit_ev">
-		<item>sygic</item>
-		<item>other</item>
-	</string-array>
 	<!-- Navigation app -->
-	<string name="pref_sygic">sygic</string>
-	<string name="pref_other">other</string>
 
 	<!-- Currencies -->
-	<string name="pref_currency_unit">Currency</string>
-	<string name="pref_currency_unit_dialog_title">Select currency</string>
-	<string name="currency_use_locale">Use my locale settings</string>
-
-
 
 
 	<!-- Collaboration -->
-	<string name="join_trip">Join trip</string>
-	<string name="add_participant">Add Participant</string>
-	<string name="edit_participant">Edit Participant</string>
-	<string name="trip_invitation_accepted">Trip invitation accepted</string>
-	<string name="collaboration_participating">Participating</string>
-	<string name="collaboration_invited">Invited</string>
-	<string name="delete_participant">Delete Participant</string>
-	<string name="collaboration_remove_dialog">"Are you sure you want to remove %s ?"</string>
-	<string name="remove_permission">Remove permission</string>
-	<string name="permission_dialog">Are you sure you don\'t want %s to edit trip?</string>
-	<string name="trip_joined">Trip successfully joined</string>
-	<string name="trip_join_fail">Failed to join the trip</string>
-	<string name="collaboration_join_unauthentified">To access this trip you need to sign in with your Sygic Travel account. Don’t have one yet? It’s free and easy to create.</string>
-	<string name="collaboration_description">Traveling with friends or family members?\nInvite them to your trip to plan together.</string>
-	<string name="collaboration_can_edit">Can edit trip?</string>
-	<string name="resend">Resend</string>
-	<string name="invite">Invite</string>
-	<string name="unable_to_invite_email">Unable to invite with this email</string>
-	<string name="resend_email_unable">Unable to resend email</string>
-	<string name="resend_sent">Email successfuly re-sent</string>
-	<string name="collaboration_not_available_offline">Collaboration is not available offline</string>
 
 	<!-- Item Detail -->
 	<string name="item_detail_buy_ticket">BUY TICKET</string>
@@ -1683,14 +913,12 @@
 	<string name="item_detail_accepted_passes">Accepted passes</string>
 	<string name="item_detail_external_link">External links</string>
 	<string name="item_detail_admission">Admission</string>
-	<string name="item_detail_scheduled_time">Scheduled time</string>
 	<string name="item_detail_see_available_rooms">See available rooms</string>
 	<string name="item_detail_bestsellser">BESTSELLER</string>
 	<string name="item_detail_instant_confirmation">INSTANT CONFIRMATION</string>
 	<string name="item_detail_mobile_voucher">MOBILE VOUCHER</string>
 	<string name="item_detail_private">PRIVATE</string>
 	<string name="item_detail_skip_line">SKIP THE LINE</string>
-	<string name="fodors_unavailable">This content is available as one of the Premium features</string>
 	<string name="item_detail_drive">Drive</string>
 	<string name="item_detail_tags">TAGS: </string>
 	<string name="translation_api_error">Error at receiving translation</string>

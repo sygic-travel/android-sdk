@@ -34,50 +34,9 @@
 		<item name="android:padding">@dimen/padding_sygic_travel_button</item>
 	</style>
 
-	<style name="google_button_style">
-		<item name="android:paddingTop">@dimen/padding_sygic_travel_button</item>
-		<item name="android:paddingBottom">@dimen/padding_sygic_travel_button</item>
-		<item name="android:layout_marginLeft">@dimen/margin_lr_google_plus_button</item>
-		<item name="android:layout_marginRight">@dimen/margin_lr_google_plus_button</item>
-	</style>
-
-	<style name="facebook_button_style">
-		<item name="android:paddingTop">12dp</item>
-		<item name="android:paddingBottom">12dp</item>
-		<item name="android:layout_marginLeft">@dimen/margin_lr_google_plus_button</item>
-		<item name="android:layout_marginRight">@dimen/margin_lr_google_plus_button</item>
-	</style>
-
-	<style name="activity_detail_button_style">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">match_parent</item>
-		<item name="android:paddingTop">10dp</item>
-		<item name="android:paddingBottom">7dp</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:clickable">true</item>
-		<item name="android:background">@color/dark_background_alpha</item>
-		<item name="android:gravity">center_horizontal</item>
-	</style>
-
 	<!-- Menu style -->
-	<style name="menu_style">
-		<item name="android:layout_width">@dimen/drawer_width</item>
-		<item name="android:layout_height">match_parent</item>
-		<item name="android:choiceMode">singleChoice</item>
-		<item name="android:background">@color/menu_background_inactive</item>
-		<item name="android:headerDividersEnabled">true</item>
-		<item name="android:divider">@null</item>
-		<item name="android:dividerHeight">0dp</item>
-	</style>
 
 	<!-- action bar buttons -->
-	<style name="action_bar_buttons_style">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:visibility">gone</item>
-		<item name="android:padding">12dp</item>
-		<item name="android:clickable">true</item>
-	</style>
 
 	<!-- offline bottom texts style -->
 	<style name="offline_bottom_texts_style" parent="blue_font_medium_style">
@@ -100,28 +59,6 @@
 	</style>
 
 	<!-- form styles -->
-	<style name="sign_edit_style">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:padding">10dp</item>
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/main_black</item>
-		<item name="android:textColorHint">@color/white_alpha</item>
-		<item name="android:layout_marginTop">5dp</item>
-		<item name="android:layout_marginBottom">5dp</item>
-		<item name="android:textCursorDrawable">@null</item>
-	</style>
-
-	<style name="new_trip_detail_edit_style">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/main_black</item>
-		<item name="android:textColorHint">@color/white_alpha</item>
-		<item name="android:layout_marginTop">8dp</item>
-		<item name="android:layout_marginBottom">8dp</item>
-		<item name="android:textCursorDrawable">@null</item>
-	</style>
 
 	<style name="form_edit_style" parent="android:Widget.Holo.Light.EditText">
 		<item name="android:layout_width">match_parent</item>
@@ -131,23 +68,6 @@
 		<item name="android:textSize">@dimen/text_size_small</item>
 		<item name="android:textColor">@color/st_blue</item>
 		<item name="android:textColorHint">@color/st_blue_hints</item>
-	</style>
-
-	<style name="form_edit_layout_style">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:orientation">vertical</item>
-		<item name="android:background">@drawable/color_white</item>
-		<item name="android:layout_marginBottom">1dp</item>
-		<item name="android:paddingTop">16dp</item>
-		<item name="android:paddingBottom">16dp</item>
-		<item name="android:paddingLeft">16dp</item>
-		<item name="android:paddingRight">16dp</item>
-	</style>
-
-	<style name="form_edit_layout_style_landscape" parent="form_edit_layout_style">
-		<item name="android:paddingLeft">@dimen/padding_edge</item>
-		<item name="android:paddingRight">@dimen/padding_edge</item>
 	</style>
 
 	<style name="form_label_style" parent="black_font_small_style">
@@ -201,43 +121,12 @@
 		<item name="android:lineSpacingExtra">@dimen/line_spacing</item>
 	</style>
 
-	<style name="showcase_dot">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:src">@drawable/dot</item>
-	</style>
-
-	<style name="my_trips_show_options_image_style">
-		<item name="android:clickable">true</item>
-		<item name="android:textColor">@android:color/transparent</item>
-		<item name="android:textSize">0sp</item>
-		<item name="android:padding">25dp</item>
-	</style>
-
-	<style name="my_trips_options_style" parent="my_trips_show_options_image_style">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_gravity">center_vertical</item>
-	</style>
-
 	<style name="map_switch" parent="white_font_small_style">
 		<item name="android:layout_width">0dp</item>
 		<item name="android:layout_height">match_parent</item>
 		<item name="android:layout_weight">1</item>>
 		<item name="android:gravity">center</item>
 		<item name="android:clickable">true</item>
-	</style>
-
-	<style name="menu_item_style" parent="dark_font_menu_small_style">
-		<item name="android:gravity">center_vertical</item>
-		<item name="android:drawablePadding">10dp</item>
-	</style>
-
-	<style name="menu_header_style" parent="dark_font_menu_small_style">
-		<item name="android:gravity">center_vertical</item>
-		<item name="android:drawablePadding">10dp</item>
-		<item name="android:textColor">@color/menu_text_header_grey</item>
 	</style>
 
 	<style name="menu_header_reset_style" parent="grey_font_micro_style">
@@ -253,44 +142,6 @@
 		<item name="android:gravity">center_vertical</item>
 	</style>
 
-	<style name="hotel_filters_item_style" parent="menu_item_style">
-		<item name="android:textColor">@color/menu_item_textcolor_selector</item>
-		<item name="android:paddingRight">10dp</item>
-		<item name="android:paddingTop">10dp</item>
-		<item name="android:paddingBottom">10dp</item>
-	</style>
-
-	<style name="hotel_filters_item_icon_style" parent="menu_item_style">
-		<item name="android:layout_centerVertical">true</item>
-		<item name="android:layout_width">20dp</item>
-		<item name="android:layout_height">20dp</item>
-		<item name="android:scaleType">fitCenter</item>
-		<item name="android:layout_margin">15dp</item>
-		<item name="android:layout_marginRight">0dp</item>
-	</style>
-
-	<style name="hotel_filters_item_style_ext" parent="menu_item_style">
-		<item name="android:paddingRight">5dp</item>
-		<item name="android:layout_marginBottom">1dp</item>
-		<item name="android:padding">10dp</item>
-	</style>
-
-
-	<style name="hotel_filters_item_value_style" parent="menu_item_style">
-		<item name="android:textColor">@color/menu_label_grey</item>
-		<item name="android:layout_marginRight">5dp</item>
-		<item name="android:layout_alignParentRight">true</item>
-		<item name="android:layout_centerVertical">true</item>
-	</style>
-
-	<style name="no_items_found_style">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">match_parent</item>
-		<item name="android:gravity">center</item>
-		<item name="android:textColor">@color/new_trip_wizard_gray</item>
-		<item name="android:textSize">@dimen/text_size_large</item>
-		<item name="android:visibility">gone</item>
-	</style>
 
 	<style name="filter_label_style" parent="white_font_small_style">
 		<item name="android:layout_width">match_parent</item>
@@ -319,43 +170,11 @@
 		<item name="android:padding">5dp</item>
 	</style>
 
-	<style name="drop_position_style">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">3dp</item>
-		<item name="android:background">@color/st_orange</item>
-		<item name="android:visibility">gone</item>
-	</style>
-
-	<style name="day_detail_total_and_weather_info_layout_style">
-		<item name="android:orientation">horizontal</item>
-		<item name="android:gravity">center</item>
-		<item name="android:paddingTop">5dp</item>
-		<item name="android:paddingBottom">5dp</item>
-	</style>
-
 	<style name="day_detail_heading_style" parent="grey_font_small_style">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:background">@android:color/white</item>
 		<item name="android:clickable">true</item>
-	</style>
-
-	<style name="detail_light_divider">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">@dimen/detail_divider_width</item>
-		<item name="android:background">@color/st_lighter_grey</item>
-	</style>
-
-	<style name="detail_medium_divider">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">@dimen/detail_divider_width</item>
-		<item name="android:background">@color/cross_status_download</item>
-	</style>
-
-	<style name="detail_dark_divider">
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_height">@dimen/detail_divider_width</item>
-		<item name="android:background">@color/grey_button_pressed</item>
 	</style>
 
 	<style name="detail_location_gallery_style" parent="white_font_small_style">
@@ -393,13 +212,6 @@
 		<item name="android:paddingTop">0dp</item>
 		<item name="android:paddingBottom">0dp</item>
 		<item name="android:visibility">gone</item>
-	</style>
-
-	<style name="st_card_view_style">
-		<item name="android:translationZ">@dimen/cardview_default_elevation</item>
-		<item name="android:elevation">@dimen/cardview_default_elevation</item>
-		<item name="cardElevation">@dimen/cardview_default_elevation</item>
-		<item name="cardCornerRadius">@dimen/cardview_default_radius</item>
 	</style>
 
 	<style name="Theme.SygicTravel.ActionBar.AppBarOverlay"

@@ -5,25 +5,9 @@
 
 	<dimen name="temperature_font_size">150sp</dimen>
 
-	<dimen name="weather_no_data_padding">70dp</dimen>
-
 	<dimen name="activity_detail_content_text_size">18sp</dimen>
 
-	<dimen name="detail_divider_width">1px</dimen>
-
-	<dimen name="cursor_width">1dp</dimen>
-
-	<dimen name="activity_detail_extra_spacing">8dp</dimen>
-
-	<dimen name="google_play_button_width">563px</dimen>
-	<dimen name="google_play_button_height">184px</dimen>
-
 	<dimen name="line_spacing">2dp</dimen>
-
-	<dimen name="drawer_width">320dp</dimen>
-
-	<dimen name="fab_min_margin">24dp</dimen>
-	<dimen name="fab_margin">48dp</dimen>
 
 
 	<!--<dimen name="nps_rating_scale_height">135px</dimen>-->

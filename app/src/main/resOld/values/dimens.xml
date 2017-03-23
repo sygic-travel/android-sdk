@@ -1,81 +1,27 @@
 <resources>
 	<!-- Default screen margins, per the Android Design guidelines. -->
 	<dimen name="general_activity_padding_margin">16dp</dimen>
-	<dimen name="alert_dialog_content_padding">24dp</dimen>
-	<dimen name="navigation_bar_height">48dp</dimen>
-
-	<dimen name="nav_drawer_max_width">320dp</dimen>
-	<dimen name="nav_drawer_width_sub">56dp</dimen>
-	<dimen name="notification_bar_height">24dp</dimen>
-
-	<dimen name="checkbox_left_padding_api17">20dp</dimen>
-	<dimen name="checkbox_left_padding_api16">40dp</dimen>
-	<dimen name="transport_icon_padding">10dp</dimen>
 
 	<dimen name="padding_sygic_travel_button">8dp</dimen>
 	<dimen name="padding_sygic_travel_button_large">24dp</dimen>
-	<dimen name="activity_detail_half_padding">8dp</dimen>
 	<dimen name="activity_detail_padding">16dp</dimen>
-	<dimen name="activity_detail_padding_larger">24dp</dimen>
-	<dimen name="activity_detail_header_margin">8dp</dimen>
 	<dimen name="activity_detail_add_info_padding">10dp</dimen>
-	<dimen name="activity_detail_extra_spacing">8dp</dimen>
-	<dimen name="itinerary_day_padding">8dp</dimen>
-	<dimen name="detail_divider_width">0.5px</dimen>
 
 	<dimen name="text_size_xmicro">10sp</dimen>
 	<dimen name="text_size_micro">12sp</dimen>
 	<dimen name="text_size_small">14sp</dimen>
 	<dimen name="text_size_small_medium">16sp</dimen>
 	<dimen name="text_size_medium">18sp</dimen>
-	<dimen name="text_size_medium_large">20sp</dimen>
 	<dimen name="text_size_large">22sp</dimen>
 	<dimen name="text_size_xlarge">30sp</dimen>
 
-	<dimen name="text_size_xmicro_t">10sp</dimen>
-	<dimen name="text_size_micro_t">12sp</dimen>
-	<dimen name="text_size_small_t">14sp</dimen>
-	<dimen name="text_size_small_medium_t">16sp</dimen>
-	<dimen name="text_size_medium_t">18sp</dimen>
-	<dimen name="text_size_medium_large_t">20sp</dimen>
-	<dimen name="text_size_large_t">22sp</dimen>
-	<dimen name="text_size_xlarge_t">30sp</dimen>
-
 	<dimen name="activity_detail_content_text_size">14sp</dimen>
-
-	<dimen name="detail_add_button_margin">20dp</dimen>
-
-	<dimen name="add_weather_icon_size">25sp</dimen>
-	<dimen name="itinerary_item_stroke_width">4px</dimen>
 
 	<dimen name="line_spacing">0.5dp</dimen>
 
 	<dimen name="padding_edge">16dp</dimen>
-	<dimen name="list_item_icon_size">24dp</dimen>
-	<dimen name="list_item_avatar_size">40dp</dimen>
-	<dimen name="list_item_padding_side">72dp</dimen>
-	<dimen name="list_item_padding_top">8dp</dimen>
-	<dimen name="list_item_padding_top_dense">4dp</dimen>
-	<dimen name="list_item_2line_height">72dp</dimen>
-	<dimen name="list_item_2line_height_dense">60dp</dimen>
 
 	<dimen name="showcase_message_padding">25dp</dimen>
-	<dimen name="showcase_picture_bottom_padding">5dp</dimen>
-
-	<dimen name="custom_poi_marker_width">10dp</dimen>
-	<dimen name="custom_poi_marker_height">5dp</dimen>
-
-	<dimen name="fab_min_margin">8dp</dimen>
-	<dimen name="fab_margin">16dp</dimen>
-	<dimen name="card_margin">8dp</dimen>
-	<dimen name="thumb_spacing">10px</dimen>
-
-	<dimen name="add_destination_lines_width">2dp</dimen>
-	<dimen name="add_destination_plus_size">64dp</dimen>
-	<dimen name="rating_star_padding">5dp</dimen>
-	<dimen name="add_to_day_spacing">2dp</dimen>
-	<dimen name="activity_detail_title">12dp</dimen>
-	<dimen name="participants_top_padding">20dp</dimen>
 
 </resources>
 

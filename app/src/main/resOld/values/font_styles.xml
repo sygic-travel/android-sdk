@@ -94,35 +94,6 @@
 	</style>
 
 	<!-- dark font styles -->
-	<style name="dark_font_small_style">
-		<item name="android:textSize">@dimen/text_size_small</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_font_medium_style">
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_font_large_style">
-		<item name="android:textSize">@dimen/text_size_large</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_font_medium_large_style">
-		<item name="android:textSize">@dimen/text_size_medium_large</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_font_xlarge_style">
-		<item name="android:textSize">@dimen/text_size_xlarge</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_font_menu_small_style">
-		<item name="android:textSize">@dimen/text_size_small</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
 
 	<!-- grey font styles -->
 	<style name="grey_font_micro_style">
@@ -157,16 +128,6 @@
 
 	<style name="grey_font_activity_detail">
 		<item name="android:textSize">@dimen/activity_detail_content_text_size</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_grey_medium_style">
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/text_grey</item>
-	</style>
-
-	<style name="dark_grey_small_style">
-		<item name="android:textSize">@dimen/text_size_small</item>
 		<item name="android:textColor">@color/text_grey</item>
 	</style>
 
@@ -229,62 +190,10 @@
 	</style>
 
 	<!-- twitter font styles -->
-	<style name="twitter_font_micro_style">
-		<item name="android:textSize">@dimen/text_size_micro</item>
-		<item name="android:textColor">@color/twitter_dark_font</item>
-	</style>
-
-	<style name="twitter_font_small_style">
-		<item name="android:textSize">@dimen/text_size_small</item>
-		<item name="android:textColor">@color/twitter_dark_font</item>
-	</style>
-
-	<style name="twitter_font_medium_style">
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/twitter_dark_font</item>
-	</style>
-
-	<style name="twitter_font_large_style">
-		<item name="android:textSize">@dimen/text_size_large</item>
-		<item name="android:textColor">@color/twitter_dark_font</item>
-	</style>
 
 	<!-- orange font styles -->
-	<style name="orange_font_micro_style">
-		<item name="android:textSize">@dimen/text_size_micro</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
-
-	<style name="orange_font_small_style">
-		<item name="android:textSize">@dimen/text_size_small</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
-
-	<style name="orange_font_medium_style">
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
-
-	<style name="orange_font_large_style">
-		<item name="android:textSize">@dimen/text_size_large</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
-
-	<style name="orange_font_xlarge_style">
-		<item name="android:textSize">@dimen/text_size_xlarge</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
-
-	<style name="orange_font_weather_temperature_style">
-		<item name="android:textSize">@dimen/temperature_font_size</item>
-		<item name="android:textColor">@color/st_orange</item>
-	</style>
 
 	<!-- red font styles -->
-	<style name="red_font_medium_style">
-		<item name="android:textSize">@dimen/text_size_medium</item>
-		<item name="android:textColor">@color/favorite_red</item>
-	</style>
 
 	<!-- weather font styles -->
 
