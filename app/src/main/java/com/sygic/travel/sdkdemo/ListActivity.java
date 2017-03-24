@@ -8,8 +8,8 @@ import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Detail;
 
-import itemDetail.fragment.PlaceDetailFragment;
-import itemDetail.fragment.PlaceDetailListener;
+import placeDetail.fragment.PlaceDetailFragment;
+import placeDetail.fragment.PlaceDetailListener;
 
 public class ListActivity extends AppCompatActivity {
 
