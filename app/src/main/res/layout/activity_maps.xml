@@ -1,9 +1,16 @@
-<fragment
-	android:id="@+id/map"
-	android:name="com.google.android.gms.maps.SupportMapFragment"
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:map="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/fl_main"
+	android:name="com.google.android.gms.maps.SupportMapFragment"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.sygic.travel.sdkdemo.MapsActivity"/>
+	tools:context="com.sygic.travel.sdkdemo.MapsActivity">
+
+	<fragment
+		android:id="@+id/map"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+</FrameLayout>
