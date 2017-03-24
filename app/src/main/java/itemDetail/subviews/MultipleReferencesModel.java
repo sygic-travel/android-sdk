@@ -9,20 +9,20 @@ import java.util.List;
  * Represents packed references to be shown in ReferencesListActivity.
  * Attribute reference is always first item in list to be eventualy shown as CTA
  */
-public class MultipleReferencesModel implements ItemDetailSubviewModel{
+public class MultipleReferencesModel implements PlaceDetailSubviewModel {
 	private Reference reference;
 	private List<Reference> otherReferences;
-	private int type;
+	private final int TYPE;
 
 	public MultipleReferencesModel(Reference reference){
 		this.reference = reference;
-		type = ItemDetailSubviewModel.REFERENCE;
+		TYPE = PlaceDetailSubviewModel.REFERENCE;
 	}
 
 	public MultipleReferencesModel(List<Reference> otherReferences) {
 		this.otherReferences = otherReferences;
 		reference = otherReferences.get(0);
-		type = MULTIPLE_REFERENCES;
+		TYPE = MULTIPLE_REFERENCES;
 	}
 
 	public Reference getReference() {
@@ -43,6 +43,6 @@ public class MultipleReferencesModel implements ItemDetailSubviewModel{
 
 	@Override
 	public int getType() {
-		return type;
+		return TYPE;
 	}
 }

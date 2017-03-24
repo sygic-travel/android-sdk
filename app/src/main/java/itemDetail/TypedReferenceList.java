@@ -5,7 +5,7 @@ import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.List;
 
-import static itemDetail.ItemDetailReferenceUtils.*;
+import static itemDetail.PlaceDetailReferenceUtils.*;
 
 
 public class TypedReferenceList {

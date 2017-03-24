@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class BookingModel implements ItemDetailSubviewModel{
+public class BookingModel implements PlaceDetailSubviewModel {
 	private float rating, price;
 	private String url, name;
 
@@ -37,7 +37,7 @@ public class BookingModel implements ItemDetailSubviewModel{
 
 	@Override
 	public int getType() {
-		return ItemDetailSubviewModel.BOOKING;
+		return PlaceDetailSubviewModel.BOOKING;
 	}
 
 	public String getName() {

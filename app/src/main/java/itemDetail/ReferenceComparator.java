@@ -9,9 +9,9 @@ public class ReferenceComparator implements Comparator<Reference> {
 
 	@Override
 	public int compare(Reference reference1, Reference reference2) {
-		if(reference2.getType().equals(ItemDetailReferenceUtils.TOUR_PLACE) && !reference1.getType().equals(ItemDetailReferenceUtils.TOUR_PLACE)) {
+		if(reference2.getType().equals(PlaceDetailReferenceUtils.TOUR_PLACE) && !reference1.getType().equals(PlaceDetailReferenceUtils.TOUR_PLACE)) {
 			return 1;
-		} else if(reference1.getType().equals(ItemDetailReferenceUtils.TOUR_PLACE) && !reference2.getType().equals(ItemDetailReferenceUtils.TOUR_PLACE)) {
+		} else if(reference1.getType().equals(PlaceDetailReferenceUtils.TOUR_PLACE) && !reference2.getType().equals(PlaceDetailReferenceUtils.TOUR_PLACE)) {
 			return -1;
 		} else {
 			if(reference2.getPriority() > reference1.getPriority()) {

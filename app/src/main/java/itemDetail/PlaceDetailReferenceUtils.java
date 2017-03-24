@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ItemDetailReferenceUtils {
+public class PlaceDetailReferenceUtils {
 	public static final String
 		TICKET = "ticket",
 		TOUR = "tour",
@@ -219,29 +219,5 @@ public class ItemDetailReferenceUtils {
 			}
 		}
 		return null;
-	}
-	
-
-	public static float getAverageRating(String ratings){
-		int count = 0;
-		String split[] = ratings.split("\\|");
-		int currentCount = 0;
-		int totalRate = 0;
-
-		try {
-			for(int i = 1; i < split.length ; i++) {
-				currentCount = Integer.parseInt(split[i]);
-				count += currentCount;
-				totalRate += currentCount * i;
-			}
-		} catch(NumberFormatException ex){
-			return 0;
-		}
-
-		if(count != 0) {
-			return totalRate / count;
-		} else {
-			return 0;
-		}
 	}
 }

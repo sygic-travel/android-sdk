@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class BasicExpandableElement implements ItemDetailSubviewModel {
+public class BasicExpandableElement implements PlaceDetailSubviewModel {
 	private String title, expandableText;
 	private int iconId;
 

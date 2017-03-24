@@ -8,21 +8,21 @@ import android.widget.TextView;
 
 import com.sygic.travel.sdkdemo.R;
 
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 import itemDetail.toBeDeleted.Utils;
 
 
-public class AttributionLayoutController implements ItemDetailSubview {
+public class AttributionLayoutController implements PlaceDetailSubview {
 	private AttributionModel attributionModel;
 	private View rootView;
 	private TextView tvAttribution, tvAuthor;
 
-	public AttributionLayoutController(ItemDetailSubviewModel model){
+	public AttributionLayoutController(PlaceDetailSubviewModel model){
 		attributionModel = (AttributionModel) model;
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories) {
 		rootView = activity.getLayoutInflater().inflate(R.layout.attribution_layout, null);
 		tvAttribution = (TextView) rootView.findViewById(R.id.tv_attribution);
 		tvAuthor = (TextView) rootView.findViewById(R.id.tv_author);

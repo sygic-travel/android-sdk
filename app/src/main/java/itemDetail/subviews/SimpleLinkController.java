@@ -10,24 +10,24 @@ import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
 import itemDetail.Duration;
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
 
-public class SimpleLinkController implements ItemDetailSubview {
-	private ItemDetailSubviewModel dependenciesData;
+public class SimpleLinkController implements PlaceDetailSubview {
+	private PlaceDetailSubviewModel dependenciesData;
 	private View rootView;
 	private TextView tvTitle, tvCount, tvSubtext;
 	private ImageView ivIcon;
 	private String navInfoPattern;
 
-	public SimpleLinkController(ItemDetailSubviewModel dependenciesData) {
+	public SimpleLinkController(PlaceDetailSubviewModel dependenciesData) {
 		this.dependenciesData = dependenciesData;
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories) {
 		rootView = activity.getLayoutInflater().inflate(R.layout.row_action_layout, null);
 		tvTitle = (TextView) rootView.findViewById(R.id.tv_link_title);
 		tvCount = (TextView) rootView.findViewById(R.id.tv_link_count);
@@ -35,37 +35,37 @@ public class SimpleLinkController implements ItemDetailSubview {
 		tvSubtext = (TextView) rootView.findViewById(R.id.tv_subtext);
 
 		switch(dependenciesData.getType()){
-			case ItemDetailSubviewModel.REFERENCE:{
+			case PlaceDetailSubviewModel.REFERENCE:{
 				renderReference(activity);
 				break;
 			}
 
-			case ItemDetailSubviewModel.MULTIPLE_REFERENCES:{
+			case PlaceDetailSubviewModel.MULTIPLE_REFERENCES:{
 				renderMultipleReferences(factories);
 				break;
 			}
 
-			case ItemDetailSubviewModel.PHONE_NUMBER:{
+			case PlaceDetailSubviewModel.PHONE_NUMBER:{
 				renderPhoneNumber(factories);
 				break;
 			}
 
-			case ItemDetailSubviewModel.EMAIL:{
+			case PlaceDetailSubviewModel.EMAIL:{
 				rederEmail(factories);
 				break;
 			}
 
-			case ItemDetailSubviewModel.ADD_NOTE:{
+			case PlaceDetailSubviewModel.ADD_NOTE:{
 				renderAddNote(factories, activity);
 				break;
 			}
 
-			case ItemDetailSubviewModel.DURATION:{
+			case PlaceDetailSubviewModel.DURATION:{
 				renderDuration(factories);
 				break;
 			}
 
-			case ItemDetailSubviewModel.LAT_LNG_DRIVE:{
+			case PlaceDetailSubviewModel.LAT_LNG_DRIVE:{
 				loadDrive(activity);
 				break;
 			}
@@ -84,14 +84,14 @@ public class SimpleLinkController implements ItemDetailSubview {
 		});
 	}
 
-	private void renderDuration(ItemDetailFragmentFactories factories) {
+	private void renderDuration(PlaceDetailFragmentFactories factories) {
 		SimpleDetailModel model = (SimpleDetailModel) dependenciesData;
 		show(model.getData(), R.drawable.ic_time);
 		renderCount("\u00b1 " + new Duration(model.getNumber()).getShortFormattedDuration());
 		rootView.setOnClickListener(factories.getUserDataActivityListener());
 	}
 
-	private void renderAddNote(ItemDetailFragmentFactories factories, Activity activity) {
+	private void renderAddNote(PlaceDetailFragmentFactories factories, Activity activity) {
 		String data = ((SimpleDetailModel) dependenciesData).getData();
 		show(data, R.drawable.ic_add_note);
 		rootView.setOnClickListener(factories.getUserDataActivityListener());
@@ -99,33 +99,33 @@ public class SimpleLinkController implements ItemDetailSubview {
 		llContainer.addView(activity.getLayoutInflater().inflate(R.layout.thick_divider, null));
 	}
 
-	private void rederEmail(ItemDetailFragmentFactories factories) {
+	private void rederEmail(PlaceDetailFragmentFactories factories) {
 		String email = ((SimpleDetailModel) dependenciesData).getData();
 		show(R.string.custom_place_hint_email, R.drawable.ic_mail);
 		showTvSubtext(email);
 		rootView.setOnClickListener(factories.getOnEmailClickListener(email));
 	}
 
-	private void renderPhoneNumber(ItemDetailFragmentFactories factories) {
+	private void renderPhoneNumber(PlaceDetailFragmentFactories factories) {
 		String phoneNumber = ((SimpleDetailModel) dependenciesData).getData();
 		show(R.string.custom_place_hint_phone, R.drawable.ic_phone);
 		showTvSubtext(phoneNumber);
 		rootView.setOnClickListener(factories.getOnPhoneClickListener(phoneNumber));
 	}
 
-	private void renderMultipleReferences(final ItemDetailFragmentFactories factories) {
+	private void renderMultipleReferences(final PlaceDetailFragmentFactories factories) {
 		final MultipleReferencesModel multipleReferencesModel = (MultipleReferencesModel)dependenciesData;
-		String type = ItemDetailReferenceUtils.normalizeReferenceType(multipleReferencesModel.getReference().getType());
+		String type = PlaceDetailReferenceUtils.normalizeReferenceType(multipleReferencesModel.getReference().getType());
 		switch(type){
-			case ItemDetailReferenceUtils.TOUR:{
+			case PlaceDetailReferenceUtils.TOUR:{
 				show(R.string.item_detail_tour, R.drawable.ic_detail_tours);
 				break;
 			}
-			case ItemDetailReferenceUtils.PASS:{
+			case PlaceDetailReferenceUtils.PASS:{
 				show(R.string.item_detail_accepted_passes, R.drawable.ic_passes);
 				break;
 			}
-			case ItemDetailReferenceUtils.SIMPLE_LINK:{
+			case PlaceDetailReferenceUtils.SIMPLE_LINK:{
 				show(R.string.item_detail_external_link, R.drawable.ic_links);
 				break;
 			}
@@ -137,19 +137,19 @@ public class SimpleLinkController implements ItemDetailSubview {
 
 	private void renderReference(final Activity activity) {
 		final Reference reference = ((MultipleReferencesModel)dependenciesData).getReference();
-		String type = ItemDetailReferenceUtils.normalizeReferenceType(reference.getType());
+		String type = PlaceDetailReferenceUtils.normalizeReferenceType(reference.getType());
 		switch(type){
-			case ItemDetailReferenceUtils.OFFICIAL:{
+			case PlaceDetailReferenceUtils.OFFICIAL:{
 				show(R.string.item_detail_official_website, R.drawable.ic_website);
 				showTvSubtext(reference.getUrl());
 				break;
 			}
-			case ItemDetailReferenceUtils.FACEBOOK:{
+			case PlaceDetailReferenceUtils.FACEBOOK:{
 				show(R.string.item_detail_facebook, R.drawable.ic_fb);
 				showTvSubtext(reference.getUrl());
 				break;
 			}
-			case ItemDetailReferenceUtils.WIKI:{
+			case PlaceDetailReferenceUtils.WIKI:{
 				show(R.string.item_detail_wikipedia, R.drawable.ic_wiki);
 				break;
 			}
@@ -158,10 +158,10 @@ public class SimpleLinkController implements ItemDetailSubview {
 		rootView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				ItemDetailReferenceUtils.showReferenceUrl(
+				PlaceDetailReferenceUtils.showReferenceUrl(
 					activity,
 					new ReferenceWrapper(reference),
-					ItemDetailReferenceUtils.DETAIL
+					PlaceDetailReferenceUtils.DETAIL
 				);
 			}
 		});

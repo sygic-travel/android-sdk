@@ -7,20 +7,20 @@ import android.net.MailTo;
 import android.net.Uri;
 import android.view.View;
 
-import itemDetail.ItemDetailConstants;
+import itemDetail.PlaceDetailConstants;
 import itemDetail.MarkerMapper;
 import itemDetail.referenceList.ReferencesListActivity;
 
-public class ItemDetailFragmentFactories {
-	private final ItemDetailListener listener;
+public class PlaceDetailFragmentFactories {
+	private final PlaceDetailListener listener;
 	private Activity activity;
 	private Typeface typeface;
-	private ItemDetailFragment fragment;
+	private PlaceDetailFragment fragment;
 	private View.OnClickListener userDataActivityListener;
 	private MarkerMapper markerMapper;
-	private FragmentRenderer fragmentRenderer;
+	private PlaceDetailFragmentRenderer fragmentRenderer;
 
-	public ItemDetailFragmentFactories(Activity activity, ItemDetailFragment fragment, ItemDetailListener listener) {
+	public PlaceDetailFragmentFactories(Activity activity, PlaceDetailFragment fragment, PlaceDetailListener listener) {
 		this.activity = activity;
 		this.fragment = fragment;
 		this.listener = listener;
@@ -39,8 +39,8 @@ public class ItemDetailFragmentFactories {
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent(activity, ReferencesListActivity.class);
-				intent.putExtra(ItemDetailConstants.FEATURE_TITLE, fragment.getFeature().getName());
-				intent.putExtra(ItemDetailConstants.GUID, fragment.getFeature().getGuid());
+				intent.putExtra(PlaceDetailConstants.FEATURE_TITLE, fragment.getFeature().getName());
+				intent.putExtra(PlaceDetailConstants.GUID, fragment.getFeature().getGuid());
 				activity.startActivity(intent);
 			}
 		};
@@ -119,9 +119,9 @@ public class ItemDetailFragmentFactories {
 		return markerMapper;
 	}
 
-	public FragmentRenderer getRenderer() {
+	public PlaceDetailFragmentRenderer getRenderer() {
 		if(fragmentRenderer == null){
-			fragmentRenderer = new FragmentRenderer();
+			fragmentRenderer = new PlaceDetailFragmentRenderer();
 		}
 		return fragmentRenderer;
 	}

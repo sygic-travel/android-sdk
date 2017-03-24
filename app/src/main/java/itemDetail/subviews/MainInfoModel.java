@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class MainInfoModel implements ItemDetailSubviewModel {
+public class MainInfoModel implements PlaceDetailSubviewModel {
 	private String title, perex;
 	private String markerId, guid, perexTranslationProvider;
 	private String perexProvider, perexLink;

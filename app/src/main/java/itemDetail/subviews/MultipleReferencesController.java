@@ -12,8 +12,8 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
-import itemDetail.ItemDetailReferenceUtils;
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.PlaceDetailReferenceUtils;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
 public class MultipleReferencesController extends ReferenceController{
 	private List<Reference> otherReferences;
@@ -22,13 +22,13 @@ public class MultipleReferencesController extends ReferenceController{
 	private View rlLinkRoot;
 
 
-	public MultipleReferencesController(ItemDetailSubviewModel multipleReferences) {
+	public MultipleReferencesController(PlaceDetailSubviewModel multipleReferences) {
 		super(multipleReferences);
-		this.otherReferences = ((MultipleReferencesModel)multipleReferences).getOtherReferences();
+		this.otherReferences = ((MultipleReferencesModel) multipleReferences).getOtherReferences();
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories){
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories){
 		referenceView = activity.getLayoutInflater().inflate(R.layout.multiple_references_layout, null);
 
 		initUiElements();
@@ -49,34 +49,34 @@ public class MultipleReferencesController extends ReferenceController{
 	}
 
 	private void renderType(){
-		String type = ItemDetailReferenceUtils.normalizeReferenceType(reference.getType());
+		String type = PlaceDetailReferenceUtils.normalizeReferenceType(reference.getType());
 		switch(type){
-			case ItemDetailReferenceUtils.TICKET: {
+			case PlaceDetailReferenceUtils.TICKET: {
 				show(R.string.item_detail_more_tickets, R.drawable.ic_moretickets);
 				break;
 			}
 
-			case ItemDetailReferenceUtils.TABLE: {
+			case PlaceDetailReferenceUtils.TABLE: {
 				show(R.string.item_detail_more_tables, R.drawable.ic_passes);
 				break;
 			}
 
-			case ItemDetailReferenceUtils.TOUR: {
+			case PlaceDetailReferenceUtils.TOUR: {
 				show(R.string.item_detail_more_tours, R.drawable.ic_detail_tours);
 				break;
 			}
 
-			case ItemDetailReferenceUtils.TRANSFER: {
+			case PlaceDetailReferenceUtils.TRANSFER: {
 				show(R.string.item_detail_more_transfers, R.drawable.ic_transfers);
 				break;
 			}
 
-			case ItemDetailReferenceUtils.RENT: {
+			case PlaceDetailReferenceUtils.RENT: {
 				show(R.string.item_detail_more_rentals, R.drawable.ic_passes);
 				break;
 			}
 
-			case ItemDetailReferenceUtils.PARKING: {
+			case PlaceDetailReferenceUtils.PARKING: {
 				show(R.string.item_detail_more_transfers, R.drawable.ic_transfers);
 				break;
 			}

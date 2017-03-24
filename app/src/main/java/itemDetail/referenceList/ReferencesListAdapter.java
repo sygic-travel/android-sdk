@@ -1,6 +1,5 @@
 package itemDetail.referenceList;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,14 +13,14 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailReferenceUtils;
 
-public class ReferenceListAdapter extends RecyclerView.Adapter<ReferenceListAdapter.ReferenceViewHolder> {
+public class ReferencesListAdapter extends RecyclerView.Adapter<ReferencesListAdapter.ReferenceViewHolder> {
 	private List<Reference> references;
 	private ReferenceViewHolder.ReferenceClick referenceClick;
 	private Resources resources;
 
-	public ReferenceListAdapter(
+	public ReferencesListAdapter(
 		List<Reference> references,
 		ReferenceViewHolder.ReferenceClick referenceClick,
 		Resources resources
@@ -53,7 +52,7 @@ public class ReferenceListAdapter extends RecyclerView.Adapter<ReferenceListAdap
 		}
 		holder.tvTitle.setText(reference.getTitle());
 		holder.tvPrice.setText(reference.getPrice() + "");
-		ItemDetailReferenceUtils.renderReferenceFlags(reference, holder.tvFlags, resources);
+		PlaceDetailReferenceUtils.renderReferenceFlags(reference, holder.tvFlags, resources);
 		holder.root.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

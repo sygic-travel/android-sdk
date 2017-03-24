@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public interface ItemDetailSubviewModel {
+public interface PlaceDetailSubviewModel {
 	int REFERENCE = 0;
 	int MULTIPLE_REFERENCES = 1;
 	int PHONE_NUMBER = 2;

@@ -8,18 +8,18 @@ import android.widget.TextView;
 
 import com.sygic.travel.sdkdemo.R;
 
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
 
-public class ExpandableElementController implements ItemDetailSubview {
+public class ExpandableElementController implements PlaceDetailSubview {
 	protected View rootView;
 	protected TextView tvTitle, expandedText;
 	protected LinearLayout expandableView;
 	protected ImageView ivIcon;
 	protected boolean open = false;
-	protected ItemDetailSubviewModel dependencies;
+	protected PlaceDetailSubviewModel dependencies;
 
-	public ExpandableElementController(ItemDetailSubviewModel dependencies) {
+	public ExpandableElementController(PlaceDetailSubviewModel dependencies) {
 		this.dependencies = dependencies;
 	}
 
@@ -32,7 +32,7 @@ public class ExpandableElementController implements ItemDetailSubview {
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories) {
 		initUiElements(activity);
 
 		BasicExpandableElement basicExpandableElement = (BasicExpandableElement)dependencies;

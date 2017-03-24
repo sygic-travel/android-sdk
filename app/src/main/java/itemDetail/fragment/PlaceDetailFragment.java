@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.sygic.travel.sdk.model.place.Detail;
-import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
@@ -23,26 +22,25 @@ import java.util.Map;
 import itemDetail.ReferenceTypeComparator;
 import itemDetail.RenderModel;
 import itemDetail.TypedReferenceList;
-import itemDetail.subviews.BookingModel;
-import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.PlaceDetailSubviewModel;
 import itemDetail.subviews.MainInfoModel;
 
-import static itemDetail.ItemDetailReferenceUtils.*;
+import static itemDetail.PlaceDetailReferenceUtils.*;
 
 
-public class ItemDetailFragment extends Fragment {
+public class PlaceDetailFragment extends Fragment {
 	private Detail feature;
 	private String guid;
-	private ItemDetailFragmentFactories factories;
+	private PlaceDetailFragmentFactories factories;
 	private Activity activity;
-	private FragmentRenderer renderer;
+	private PlaceDetailFragmentRenderer renderer;
 	private View rootView;
 
 	public void setDependencies(
 		Activity activity,
-		ItemDetailListener listener
+		PlaceDetailListener listener
 	){
-		this.factories = new ItemDetailFragmentFactories(activity, this, listener);
+		this.factories = new PlaceDetailFragmentFactories(activity, this, listener);
 		this.activity = activity;
 		renderer = factories.getRenderer();
 	}
@@ -202,11 +200,11 @@ public class ItemDetailFragment extends Fragment {
 		renderModel.addDivider();
 
 		if(feature.getEmail() != null) {
-			renderModel.addSimpleLink(feature.getEmail(), ItemDetailSubviewModel.EMAIL);
+			renderModel.addSimpleLink(feature.getEmail(), PlaceDetailSubviewModel.EMAIL);
 		}
 
 		if(feature.getPhone() != null){
-			renderModel.addSimpleLink(feature.getPhone(), ItemDetailSubviewModel.PHONE_NUMBER);
+			renderModel.addSimpleLink(feature.getPhone(), PlaceDetailSubviewModel.PHONE_NUMBER);
 		}
 
 		addSingleReference(renderModel, FACEBOOK, singleReferences);
@@ -217,7 +215,7 @@ public class ItemDetailFragment extends Fragment {
 
 		renderModel.addDivider();
 
-		renderModel.addSimpleLink(getString(R.string.add_note), ItemDetailSubviewModel.ADD_NOTE);
+		renderModel.addSimpleLink(getString(R.string.add_note), PlaceDetailSubviewModel.ADD_NOTE);
 
 		renderModel.addTags(feature.getTags());
 
@@ -247,7 +245,7 @@ public class ItemDetailFragment extends Fragment {
 		return feature;
 	}
 
-	public FragmentRenderer getRenderer(){
+	public PlaceDetailFragmentRenderer getRenderer(){
 		return renderer;
 	}
 }

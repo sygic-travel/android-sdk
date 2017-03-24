@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.model.place.TagStats;
 
 import java.util.List;
 
-public class TagsWrapperModel implements ItemDetailSubviewModel{
+public class TagsWrapperModel implements PlaceDetailSubviewModel {
 	private List<TagStats> tags;
 
 	public TagsWrapperModel(List<TagStats> tags) {

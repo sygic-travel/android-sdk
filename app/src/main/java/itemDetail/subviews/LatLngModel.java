@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class LatLngModel implements ItemDetailSubviewModel {
+public class LatLngModel implements PlaceDetailSubviewModel {
 	private boolean drive;
 	private double lat, lng;
 

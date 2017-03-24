@@ -10,23 +10,22 @@ import android.widget.TextView;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
 public class ExternalLinksExpandableController extends ExpandableElementController {
 	public Runnable onLeadCreatedRunnable;
 
-	public ExternalLinksExpandableController(ItemDetailSubviewModel dependencies) {
+	public ExternalLinksExpandableController(PlaceDetailSubviewModel dependencies) {
 		super(dependencies);
 	}
 
 	@Override
-	public void render(LinearLayout llContent, final Activity activity, ItemDetailFragmentFactories factories){
+	public void render(LinearLayout llContent, final Activity activity, PlaceDetailFragmentFactories factories){
 		initUiElements(activity);
 
 		MultipleReferencesModel model = (MultipleReferencesModel) dependencies;
-
 
 		tvTitle.setText(activity.getString(R.string.item_detail_external_link));
 		ivIcon.setImageResource(R.drawable.ic_links);
@@ -40,10 +39,10 @@ public class ExternalLinksExpandableController extends ExpandableElementControll
 			tvReference.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					ItemDetailReferenceUtils.showReferenceUrl(
+					PlaceDetailReferenceUtils.showReferenceUrl(
 						activity,
 						new ReferenceWrapper(reference),
-						ItemDetailReferenceUtils.DETAIL
+						PlaceDetailReferenceUtils.DETAIL
 					);
 				}
 			});

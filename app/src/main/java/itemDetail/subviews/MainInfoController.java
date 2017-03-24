@@ -9,11 +9,9 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,12 +21,11 @@ import com.sygic.travel.sdkdemo.R;
 import org.jdeferred.DoneCallback;
 import org.jdeferred.FailCallback;
 
-import itemDetail.ItemDetailReferenceUtils;
-import itemDetail.fragment.ItemDetailFragmentFactories;
-import itemDetail.toBeDeleted.Utils;
+import itemDetail.PlaceDetailReferenceUtils;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 import retrofit2.Call;
 
-public class MainInfoController implements ItemDetailSubview {
+public class MainInfoController implements PlaceDetailSubview {
 	private static final String WIKIPEDIA = "wikipedia";
 	public final String GOOGLE = "google";
 
@@ -51,12 +48,12 @@ public class MainInfoController implements ItemDetailSubview {
 	private DoneCallback<JsonObject> doneCallback;
 	private FailCallback failCallback;
 
-	public MainInfoController (ItemDetailSubviewModel model){
+	public MainInfoController (PlaceDetailSubviewModel model){
 		mainInfoModel = (MainInfoModel) model;
 	}
 
 	@Override
-	public void render(LinearLayout llContent, final Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, final Activity activity, PlaceDetailFragmentFactories factories) {
 		rootView = activity.getLayoutInflater().inflate(R.layout.item_detail_main_info_layout, null);
 		tvTitle = (TextView) rootView.findViewById(R.id.tv_item_title);
 		tvLocalTitle = (TextView) rootView.findViewById(R.id.tv_local_title);
@@ -115,7 +112,7 @@ public class MainInfoController implements ItemDetailSubview {
 		return new ClickableSpan() {
 			@Override
 			public void onClick(View textView) {
-				ItemDetailReferenceUtils.showUrl(activity, mainInfoModel.getPerexLink(), "", "");
+				PlaceDetailReferenceUtils.showUrl(activity, mainInfoModel.getPerexLink(), "", "");
 			}
 			@Override
 			public void updateDrawState(TextPaint drawState) {

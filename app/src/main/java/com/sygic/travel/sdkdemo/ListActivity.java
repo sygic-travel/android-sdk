@@ -7,12 +7,9 @@ import android.util.Log;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Detail;
-import com.sygic.travel.sdk.model.place.Reference;
 
-import java.util.List;
-
-import itemDetail.fragment.ItemDetailFragment;
-import itemDetail.fragment.ItemDetailListener;
+import itemDetail.fragment.PlaceDetailFragment;
+import itemDetail.fragment.PlaceDetailListener;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -21,8 +18,8 @@ public class ListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
-		final ItemDetailFragment fragment = new ItemDetailFragment();
-		fragment.setDependencies(this, new ItemDetailListener() {
+		final PlaceDetailFragment fragment = new PlaceDetailFragment();
+		fragment.setDependencies(this, new PlaceDetailListener() {
 			@Override
 			public void onRenderFinished() {
 

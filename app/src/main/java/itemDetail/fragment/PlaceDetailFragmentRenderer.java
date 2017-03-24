@@ -11,17 +11,15 @@ import itemDetail.subviews.AttributionLayoutController;
 import itemDetail.subviews.BookingController;
 import itemDetail.subviews.ExpandableElementController;
 import itemDetail.subviews.ExternalLinksExpandableController;
-import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.PlaceDetailSubviewModel;
 import itemDetail.subviews.MainInfoController;
 import itemDetail.subviews.MultipleReferencesController;
 import itemDetail.subviews.ReferenceController;
 import itemDetail.subviews.SimpleLinkController;
 import itemDetail.subviews.TagsController;
 
-import com.sygic.travel.sdk.model.place.Reference;
 
-
-public class FragmentRenderer {
+public class PlaceDetailFragmentRenderer {
 	private final int DIVIDER_STATE_ADDED = 0;
 	private final int DIVIDER_STATE_LAST = 1;
 	private final int DIVIDER_STATE_NOT = 2;
@@ -29,14 +27,14 @@ public class FragmentRenderer {
 	private MainInfoController mainInfoController;
 	private int dividerState = DIVIDER_STATE_NOT;
 	private SimpleLinkController addNoteController, durationController;
-	private ItemDetailFragmentFactories factories;
+	private PlaceDetailFragmentFactories factories;
 
 
 
 	public Runnable getRenderContent(
 		final Activity activity,
 		final RenderModel renderModel,
-		final ItemDetailFragmentFactories factories,
+		final PlaceDetailFragmentFactories factories,
 		final LinearLayout llContent
 	){
 		this.factories = factories;
@@ -77,9 +75,9 @@ public class FragmentRenderer {
 						case RenderModel.LINK:{
 							int type = renderModelEntry.getValue().getType();
 							SimpleLinkController simpleLinkController = new SimpleLinkController(renderModelEntry.getValue());
-							if(type == ItemDetailSubviewModel.ADD_NOTE){
+							if(type == PlaceDetailSubviewModel.ADD_NOTE){
 								addNoteController = simpleLinkController;
-							} else if(type == ItemDetailSubviewModel.DURATION){
+							} else if(type == PlaceDetailSubviewModel.DURATION){
 								durationController = simpleLinkController;
 							}
 

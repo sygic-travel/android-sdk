@@ -2,12 +2,8 @@ package itemDetail.referenceList;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 
@@ -19,16 +15,15 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
-import itemDetail.ItemDetailConstants;
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailConstants;
+import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
 import itemDetail.Screen;
-import itemDetail.toBeDeleted.Utils;
 
 public class ReferencesListActivity extends Screen {
 	private String guid;
 	private List<Reference> references;
-	private ReferenceListAdapter adapter;
+	private ReferencesListAdapter adapter;
 	private RecyclerView rvReferences;
 
 
@@ -38,8 +33,8 @@ public class ReferencesListActivity extends Screen {
 		setToolbar();
 		supportActionBar.setDisplayHomeAsUpEnabled(true);
 
-		if(getIntent().hasExtra(ItemDetailConstants.FEATURE_TITLE)){
-			supportActionBar.setTitle(getIntent().getStringExtra(ItemDetailConstants.FEATURE_TITLE));
+		if(getIntent().hasExtra(PlaceDetailConstants.FEATURE_TITLE)){
+			supportActionBar.setTitle(getIntent().getStringExtra(PlaceDetailConstants.FEATURE_TITLE));
 		} else {
 			supportActionBar.setTitle("");
 		}
@@ -57,20 +52,16 @@ public class ReferencesListActivity extends Screen {
 			}
 		};
 
-		if(getIntent().hasExtra(ItemDetailConstants.GUID)){
-			guid = getIntent().getStringExtra(ItemDetailConstants.GUID);
+		if(getIntent().hasExtra(PlaceDetailConstants.GUID)){
+			guid = getIntent().getStringExtra(PlaceDetailConstants.GUID);
 			StSDK.getInstance().getPlaceDetailed(guid, detailBack);
 		} else {
 			showErrorAndFinish();
 		}
-
-
-
-
 	}
 
 	private void proceedWithLoadedReferences(){
-		adapter = new ReferenceListAdapter(
+		adapter = new ReferencesListAdapter(
 			references,
 			getReferenceClick(),
 			getResources()
@@ -87,14 +78,14 @@ public class ReferencesListActivity extends Screen {
 	}
 
 
-	private ReferenceListAdapter.ReferenceViewHolder.ReferenceClick getReferenceClick(){
-		return new ReferenceListAdapter.ReferenceViewHolder.ReferenceClick() {
+	private ReferencesListAdapter.ReferenceViewHolder.ReferenceClick getReferenceClick(){
+		return new ReferencesListAdapter.ReferenceViewHolder.ReferenceClick() {
 			@Override
 			public void referenceClicked(Reference reference) {
-				ItemDetailReferenceUtils.showReferenceUrl(
+				PlaceDetailReferenceUtils.showReferenceUrl(
 					ReferencesListActivity.this,
 					new ReferenceWrapper(reference),
-					ItemDetailReferenceUtils.DETAIL
+					PlaceDetailReferenceUtils.DETAIL
 				);
 			}
 		};

@@ -10,24 +10,24 @@ import android.widget.TextView;
 
 import com.sygic.travel.sdkdemo.R;
 
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReviewScoreRating;
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
 
-public class BookingController implements ItemDetailSubview {
+public class BookingController implements PlaceDetailSubview {
 	private Button btnBook;
 	private TextView tvPrice, tvRating, tvRatingValue, tvPriceGuarantee;
 	private View rootView;
 	private RelativeLayout llScoreLayout;
 	private BookingModel bookingModel;
 
-	public BookingController (ItemDetailSubviewModel model){
+	public BookingController (PlaceDetailSubviewModel model){
 		bookingModel = (BookingModel)model;
 	}
 
 	@Override
-	public void render(LinearLayout llContent, final Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, final Activity activity, PlaceDetailFragmentFactories factories) {
 		rootView = activity.getLayoutInflater().inflate(R.layout.booking_layout, null);
 		tvPrice = (TextView) rootView.findViewById(R.id.tv_price);
 		tvRating = (TextView) rootView.findViewById(R.id.tv_detail_score_rating);
@@ -42,7 +42,7 @@ public class BookingController implements ItemDetailSubview {
 		btnBook.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				ItemDetailReferenceUtils.showUrl(
+				PlaceDetailReferenceUtils.showUrl(
 					activity,
 					bookingModel.getUrl(),
 					bookingModel.getName(),

@@ -16,24 +16,24 @@ import android.widget.TextView;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdkdemo.R;
 
-import itemDetail.ItemDetailReferenceUtils;
+import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
-import static itemDetail.ItemDetailReferenceUtils.*;
+import static itemDetail.PlaceDetailReferenceUtils.*;
 
 
-public class ReferenceController implements ItemDetailSubview{
+public class ReferenceController implements PlaceDetailSubview {
 	protected Reference reference;
 	private TextView tvFlags, tvDescPrice, btnAction;
 	protected View referenceView;
 
-	public ReferenceController(ItemDetailSubviewModel reference) {
+	public ReferenceController(PlaceDetailSubviewModel reference) {
 		this.reference = ((MultipleReferencesModel)reference).getReference();
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories){
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories){
 		referenceView = activity.getLayoutInflater().inflate(R.layout.reference_layout, null);
 
 		initUiElements();
@@ -79,7 +79,7 @@ public class ReferenceController implements ItemDetailSubview{
 				showReferenceUrl(
 					activity,
 					new ReferenceWrapper(reference),
-					ItemDetailReferenceUtils.DETAIL
+					PlaceDetailReferenceUtils.DETAIL
 				);
 			}
 		});

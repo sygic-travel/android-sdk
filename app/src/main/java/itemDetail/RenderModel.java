@@ -12,7 +12,7 @@ import java.util.List;
 import itemDetail.subviews.AttributionModel;
 import itemDetail.subviews.BasicExpandableElement;
 import itemDetail.subviews.BookingModel;
-import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.PlaceDetailSubviewModel;
 import itemDetail.subviews.LatLngModel;
 import itemDetail.subviews.MainInfoModel;
 import itemDetail.subviews.MultipleReferencesModel;
@@ -59,7 +59,7 @@ public class RenderModel {
 	public void addTours(List<Reference> references) {
 		MultipleReferencesModel model = getMultipleReferencesModel(references);
 		if(model != null && references.get(0) != null) {
-			if(references.get(0).getType().equals(ItemDetailReferenceUtils.TOUR_PLACE)) {
+			if(references.get(0).getType().equals(PlaceDetailReferenceUtils.TOUR_PLACE)) {
 				if(references.size() == 1){
 					data.add(new RenderModelEntry(REFERENCE, new MultipleReferencesModel(references.get(0))));
 				} else {
@@ -128,7 +128,7 @@ public class RenderModel {
 				LINK,
 				new SimpleDetailModel(
 					text,
-					ItemDetailSubviewModel.DURATION,
+					PlaceDetailSubviewModel.DURATION,
 					duration
 				)
 			)

@@ -1,13 +1,13 @@
 package itemDetail;
 
 
-import itemDetail.subviews.ItemDetailSubviewModel;
+import itemDetail.subviews.PlaceDetailSubviewModel;
 
 public class RenderModelEntry {
 	private String key;
-	private ItemDetailSubviewModel value;
+	private PlaceDetailSubviewModel value;
 
-	public RenderModelEntry(String key, ItemDetailSubviewModel value) {
+	public RenderModelEntry(String key, PlaceDetailSubviewModel value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -20,11 +20,11 @@ public class RenderModelEntry {
 		this.key = key;
 	}
 
-	public ItemDetailSubviewModel getValue() {
+	public PlaceDetailSubviewModel getValue() {
 		return value;
 	}
 
-	public void setValue(ItemDetailSubviewModel value) {
+	public void setValue(PlaceDetailSubviewModel value) {
 		this.value = value;
 	}
 }

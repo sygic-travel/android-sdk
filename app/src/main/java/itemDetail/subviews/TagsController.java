@@ -10,19 +10,19 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
-import itemDetail.fragment.ItemDetailFragmentFactories;
+import itemDetail.fragment.PlaceDetailFragmentFactories;
 
-public class TagsController implements ItemDetailSubview {
+public class TagsController implements PlaceDetailSubview {
 	private List<TagStats> tags;
 	private TextView tvTags;
 	private View rootView;
 
-	public TagsController(ItemDetailSubviewModel tags) {
+	public TagsController(PlaceDetailSubviewModel tags) {
 		this.tags = ((TagsWrapperModel) tags).getTags();
 	}
 
 	@Override
-	public void render(LinearLayout llContent, Activity activity, ItemDetailFragmentFactories factories) {
+	public void render(LinearLayout llContent, Activity activity, PlaceDetailFragmentFactories factories) {
 		rootView = activity.getLayoutInflater().inflate(R.layout.item_detail_tags_layout, null);
 
 		StringBuilder builder = new StringBuilder();

@@ -5,7 +5,7 @@ import com.sygic.travel.sdk.model.place.Reference;
 
 import java.util.List;
 
-public interface ItemDetailListener {
+public interface PlaceDetailListener {
 	void onRenderFinished();
 	void onUserDataClick();
 }

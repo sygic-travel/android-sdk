@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class SimpleDetailModel implements ItemDetailSubviewModel{
+public class SimpleDetailModel implements PlaceDetailSubviewModel {
 	private String data;
 	private int type;
 	private int number;

@@ -1,6 +1,6 @@
 package itemDetail.subviews;
 
-public class AttributionModel implements ItemDetailSubviewModel {
+public class AttributionModel implements PlaceDetailSubviewModel {
 	private String title, author, source;
 
 	public AttributionModel(String title, String author, String source) {
