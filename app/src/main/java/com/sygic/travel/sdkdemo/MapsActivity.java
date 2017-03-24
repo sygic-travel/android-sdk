@@ -71,6 +71,15 @@ public class MapsActivity
 			}
 		});
 
+		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+			@Override
+			public void onInfoWindowClick(Marker marker) {
+				String guid = ((String) marker.getTag());
+				// todo start detail activity
+				Log.d(TAG, "Start detail activity for: " + guid);
+			}
+		});
+
 		enableMyLocation();
 		loadPlaces();
 	}
@@ -108,12 +117,15 @@ public class MapsActivity
 			if(placeMarkers.keySet().contains(place.getGuid())){
 				continue;
 			}
-			placeMarkers.put(place.getGuid(), mMap.addMarker(
+			Marker newMarker = mMap.addMarker(
 				new MarkerOptions()
 					.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 					.title(place.getName())
 					.snippet(place.getPerex())
-			));
+			);
+			newMarker.setTag(place.getGuid());
+
+			placeMarkers.put(place.getGuid(), newMarker);
 
 			if(placeMarkers.size() >= 50){
 				break;
