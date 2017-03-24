@@ -9,6 +9,9 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -55,5 +58,22 @@ public class Utils {
 			result = context.getResources().getDimensionPixelSize(resourceId);
 		}
 		return result;
+	}
+
+	public static ActionBar setToolbar(AppCompatActivity activity){
+		return setToolbar(true, activity);
+	}
+
+	public static ActionBar setToolbar(boolean updatePadding, AppCompatActivity activity){
+		Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+		if(toolbar != null) {
+			activity.setSupportActionBar(toolbar);
+		}
+
+		if(updatePadding) {
+			toolbar.setPadding(0, Utils.getStatusBarHeight(activity), 0, 0);
+		}
+
+		return activity.getSupportActionBar();
 	}
 }

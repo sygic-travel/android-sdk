@@ -2,6 +2,8 @@ package itemDetail.referenceList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -18,19 +20,20 @@ import java.util.List;
 import itemDetail.PlaceDetailConstants;
 import itemDetail.PlaceDetailReferenceUtils;
 import itemDetail.ReferenceWrapper;
-import itemDetail.Screen;
+import itemDetail.toBeDeleted.Utils;
 
-public class ReferencesListActivity extends Screen {
+public class ReferencesListActivity extends AppCompatActivity {
 	private String guid;
 	private List<Reference> references;
 	private ReferencesListAdapter adapter;
 	private RecyclerView rvReferences;
+	private ActionBar supportActionBar;
 
 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reference_list_activity);
-		setToolbar();
+		supportActionBar = Utils.setToolbar(this);
 		supportActionBar.setDisplayHomeAsUpEnabled(true);
 
 		if(getIntent().hasExtra(PlaceDetailConstants.FEATURE_TITLE)){
