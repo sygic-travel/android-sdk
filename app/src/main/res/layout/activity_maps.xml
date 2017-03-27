@@ -1,11 +1,15 @@
-<FrameLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/fl_main"
+	android:id="@+id/ll_main"
 	android:name="com.google.android.gms.maps.SupportMapFragment"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	tools:context="com.sygic.travel.sdkdemo.MapsActivity">
+
+	<include
+		layout="@layout/toolbar"/>
 
 	<fragment
 		android:id="@+id/map"
@@ -13,4 +17,4 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
-</FrameLayout>
+</LinearLayout>

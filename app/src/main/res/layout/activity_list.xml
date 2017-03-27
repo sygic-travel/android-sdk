@@ -11,4 +11,7 @@
 	android:paddingTop="@dimen/activity_vertical_margin"
 	tools:context="com.sygic.travel.sdkdemo.ListActivity">
 
+	<include
+		layout="@layout/toolbar"/>
+
 </RelativeLayout>
