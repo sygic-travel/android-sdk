@@ -50,7 +50,7 @@ public class Detail extends Place { // shall we do this? (extends Place)
 	private String email;
 
 	@SerializedName(DURATION)
-	private String duration;
+	private int duration;
 
 	@SerializedName(OPENING_HOURS)
 	private String openingHours;
@@ -102,11 +102,11 @@ public class Detail extends Place { // shall we do this? (extends Place)
 		this.email = email;
 	}
 
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
