@@ -8,7 +8,7 @@ import java.util.List;
  * Created by michal.murin on 16.2.2017.
  */
 
-class Reference {
+public class Reference {
 	public static final String TITLE = "title";
 	public static final String TYPE = "type";
 	public static final String LANGUAGE_ID = "language_id";
