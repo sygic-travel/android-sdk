@@ -2,6 +2,7 @@
 	<string name="app_name">SDK Demo</string>
 	<string name="title_activity_maps">Map</string>
 	<string name="title_activity_list">List</string>
+	<string name="title_activity_place_detail">Place Detail</string>
 
 	<string name="settings">Settings</string>
 

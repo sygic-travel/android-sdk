@@ -21,7 +21,7 @@ class Place {
 	 boundingBox: BoundingBox
 	 perex: string
 	 url: string
-	 thumbnailUrl: string
+	 photoUrl: string
 	 price: Price
 	 marker: string
 	 tier: int
@@ -77,7 +77,7 @@ public class Place {
 	private String url;
 
 	@SerializedName(PHOTO_URL)
-	private String thumbnailUrl;
+	private String photoUrl;
 
 	@SerializedName(PRICE)
 	private Price price;
@@ -169,12 +169,12 @@ public class Place {
 		this.url = url;
 	}
 
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
+	public String getPhotoUrl() {
+		return photoUrl;
 	}
 
-	public void setThumbnailUrl(String thumbnailUrl) {
-		this.thumbnailUrl = thumbnailUrl;
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 
 	public Price getPrice() {

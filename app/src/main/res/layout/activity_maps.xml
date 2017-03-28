@@ -8,9 +8,6 @@
 	android:orientation="vertical"
 	tools:context="com.sygic.travel.sdkdemo.MapsActivity">
 
-	<include
-		layout="@layout/toolbar"/>
-
 	<fragment
 		android:id="@+id/map"
 		android:name="com.google.android.gms.maps.SupportMapFragment"

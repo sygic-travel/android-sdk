@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Window;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +25,7 @@ import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
+import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +35,7 @@ import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API
 import static com.sygic.travel.sdk.model.place.Place.GUID;
 
 public class MapsActivity
-	extends FragmentActivity
+	extends AppCompatActivity
 	implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback
 {
 	private static final String TAG = "SdkDemoApp-MapActivity";
@@ -63,8 +67,8 @@ public class MapsActivity
 		placesCallback = getPlacesCallback();
 		placeMarkers = new HashMap<>();
 
-		LatLng sydney = new LatLng(51.5116983, -0.1205079);
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
 
 		mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
 			@Override
