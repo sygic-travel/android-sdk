@@ -8,7 +8,8 @@ import java.util.List;
  * Created by michal.murin on 16.2.2017.
  */
 
-class Reference {
+public class Reference {
+	public static final String ID = "id";
 	public static final String TITLE = "title";
 	public static final String TYPE = "type";
 	public static final String LANGUAGE_ID = "language_id";
@@ -20,7 +21,9 @@ class Reference {
 	public static final String CURRENCY = "currency";
 	public static final String PRICE = "price";
 	public static final String FLAGS = "flags";
-	
+
+	@SerializedName(ID)
+	private int id;
 	@SerializedName(TITLE)
 	private String title;
 	@SerializedName(TYPE)
@@ -133,5 +136,13 @@ class Reference {
 
 	public void setFlags(List<String> flags) {
 		this.flags = flags;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

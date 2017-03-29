@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
+import com.sygic.travel.sdk.model.media.MainMedia;
 import com.sygic.travel.sdk.model.media.Media;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class Detail extends Place { // shall we do this? (extends Place)
 	private String email;
 
 	@SerializedName(DURATION)
-	private String duration;
+	private int duration;
 
 	@SerializedName(OPENING_HOURS)
 	private String openingHours;
@@ -58,7 +59,7 @@ public class Detail extends Place { // shall we do this? (extends Place)
 	private String phone;
 
 	@SerializedName(MAIN_MEDIA)
-	private Media mainMedia;
+	private MainMedia mainMedia;
 
 	@SerializedName(REFERENCES)
 	private List<Reference> references;
@@ -101,11 +102,11 @@ public class Detail extends Place { // shall we do this? (extends Place)
 		this.email = email;
 	}
 
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
@@ -125,11 +126,11 @@ public class Detail extends Place { // shall we do this? (extends Place)
 		this.phone = phone;
 	}
 
-	public Media getMainMedia() {
+	public MainMedia getMainMedia() {
 		return mainMedia;
 	}
 
-	public void setMainMedia(Media mainMedia) {
+	public void setMainMedia(MainMedia mainMedia) {
 		this.mainMedia = mainMedia;
 	}
 
