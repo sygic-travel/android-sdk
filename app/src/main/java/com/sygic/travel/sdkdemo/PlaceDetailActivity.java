@@ -45,14 +45,27 @@ public class PlaceDetailActivity extends AppCompatActivity {
 	}
 
 	private void renderPlaceDetail(Detail placeDetail) {
-//		Picasso.
-//			with(this)
-//			.load(Utils.getPhotoUrl(this, placeDetail.getMainMedia().getUrlTemplate()))
-//			.into(views.ivPhoto);
+		String mediaUrlTemplate = "url";
+
+		if(placeDetail.getMainMedia() != null) {
+			if(placeDetail.getMainMedia().getMedia() != null && placeDetail.getMainMedia().getMedia().size() > 0) {
+				mediaUrlTemplate = placeDetail.getMainMedia().getMedia().get(0).getUrlTemplate();
+			}
+		}
+
+		if(!mediaUrlTemplate.equals("")) {
+			Picasso
+				.with(this)
+				.load(Utils.getPhotoUrl(this, mediaUrlTemplate))
+				.placeholder(R.drawable.ic_photo_camera)
+				.into(views.ivPhoto);
+		}
 		views.tvName.setText(placeDetail.getName());
 		views.tvNameSuffix.setText(placeDetail.getNameSuffix());
 		views.tvPerex.setText(placeDetail.getPerex());
-		views.tvDescription.setText(placeDetail.getDescription().getText());
+		if(placeDetail.getDescription() != null) {
+			views.tvDescription.setText(placeDetail.getDescription().getText());
+		}
 		if(placeDetail.getPrice() != null) {
 			views.tvPrice.setText(String.format(pricePattern, placeDetail.getPrice().getValue()));
 		}

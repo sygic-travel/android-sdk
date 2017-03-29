@@ -34,7 +34,8 @@ public class Utils {
 			height = displayMetrics.heightPixels;
 		} else {
 			width = displayMetrics.widthPixels;
-			height = (int) ((width >> 3) * 7f);
+			height = width;
+//			height = (int) ((width >> 3) * 7f);
 		}
 
 		return width + "x" + height;

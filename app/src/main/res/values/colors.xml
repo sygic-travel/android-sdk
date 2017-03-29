@@ -5,6 +5,6 @@
 	<color name="colorAccent">#ff4081</color>
 
 	<color name="snackbar_action_color">#ff009688</color>
-	<color name="tag_backgroud">#98bca9</color>
-	<color name="tag_stroke">#5a7c6b</color>
+	<color name="tag_backgroud">#dedede</color>
+	<color name="tag_stroke">#ababab</color>
 </resources>
