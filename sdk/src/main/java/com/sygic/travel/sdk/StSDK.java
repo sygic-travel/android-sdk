@@ -69,8 +69,8 @@ public class StSDK {
 	}
 
 
-	public void getPlaceMedia(String guid, Callback<Media> back){
-		Call<StResponse> call = getStApi().getPlaceDetailed(guid);
+	public void getPlaceMedia(String guid, Callback<List<Media>> back){
+		Call<StResponse> call = getStApi().getPlaceMedia(guid);
 		StCallback<StResponse> stCallback = new StCallback<>(back, MEDIA_API_CALL);
 		call.enqueue(stCallback);
 	}

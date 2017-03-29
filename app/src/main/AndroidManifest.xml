@@ -47,6 +47,10 @@
 			android:label="@string/title_activity_place_detail"
 			android:screenOrientation="portrait">
 		</activity>
+		<activity
+			android:name=".gallery.GalleryActivity"
+			android:label="@string/title_activity_gallery">
+		</activity>
 	</application>
 
 </manifest>

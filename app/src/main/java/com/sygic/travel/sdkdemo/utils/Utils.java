@@ -7,6 +7,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.sygic.travel.sdkdemo.R;
+
 /**
  * Created by michal.murin on 28.3.2017.
  */
@@ -39,5 +41,25 @@ public class Utils {
 		}
 
 		return width + "x" + height;
+	}
+
+	public static int getGalleryThumbSize(Context context, int spanCount) {
+		int spacingInPx = context.getResources().getDimensionPixelSize(R.dimen.gallery_photo_spacing);
+		int thumbSize = Math.round(
+			(float) (getScreenWidth(context) - ((spanCount - 1) * spacingInPx)) / (float) spanCount
+		);
+		if(thumbSize % 2 != 0){
+			thumbSize++;
+		}
+		return thumbSize;
+	}
+
+	public static int getScreenWidth(Context context) {
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		DisplayMetrics metrics = new DisplayMetrics();
+		display.getMetrics(metrics);
+
+		return metrics.widthPixels;
 	}
 }

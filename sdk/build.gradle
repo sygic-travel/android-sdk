@@ -22,11 +22,11 @@ android {
 }
 
 dependencies {
-// http request, api calls
+	// http request, api calls
 	compile 'com.squareup.retrofit2:retrofit:2.1.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 	compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-	compile 'com.google.code.gson:gson:2.4'
+	compile 'com.google.code.gson:gson:2.7'
 
 	// promises
 	compile 'org.jdeferred:jdeferred-core:1.2.4'
