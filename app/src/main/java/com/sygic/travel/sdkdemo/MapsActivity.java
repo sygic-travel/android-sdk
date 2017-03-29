@@ -11,7 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -98,7 +98,7 @@ public class MapsActivity
 
 	private void loadPlaces(){
 		Query query = new Query(
-			null, getBoundsString(), "sightseeing", null, "city:1", null, null, null, null, 50
+			null, getBoundsString(), null, null, "city:1", null, null, null, null, 50
 		);
 		StSDK.getInstance().getPlaces(query, placesCallback);
 	}
@@ -117,11 +117,15 @@ public class MapsActivity
 			if(placeMarkers.keySet().contains(place.getGuid())){
 				continue;
 			}
-			Marker newMarker = mMap.addMarker(
-				new MarkerOptions()
-					.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
-					.title(place.getName())
-					.snippet(place.getPerex())
+			float markerColor = BitmapDescriptorFactory.HUE_RED;
+			if(place.getCategories() != null && place.getCategories().size() > 0){
+				markerColor = getMarkerHue(place.getCategories().get(0));
+			}
+			Marker newMarker = mMap.addMarker(new MarkerOptions()
+				.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
+				.title(place.getName())
+				.snippet(place.getPerex())
+				.icon(BitmapDescriptorFactory.defaultMarker(markerColor))
 			);
 			newMarker.setTag(place.getGuid());
 
@@ -130,6 +134,57 @@ public class MapsActivity
 			if(placeMarkers.size() >= 50){
 				break;
 			}
+		}
+	}
+
+	// todo put to utils
+	/*
+		sightseeing 0xF6746C;
+		shopping    0xE7A41C;
+		eating      0xF6936C;
+		discovering 0x898F9A;
+		playing     0x6CD8F6;
+		traveling   0x6B91F6;
+		going_out   0xE76CA0;
+		hiking      0xD59B6B;
+		sports      0x68B277;
+		relaxing    0xA06CF6;
+		sleeping    0xA4CB69;
+	*/
+	public float getMarkerHue(String category){
+		switch(category){
+			case "sightseeing":
+//				return 0xF6746C;
+				return 14;
+			case "shopping":
+//				return 0xE7A41C;
+				return 40;
+			case "eating":
+//				return 0xF6936C;
+				return 17;
+			case "discovering":
+//				return 0x898F9A;
+				return 219;
+			case "playing":
+//				return 0x6CD8F6;
+				return 193;
+			case "traveling":
+//				return 0x6B91F6;
+				return 224;
+			case "going_out":
+//				return 0xE76CA0;
+				return 335;
+			case "hiking":
+//				return 0xD59B6B;
+				return 27;
+			case "sports":
+//				return 0x68B277;
+				return 132;
+			case "relaxing":
+//				return 0xA06CF6;
+				return 263;
+			default:
+				return BitmapDescriptorFactory.HUE_RED;
 		}
 	}
 
