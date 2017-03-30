@@ -2,7 +2,9 @@
 <resources>
 	<color name="colorPrimary">#3F51B5</color>
 	<color name="colorPrimaryDark">#303F9F</color>
-	<color name="colorAccent">#FF4081</color>
+	<color name="colorAccent">#ff4081</color>
 
 	<color name="snackbar_action_color">#ff009688</color>
+	<color name="tag_backgroud">#dedede</color>
+	<color name="tag_stroke">#ababab</color>
 </resources>

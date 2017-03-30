@@ -1,10 +1,11 @@
 package com.sygic.travel.sdkdemo;
 
 import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,9 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
+import static com.sygic.travel.sdk.model.place.Place.GUID;
 
 public class MapsActivity
-	extends FragmentActivity
+	extends AppCompatActivity
 	implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback
 {
 	private static final String TAG = "SdkDemoApp-MapActivity";
@@ -46,7 +48,7 @@ public class MapsActivity
 		setContentView(R.layout.activity_maps);
 
 		StSDK.initialize(USER_X_API_KEY, this);
-		permissionsUtils = new PermissionsUtils(findViewById(R.id.fl_main));
+		permissionsUtils = new PermissionsUtils(findViewById(R.id.ll_main));
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -61,8 +63,8 @@ public class MapsActivity
 		placesCallback = getPlacesCallback();
 		placeMarkers = new HashMap<>();
 
-		LatLng sydney = new LatLng(51.5116983, -0.1205079);
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
 
 		mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
 			@Override
@@ -75,8 +77,9 @@ public class MapsActivity
 			@Override
 			public void onInfoWindowClick(Marker marker) {
 				String guid = ((String) marker.getTag());
-				// todo start detail activity
-				Log.d(TAG, "Start detail activity for: " + guid);
+				Intent placeDetailIntent = new Intent(MapsActivity.this, PlaceDetailActivity.class);
+				placeDetailIntent.putExtra(GUID, guid);
+				startActivity(placeDetailIntent);
 			}
 		});
 
