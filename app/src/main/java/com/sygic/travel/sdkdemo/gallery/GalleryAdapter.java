@@ -76,12 +76,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 		}
 
 		public interface galleryPhotoClick {
-			void onPhotoClick(int position);
+			void onPhotoClick(int position, ImageView ivPhoto);
 		}
 
 		@Override
 		public void onClick(View v) {
-			galleryPhotoClick.onPhotoClick(getAdapterPosition());
+			galleryPhotoClick.onPhotoClick(getAdapterPosition(), ivPhoto);
 		}
 	}
 }

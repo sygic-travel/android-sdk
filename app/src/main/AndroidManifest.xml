@@ -51,6 +51,15 @@
 			android:name=".gallery.GalleryActivity"
 			android:label="@string/title_activity_gallery">
 		</activity>
+		<activity
+			android:name=".gallery.PhotoActivity"
+			android:configChanges="orientation|keyboardHidden|screenSize"
+			android:label="@string/title_activity_photo"
+			android:parentActivityName=".gallery.GalleryActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.sygic.travel.sdkdemo.gallery.GalleryActivity"/>
+		</activity>
 	</application>
 
 </manifest>

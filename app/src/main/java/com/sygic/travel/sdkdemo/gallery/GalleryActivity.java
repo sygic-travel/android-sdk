@@ -1,10 +1,12 @@
 package com.sygic.travel.sdkdemo.gallery;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
@@ -15,6 +17,7 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
+import static com.sygic.travel.sdk.model.place.Place.PHOTO_URL;
 
 public class GalleryActivity extends AppCompatActivity {
 	private static final String TAG = GalleryActivity.class.getSimpleName();
@@ -46,8 +49,10 @@ public class GalleryActivity extends AppCompatActivity {
 	private GalleryAdapter.ViewHolder.galleryPhotoClick getOnPhotoClick() {
 		return new GalleryAdapter.ViewHolder.galleryPhotoClick() {
 			@Override
-			public void onPhotoClick(int position) {
-
+			public void onPhotoClick(int position, ImageView ivPhoto) {
+				Intent photoIntent = new Intent(GalleryActivity.this, PhotoActivity.class);
+				photoIntent.putExtra(PHOTO_URL, gallery.get(position).getUrlTemplate());
+				startActivity(photoIntent);
 			}
 		};
 	}
