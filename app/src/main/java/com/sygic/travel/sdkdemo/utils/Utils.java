@@ -14,7 +14,7 @@ import com.sygic.travel.sdkdemo.R;
  */
 
 public class Utils {
-	private static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
+	public static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
 
 	public static boolean isLandscape(Resources resources){
 		return resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
@@ -41,25 +41,5 @@ public class Utils {
 		}
 
 		return width + "x" + height;
-	}
-
-	public static int getGalleryThumbSize(Context context, int spanCount) {
-		int spacingInPx = context.getResources().getDimensionPixelSize(R.dimen.gallery_photo_spacing);
-		int thumbSize = Math.round(
-			(float) (getScreenWidth(context) - ((spanCount - 1) * spacingInPx)) / (float) spanCount
-		);
-		if(thumbSize % 2 != 0){
-			thumbSize++;
-		}
-		return thumbSize;
-	}
-
-	public static int getScreenWidth(Context context) {
-		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		DisplayMetrics metrics = new DisplayMetrics();
-		display.getMetrics(metrics);
-
-		return metrics.widthPixels;
 	}
 }

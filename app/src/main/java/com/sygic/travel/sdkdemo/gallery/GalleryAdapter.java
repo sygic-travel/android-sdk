@@ -13,18 +13,19 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
 	private final ViewHolder.galleryPhotoClick galleryPhotoClick;
-	private int photoSize;
+	private String photoSize;
 	private List<Media> gallery;
 
 	public GalleryAdapter(
 		ViewHolder.galleryPhotoClick galleryPhotoClick,
-		int photoSize
+		String photoSize
 	) {
 		this.galleryPhotoClick = galleryPhotoClick;
 		this.photoSize = photoSize;
@@ -42,7 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		Picasso
 			.with(holder.ivPhoto.getContext())
-			.load(gallery.get(position).getUrlTemplate().replace("{size}", photoSize + "x" + photoSize))
+			.load(gallery.get(position).getUrlTemplate().replace(Utils.PHOTO_SIZE_PLACEHOLDER, photoSize))
 			.placeholder(R.drawable.ic_photo_camera)
 			.into(holder.ivPhoto);
 	}

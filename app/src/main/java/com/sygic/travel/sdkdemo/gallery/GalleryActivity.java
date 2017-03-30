@@ -39,10 +39,7 @@ public class GalleryActivity extends AppCompatActivity {
 		rvGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		rvGallery.addItemDecoration(new DividerDecoration(this, R.drawable.line_divider));
 		rvGallery.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-		galleryAdapter = new GalleryAdapter(
-			getOnPhotoClick(),
-			Utils.getGalleryThumbSize(this, 3)
-		);
+		galleryAdapter = new GalleryAdapter(getOnPhotoClick(), Utils.getDetailPhotoSize(this));
 		rvGallery.setAdapter(galleryAdapter);
 	}
 
