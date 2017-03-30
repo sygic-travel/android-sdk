@@ -41,7 +41,7 @@ public class GalleryActivity extends AppCompatActivity {
 		rvGallery = (RecyclerView) findViewById(R.id.rv_gallery);
 		rvGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		rvGallery.addItemDecoration(new DividerDecoration(this, R.drawable.line_divider));
-		rvGallery.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//		rvGallery.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 		galleryAdapter = new GalleryAdapter(getOnPhotoClick(), Utils.getDetailPhotoSize(this));
 		rvGallery.setAdapter(galleryAdapter);
 	}

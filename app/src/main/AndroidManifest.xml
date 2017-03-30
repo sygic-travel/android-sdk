@@ -38,7 +38,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ListActivity"
+			android:name=".list.PlacesListActivity"
 			android:label="@string/title_activity_list"
 			android:screenOrientation="portrait">
 		</activity>
