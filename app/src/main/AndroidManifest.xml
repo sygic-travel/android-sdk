@@ -28,14 +28,8 @@
 			android:value="@string/google_maps_key"/>
 
 		<activity
-			android:name=".MapsActivity"
-			android:label="@string/title_activity_maps"
-			android:screenOrientation="portrait">
-
-		</activity>
-		<activity
-			android:name=".list.PlacesListActivity"
-			android:label="@string/title_activity_list"
+			android:name=".DemoMainActivity"
+			android:label="@string/title_activity_demo_main"
 			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
@@ -44,19 +38,31 @@
 			</intent-filter>
 		</activity>
 		<activity
+			android:name=".MapsActivity"
+			android:label="@string/title_activity_maps"
+			android:screenOrientation="portrait">
+		</activity>
+		<activity
+			android:name=".list.PlacesListActivity"
+			android:label="@string/title_activity_list"
+			android:screenOrientation="portrait">
+		</activity>
+		<activity
 			android:name=".PlaceDetailActivity"
 			android:label="@string/title_activity_place_detail"
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
 			android:name=".gallery.GalleryActivity"
-			android:label="@string/title_activity_gallery">
+			android:label="@string/title_activity_gallery"
+			android:screenOrientation="portrait">
 		</activity>
 		<activity
 			android:name=".gallery.PhotoActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:label="@string/title_activity_photo"
-			android:parentActivityName=".gallery.GalleryActivity">
+			android:parentActivityName=".gallery.GalleryActivity"
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.sygic.travel.sdkdemo.gallery.GalleryActivity"/>

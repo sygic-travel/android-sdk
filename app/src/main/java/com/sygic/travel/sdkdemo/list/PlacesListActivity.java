@@ -1,8 +1,8 @@
 package com.sygic.travel.sdkdemo.list;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +14,10 @@ import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
-import com.sygic.travel.sdkdemo.gallery.DividerDecoration;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
 import static com.sygic.travel.sdk.model.place.Place.GUID;
 
 public class PlacesListActivity extends AppCompatActivity {
@@ -34,7 +32,6 @@ public class PlacesListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
-		StSDK.initialize(USER_X_API_KEY, this);
 		initRecycler();
 		loadPlaces();
 	}

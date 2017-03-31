@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
 import static com.sygic.travel.sdk.model.place.Place.GUID;
 
 public class MapsActivity
@@ -47,7 +46,6 @@ public class MapsActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 
-		StSDK.initialize(USER_X_API_KEY, this);
 		permissionsUtils = new PermissionsUtils(findViewById(R.id.ll_main));
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
