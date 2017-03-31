@@ -51,8 +51,8 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		String photoUrl = "url";
 
-		if(places.get(position).getPhotoUrl() != null) {
-			photoUrl = places.get(position).getPhotoUrl();
+		if(places.get(position).getThumbnailUrl() != null) {
+			photoUrl = places.get(position).getThumbnailUrl();
 		}
 
 		Picasso

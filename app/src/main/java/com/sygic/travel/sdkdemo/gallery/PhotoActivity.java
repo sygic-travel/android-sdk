@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
-import static com.sygic.travel.sdk.model.place.Place.PHOTO_URL;
+import static com.sygic.travel.sdk.model.place.Place.THUMBNAIL_URL;
 
 public class PhotoActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class PhotoActivity extends AppCompatActivity {
 
 	private void loadPhoto() {
 		String photoUrl;
-		String photoUrlTemplate = getIntent().getStringExtra(PHOTO_URL);
+		String photoUrlTemplate = getIntent().getStringExtra(THUMBNAIL_URL);
 		if(photoUrlTemplate != null && !photoUrlTemplate.equals("")){
 			photoUrl = photoUrlTemplate.replace(Utils.PHOTO_SIZE_PLACEHOLDER, Utils.getDetailPhotoSize(this));
 		} else {

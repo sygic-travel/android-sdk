@@ -16,7 +16,7 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
-import static com.sygic.travel.sdk.model.place.Place.PHOTO_URL;
+import static com.sygic.travel.sdk.model.place.Place.THUMBNAIL_URL;
 
 public class GalleryActivity extends AppCompatActivity {
 	private static final String TAG = GalleryActivity.class.getSimpleName();
@@ -50,7 +50,7 @@ public class GalleryActivity extends AppCompatActivity {
 			@Override
 			public void onPhotoClick(int position, ImageView ivPhoto) {
 				Intent photoIntent = new Intent(GalleryActivity.this, PhotoActivity.class);
-				photoIntent.putExtra(PHOTO_URL, gallery.get(position).getUrlTemplate());
+				photoIntent.putExtra(THUMBNAIL_URL, gallery.get(position).getUrlTemplate());
 				startActivity(photoIntent);
 			}
 		};
