@@ -3,7 +3,6 @@ package com.sygic.travel.sdkdemo.gallery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
@@ -46,8 +45,8 @@ public class GalleryActivity extends AppCompatActivity {
 		rvGallery.setAdapter(galleryAdapter);
 	}
 
-	private GalleryAdapter.ViewHolder.galleryPhotoClick getOnPhotoClick() {
-		return new GalleryAdapter.ViewHolder.galleryPhotoClick() {
+	private GalleryAdapter.ViewHolder.GalleryPhotoClick getOnPhotoClick() {
+		return new GalleryAdapter.ViewHolder.GalleryPhotoClick() {
 			@Override
 			public void onPhotoClick(int position, ImageView ivPhoto) {
 				Intent photoIntent = new Intent(GalleryActivity.this, PhotoActivity.class);
