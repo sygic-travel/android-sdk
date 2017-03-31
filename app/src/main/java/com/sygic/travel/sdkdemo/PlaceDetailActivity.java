@@ -24,6 +24,8 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
+import static com.sygic.travel.sdk.model.place.Reference.TITLE;
+import static com.sygic.travel.sdk.model.place.Reference.URL;
 
 public class PlaceDetailActivity extends AppCompatActivity {
 	private static final String TAG = PlaceDetailActivity.class.getSimpleName();
@@ -52,6 +54,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 	private void renderPlaceDetail(Detail placeDetail) {
 		String mediaUrlTemplate = "url";
+		setTitle(placeDetail.getName());
 
 		if(placeDetail.getMainMedia() != null) {
 			if(placeDetail.getMainMedia().getMedia() != null && placeDetail.getMainMedia().getMedia().size() > 0) {
@@ -126,19 +129,25 @@ public class PlaceDetailActivity extends AppCompatActivity {
 				int backgroundResource = typedArray.getResourceId(0, 0);
 				tvReference.setBackgroundResource(backgroundResource);
 				typedArray.recycle();
-				tvReference.setOnClickListener(getOnReferenceClickListener(reference.getUrl()));
+				tvReference.setOnClickListener(getOnReferenceClickListener(reference.getUrl(), reference.getTitle()));
 				tvReference.setPadding(0, 0, 0, getResources().getDimensionPixelSize(R.dimen.reference_padding));
 				views.llReferencesList.addView(tvReference);
 			}
 		}
 	}
 
-	private View.OnClickListener getOnReferenceClickListener(final String referenceUrl) {
+	private View.OnClickListener getOnReferenceClickListener(
+		final String referenceUrl,
+		final String referenceTitle
+	) {
 		return new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(referenceUrl != null && !referenceUrl.equals("")){
-					// todo show webview activity - new branch
+					Intent referenceIntent = new Intent(PlaceDetailActivity.this, ReferenceActivity.class);
+					referenceIntent.putExtra(URL, referenceUrl);
+					referenceIntent.putExtra(TITLE, referenceTitle);
+					startActivity(referenceIntent);
 				} else {
 					Toast.makeText(PlaceDetailActivity.this, "No reference URL.", Toast.LENGTH_LONG).show();
 				}

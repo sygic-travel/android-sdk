@@ -67,6 +67,10 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.sygic.travel.sdkdemo.gallery.GalleryActivity"/>
 		</activity>
+		<activity
+			android:name=".ReferenceActivity"
+			android:screenOrientation="portrait">
+		</activity>
 	</application>
 
 </manifest>

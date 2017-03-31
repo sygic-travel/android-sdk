@@ -6,6 +6,7 @@
 	<string name="title_activity_place_detail">Place Detail</string>
 	<string name="title_activity_gallery">Gallery</string>
 	<string name="title_activity_photo">Photo</string>
+	<string name="title_activity_reference">Reference</string>
 
 	<string name="settings">Settings</string>
 
