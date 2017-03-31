@@ -7,12 +7,14 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.sygic.travel.sdkdemo.R;
+
 /**
  * Created by michal.murin on 28.3.2017.
  */
 
 public class Utils {
-	private static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
+	public static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
 
 	public static boolean isLandscape(Resources resources){
 		return resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;

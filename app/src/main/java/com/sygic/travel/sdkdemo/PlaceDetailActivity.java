@@ -1,5 +1,6 @@
 package com.sygic.travel.sdkdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.TagStats;
+import com.sygic.travel.sdkdemo.gallery.GalleryActivity;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
@@ -60,6 +62,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
 				.placeholder(R.drawable.ic_photo_camera)
 				.into(views.ivPhoto);
 		}
+		views.ivPhoto.setOnClickListener(getOnPhotoClickListener());
+
 		views.tvName.setText(placeDetail.getName());
 		views.tvNameSuffix.setText(placeDetail.getNameSuffix());
 		views.tvPerex.setText(placeDetail.getPerex());
@@ -76,6 +80,21 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		views.tvAdmission.setText(placeDetail.getAdmission());
 		views.tvOpeningHours.setText(placeDetail.getOpeningHours());
 		renderTags(placeDetail.getTags());
+	}
+
+	private View.OnClickListener getOnPhotoClickListener() {
+		return new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startGallery();
+			}
+		};
+	}
+
+	private void startGallery() {
+		Intent galleryIntent = new Intent(this, GalleryActivity.class);
+		galleryIntent.putExtra(GUID, guid);
+		startActivity(galleryIntent);
 	}
 
 	private void renderTags(List<TagStats> tags) {
@@ -119,7 +138,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		FlexboxLayout fblTags;
 
 		Views(){
-			ivPhoto = (ImageView) findViewById(R.id.iv_photo);
+			ivPhoto = (ImageView) findViewById(R.id.iv_detail_photo);
 			tvName = (TextView) findViewById(R.id.tv_name);
 			tvNameSuffix = (TextView) findViewById(R.id.tv_name_suffix);
 			tvPerex = (TextView) findViewById(R.id.tv_perex);
