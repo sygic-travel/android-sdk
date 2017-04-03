@@ -44,6 +44,7 @@ public class QuadTree {
 			return FAIL_INTERSECTS;
 		}
 		insertedPlaceMetas.add(placeMeta);
+
 		return INSERTED;
 	}
 }
