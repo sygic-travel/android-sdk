@@ -35,7 +35,6 @@ public class PlacesSpreader {
 	private int zoom;
 	private List<String> processedGuids;
 
-
 	public PlacesSpreader(Resources resources, DimensConfig dimensConfig){
 		this.resources = resources;
 		intersection = new Intersection(dimensConfig);
