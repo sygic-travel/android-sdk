@@ -1,4 +1,4 @@
-package com.sygic.travel.sdkdemo;
+package com.sygic.travel.sdkdemo.map;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
+import com.sygic.travel.sdkdemo.PlaceDetailActivity;
+import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 
 import java.util.ArrayList;
@@ -34,6 +36,10 @@ public class MapsActivity
 	implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback
 {
 	private static final String TAG = "SdkDemoApp-MapActivity";
+
+	public static final float ZOOM_FOR_DETAIL = 18f;
+	public static final float ZOOM_FOR_CITY = 15f;
+	public static final float ZOOM_FOR_COUNTRY = 7f;
 
 	private GoogleMap mMap;
 	private PermissionsUtils permissionsUtils;
