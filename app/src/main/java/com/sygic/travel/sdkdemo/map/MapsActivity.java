@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -24,12 +25,15 @@ import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
+import com.sygic.travel.sdkdemo.utils.spread.DimensConfig;
+import com.sygic.travel.sdkdemo.utils.spread.PlacesSpreader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
+import static com.sygic.travel.sdkdemo.utils.Utils.getMarkerHue;
 
 public class MapsActivity
 	extends AppCompatActivity
@@ -43,6 +47,7 @@ public class MapsActivity
 
 	private GoogleMap mMap;
 	private PermissionsUtils permissionsUtils;
+	private PlacesSpreader placesSpreader;
 
 	private Callback<List<Place>> placesCallback;
 	private HashMap<String, Marker> placeMarkers;
@@ -64,19 +69,18 @@ public class MapsActivity
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 
+		placesSpreader  = new PlacesSpreader(getDimensConfig());
 		placesCallback = getPlacesCallback();
 		placeMarkers = new HashMap<>();
 
 		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
-
 		mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
 			@Override
 			public void onCameraMove() {
 				loadPlaces();
 			}
 		});
-
 		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
@@ -89,6 +93,19 @@ public class MapsActivity
 
 		enableMyLocation();
 		loadPlaces();
+	}
+
+	private DimensConfig getDimensConfig() {
+		return new DimensConfig(
+			getResources().getDimensionPixelSize(R.dimen.marker_margin_popular),
+			getResources().getDimensionPixelSize(R.dimen.marker_margin_big),
+			getResources().getDimensionPixelSize(R.dimen.marker_margin_medium),
+			getResources().getDimensionPixelSize(R.dimen.marker_margin_small),
+			getResources().getDimensionPixelSize(R.dimen.marker_size_popular),
+			getResources().getDimensionPixelSize(R.dimen.marker_size_big),
+			getResources().getDimensionPixelSize(R.dimen.marker_size_medium),
+			getResources().getDimensionPixelSize(R.dimen.marker_size_small)
+		);
 	}
 
 	private void enableMyLocation() {
@@ -120,6 +137,9 @@ public class MapsActivity
 
 	private void showPlacesOnMap(List<Place> places) {
 		removeMarkers();
+
+
+
 		for(Place place : places) {
 			if(placeMarkers.keySet().contains(place.getGuid())){
 				continue;
@@ -141,57 +161,6 @@ public class MapsActivity
 			if(placeMarkers.size() >= 50){
 				break;
 			}
-		}
-	}
-
-	// todo put to utils
-	/*
-		sightseeing 0xF6746C;
-		shopping    0xE7A41C;
-		eating      0xF6936C;
-		discovering 0x898F9A;
-		playing     0x6CD8F6;
-		traveling   0x6B91F6;
-		going_out   0xE76CA0;
-		hiking      0xD59B6B;
-		sports      0x68B277;
-		relaxing    0xA06CF6;
-		sleeping    0xA4CB69;
-	*/
-	public float getMarkerHue(String category){
-		switch(category){
-			case "sightseeing":
-//				return 0xF6746C;
-				return 14;
-			case "shopping":
-//				return 0xE7A41C;
-				return 40;
-			case "eating":
-//				return 0xF6936C;
-				return 17;
-			case "discovering":
-//				return 0x898F9A;
-				return 219;
-			case "playing":
-//				return 0x6CD8F6;
-				return 193;
-			case "traveling":
-//				return 0x6B91F6;
-				return 224;
-			case "going_out":
-//				return 0xE76CA0;
-				return 335;
-			case "hiking":
-//				return 0xD59B6B;
-				return 27;
-			case "sports":
-//				return 0x68B277;
-				return 132;
-			case "relaxing":
-//				return 0xA06CF6;
-				return 263;
-			default:
-				return BitmapDescriptorFactory.HUE_RED;
 		}
 	}
 

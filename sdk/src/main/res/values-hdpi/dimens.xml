@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Map Markers -->
+	<dimen name="marker_dot">12px</dimen>
+
+	<dimen name="marker_size_small">18px</dimen>
+	<dimen name="marker_size_medium">36px</dimen>
+	<dimen name="marker_size_big">54px</dimen>
+	<dimen name="marker_size_popular">81px</dimen>
+
+	<dimen name="marker_margin_small">15px</dimen>
+	<dimen name="marker_margin_medium">30px</dimen>
+	<dimen name="marker_margin_big">45px</dimen>
+	<dimen name="marker_margin_popular">60px</dimen>
+</resources>
