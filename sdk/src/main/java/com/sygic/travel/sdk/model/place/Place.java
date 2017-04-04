@@ -41,7 +41,7 @@ public class Place {
 	public static final String BOUNDING_BOX = "bounding_box";
 	public static final String PEREX = "perex";
 	public static final String URL = "url";
-	public static final String PHOTO_URL = "photo_url";
+	public static final String THUMBNAIL_URL = "thumbnail_url";
 	public static final String PRICE = "price";
 	public static final String MARKER = "marker";
 	public static final String TIER = "tier";
@@ -76,8 +76,8 @@ public class Place {
 	@SerializedName(URL)
 	private String url;
 
-	@SerializedName(PHOTO_URL)
-	private String photoUrl;
+	@SerializedName(THUMBNAIL_URL)
+	private String thumbnailUrl;
 
 	@SerializedName(PRICE)
 	private Price price;
@@ -169,12 +169,12 @@ public class Place {
 		this.url = url;
 	}
 
-	public String getPhotoUrl() {
-		return photoUrl;
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
 	}
 
 	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
+		this.thumbnailUrl = photoUrl;
 	}
 
 	public Price getPrice() {

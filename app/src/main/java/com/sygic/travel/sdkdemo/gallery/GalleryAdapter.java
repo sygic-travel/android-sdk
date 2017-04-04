@@ -19,12 +19,12 @@ import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-	private final ViewHolder.galleryPhotoClick galleryPhotoClick;
+	private final ViewHolder.GalleryPhotoClick galleryPhotoClick;
 	private String photoSize;
 	private List<Media> gallery;
 
 	public GalleryAdapter(
-		ViewHolder.galleryPhotoClick galleryPhotoClick,
+		ViewHolder.GalleryPhotoClick galleryPhotoClick,
 		String photoSize
 	) {
 		this.galleryPhotoClick = galleryPhotoClick;
@@ -62,11 +62,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
 	public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 		public ImageView ivPhoto;
-		private final galleryPhotoClick galleryPhotoClick;
+		private final GalleryPhotoClick galleryPhotoClick;
 
 		public ViewHolder(
 			View vItem,
-			galleryPhotoClick galleryPhotoClick
+			GalleryPhotoClick galleryPhotoClick
 		) {
 			super(vItem);
 			this.galleryPhotoClick = galleryPhotoClick;
@@ -75,7 +75,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 			vItem.setOnClickListener(this);
 		}
 
-		public interface galleryPhotoClick {
+		public interface GalleryPhotoClick {
 			void onPhotoClick(int position, ImageView ivPhoto);
 		}
 
