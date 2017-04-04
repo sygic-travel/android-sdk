@@ -10,7 +10,16 @@ public class DimensConfig {
 
 	public DimensConfig(){}
 
-	public DimensConfig(int popularMargin, int bigMargin, int mediumMargin, int smallMargin, int popularSize, int bigSize, int mediumSize, int smallSize) {
+	public DimensConfig(
+		int popularMargin,
+		int bigMargin,
+		int mediumMargin,
+		int smallMargin,
+		int popularSize,
+		int bigSize,
+		int mediumSize,
+		int smallSize
+	) {
 		this.popularMargin = popularMargin;
 		this.bigMargin = bigMargin;
 		this.mediumMargin = mediumMargin;
