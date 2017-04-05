@@ -34,16 +34,16 @@ public class QuadTree {
 		return false;
 	}
 
-	public int insert(PlaceMeta item){
-		Rect rect = intersection.getMaxRect(item);
+	public int insert(PlaceMeta placeMeta){
+		Rect rect = intersection.getMaxRect(placeMeta);
 		if(!mapRect.contains(rect) && !Rect.intersects(mapRect, rect)){
 			return FAIL_OUT_OF_BOUNDS;
 		}
 
-		if(intersectsWithItems(item)){
+		if(intersectsWithItems(placeMeta)){
 			return FAIL_INTERSECTS;
 		}
-		insertedPlaceMetas.add(item);
+		insertedPlaceMetas.add(placeMeta);
 		return INSERTED;
 	}
 }

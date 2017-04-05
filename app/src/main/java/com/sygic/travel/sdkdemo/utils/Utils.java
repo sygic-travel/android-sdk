@@ -3,12 +3,15 @@ package com.sygic.travel.sdkdemo.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.sygic.travel.sdkdemo.R;
+
+import static com.sygic.travel.sdkdemo.utils.spread.PlacesSpreader.*;
 
 /**
  * Created by michal.murin on 28.3.2017.
@@ -71,30 +74,47 @@ public class Utils {
 		}
 	}
 
-	public static int getMarkerColor(String category){
+	public static int getMarkerColor(Context context, String category){
 		switch(category){
 			case "sightseeing":
-				return 0xF6746C;
+				return ContextCompat.getColor(context, R.color.marker_sightseeing);
 			case "shopping":
-				return 0xE7A41C;
+				return ContextCompat.getColor(context, R.color.marker_shopping);
 			case "eating":
-				return 0xF6936C;
+				return ContextCompat.getColor(context, R.color.marker_eating);
 			case "discovering":
-				return 0x898F9A;
+				return ContextCompat.getColor(context, R.color.marker_discovering);
 			case "playing":
-				return 0x6CD8F6;
+				return ContextCompat.getColor(context, R.color.marker_playing);
 			case "traveling":
-				return 0x6B91F6;
+				return ContextCompat.getColor(context, R.color.marker_traveling);
 			case "going_out":
-				return 0xE76CA0;
+				return ContextCompat.getColor(context, R.color.marker_going_out);
 			case "hiking":
-				return 0xD59B6B;
+				return ContextCompat.getColor(context, R.color.marker_hiking);
 			case "sports":
-				return 0x68B277;
+				return ContextCompat.getColor(context, R.color.marker_sports);
 			case "relaxing":
-				return 0xA06CF6;
+				return ContextCompat.getColor(context, R.color.marker_relaxing);
 			default:
-				return 0x348ce3;
+				return ContextCompat.getColor(context, R.color.st_blue);
+		}
+	}
+
+	public static int getMarkerSize(Resources resources, String markerType){
+		switch(markerType){
+			case POPULAR:
+				return resources.getDimensionPixelSize(R.dimen.marker_size_popular);
+			case SMALL:
+				return resources.getDimensionPixelSize(R.dimen.marker_size_small);
+			case MEDIUM:
+				return resources.getDimensionPixelSize(R.dimen.marker_size_medium);
+			case BIG:
+				return resources.getDimensionPixelSize(R.dimen.marker_size_big);
+			case INVISIBLE:
+				return 0;
+			default:
+				return resources.getDimensionPixelSize(R.dimen.marker_size_dot);
 		}
 	}
 }

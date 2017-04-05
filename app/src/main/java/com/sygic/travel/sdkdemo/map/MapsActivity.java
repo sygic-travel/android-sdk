@@ -2,17 +2,24 @@ package com.sygic.travel.sdkdemo.map;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -28,6 +35,7 @@ import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
+import com.sygic.travel.sdkdemo.utils.Utils;
 import com.sygic.travel.sdkdemo.utils.spread.DimensConfig;
 import com.sygic.travel.sdkdemo.utils.spread.PlacesSpreader;
 
@@ -36,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
-import static com.sygic.travel.sdkdemo.utils.Utils.getMarkerHue;
+import static com.sygic.travel.sdkdemo.utils.Utils.getMarkerColor;
 
 public class MapsActivity
 	extends AppCompatActivity
@@ -54,13 +62,15 @@ public class MapsActivity
 
 	private Callback<List<Place>> placesCallback;
 	private HashMap<String, Marker> placeMarkers;
+	private View vMain;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 
-		permissionsUtils = new PermissionsUtils(findViewById(R.id.ll_main));
+		vMain = findViewById(R.id.ll_main);
+		permissionsUtils = new PermissionsUtils(vMain);
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -78,7 +88,7 @@ public class MapsActivity
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 
-		placesSpreader  = new PlacesSpreader(getDimensConfig());
+		placesSpreader  = new PlacesSpreader(getResources(), getDimensConfig());
 		placesCallback = getPlacesCallback();
 		placeMarkers = new HashMap<>();
 
@@ -164,25 +174,30 @@ public class MapsActivity
 		return boundingBox;
 	}
 
-
 	private void showPlacesOnMap(List<Place> places) {
+		placesSpreader.prepareForSpreadingNextCollection(
+			getMapBoundingBox(),
+			(int) mMap.getCameraPosition().zoom,
+			vMain.getLayoutParams().width,
+			vMain.getLayoutParams().height
+		);
+
 		removeMarkers();
-
-
-
 		for(Place place : places) {
 			if(placeMarkers.keySet().contains(place.getGuid())){
 				continue;
 			}
-			float markerColor = BitmapDescriptorFactory.HUE_RED;
-			if(place.getCategories() != null && place.getCategories().size() > 0){
-				markerColor = getMarkerHue(place.getCategories().get(0));
+
+			BitmapDescriptor markerBitmapDescriptor = getMarkerBitmapDescriptor(place);
+			if(markerBitmapDescriptor == null) {
+				continue;
 			}
+
 			Marker newMarker = mMap.addMarker(new MarkerOptions()
 				.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 				.title(place.getName())
 				.snippet(place.getPerex())
-				.icon(BitmapDescriptorFactory.defaultMarker(markerColor))
+				.icon(markerBitmapDescriptor)
 			);
 			newMarker.setTag(place.getGuid());
 
@@ -191,6 +206,67 @@ public class MapsActivity
 			if(placeMarkers.size() >= 50){
 				break;
 			}
+		}
+	}
+
+	private BitmapDescriptor getMarkerBitmapDescriptor(Place place) {
+		try {
+			Bitmap markerBitmap = createMarkerBitmap(place);
+			if(markerBitmap != null) {
+				return BitmapDescriptorFactory.fromBitmap(markerBitmap);
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			return BitmapDescriptorFactory.defaultMarker(getMarkerHue(place));
+		}
+	}
+
+	private float getMarkerHue(Place place) {
+		float markerHue = BitmapDescriptorFactory.HUE_RED;
+		if(place.getCategories() != null && place.getCategories().size() > 0){
+			markerHue = Utils.getMarkerHue(place.getCategories().get(0));
+		}
+		return markerHue;
+	}
+
+	public Bitmap createMarkerBitmap(Place place) {
+		try {
+			Bitmap markerBitmap;
+			Canvas canvas;
+			Paint paint;
+			Rect rect;
+			RectF rectF;
+
+			int markerColor = ContextCompat.getColor(this, R.color.st_blue);
+			int markerSize = getResources().getDimensionPixelSize(R.dimen.marker_size_dot);
+
+			if(place.getCategories() != null && place.getCategories().size() > 0){
+				markerColor = getMarkerColor(this, place.getCategories().get(0));
+			}
+
+			if(place.getMarker() != null && !place.getMarker().equals("")){
+				markerSize = placesSpreader.getPlaceSizeAndInsert(place);
+			}
+
+			if(markerSize == 0){
+				return null;
+			}
+
+			markerBitmap = Bitmap.createBitmap(markerSize, markerSize, Bitmap.Config.ARGB_8888);
+			canvas = new Canvas(markerBitmap);
+			paint = new Paint();
+			rect = new Rect(0, 0, markerSize, markerSize);
+			rectF = new RectF(rect);
+
+			paint.setStyle(Paint.Style.FILL);
+			paint.setColor(markerColor);
+			canvas.drawRoundRect(rectF, markerSize >> 1, markerSize >> 1, paint);
+
+			return markerBitmap;
+		} catch (Exception exception){
+			exception.printStackTrace();
+			return null;
 		}
 	}
 
