@@ -1,9 +1,12 @@
 package com.sygic.travel.sdkdemo.utils.spread;
 
+import android.content.res.Resources;
 import android.graphics.Rect;
 
 import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
+import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,8 @@ public class PlacesSpreader {
 	public static final String BIG = "big";
 	public static final String INVISIBLE = "invisible";
 
-	private String placeSizesList[] = new String[]{POPULAR, BIG, MEDIUM, SMALL};
+	private String markerSizesTypes[] = new String[]{POPULAR, BIG, MEDIUM, SMALL};
+	private final Resources resources;
 	private Intersection intersection;
 
 	private QuadTree quadTree;
@@ -32,11 +36,12 @@ public class PlacesSpreader {
 	private List<String> processedGuids;
 
 
-	public PlacesSpreader(DimensConfig dimensConfig){
+	public PlacesSpreader(Resources resources, DimensConfig dimensConfig){
+		this.resources = resources;
 		intersection = new Intersection(dimensConfig);
 	}
 
-	private void prepareForSpreadingNextCollection(BoundingBox boundingBox, int zoom, int mapWidth, int mapHeight){
+	public void prepareForSpreadingNextCollection(BoundingBox boundingBox, int zoom, int mapWidth, int mapHeight){
 		this.boundingBox = boundingBox;
 		this.zoom = zoom;
 		this.mapWidth = mapWidth;
@@ -47,36 +52,51 @@ public class PlacesSpreader {
 		processedGuids = new ArrayList<>();
 	}
 
-	public String getPlaceSizeAndInsert(Place place){
-		if(processedGuids.contains(place.getGuid())){
-			return INVISIBLE;
+	public int getPlaceSizeAndInsert(Place place){
+		Location location = place.getLocation();
+		if(processedGuids.contains(place.getGuid()) || location == null){
+			return Utils.getMarkerSize(resources, INVISIBLE);
 		}
-		processedGuids.add(place.getGuid());
-		int placesSizeLimit = zoom >= ZOOM_FOR_DETAIL ? placeSizesList.length - 1 : placeSizesList.length;
-		if(place.getLocation() != null){
-			return INVISIBLE;
-		}
+		int suitableSizesCount =
+			zoom >= ZOOM_FOR_DETAIL ? markerSizesTypes.length - 1 : markerSizesTypes.length;
+		int screenPosition[] = latLngToPixel(location.getLat(), location.getLng(), boundingBox);
 
-		int screenPosition[] = latLngToPixel(place.getLocation().getLat(), place.getLocation().getLng(), boundingBox);
-		return insert(screenPosition, place.getTier(), placesSizeLimit);
+		processedGuids.add(place.getGuid());
+
+		return insert(screenPosition, getPlaceTier(place), suitableSizesCount);
 	}
 
-	private String insert(int [] screenPosition, int tier, int placesSizeLimit){
-		String category = zoom >= ZOOM_FOR_DETAIL ? MEDIUM : INVISIBLE;
-		for(int i = getAllowedSize(tier) ; i < placesSizeLimit; i++) {
-			PlaceMeta placeMeta = new PlaceMeta(screenPosition[0], screenPosition[1], placeSizesList[i]);
+	private int insert(int [] screenPosition, int tier, int suitableSizesCount){
+		String sizeType = zoom >= ZOOM_FOR_DETAIL ? MEDIUM : INVISIBLE;
+		int limitSizeIndex = getLimitSizeIndex(tier);
+		for(int i = limitSizeIndex; i < suitableSizesCount; i++) {
+			PlaceMeta placeMeta = new PlaceMeta(screenPosition[0], screenPosition[1], markerSizesTypes[i]);
 			int result = quadTree.insert(placeMeta);
 			if(result == QuadTree.INSERTED) {
-				category = placeSizesList[i];
+				sizeType = markerSizesTypes[i];
 				break;
 			} else if(result == QuadTree.FAIL_OUT_OF_BOUNDS) {
-				return INVISIBLE;
+				sizeType = INVISIBLE;
+				break;
 			}
 		}
-		return category;
+		return Utils.getMarkerSize(resources, sizeType);
 	}
 
-	private int getAllowedSize(int tier){
+	private int getPlaceTier(Place place) {
+		float rating = place.getRating();
+		if(rating >= 7.5f) {
+			return 1;
+		} else if(rating >= 5f) {
+			return 2;
+		} else if(rating >= 2.5f) {
+			return 3;
+		} else {
+			return 4;
+		}
+	}
+
+	private int getLimitSizeIndex(int tier){
 		switch(tier){
 			case 1:
 				return 0;

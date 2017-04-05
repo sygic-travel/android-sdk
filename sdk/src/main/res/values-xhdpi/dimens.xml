@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Map Markers -->
-	<dimen name="marker_dot">16px</dimen>
+	<dimen name="marker_size_dot">16px</dimen>
 
 	<dimen name="marker_size_small">24px</dimen>
 	<dimen name="marker_size_medium">48px</dimen>
