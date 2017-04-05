@@ -3,6 +3,7 @@
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="tag_padding">4dp</dimen>
+	<dimen name="reference_padding">8dp</dimen>
 	<dimen name="gallery_photo_spacing">10px</dimen>
 	<dimen name="places_item_photo_size">240px</dimen>
 </resources>

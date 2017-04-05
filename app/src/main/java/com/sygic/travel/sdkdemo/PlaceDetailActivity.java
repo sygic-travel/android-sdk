@@ -1,18 +1,22 @@
 package com.sygic.travel.sdkdemo;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.squareup.picasso.Picasso;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdk.model.place.TagStats;
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity;
 import com.sygic.travel.sdkdemo.utils.Utils;
@@ -20,6 +24,8 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
+import static com.sygic.travel.sdk.model.place.Reference.TITLE;
+import static com.sygic.travel.sdk.model.place.Reference.URL;
 
 public class PlaceDetailActivity extends AppCompatActivity {
 	private static final String TAG = PlaceDetailActivity.class.getSimpleName();
@@ -48,6 +54,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 	private void renderPlaceDetail(Detail placeDetail) {
 		String mediaUrlTemplate = "url";
+		setTitle(placeDetail.getName());
 
 		if(placeDetail.getMainMedia() != null) {
 			if(placeDetail.getMainMedia().getMedia() != null && placeDetail.getMainMedia().getMedia().size() > 0) {
@@ -80,6 +87,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		views.tvAdmission.setText(placeDetail.getAdmission());
 		views.tvOpeningHours.setText(placeDetail.getOpeningHours());
 		renderTags(placeDetail.getTags());
+		renderReferences(placeDetail.getReferences());
 	}
 
 	private View.OnClickListener getOnPhotoClickListener() {
@@ -110,6 +118,56 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		}
 	}
 
+	private void renderReferences(List<Reference> references) {
+		if(references != null){
+			for(Reference reference : references) {
+				TextView tvReference = new TextView(this);
+				tvReference.setText(getReferenceText(reference));
+				tvReference.setClickable(true);
+				int[] attrs = new int[]{R.attr.selectableItemBackground};
+				TypedArray typedArray = obtainStyledAttributes(attrs);
+				int backgroundResource = typedArray.getResourceId(0, 0);
+				tvReference.setBackgroundResource(backgroundResource);
+				typedArray.recycle();
+				tvReference.setOnClickListener(getOnReferenceClickListener(reference.getUrl(), reference.getTitle()));
+				tvReference.setPadding(0, 0, 0, getResources().getDimensionPixelSize(R.dimen.reference_padding));
+				views.llReferencesList.addView(tvReference);
+			}
+		}
+	}
+
+	private View.OnClickListener getOnReferenceClickListener(
+		final String referenceUrl,
+		final String referenceTitle
+	) {
+		return new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(referenceUrl != null && !referenceUrl.equals("")){
+					Intent referenceIntent = new Intent(PlaceDetailActivity.this, ReferenceActivity.class);
+					referenceIntent.putExtra(URL, referenceUrl);
+					referenceIntent.putExtra(TITLE, referenceTitle);
+					startActivity(referenceIntent);
+				} else {
+					Toast.makeText(PlaceDetailActivity.this, "No reference URL.", Toast.LENGTH_LONG).show();
+				}
+			}
+		};
+	}
+
+	private String getReferenceText(Reference reference) {
+		StringBuilder referenceBuilder = new StringBuilder();
+		referenceBuilder
+			.append(reference.getTitle())
+			.append("\n")
+			.append("Price: $")
+			.append(reference.getPrice())
+			.append("\n")
+			.append("URL: ")
+			.append(reference.getUrl());
+		return referenceBuilder.toString();
+	}
+
 	private TextView createFlexTagTextView(String tag) {
 		TextView textView = new TextView(this);
 		textView.setBackgroundResource(R.drawable.tag_background);
@@ -136,6 +194,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		TextView tvName, tvNameSuffix, tvPerex, tvDescription, tvPrice, tvRating, tvAddress, tvPhone,
 				tvEmail, tvAdmission, tvOpeningHours;
 		FlexboxLayout fblTags;
+		LinearLayout llReferencesList;
 
 		Views(){
 			ivPhoto = (ImageView) findViewById(R.id.iv_detail_photo);
@@ -151,6 +210,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 			tvAdmission = (TextView) findViewById(R.id.tv_admission);
 			tvOpeningHours = (TextView) findViewById(R.id.tv_opening_hours);
 			fblTags = (FlexboxLayout) findViewById(R.id.fbl_tags);
+			llReferencesList = (LinearLayout) findViewById(R.id.ll_references_list);
 		}
 	}
 }
