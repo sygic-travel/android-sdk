@@ -22,10 +22,14 @@ public class QuadTree {
 	public QuadTree(Intersection intersection, Rect mapRect) {
 		this.intersection = intersection;
 		this.mapRect = mapRect;
+		reset();
+	}
+
+	public void reset(){
 		insertedPlaceMetas = Collections.synchronizedList(new ArrayList<PlaceMeta>());
 	}
 
-	public boolean intersectsWithItems(PlaceMeta placeMeta){
+	public boolean intersectsWithInsertedPlaces(PlaceMeta placeMeta){
 		for (PlaceMeta insertedPlaceMeta : insertedPlaceMetas){
 			if(intersection.intersects(insertedPlaceMeta, placeMeta)){
 				return true;
@@ -40,9 +44,10 @@ public class QuadTree {
 			return FAIL_OUT_OF_BOUNDS;
 		}
 
-		if(intersectsWithItems(placeMeta)){
+		if(intersectsWithInsertedPlaces(placeMeta)){
 			return FAIL_INTERSECTS;
 		}
+
 		insertedPlaceMetas.add(placeMeta);
 
 		return INSERTED;

@@ -1,15 +1,14 @@
 package com.sygic.travel.sdkdemo.utils.spread;
 
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdkdemo.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.sygic.travel.sdkdemo.map.MapsActivity.ZOOM_FOR_DETAIL;
 
@@ -18,6 +17,8 @@ import static com.sygic.travel.sdkdemo.map.MapsActivity.ZOOM_FOR_DETAIL;
  */
 
 public class PlacesSpreader {
+	private static final String TAG = PlacesSpreader.class.getSimpleName();
+
 	public static final String POPULAR = "popular";
 	public static final String SMALL = "small";
 	public static final String MEDIUM = "medium";
@@ -33,43 +34,45 @@ public class PlacesSpreader {
 	private int mapHeight;
 	private BoundingBox boundingBox;
 	private int zoom;
-	private List<String> processedGuids;
 
-	public PlacesSpreader(Resources resources, DimensConfig dimensConfig){
+	public PlacesSpreader(
+		Resources resources,
+		int mapWidth,
+		int mapHeight,
+		DimensConfig dimensConfig
+	){
 		this.resources = resources;
-		intersection = new Intersection(dimensConfig);
-	}
-
-	public void prepareForSpreadingNextCollection(BoundingBox boundingBox, int zoom, int mapWidth, int mapHeight){
-		this.boundingBox = boundingBox;
-		this.zoom = zoom;
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 
-		Rect mapRect = new Rect(0, 0, mapWidth, mapHeight);
-		quadTree = new QuadTree(intersection, mapRect);
-		processedGuids = new ArrayList<>();
+		intersection = new Intersection(dimensConfig);
+		quadTree = new QuadTree(intersection, new Rect(0, 0, mapWidth, mapHeight));
+	}
+
+	public void setNewMapPosition(
+		BoundingBox boundingBox,
+		int zoom
+	){
+		this.boundingBox = boundingBox;
+		this.zoom = zoom;
+		quadTree.reset();
 	}
 
 	public int getPlaceSizeAndInsert(Place place){
 		Location location = place.getLocation();
-		if(processedGuids.contains(place.getGuid()) || location == null){
-			return Utils.getMarkerSize(resources, INVISIBLE);
-		}
+
 		int suitableSizesCount =
 			zoom >= ZOOM_FOR_DETAIL ? markerSizesTypes.length - 1 : markerSizesTypes.length;
-		int screenPosition[] = latLngToPixel(location.getLat(), location.getLng(), boundingBox);
-
-		processedGuids.add(place.getGuid());
+		Point screenPosition = latLngToPixel(location.getLat(), location.getLng(), boundingBox);
 
 		return insert(screenPosition, getPlaceTier(place), suitableSizesCount);
 	}
 
-	private int insert(int [] screenPosition, int tier, int suitableSizesCount){
-		String sizeType = zoom >= ZOOM_FOR_DETAIL ? MEDIUM : INVISIBLE;
+	private int insert(Point screenPosition, int tier, int suitableSizesCount){
+		String sizeType = zoom >= ZOOM_FOR_DETAIL ? MEDIUM : SMALL;
 		int limitSizeIndex = getLimitSizeIndex(tier);
 		for(int i = limitSizeIndex; i < suitableSizesCount; i++) {
-			PlaceMeta placeMeta = new PlaceMeta(screenPosition[0], screenPosition[1], markerSizesTypes[i]);
+			PlaceMeta placeMeta = new PlaceMeta(screenPosition.x, screenPosition.y, markerSizesTypes[i]);
 			int result = quadTree.insert(placeMeta);
 			if(result == QuadTree.INSERTED) {
 				sizeType = markerSizesTypes[i];
@@ -79,16 +82,17 @@ public class PlacesSpreader {
 				break;
 			}
 		}
+		Log.d(TAG, sizeType);
 		return Utils.getMarkerSize(resources, sizeType);
 	}
 
 	private int getPlaceTier(Place place) {
 		float rating = place.getRating();
-		if(rating >= 7.5f) {
+		if(rating >= 8.5f) {
 			return 1;
-		} else if(rating >= 5f) {
+		} else if(rating >= 7f) {
 			return 2;
-		} else if(rating >= 2.5f) {
+		} else if(rating >= 4.5f) {
 			return 3;
 		} else {
 			return 4;
@@ -109,7 +113,16 @@ public class PlacesSpreader {
 		return 3;
 	}
 
-	private int[] latLngToPixel(double lat, double lng, BoundingBox boundingBox){
+	/**
+	 * If using Google Maps, you can use GoogleMap.getProjection().toScreenLocation(LatLng)
+	 *
+	 * @param lat Latitude of the posiotion to convert
+	 * @param lng Longitude of the position to convert
+	 * @param boundingBox map's current bounding box
+	 * @return android.graphics.Point device's screen coordinates
+	 *
+	 */
+	private Point latLngToPixel(double lat, double lng, BoundingBox boundingBox){
 		double south, west, north, east;
 		south = boundingBox.getSouth();
 		west = boundingBox.getWest();
@@ -122,7 +135,7 @@ public class PlacesSpreader {
 		double latRatio = mapHeight / Math.abs(south - north);
 		double lngRatio = mapWidth / Math.abs(west - east);
 
-		if (west > east){ //date date border is crossing
+		if (west > east){ //date border
 			lngRatio = mapWidth / Math.abs(180 - west + 180 + east);
 			if(lng < 0 && lng < east){
 				lngDiff = 180 - west + 180 + lng;
@@ -132,8 +145,9 @@ public class PlacesSpreader {
 			}
 		}
 
-		int x = (int) (lngDiff * lngRatio);
-		int y = (int) (latDiff * latRatio);
-		return new int[]{x, y};
+		return new Point(
+			(int) (lngDiff * lngRatio),
+			(int) (latDiff * latRatio)
+		);
 	}
 }
