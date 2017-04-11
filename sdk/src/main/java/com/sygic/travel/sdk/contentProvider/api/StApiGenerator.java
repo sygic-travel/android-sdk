@@ -15,6 +15,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL;
@@ -45,9 +46,13 @@ public class StApiGenerator {
 
 	//TO_INTERCEPT is replaced by api version and locale in LocaleInterceptor class
 
-	private static Retrofit.Builder builder = new Retrofit.Builder()
-		.baseUrl((StEnvironment.alpha ? API_BASE_URL_ALPHA : API_BASE_URL) + LocaleInterceptor.TO_INTERCEPT + "/")
-		.addConverterFactory(GsonConverterFactory.create(apiGson));
+	private static String baseUrl = StEnvironment.alpha ? API_BASE_URL_ALPHA : API_BASE_URL;
+
+	private static Retrofit.Builder builder =
+		new Retrofit.Builder()
+			.baseUrl(baseUrl + LocaleInterceptor.TO_INTERCEPT + "/")
+			.addConverterFactory(GsonConverterFactory.create(apiGson))
+			.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
 	private static OkHttpClient getHttpClient(File cacheDir) {
 		if(httpClient == null){

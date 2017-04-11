@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.sygic.travel.sdk.StSDK;
@@ -33,7 +34,7 @@ public class GalleryActivity extends AppCompatActivity {
 
 		initRecycler();
 		guid = getIntent().getStringExtra(GUID);
-		StSDK.getInstance().getPlaceMedia(guid, new MediaCallback());
+		StSDK.getInstance().getPlaceMedia(guid, getMediaCallback());
 	}
 
 	private void initRecycler() {
@@ -56,17 +57,20 @@ public class GalleryActivity extends AppCompatActivity {
 		};
 	}
 
-	private class MediaCallback extends Callback<List<Media>> {
-		@Override
-		public void onSuccess(List<Media> gallery) {
-			GalleryActivity.this.gallery = gallery;
-			galleryAdapter.setGallery(gallery);
-			galleryAdapter.notifyDataSetChanged();
-		}
+	private Callback<List<Media>> getMediaCallback() {
+		return new Callback<List<Media>>() {
+			@Override
+			public void onSuccess(List<Media> gallery) {
+				GalleryActivity.this.gallery = gallery;
+				galleryAdapter.setGallery(gallery);
+				galleryAdapter.notifyDataSetChanged();
+			}
 
-		@Override
-		public void onFailure(Throwable t) {
-
-		}
+			@Override
+			public void onFailure(Throwable t) {
+				Log.d(TAG, "Media: onFailure");
+				t.printStackTrace();
+			}
+		};
 	}
 }

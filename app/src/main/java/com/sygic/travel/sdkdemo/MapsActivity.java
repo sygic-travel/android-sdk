@@ -214,7 +214,6 @@ public class MapsActivity
 			placesCallback = new Callback<List<Place>>() {
 				@Override
 				public void onSuccess(List<Place> places) {
-//					Log.d(TAG, "Places: onSuccess");
 					showPlacesOnMap(places);
 				}
 

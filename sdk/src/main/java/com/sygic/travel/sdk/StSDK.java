@@ -1,11 +1,12 @@
 package com.sygic.travel.sdk;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
-import com.sygic.travel.sdk.contentProvider.api.StCallback;
+import com.sygic.travel.sdk.contentProvider.api.StObserver;
 import com.sygic.travel.sdk.model.StResponse;
 import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdk.model.place.Detail;
@@ -15,8 +16,10 @@ import com.sygic.travel.sdk.model.query.Query;
 import java.io.File;
 import java.util.List;
 
-import retrofit2.Call;
+import retrofit2.adapter.rxjava.Result;
 import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,6 +32,12 @@ import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
  * all inner ?structures?.
  */
 public class StSDK {
+
+	/********************************************
+	 *  		       CONSTANTS
+	 ********************************************/
+
+	private static final String TAG = StSDK.class.getSimpleName();
 
 	/********************************************
 	 *  		PUBLIC MEMBERS & METHODS
@@ -51,7 +60,7 @@ public class StSDK {
 		Query query,
 		Callback<List<Place>> back
 	){
-		Call<StResponse> call = getStApi().getPlaces(
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaces(
 			query.getQuery(),
 			query.getLevel(),
 			query.getCategories(),
@@ -63,21 +72,21 @@ public class StSDK {
 			query.getLimit()
 		);
 
-		StCallback<StResponse> stCallback = new StCallback<>(back, PLACES_API_CALL);
-		call.enqueue(stCallback);
+		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = mergedObservable.subscribe(new StObserver(back, PLACES_API_CALL));
 	}
 
 	public void getPlaceDetailed(String guid, Callback<Detail> back){
-		Call<StResponse> call = getStApi().getPlaceDetailed(guid);
-		StCallback<StResponse> stCallback = new StCallback<>(back, DETAIL_API_CALL);
-		call.enqueue(stCallback);
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(guid);
+		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = mergedObservable.subscribe(new StObserver(back, DETAIL_API_CALL));
 	}
 
 
 	public void getPlaceMedia(String guid, Callback<List<Media>> back){
-		Call<StResponse> call = getStApi().getPlaceMedia(guid);
-		StCallback<StResponse> stCallback = new StCallback<>(back, MEDIA_API_CALL);
-		call.enqueue(stCallback);
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
+		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = mergedObservable.subscribe(new StObserver(back, MEDIA_API_CALL));
 	}
 
 	/********************************************
@@ -98,12 +107,19 @@ public class StSDK {
 			.observeOn(AndroidSchedulers.mainThread());
 	}
 
+	public void rxUnSubscribe(){
+		if(subscription != null && subscription.isUnsubscribed()){
+			subscription.unsubscribe();
+		}
+	}
+
 	/********************************************
 	 *  		PRIVATE MEMBERS & METHODS
 	 ********************************************/
 
 	private StApi stApi;
 	private File cacheDir;
+	private Subscription subscription;
 
 	private StSDK() {
 	}

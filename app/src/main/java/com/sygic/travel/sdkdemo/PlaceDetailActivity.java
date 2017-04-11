@@ -49,11 +49,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
 	}
 
 	private void loadPlaceDetail() {
-		StSDK.getInstance().getPlaceDetailed(guid, new PlaceDetailCallback());
+		StSDK.getInstance().getPlaceDetailed(guid, getDetailCallback());
 	}
 
 	private void renderPlaceDetail(Detail placeDetail) {
 		String mediaUrlTemplate = "url";
+
 		setTitle(placeDetail.getName());
 
 		if(placeDetail.getMainMedia() != null) {
@@ -177,16 +178,18 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		return textView;
 	}
 
-	private class PlaceDetailCallback extends Callback<Detail> {
-		@Override
-		public void onSuccess(Detail placeDetail) {
-			renderPlaceDetail(placeDetail);
-		}
+	private Callback<Detail> getDetailCallback(){
+		return new Callback<Detail>() {
+			@Override
+			public void onSuccess(Detail placeDetail) {
+				renderPlaceDetail(placeDetail);
+			}
 
-		@Override
-		public void onFailure(Throwable t) {
+			@Override
+			public void onFailure(Throwable t) {
 
-		}
+			}
+		};
 	}
 
 	private class Views {
