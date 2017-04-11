@@ -2,10 +2,10 @@ package com.sygic.travel.sdk;
 
 import android.content.Context;
 
-import com.sygic.travel.sdk.contentProvider.api.StCallback;
-import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
-import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
+import com.sygic.travel.sdk.contentProvider.api.StApi;
+import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
+import com.sygic.travel.sdk.contentProvider.api.StCallback;
 import com.sygic.travel.sdk.model.StResponse;
 import com.sygic.travel.sdk.model.media.Media;
 import com.sygic.travel.sdk.model.place.Detail;
@@ -16,8 +16,13 @@ import java.io.File;
 import java.util.List;
 
 import retrofit2.Call;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApi.*;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.DETAIL_API_CALL;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
  * This class provides public methods for user, it is starting point of app and it initialize
@@ -74,6 +79,25 @@ public class StSDK {
 		StCallback<StResponse> stCallback = new StCallback<>(back, MEDIA_API_CALL);
 		call.enqueue(stCallback);
 	}
+
+	/********************************************
+	 *  		          RX
+	 ********************************************/
+
+	/**
+	 * Method returns a new prepared Observable.
+	 *
+	 * @param unpreparedObservable Observable to be prepared
+	 * @return Observable ready to be subscribed to
+	 */
+	public static <T> Observable<T> getPreparedObservable(
+		Observable<T> unpreparedObservable
+	){
+		return unpreparedObservable
+			.subscribeOn(Schedulers.newThread())
+			.observeOn(AndroidSchedulers.mainThread());
+	}
+
 	/********************************************
 	 *  		PRIVATE MEMBERS & METHODS
 	 ********************************************/

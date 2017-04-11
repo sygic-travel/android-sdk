@@ -21,9 +21,12 @@ import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_U
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL_ALPHA;
 
 public class StApiGenerator {
-
+	/********************************************
+	 *  		        RETROFIT
+	 ********************************************/
 	public static AuthorizationInterceptor authorizationInterceptor = new AuthorizationInterceptor();
 	public static LocaleInterceptor localeInterceptor = new LocaleInterceptor();
+
 	private static Interceptor loggingInterceptor = new HttpLoggingInterceptor()
 		.setLevel(getHttpLoggingInterceptorLevel());
 	private static OkHttpClient httpClient;
@@ -35,6 +38,16 @@ public class StApiGenerator {
 	private static Retrofit buildRetrofit(File cacheDir){
 		return builder.client(getHttpClient(cacheDir)).build();
 	}
+
+	private static Gson apiGson = new GsonBuilder()
+		.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+		.create();
+
+	//TO_INTERCEPT is replaced by api version and locale in LocaleInterceptor class
+
+	private static Retrofit.Builder builder = new Retrofit.Builder()
+		.baseUrl((StEnvironment.alpha ? API_BASE_URL_ALPHA : API_BASE_URL) + LocaleInterceptor.TO_INTERCEPT + "/")
+		.addConverterFactory(GsonConverterFactory.create(apiGson));
 
 	private static OkHttpClient getHttpClient(File cacheDir) {
 		if(httpClient == null){
@@ -49,16 +62,6 @@ public class StApiGenerator {
 		}
 		return httpClient;
 	}
-
-	private static Gson apiGson = new GsonBuilder()
-		.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-		.create();
-
-	//TO_INTERCEPT is replaced by api version and locale in LocaleInterceptor class
-
-	private static Retrofit.Builder builder = new Retrofit.Builder()
-		.baseUrl((StEnvironment.alpha ? API_BASE_URL_ALPHA : API_BASE_URL) + LocaleInterceptor.TO_INTERCEPT + "/")
-		.addConverterFactory(GsonConverterFactory.create(apiGson));
 
 	private static HttpLoggingInterceptor.Level getHttpLoggingInterceptorLevel() {
 		if (StEnvironment.debug) {
