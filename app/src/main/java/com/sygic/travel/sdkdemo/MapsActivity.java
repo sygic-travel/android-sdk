@@ -98,10 +98,9 @@ public class MapsActivity
 	}
 
 	private void loadPlaces(){
-		Query query = new Query(
-			null, getBoundsString(), null, null, "city:1", null, null, null, null, 50
-		);
-		StSDK.getInstance().getPlaces(query, placesCallback);
+		List<Query> queries = new ArrayList<>();
+		queries.add(new Query(null, getBoundsString(), null, null, "city:1", null, null, null, null, 100));
+		StSDK.getInstance().getPlaces(queries, placesCallback);
 	}
 
 	private String getBoundsString() {
