@@ -114,8 +114,11 @@ public class StSDK {
 			.observeOn(AndroidSchedulers.mainThread());
 	}
 
-	public void rxUnSubscribe(){
-		if(subscription != null && subscription.isUnsubscribed()){
+	/**
+	 * Method unsubsribes a subscribed observable
+	 */
+	public void unsubscribeObservable(){
+		if(subscription != null && !subscription.isUnsubscribed()){
 			subscription.unsubscribe();
 		}
 	}

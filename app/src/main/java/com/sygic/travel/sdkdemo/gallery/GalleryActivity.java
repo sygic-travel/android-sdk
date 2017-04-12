@@ -37,6 +37,12 @@ public class GalleryActivity extends AppCompatActivity {
 		StSDK.getInstance().getPlaceMedia(guid, getMediaCallback());
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		StSDK.getInstance().unsubscribeObservable();
+	}
+
 	private void initRecycler() {
 		rvGallery = (RecyclerView) findViewById(R.id.rv_gallery);
 		rvGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -48,6 +48,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		loadPlaceDetail();
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		StSDK.getInstance().unsubscribeObservable();
+	}
+
 	private void loadPlaceDetail() {
 		StSDK.getInstance().getPlaceDetailed(guid, getDetailCallback());
 	}

@@ -37,6 +37,12 @@ public class PlacesListActivity extends AppCompatActivity {
 		loadPlaces();
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		StSDK.getInstance().unsubscribeObservable();
+	}
+
 	private void initRecycler() {
 		rvPlaces = (RecyclerView) findViewById(R.id.rv_places);
 		rvPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

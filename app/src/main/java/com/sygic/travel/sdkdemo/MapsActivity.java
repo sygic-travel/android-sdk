@@ -55,6 +55,12 @@ public class MapsActivity
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+		StSDK.getInstance().unsubscribeObservable();
+	}
+
+	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 
