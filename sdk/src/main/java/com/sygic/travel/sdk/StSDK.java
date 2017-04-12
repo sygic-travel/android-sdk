@@ -64,13 +64,13 @@ public class StSDK {
 			preparedObservables.add(getPreparedObservable(
 				getStApi().getPlaces(
 					query.getQuery(),
-					query.getLevel(),
+					query.getLevels(),
 					query.getCategories(),
 					query.getMapTile(),
 					query.getMapSpread(),
 					query.getBounds(),
 					query.getTags(),
-					query.getParent(),
+					query.getParents(),
 					query.getLimit()
 				)
 			));

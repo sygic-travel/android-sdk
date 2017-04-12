@@ -26,13 +26,13 @@ public interface StApi {
 	@GET("places")
 	Observable<Result<StResponse>> getPlaces(
 		@Query("query") String query,
-		@Query("level") String level,
+		@Query("levels") String levels,
 		@Query("categories") String categories,
 		@Query("map_tile") String mapTile,
 		@Query("map_spread") Integer mapSpread,
 		@Query("bounds") String bounds,
 		@Query("tags") String tags,
-		@Query("parent") String parent,
+		@Query("parents") String parents,
 		@Query("limit") Integer limit
 	);
 

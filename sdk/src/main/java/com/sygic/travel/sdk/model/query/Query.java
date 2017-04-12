@@ -6,30 +6,16 @@ import com.google.gson.annotations.SerializedName;
  * Created by michal.murin on 10.3.2017.
  */
 
-/*
-class Query {
-	query,
-	bounds,
-	categories,
-	tags,
-	parent,
-	quadkeys,
-	mapSpread,
-	limit
-}
-*/
-
 public class Query {
 	public static final String QUERY = "query";
 	public static final String BOUNDS = "bounds";
 	public static final String CATEGORIES = "categories";
 	public static final String TAGS = "tags";
-	public static final String PARENT = "parent";
-	public static final String QUADKEYS = "quadkeys";
+	public static final String PARENTS = "parents";
 	public static final String MAP_SPREAD = "map_spread";
 	public static final String MAP_TILE = "map_tile";
 	public static final String LIMIT = "limit";
-	public static final String LEVEL = "level";
+	public static final String LEVELS = "levels";
 
 	@SerializedName(QUERY)
 	private String query;
@@ -43,11 +29,8 @@ public class Query {
 	@SerializedName(TAGS)
 	private String tags;
 
-	@SerializedName(PARENT)
-	private String parent;
-
-	@SerializedName(QUADKEYS)
-	private Integer quadkeys;
+	@SerializedName(PARENTS)
+	private String parents;
 
 	@SerializedName(MAP_SPREAD)
 	private Integer mapSpread;
@@ -58,22 +41,31 @@ public class Query {
 	@SerializedName(LIMIT)
 	private Integer limit;
 
-	@SerializedName(LEVEL)
-	private String level;
+	@SerializedName(LEVELS)
+	private String levels;
 
 	public Query(){}
 
-	public Query(String query, String bounds, String categories, String tags, String parent, Integer quadkeys, Integer mapSpread, String mapTile, String level, Integer limit) {
+	public Query(
+		String query,
+		String bounds,
+		String categories,
+		String tags,
+		String parents,
+		Integer mapSpread,
+		String mapTile,
+		String levels,
+		Integer limit
+	) {
 		this.query = query;
 		this.bounds = bounds;
 		this.categories = categories;
 		this.tags = tags;
-		this.parent = parent;
-		this.quadkeys = quadkeys;
+		this.parents = parents;
 		this.mapSpread = mapSpread;
 		this.mapTile = mapTile;
 		this.limit = limit;
-		this.level = level;
+		this.levels = levels;
 	}
 
 	public String getQuery() {
@@ -108,20 +100,12 @@ public class Query {
 		this.tags = tags;
 	}
 
-	public String getParent() {
-		return parent;
+	public String getParents() {
+		return parents;
 	}
 
-	public void setParent(String parent) {
-		this.parent = parent;
-	}
-
-	public Integer getQuadkeys() {
-		return quadkeys;
-	}
-
-	public void setQuadkeys(Integer quadkeys) {
-		this.quadkeys = quadkeys;
+	public void setParents(String parent) {
+		this.parents = parent;
 	}
 
 	public Integer getMapSpread() {
@@ -148,11 +132,11 @@ public class Query {
 		this.mapTile = mapTile;
 	}
 
-	public String getLevel() {
-		return level;
+	public String getLevels() {
+		return levels;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setLevels(String levels) {
+		this.levels = levels;
 	}
 }
