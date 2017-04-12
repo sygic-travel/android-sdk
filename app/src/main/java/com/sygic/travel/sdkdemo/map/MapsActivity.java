@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
+import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator;
 import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
@@ -137,8 +138,18 @@ public class MapsActivity
 	}
 
 	private void loadPlaces(){
+		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
+			getMapBoundingBox(),
+			(int) map.getCameraPosition().zoom
+		);
 		List<Query> queries = new ArrayList<>();
-		queries.add(new Query(null, getMapBoundsString(), null, null, "city:1", null, null, null, null, 100));
+
+		for(String quadkey : quadkeys) {
+			queries.add(new Query(
+				null, getMapBoundsString(), null, null, "city:1", 1, quadkey, null, 32)
+			);
+		}
+
 		StSDK.getInstance().getPlaces(queries, placesCallback);
 	}
 

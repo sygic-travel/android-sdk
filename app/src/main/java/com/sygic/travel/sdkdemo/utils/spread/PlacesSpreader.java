@@ -82,7 +82,6 @@ public class PlacesSpreader {
 				break;
 			}
 		}
-		Log.d(TAG, sizeType);
 		return Utils.getMarkerSize(resources, sizeType);
 	}
 
