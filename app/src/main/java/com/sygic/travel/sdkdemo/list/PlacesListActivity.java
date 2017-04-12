@@ -16,6 +16,7 @@ import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
@@ -34,6 +35,12 @@ public class PlacesListActivity extends AppCompatActivity {
 
 		initRecycler();
 		loadPlaces();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		StSDK.getInstance().unsubscribeObservable();
 	}
 
 	private void initRecycler() {
@@ -57,10 +64,9 @@ public class PlacesListActivity extends AppCompatActivity {
 	}
 
 	private void loadPlaces() {
-		Query query = new Query(
-			null, null, null, null, "city:1", null, null, null, null, 100
-		);
-		StSDK.getInstance().getPlaces(query, getPlacesCallback());
+		List<Query> queries = new ArrayList<>();
+		queries.add(new Query(null, null, null, null, "city:1", null, null, null, null, 100));
+		StSDK.getInstance().getPlaces(queries, getPlacesCallback());
 	}
 
 	private void renderPlacesList(List<Place> places) {
