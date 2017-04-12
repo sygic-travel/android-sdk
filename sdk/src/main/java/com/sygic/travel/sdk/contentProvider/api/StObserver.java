@@ -74,13 +74,25 @@ public class StObserver implements Observer<Result<StResponse>> {
 
 	@Override
 	public void onNext(Result<StResponse> stResponseResult) {
-		if(stResponseResult.response().errorBody() != null){
+		if(isError(stResponseResult)){
 			Log.e(TAG, "Error: " + stResponseResult.response().errorBody().toString());
 		} else {
 			if(multipleCallsMerged){
 				stResponses.add(stResponseResult.response().body());
 			} else {
 				stResponse = stResponseResult.response().body();
+			}
+		}
+	}
+
+	private boolean isError(Result<StResponse> stResponseResult) {
+		if(stResponseResult.error() != null){
+			return true;
+		} else {
+			if(stResponseResult.response().errorBody() != null){
+				return true;
+			} else {
+				return stResponseResult.response().body() == null;
 			}
 		}
 	}

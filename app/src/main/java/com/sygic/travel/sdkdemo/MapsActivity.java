@@ -19,6 +19,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
+
+import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator;
+import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
@@ -104,18 +107,40 @@ public class MapsActivity
 	}
 
 	private void loadPlaces(){
+		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
+			getMapBoundingBox(),
+			(int) mMap.getCameraPosition().zoom
+		);
 		List<Query> queries = new ArrayList<>();
-		queries.add(new Query(null, getBoundsString(), null, null, "city:1", null, null, null, null, 100));
+
+		for(String quadkey : quadkeys) {
+			queries.add(new Query(
+				null, getMapBoundsString(), null, null, "city:1", 1, quadkey, null, 32)
+			);
+		}
+
 		StSDK.getInstance().getPlaces(queries, placesCallback);
 	}
 
-	private String getBoundsString() {
+	private String getMapBoundsString() {
 		LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
 		LatLng ne = bounds.northeast;
 		LatLng sw = bounds.southwest;
 
 		return sw.latitude + "," + sw.longitude + "," + ne.latitude + "," + ne.longitude;
 	}
+
+	private BoundingBox getMapBoundingBox() {
+		LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+		BoundingBox boundingBox = new BoundingBox();
+		boundingBox.setSouth((float) bounds.southwest.latitude);
+		boundingBox.setWest((float) bounds.southwest.longitude);
+		boundingBox.setNorth((float) bounds.northeast.latitude);
+		boundingBox.setEast((float) bounds.northeast.longitude);
+
+		return boundingBox;
+	}
+
 
 	private void showPlacesOnMap(List<Place> places) {
 		removeMarkers();
