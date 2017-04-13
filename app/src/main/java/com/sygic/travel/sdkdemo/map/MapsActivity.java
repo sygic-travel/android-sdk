@@ -22,19 +22,22 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
-
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator;
+import com.sygic.travel.sdk.geo.spread.CanvasSize;
+import com.sygic.travel.sdk.geo.spread.SpreadResult;
+import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
+import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
+import com.sygic.travel.sdk.geo.spread.Spreader;
 import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 import com.sygic.travel.sdkdemo.utils.Utils;
-import com.sygic.travel.sdkdemo.utils.spread.MarkerProcessor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
@@ -51,12 +54,11 @@ public class MapsActivity
 
 	private GoogleMap map;
 	private PermissionsUtils permissionsUtils;
-	private MarkerProcessor markerProcessor;
+	private Spreader spreader;
+	private List<SpreadSizeConfig> sizeConfigs;
 
 	private Callback<List<Place>> placesCallback;
-	private HashMap<String, Marker> placesMarkers;
 	private View vMain;
-	private String selectedMakerGuid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class MapsActivity
 
 		vMain = findViewById(R.id.ll_main);
 		permissionsUtils = new PermissionsUtils(vMain);
+		spreader = new Spreader();
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -82,24 +85,11 @@ public class MapsActivity
 	public void onMapReady(GoogleMap googleMap) {
 		map = googleMap;
 
-		markerProcessor = new MarkerProcessor(
-			getResources(),
-			vMain.getMeasuredWidth(),
-			vMain.getMeasuredHeight()
-		);
+		sizeConfigs = Utils.getSpreadSizeConfigs(getResources());
 		placesCallback = getPlacesCallback();
-		placesMarkers = new HashMap<>();
 
 		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
-		map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-				marker.showInfoWindow();
-				selectedMakerGuid = (String) marker.getTag();
-				return false;
-			}
-		});
 		map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
 			final int MAP_MOVES_LOAD_LIMIT = 10;
 			int movesCounter = 0;
@@ -174,40 +164,37 @@ public class MapsActivity
 	}
 
 	private void showPlacesOnMap(List<Place> places) {
-		markerProcessor.setNewMapPosition(
-			getMapBoundingBox(),
-			(int) map.getCameraPosition().zoom
-		);
+		BoundingBox boundingBox = getMapBoundingBox();
 
-		removeMarkers();
-		for(Place place : places) {
-			BitmapDescriptor markerBitmapDescriptor = getMarkerBitmapDescriptor(place);
-			if(markerBitmapDescriptor == null) {
-				continue;
-			}
+		map.clear();
+		SpreadResult spreadResult = spreader.spread(
+			places,
+			sizeConfigs,
+			boundingBox,
+			new CanvasSize(vMain.getMeasuredWidth(), vMain.getMeasuredHeight()));
 
+		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
+			Place place = spreadedPlace.getPlace();
 			Marker newMarker = map.addMarker(new MarkerOptions()
 				.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 				.title(place.getName())
 				.snippet(place.getPerex())
-				.icon(markerBitmapDescriptor)
+				.icon(getMarkerBitmapDescriptor(spreadedPlace))
 			);
 			newMarker.setTag(place.getGuid());
-
-			placesMarkers.put(place.getGuid(), newMarker);
 		}
 	}
 
-	private BitmapDescriptor getMarkerBitmapDescriptor(Place place) {
+	private BitmapDescriptor getMarkerBitmapDescriptor(SpreadedPlace spreadedPlace) {
 		try {
-			Bitmap markerBitmap = markerProcessor.createMarkerBitmap(this, place);
+			Bitmap markerBitmap = MarkerBitmapGenerator.createMarkerBitmap(this, spreadedPlace);
 			if(markerBitmap != null) {
 				return BitmapDescriptorFactory.fromBitmap(markerBitmap);
 			} else {
 				return null;
 			}
 		} catch(Exception e) {
-			return BitmapDescriptorFactory.defaultMarker(getMarkerHue(place));
+			return BitmapDescriptorFactory.defaultMarker(getMarkerHue(spreadedPlace.getPlace()));
 		}
 	}
 
@@ -217,34 +204,6 @@ public class MapsActivity
 			markerHue = Utils.getMarkerHue(place.getCategories().get(0));
 		}
 		return markerHue;
-	}
-
-	private void removeMarkers() {
-		if(placesMarkers != null){
-			if(selectedMakerGuid == null){
-				map.clear();
-				placesMarkers.clear();
-				return;
-			}
-
-			List<String> removedMarkers = new ArrayList<>();
-
-			for(String key : placesMarkers.keySet()) {
-				Marker placeMarker = placesMarkers.get(key);
-				String placeMarkerGuid = (String) placeMarker.getTag();
-
-				if(placeMarkerGuid != null) {
-					if(!placeMarkerGuid.equals(selectedMakerGuid)) {
-						placeMarker.remove();
-						removedMarkers.add(key);
-					}
-				}
-			}
-
-			for(String removedMarker : removedMarkers) {
-				placesMarkers.remove(removedMarker);
-			}
-		}
 	}
 
 	private Callback<List<Place>> getPlacesCallback() {

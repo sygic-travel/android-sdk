@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Map Markers -->
-	<dimen name="marker_size_dot">12px</dimen>
+	<dimen name="marker_radius_dot">6px</dimen>
 
-	<dimen name="marker_size_small">18px</dimen>
-	<dimen name="marker_size_medium">36px</dimen>
-	<dimen name="marker_size_big">54px</dimen>
-	<dimen name="marker_size_popular">81px</dimen>
+	<dimen name="marker_radius_small">9px</dimen>
+	<dimen name="marker_radius_medium">18px</dimen>
+	<dimen name="marker_radius_big">27px</dimen>
+	<dimen name="marker_radius_popular">40px</dimen>
 
-	<dimen name="marker_margin_small">15px</dimen>
-	<dimen name="marker_margin_medium">30px</dimen>
-	<dimen name="marker_margin_big">45px</dimen>
-	<dimen name="marker_margin_popular">60px</dimen>
+	<dimen name="marker_margin_small">7px</dimen>
+	<dimen name="marker_margin_medium">15px</dimen>
+	<dimen name="marker_margin_big">22px</dimen>
+	<dimen name="marker_margin_popular">30px</dimen>
 </resources>

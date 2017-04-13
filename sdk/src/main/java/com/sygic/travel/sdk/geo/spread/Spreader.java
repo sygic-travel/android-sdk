@@ -2,8 +2,8 @@ package com.sygic.travel.sdk.geo.spread;
 
 import android.graphics.Point;
 
-import com.sygic.travel.sdk.geo.GeoUtils;
 import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Spreader {
 				continue;
 			}
 
-			Point canvasCoors = GeoUtils.locationToCanvasCoors(place.getLocation(), bounds, canvasSize);
+			Point canvasCoors = locationToCanvasCoors(place.getLocation(), bounds, canvasSize);
 			if(
 				canvasCoors.x < 0 ||
 				canvasCoors.y < 0 ||
@@ -45,7 +45,7 @@ public class Spreader {
 					continue;
 				}
 				if(sizeConfig.getMinimalRating() > 0f &&
-					place.getRating() <= sizeConfig.getMinimalRating()
+					place.getRating() >= sizeConfig.getMinimalRating()
 				) {
 					continue;
 				}
@@ -78,5 +78,38 @@ public class Spreader {
 			}
 		}
 		return false;
+	}
+
+	private Point locationToCanvasCoors(
+		Location location,
+		BoundingBox boundingBox,
+		CanvasSize canvasSize
+	){
+		double south, west, north, east;
+		south = boundingBox.getSouth();
+		west = boundingBox.getWest();
+		north = boundingBox.getNorth();
+		east = boundingBox.getEast();
+
+		double latDiff = north - location.getLat();
+		double lngDiff = location.getLng() - west;
+
+		double latRatio = canvasSize.height / Math.abs(south - north);
+		double lngRatio = canvasSize.width / Math.abs(west - east);
+
+		if (west > east){ //date border
+			lngRatio = canvasSize.width / Math.abs(180 - west + 180 + east);
+			if(location.getLng() < 0 && location.getLng() < east){
+				lngDiff = 180 - west + 180 + location.getLng();
+			}
+			if(location.getLng() > 0 && location.getLng() < west){
+				lngDiff = 180 - west + 180 + location.getLng();
+			}
+		}
+
+		return new Point(
+			(int) (lngDiff * lngRatio),
+			(int) (latDiff * latRatio)
+		);
 	}
 }

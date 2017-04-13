@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="st_blue">#348ce3</color>
-
-	<color name="marker_sightseeing">#f6746c</color>
-	<color name="marker_shopping">#e7a41c</color>
-	<color name="marker_eating">#f6936c</color>
-	<color name="marker_discovering">#898f9a</color>
-	<color name="marker_playing">#6cd8f6</color>
-	<color name="marker_traveling">#6b91f6</color>
-	<color name="marker_going_out">#e76ca0</color>
-	<color name="marker_hiking">#d59b6b</color>
-	<color name="marker_sports">#68b277</color>
-	<color name="marker_relaxing">#a06cf6</color>
 </resources>

@@ -5,6 +5,12 @@ package com.sygic.travel.sdk.geo.spread;
  */
 
 public class SpreadSizeConfig {
+	public static final String SMALL = "small";
+	public static final String MEDIUM = "medium";
+	public static final String BIG = "big";
+	public static final String POPULAR = "popular";
+	public static final String INVISIBLE = "invisible";
+
 	private int radius;
 	private int margin;
 	private String name;
