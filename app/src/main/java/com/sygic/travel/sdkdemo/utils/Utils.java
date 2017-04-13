@@ -11,8 +11,6 @@ import android.view.WindowManager;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.sygic.travel.sdkdemo.R;
 
-import static com.sygic.travel.sdkdemo.utils.spread.PlacesSpreader.*;
-
 /**
  * Created by michal.murin on 28.3.2017.
  */
@@ -98,23 +96,6 @@ public class Utils {
 				return ContextCompat.getColor(context, R.color.marker_relaxing);
 			default:
 				return ContextCompat.getColor(context, R.color.st_blue);
-		}
-	}
-
-	public static int getMarkerSize(Resources resources, String markerType){
-		switch(markerType){
-			case POPULAR:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_popular);
-			case SMALL:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_small);
-			case MEDIUM:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_medium);
-			case BIG:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_big);
-			case INVISIBLE:
-				return 0;
-			default:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_dot);
 		}
 	}
 }

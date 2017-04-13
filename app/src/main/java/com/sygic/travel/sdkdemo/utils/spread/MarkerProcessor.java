@@ -21,7 +21,6 @@ import static com.sygic.travel.sdkdemo.utils.Utils.getMarkerColor;
 
 public class MarkerProcessor {
 	private Resources resources;
-	private PlacesSpreader placesSpreader;
 
 	public MarkerProcessor(Resources resources, int mapWidth, int mapHeight) {
 		this.resources = resources;
@@ -30,20 +29,6 @@ public class MarkerProcessor {
 	}
 
 	private void init(int mapWidth, int mapHeight) {
-		placesSpreader  = new PlacesSpreader(resources, mapWidth, mapHeight, getDimensConfig());
-	}
-
-	private DimensConfig getDimensConfig() {
-		return new DimensConfig(
-			resources.getDimensionPixelSize(R.dimen.marker_margin_popular),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_big),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_medium),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_small),
-			resources.getDimensionPixelSize(R.dimen.marker_size_popular),
-			resources.getDimensionPixelSize(R.dimen.marker_size_big),
-			resources.getDimensionPixelSize(R.dimen.marker_size_medium),
-			resources.getDimensionPixelSize(R.dimen.marker_size_small)
-		);
 	}
 
 	public Bitmap createMarkerBitmap(Context context, Place place) {
@@ -62,7 +47,6 @@ public class MarkerProcessor {
 			}
 
 			if(place.getMarker() != null && !place.getMarker().equals("")){
-				markerSize = placesSpreader.getPlaceSizeAndInsert(place);
 			}
 
 			if(markerSize == 0){
@@ -87,6 +71,5 @@ public class MarkerProcessor {
 	}
 
 	public void setNewMapPosition(BoundingBox boundingBox, int zoom) {
-		placesSpreader.setNewMapPosition(boundingBox, zoom);
 	}
 }
