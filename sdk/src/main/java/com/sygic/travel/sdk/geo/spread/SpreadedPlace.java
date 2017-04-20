@@ -10,12 +10,12 @@ import com.sygic.travel.sdk.model.place.Place;
 
 public class SpreadedPlace {
 	private Place place;
-	private Point canvasCoors;
+	private Point canvasCoords;
 	private SpreadSizeConfig sizeConfig;
 
-	public SpreadedPlace(Place place, Point canvasCoors, SpreadSizeConfig sizeConfig) {
+	public SpreadedPlace(Place place, Point canvasCoords, SpreadSizeConfig sizeConfig) {
 		this.place = place;
-		this.canvasCoors = canvasCoors;
+		this.canvasCoords = canvasCoords;
 		this.sizeConfig = sizeConfig;
 	}
 
@@ -27,12 +27,12 @@ public class SpreadedPlace {
 		this.place = place;
 	}
 
-	public Point getCanvasCoors() {
-		return canvasCoors;
+	public Point getCanvasCoords() {
+		return canvasCoords;
 	}
 
-	public void setCanvasCoors(Point canvasCoors) {
-		this.canvasCoors = canvasCoors;
+	public void setCanvasCoords(Point canvasCoords) {
+		this.canvasCoords = canvasCoords;
 	}
 
 	public SpreadSizeConfig getSizeConfig() {

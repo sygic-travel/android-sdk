@@ -6,7 +6,6 @@ import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,12 +29,12 @@ public class Spreader {
 				continue;
 			}
 
-			Point canvasCoors = locationToCanvasCoors(place.getLocation(), bounds, canvasSize);
+			Point canvasCoords = locationToCanvasCoords(place.getLocation(), bounds, canvasSize);
 			if(
-				canvasCoors.x < 0 ||
-				canvasCoors.y < 0 ||
-				canvasCoors.x > canvasSize.width ||
-				canvasCoors.y > canvasSize.height
+				canvasCoords.x < 0 ||
+				canvasCoords.y < 0 ||
+				canvasCoords.x > canvasSize.width ||
+				canvasCoords.y > canvasSize.height
 			) {
 				hiddenPlaces.add(0, place);
 				continue;
@@ -50,8 +49,8 @@ public class Spreader {
 				) {
 					continue;
 				}
-				if(!intersects(sizeConfig, canvasCoors, visiblePlaces)) {
-					visiblePlaces.add(0, new SpreadedPlace(place, canvasCoors, sizeConfig));
+				if(!intersects(sizeConfig, canvasCoords, visiblePlaces)) {
+					visiblePlaces.add(0, new SpreadedPlace(place, canvasCoords, sizeConfig));
 				}
 			}
 		}
@@ -61,7 +60,7 @@ public class Spreader {
 
 	private boolean intersects(
 		SpreadSizeConfig sizeConfig,
-		Point canvasCoors,
+		Point canvasCoords,
 		List<SpreadedPlace> spreadedPlaces
 	) {
 		boolean intersects;
@@ -69,8 +68,8 @@ public class Spreader {
 		int r = sizeConfig.getRadius() + sizeConfig.getMargin();
 
 		for(SpreadedPlace spreadedPlace : spreadedPlaces) {
-			int dX = canvasCoors.x - spreadedPlace.getCanvasCoors().x;
-			int dY = canvasCoors.y - spreadedPlace.getCanvasCoors().y;
+			int dX = canvasCoords.x - spreadedPlace.getCanvasCoords().x;
+			int dY = canvasCoords.y - spreadedPlace.getCanvasCoords().y;
 
 			r2 = spreadedPlace.getSizeConfig().getRadius() + spreadedPlace.getSizeConfig().getMargin();
 			intersects = (Math.pow(dX, 2) +	Math.pow(dY, 2)) <=	Math.pow(r + r2, 2);
@@ -81,7 +80,7 @@ public class Spreader {
 		return false;
 	}
 
-	private Point locationToCanvasCoors(
+	private Point locationToCanvasCoords(
 		Location location,
 		BoundingBox boundingBox,
 		CanvasSize canvasSize
