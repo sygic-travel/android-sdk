@@ -116,6 +116,10 @@ public class Place {
 		this.location = location;
 	}
 
+	public boolean hasLocation(){
+		return (location != null && (location.getLat() != 0f || location.getLng() != 0f));
+	}
+
 	public String getQuadkey() {
 		return quadkey;
 	}
@@ -168,8 +172,12 @@ public class Place {
 		return thumbnailUrl;
 	}
 
-	public void setPhotoUrl(String photoUrl) {
+	public void setThumbnailUrl(String photoUrl) {
 		this.thumbnailUrl = photoUrl;
+	}
+
+	public boolean hasThumbnailUrl() {
+		return thumbnailUrl != null && !thumbnailUrl.equals("");
 	}
 
 	public Price getPrice() {

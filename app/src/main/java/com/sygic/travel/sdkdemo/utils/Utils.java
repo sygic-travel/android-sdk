@@ -8,10 +8,16 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
 import com.sygic.travel.sdkdemo.R;
 
-import static com.sygic.travel.sdkdemo.utils.spread.PlacesSpreader.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.BIG;
+import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.MEDIUM;
+import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.POPULAR;
+import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.SMALL;
 
 /**
  * Created by michal.murin on 28.3.2017.
@@ -47,6 +53,31 @@ public class Utils {
 		return width + "x" + height;
 	}
 
+	public static List<SpreadSizeConfig> getSpreadSizeConfigs(Resources resources){
+		List<SpreadSizeConfig> sizeConfigs = new ArrayList<>();
+		sizeConfigs.add(new SpreadSizeConfig(
+			resources.getDimensionPixelSize(R.dimen.marker_radius_popular),
+			resources.getDimensionPixelSize(R.dimen.marker_margin_popular),
+			POPULAR, false, 9.75f
+		));
+		sizeConfigs.add(new SpreadSizeConfig(
+			resources.getDimensionPixelSize(R.dimen.marker_radius_big),
+			resources.getDimensionPixelSize(R.dimen.marker_margin_big),
+			BIG, false, 7.5f
+		));
+		sizeConfigs.add(new SpreadSizeConfig(
+			resources.getDimensionPixelSize(R.dimen.marker_radius_medium),
+			resources.getDimensionPixelSize(R.dimen.marker_margin_medium),
+			MEDIUM, false, 5f
+		));
+		sizeConfigs.add(new SpreadSizeConfig(
+			resources.getDimensionPixelSize(R.dimen.marker_radius_small),
+			resources.getDimensionPixelSize(R.dimen.marker_margin_small),
+			SMALL, false, 3f
+		));
+		return sizeConfigs;
+	}
+
 	public static float getMarkerHue(String category){
 		switch(category){
 			case "sightseeing":
@@ -70,7 +101,7 @@ public class Utils {
 			case "relaxing":
 				return 263;
 			default:
-				return BitmapDescriptorFactory.HUE_RED;
+				return 14;
 		}
 	}
 
@@ -98,23 +129,6 @@ public class Utils {
 				return ContextCompat.getColor(context, R.color.marker_relaxing);
 			default:
 				return ContextCompat.getColor(context, R.color.st_blue);
-		}
-	}
-
-	public static int getMarkerSize(Resources resources, String markerType){
-		switch(markerType){
-			case POPULAR:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_popular);
-			case SMALL:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_small);
-			case MEDIUM:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_medium);
-			case BIG:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_big);
-			case INVISIBLE:
-				return 0;
-			default:
-				return resources.getDimensionPixelSize(R.dimen.marker_size_dot);
 		}
 	}
 }
