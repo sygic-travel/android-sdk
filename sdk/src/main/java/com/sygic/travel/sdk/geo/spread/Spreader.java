@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,12 +21,12 @@ public class Spreader {
 		BoundingBox bounds,
 		CanvasSize canvasSize
 	){
-		List<SpreadedPlace> visiblePlaces = new ArrayList<>();
-		List<Place> hiddenPlaces = new ArrayList<>();
+		LinkedList<SpreadedPlace> visiblePlaces = new LinkedList<>();
+		LinkedList<Place> hiddenPlaces = new LinkedList<>();
 
 		for(Place place : places) {
 			if(!place.hasLocation()){
-				hiddenPlaces.add(place);
+				hiddenPlaces.add(0, place);
 				continue;
 			}
 
@@ -36,7 +37,7 @@ public class Spreader {
 				canvasCoors.x > canvasSize.width ||
 				canvasCoors.y > canvasSize.height
 			) {
-				hiddenPlaces.add(place);
+				hiddenPlaces.add(0, place);
 				continue;
 			}
 
@@ -50,7 +51,7 @@ public class Spreader {
 					continue;
 				}
 				if(!intersects(sizeConfig, canvasCoors, visiblePlaces)) {
-					visiblePlaces.add(new SpreadedPlace(place, canvasCoors, sizeConfig));
+					visiblePlaces.add(0, new SpreadedPlace(place, canvasCoors, sizeConfig));
 				}
 			}
 		}
@@ -95,7 +96,7 @@ public class Spreader {
 		double lngDiff = location.getLng() - west;
 
 		double latRatio = canvasSize.height / Math.abs(south - north);
-		double lngRatio = canvasSize.width / Math.abs(west - east);
+		double lngRatio;
 
 		if (west > east){ //date border
 			lngRatio = canvasSize.width / Math.abs(180 - west + 180 + east);
@@ -105,6 +106,8 @@ public class Spreader {
 			if(location.getLng() > 0 && location.getLng() < west){
 				lngDiff = 180 - west + 180 + location.getLng();
 			}
+		} else {
+			lngRatio = canvasSize.width / Math.abs(west - east);
 		}
 
 		return new Point(
