@@ -17,4 +17,17 @@
 	<string name="permissions_granted">Permission has now been granted.</string>
 	<string name="permissions_not_granted">Permission has not been granted.</string>
 	<string name="permissions_location_explanation">Location needed to show what\'s around and for navigation.</string>
+
+	<!-- Categories -->
+	<string name="sightseeing">Sightseeing</string>
+	<string name="shopping">Shopping</string>
+	<string name="eating">Restaurants</string>
+	<string name="discovering">Museums</string>
+	<string name="playing">Family</string>
+	<string name="traveling">Transport</string>
+	<string name="going_out">Nightlife</string>
+	<string name="hiking">Outdoors</string>
+	<string name="sports">Sports</string>
+	<string name="relaxing">Relaxation</string>
+	<string name="sleeping">Accommodation</string>
 </resources>
