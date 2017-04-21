@@ -65,7 +65,8 @@ public class MapsActivity
 	private List<SpreadSizeConfig> sizeConfigs;
 
 	private CategoriesDialog categoriesDialog;
-	private String selectedCategory;
+	private String selectedCategoryKey;
+	private String titlePattern;
 
 	private Callback<List<Place>> placesCallback;
 	private View vMain;
@@ -79,6 +80,7 @@ public class MapsActivity
 		permissionsUtils = new PermissionsUtils(vMain);
 		spreader = new Spreader();
 		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
+		titlePattern = getString(R.string.title_activity_maps) + " - %s";
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -168,7 +170,7 @@ public class MapsActivity
 
 		for(String quadkey : quadkeys) {
 			queries.add(new Query(
-				null, getMapBoundsString(), selectedCategory, null, "city:1", 1, quadkey, null, 32)
+				null, getMapBoundsString(), selectedCategoryKey, null, "city:1", 1, quadkey, null, 32)
 			);
 		}
 
@@ -178,8 +180,20 @@ public class MapsActivity
 	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
-			public void onCategoryClick(String category) {
-				selectedCategory = category.equals("reset") ? null : category;
+			public void onCategoryClick(String categoryKey, String categoryName) {
+				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+					categoriesDialog.dismiss();
+					return;
+				}
+
+				if(categoryKey.equals("reset")){
+					selectedCategoryKey = null;
+					setTitle(getString(R.string.title_activity_maps));
+				} else {
+					selectedCategoryKey = categoryKey;
+					setTitle(String.format(titlePattern, categoryName));
+				}
+
 				loadPlaces();
 				categoriesDialog.dismiss();
 			}

@@ -16,7 +16,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 	private static String[] categoriesKeys = {"reset", "sightseeing", "shopping", "eating", "discovering", "playing",
 		"traveling", "going_out", "hiking", "sports", "relaxing"};
 
-	private static String[] categories = {"Reset", "Sightseeing", "Shopping", "Restaurants", "Museums", "Family",
+	private static String[] categoriesNames = {"Reset", "Sightseeing", "Shopping", "Restaurants", "Museums", "Family",
 		"Transport", "Nightlife", "Outdoors", "Sports", "Relaxation"};
 
 	private ViewHolder.CategoryClick categoryClick;
@@ -35,15 +35,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		holder.tvCategory.setText(categories[position]);
+		holder.tvCategory.setText(categoriesNames[position]);
 	}
 
 	@Override
 	public int getItemCount() {
-		if(categories == null) {
+		if(categoriesNames == null) {
 			return 0;
 		}
-		return categories.length;
+		return categoriesNames.length;
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -59,11 +59,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
 		@Override
 		public void onClick(View tvCategory) {
-			categoryClick.onCategoryClick(categoriesKeys[getAdapterPosition()]);
+			categoryClick.onCategoryClick(
+				categoriesKeys[getAdapterPosition()],
+				categoriesNames[getAdapterPosition()]
+			);
 		}
 
 		public interface CategoryClick{
-			void onCategoryClick(String category);
+			void onCategoryClick(String categoryKey, String categoryName);
 		}
 	}
 }

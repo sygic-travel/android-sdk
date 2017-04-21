@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
@@ -22,6 +21,8 @@ import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
@@ -32,8 +33,10 @@ public class PlacesListActivity extends AppCompatActivity {
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
 	private List<Place> places;
+
 	private CategoriesDialog categoriesDialog;
-	private String selectedCategory;
+	private String selectedCategoryKey;
+	private String titlePattern;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class PlacesListActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_list);
 
 		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
+		titlePattern = getString(R.string.title_activity_list) + " - %s";
+
 		initRecycler();
 		loadPlaces();
 	}
@@ -87,7 +92,7 @@ public class PlacesListActivity extends AppCompatActivity {
 
 	private void loadPlaces() {
 		List<Query> queries = new ArrayList<>();
-		queries.add(new Query(null, null, selectedCategory, null, "city:1", null, null, null, 128));
+		queries.add(new Query(null, null, selectedCategoryKey, null, "city:1", null, null, null, 128));
 		StSDK.getInstance().getPlaces(queries, getPlacesCallback());
 	}
 
@@ -100,8 +105,20 @@ public class PlacesListActivity extends AppCompatActivity {
 	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
-			public void onCategoryClick(String category) {
-				selectedCategory = category.equals("reset") ? null : category;
+			public void onCategoryClick(String categoryKey, String categoryName) {
+				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+					categoriesDialog.dismiss();
+					return;
+				}
+
+				if(categoryKey.equals("reset")){
+					selectedCategoryKey = null;
+					setTitle(getString(R.string.title_activity_list));
+				} else {
+					selectedCategoryKey = categoryKey;
+					setTitle(String.format(titlePattern, categoryName));
+				}
+
 				loadPlaces();
 				categoriesDialog.dismiss();
 			}
@@ -112,6 +129,16 @@ public class PlacesListActivity extends AppCompatActivity {
 		return new Callback<List<Place>>() {
 			@Override
 			public void onSuccess(List<Place> places) {
+				Collections.sort(places, new Comparator<Place>() {
+					@Override
+					public int compare(Place p1, Place p2) {
+						if(p1.getRating() == p2.getRating()){
+							return 0;
+						} else {
+							return p1.getRating() > p2.getRating() ? -1 : 1;
+						}
+					}
+				});
 				renderPlacesList(places);
 			}
 
