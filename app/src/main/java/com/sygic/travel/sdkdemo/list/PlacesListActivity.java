@@ -40,6 +40,7 @@ public class PlacesListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 
+		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
 		initRecycler();
 		loadPlaces();
 	}
@@ -59,7 +60,6 @@ public class PlacesListActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.action_filter_places) {
-			categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
 			categoriesDialog.show();
 		}
 		return super.onOptionsItemSelected(item);
