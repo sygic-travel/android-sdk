@@ -24,7 +24,6 @@ class Place {
 	 photoUrl: string
 	 price: Price
 	 marker: string
-	 tier: int
 	 categories: array<string>
 	 parentsGuids: array<string>
 	 detail: Detail
@@ -44,7 +43,6 @@ public class Place {
 	public static final String THUMBNAIL_URL = "thumbnail_url";
 	public static final String PRICE = "price";
 	public static final String MARKER = "marker";
-	public static final String TIER = "tier";
 	public static final String CATEGORIES = "categories";
 	public static final String PARENTS = "parentsGuids";
 	public static final String DETAIL = "detail";
@@ -85,9 +83,6 @@ public class Place {
 	@SerializedName(MARKER)
 	private String marker;
 
-	@SerializedName(TIER)
-	private int tier;
-
 	@SerializedName(CATEGORIES)
 	private List<String> categories;
 
@@ -119,6 +114,10 @@ public class Place {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public boolean hasLocation(){
+		return (location != null && (location.getLat() != 0f || location.getLng() != 0f));
 	}
 
 	public String getQuadkey() {
@@ -173,8 +172,12 @@ public class Place {
 		return thumbnailUrl;
 	}
 
-	public void setPhotoUrl(String photoUrl) {
+	public void setThumbnailUrl(String photoUrl) {
 		this.thumbnailUrl = photoUrl;
+	}
+
+	public boolean hasThumbnailUrl() {
+		return thumbnailUrl != null && !thumbnailUrl.equals("");
 	}
 
 	public Price getPrice() {
@@ -191,14 +194,6 @@ public class Place {
 
 	public void setMarker(String marker) {
 		this.marker = marker;
-	}
-
-	public int getTier() {
-		return tier;
-	}
-
-	public void setTier(int tier) {
-		this.tier = tier;
 	}
 
 	public List<String> getCategories() {

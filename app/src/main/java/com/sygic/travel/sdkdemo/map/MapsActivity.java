@@ -1,17 +1,20 @@
-package com.sygic.travel.sdkdemo;
+package com.sygic.travel.sdkdemo.map;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -19,15 +22,22 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
-
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator;
+import com.sygic.travel.sdk.geo.spread.CanvasSize;
+import com.sygic.travel.sdk.geo.spread.SpreadResult;
+import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
+import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
+import com.sygic.travel.sdk.geo.spread.Spreader;
 import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
+import com.sygic.travel.sdkdemo.PlaceDetailActivity;
+import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
+import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
@@ -38,18 +48,29 @@ public class MapsActivity
 {
 	private static final String TAG = "SdkDemoApp-MapActivity";
 
-	private GoogleMap mMap;
+	public static final float ZOOM_FOR_DETAIL = 18f;
+	public static final float ZOOM_FOR_CITY = 15f;
+	public static final float ZOOM_FOR_COUNTRY = 7f;
+	private static final double BOUNDS_OFFSET = 0.05;
+
+	private double canvasWidthRatio, canvasHeightRatio;
+
+	private GoogleMap map;
 	private PermissionsUtils permissionsUtils;
+	private Spreader spreader;
+	private List<SpreadSizeConfig> sizeConfigs;
 
 	private Callback<List<Place>> placesCallback;
-	private HashMap<String, Marker> placeMarkers;
+	private View vMain;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 
-		permissionsUtils = new PermissionsUtils(findViewById(R.id.ll_main));
+		vMain = findViewById(R.id.ll_main);
+		permissionsUtils = new PermissionsUtils(vMain);
+		spreader = new Spreader();
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -65,22 +86,14 @@ public class MapsActivity
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
-		mMap = googleMap;
+		map = googleMap;
 
+		sizeConfigs = Utils.getSpreadSizeConfigs(getResources());
 		placesCallback = getPlacesCallback();
-		placeMarkers = new HashMap<>();
 
 		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
-
-		mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
-			@Override
-			public void onCameraMove() {
-				loadPlaces();
-			}
-		});
-
-		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
+		map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
 				String guid = ((String) marker.getTag());
@@ -90,8 +103,26 @@ public class MapsActivity
 			}
 		});
 
+		calculateCanvasSizeRatios();
 		enableMyLocation();
 		loadPlaces();
+	}
+
+	private void calculateCanvasSizeRatios() {
+		LatLngBounds originalBounds = map.getProjection().getVisibleRegion().latLngBounds;
+		LatLngBounds offsetBounds = new LatLngBounds(
+			new LatLng(originalBounds.southwest.latitude - BOUNDS_OFFSET, originalBounds.southwest.longitude - BOUNDS_OFFSET),  //sw
+			new LatLng(originalBounds.northeast.latitude + BOUNDS_OFFSET, originalBounds.northeast.longitude + BOUNDS_OFFSET)  //ne
+		);
+
+		final double dOffLat = offsetBounds.northeast.latitude - offsetBounds.southwest.latitude;
+		final double dOrgLat = originalBounds.northeast.latitude - originalBounds.southwest.latitude;
+		final double dOffLng = Math.max(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude)) -
+			Math.min(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude));
+		final double dOrgLng = Math.max(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude)) -
+			Math.min(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude));
+		canvasHeightRatio = dOffLat / dOrgLat;
+		canvasWidthRatio = dOffLng / dOrgLng;
 	}
 
 	private void enableMyLocation() {
@@ -100,7 +131,7 @@ public class MapsActivity
 			Manifest.permission.ACCESS_FINE_LOCATION,
 			Manifest.permission.ACCESS_COARSE_LOCATION
 		)) {
-			mMap.setMyLocationEnabled(true);
+			map.setMyLocationEnabled(true);
 		} else {
 			permissionsUtils.requestLocationPermission(this);
 		}
@@ -109,7 +140,7 @@ public class MapsActivity
 	private void loadPlaces(){
 		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
 			getMapBoundingBox(),
-			(int) mMap.getCameraPosition().zoom
+			(int) map.getCameraPosition().zoom
 		);
 		List<Query> queries = new ArrayList<>();
 
@@ -123,120 +154,72 @@ public class MapsActivity
 	}
 
 	private String getMapBoundsString() {
-		LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		LatLng ne = bounds.northeast;
 		LatLng sw = bounds.southwest;
 
-		return sw.latitude + "," + sw.longitude + "," + ne.latitude + "," + ne.longitude;
+		return (sw.latitude - BOUNDS_OFFSET) + "," +
+			(sw.longitude - BOUNDS_OFFSET) + "," +
+			(ne.latitude + BOUNDS_OFFSET) + "," +
+			(ne.longitude + BOUNDS_OFFSET);
 	}
 
 	private BoundingBox getMapBoundingBox() {
-		LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		BoundingBox boundingBox = new BoundingBox();
-		boundingBox.setSouth((float) bounds.southwest.latitude);
-		boundingBox.setWest((float) bounds.southwest.longitude);
-		boundingBox.setNorth((float) bounds.northeast.latitude);
-		boundingBox.setEast((float) bounds.northeast.longitude);
+		boundingBox.setSouth((float) (bounds.southwest.latitude - BOUNDS_OFFSET));
+		boundingBox.setWest((float) (bounds.southwest.longitude - BOUNDS_OFFSET));
+		boundingBox.setNorth((float) (bounds.northeast.latitude + BOUNDS_OFFSET));
+		boundingBox.setEast((float) (bounds.northeast.longitude + BOUNDS_OFFSET));
 
 		return boundingBox;
 	}
 
-
 	private void showPlacesOnMap(List<Place> places) {
-		removeMarkers();
-		for(Place place : places) {
-			if(placeMarkers.keySet().contains(place.getGuid())){
-				continue;
-			}
-			float markerColor = BitmapDescriptorFactory.HUE_RED;
-			if(place.getCategories() != null && place.getCategories().size() > 0){
-				markerColor = getMarkerHue(place.getCategories().get(0));
-			}
-			Marker newMarker = mMap.addMarker(new MarkerOptions()
+		BoundingBox boundingBox = getMapBoundingBox();
+
+		map.clear();
+		SpreadResult spreadResult = spreader.spread(
+			places,
+			sizeConfigs,
+			boundingBox,
+			new CanvasSize(
+				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),
+				(int) (vMain.getMeasuredHeight() * canvasHeightRatio)
+			)
+		);
+
+		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
+			Place place = spreadedPlace.getPlace();
+			Marker newMarker = map.addMarker(new MarkerOptions()
 				.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 				.title(place.getName())
 				.snippet(place.getPerex())
-				.icon(BitmapDescriptorFactory.defaultMarker(markerColor))
+				.icon(getMarkerBitmapDescriptor(spreadedPlace))
 			);
 			newMarker.setTag(place.getGuid());
-
-			placeMarkers.put(place.getGuid(), newMarker);
-
-			if(placeMarkers.size() >= 50){
-				break;
-			}
 		}
 	}
 
-	// todo put to utils
-	/*
-		sightseeing 0xF6746C;
-		shopping    0xE7A41C;
-		eating      0xF6936C;
-		discovering 0x898F9A;
-		playing     0x6CD8F6;
-		traveling   0x6B91F6;
-		going_out   0xE76CA0;
-		hiking      0xD59B6B;
-		sports      0x68B277;
-		relaxing    0xA06CF6;
-		sleeping    0xA4CB69;
-	*/
-	public float getMarkerHue(String category){
-		switch(category){
-			case "sightseeing":
-//				return 0xF6746C;
-				return 14;
-			case "shopping":
-//				return 0xE7A41C;
-				return 40;
-			case "eating":
-//				return 0xF6936C;
-				return 17;
-			case "discovering":
-//				return 0x898F9A;
-				return 219;
-			case "playing":
-//				return 0x6CD8F6;
-				return 193;
-			case "traveling":
-//				return 0x6B91F6;
-				return 224;
-			case "going_out":
-//				return 0xE76CA0;
-				return 335;
-			case "hiking":
-//				return 0xD59B6B;
-				return 27;
-			case "sports":
-//				return 0x68B277;
-				return 132;
-			case "relaxing":
-//				return 0xA06CF6;
-				return 263;
-			default:
-				return BitmapDescriptorFactory.HUE_RED;
+	private BitmapDescriptor getMarkerBitmapDescriptor(SpreadedPlace spreadedPlace) {
+		try {
+			Bitmap markerBitmap = MarkerBitmapGenerator.createMarkerBitmap(this, spreadedPlace);
+			if(markerBitmap != null) {
+				return BitmapDescriptorFactory.fromBitmap(markerBitmap);
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			return BitmapDescriptorFactory.defaultMarker(getMarkerHue(spreadedPlace.getPlace()));
 		}
 	}
 
-	private void removeMarkers() {
-		if(placeMarkers != null){
-			List<String> removedMarkers = new ArrayList<>();
-			LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
-
-			for(String key : placeMarkers.keySet()) {
-				Marker placeMarker = placeMarkers.get(key);
-
-				if(!bounds.contains(placeMarker.getPosition())) {
-					placeMarker.remove();
-					removedMarkers.add(key);
-				}
-			}
-
-			for(String removedMarker : removedMarkers) {
-				placeMarkers.remove(removedMarker);
-			}
+	private float getMarkerHue(Place place) {
+		float markerHue = BitmapDescriptorFactory.HUE_RED;
+		if(place.getCategories() != null && place.getCategories().size() > 0){
+			markerHue = Utils.getMarkerHue(place.getCategories().get(0));
 		}
+		return markerHue;
 	}
 
 	private Callback<List<Place>> getPlacesCallback() {
@@ -262,7 +245,7 @@ public class MapsActivity
 		if (requestCode == PermissionsUtils.REQUEST_LOCATION) {
 			if (permissionsUtils.verifyPermissions(grantResults)){
 				permissionsUtils.showGrantedSnackBar();
-				mMap.setMyLocationEnabled(true);
+				map.setMyLocationEnabled(true);
 			} else {
 				permissionsUtils.showExplanationSnackbar(this, Manifest.permission.ACCESS_FINE_LOCATION);
 			}

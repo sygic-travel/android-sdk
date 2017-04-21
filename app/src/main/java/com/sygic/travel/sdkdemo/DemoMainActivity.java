@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdkdemo.list.PlacesListActivity;
+import com.sygic.travel.sdkdemo.map.MapsActivity;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
 

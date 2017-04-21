@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context="com.sygic.travel.sdkdemo.MapsActivity">
+	tools:context="com.sygic.travel.sdkdemo.map.MapsActivity">
 
 	<fragment
 		android:id="@+id/map"
