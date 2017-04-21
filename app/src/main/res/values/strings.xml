@@ -30,4 +30,6 @@
 	<string name="sports">Sports</string>
 	<string name="relaxing">Relaxation</string>
 	<string name="sleeping">Accommodation</string>
+
+	<string name="filter_places">Filter places</string>
 </resources>

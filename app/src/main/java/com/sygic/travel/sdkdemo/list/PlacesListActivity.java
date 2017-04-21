@@ -7,6 +7,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
@@ -14,6 +17,8 @@ import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
+import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
@@ -27,6 +32,8 @@ public class PlacesListActivity extends AppCompatActivity {
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
 	private List<Place> places;
+	private CategoriesDialog categoriesDialog;
+	private String selectedCategory;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,21 @@ public class PlacesListActivity extends AppCompatActivity {
 	protected void onPause() {
 		super.onPause();
 		StSDK.getInstance().unsubscribeObservable();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.places, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.action_filter_places) {
+			categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
+			categoriesDialog.show();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void initRecycler() {
@@ -65,7 +87,7 @@ public class PlacesListActivity extends AppCompatActivity {
 
 	private void loadPlaces() {
 		List<Query> queries = new ArrayList<>();
-		queries.add(new Query(null, null, null, null, "city:1", null, null, null, 128));
+		queries.add(new Query(null, null, selectedCategory, null, "city:1", null, null, null, 128));
 		StSDK.getInstance().getPlaces(queries, getPlacesCallback());
 	}
 
@@ -73,6 +95,17 @@ public class PlacesListActivity extends AppCompatActivity {
 		this.places = places;
 		placesAdapter.setPlaces(places);
 		placesAdapter.notifyDataSetChanged();
+	}
+
+	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
+		return new CategoriesAdapter.ViewHolder.CategoryClick() {
+			@Override
+			public void onCategoryClick(String category) {
+				selectedCategory = category.equals("reset") ? null : category;
+				loadPlaces();
+				categoriesDialog.dismiss();
+			}
+		};
 	}
 
 	private Callback<List<Place>> getPlacesCallback() {
