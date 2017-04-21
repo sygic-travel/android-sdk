@@ -51,6 +51,9 @@ public class MapsActivity
 	public static final float ZOOM_FOR_DETAIL = 18f;
 	public static final float ZOOM_FOR_CITY = 15f;
 	public static final float ZOOM_FOR_COUNTRY = 7f;
+	private static final double BOUNDS_OFFSET = 0.05;
+
+	private double canvasWidthRatio, canvasHeightRatio;
 
 	private GoogleMap map;
 	private PermissionsUtils permissionsUtils;
@@ -90,18 +93,6 @@ public class MapsActivity
 
 		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
-		map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
-			final int MAP_MOVES_LOAD_LIMIT = 10;
-			int movesCounter = 0;
-
-			@Override
-			public void onCameraMove() {
-				if(++movesCounter == MAP_MOVES_LOAD_LIMIT) {
-					movesCounter = 0;
-					loadPlaces();
-				}
-			}
-		});
 		map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
@@ -112,8 +103,26 @@ public class MapsActivity
 			}
 		});
 
+		calculateCanvasSizeRatios();
 		enableMyLocation();
 		loadPlaces();
+	}
+
+	private void calculateCanvasSizeRatios() {
+		LatLngBounds originalBounds = map.getProjection().getVisibleRegion().latLngBounds;
+		LatLngBounds offsetBounds = new LatLngBounds(
+			new LatLng(originalBounds.southwest.latitude - BOUNDS_OFFSET, originalBounds.southwest.longitude - BOUNDS_OFFSET),  //sw
+			new LatLng(originalBounds.northeast.latitude + BOUNDS_OFFSET, originalBounds.northeast.longitude + BOUNDS_OFFSET)  //ne
+		);
+
+		final double dOffLat = offsetBounds.northeast.latitude - offsetBounds.southwest.latitude;
+		final double dOrgLat = originalBounds.northeast.latitude - originalBounds.southwest.latitude;
+		final double dOffLng = Math.max(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude)) -
+			Math.min(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude));
+		final double dOrgLng = Math.max(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude)) -
+			Math.min(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude));
+		canvasHeightRatio = dOffLat / dOrgLat;
+		canvasWidthRatio = dOffLng / dOrgLng;
 	}
 
 	private void enableMyLocation() {
@@ -149,16 +158,19 @@ public class MapsActivity
 		LatLng ne = bounds.northeast;
 		LatLng sw = bounds.southwest;
 
-		return sw.latitude + "," + sw.longitude + "," + ne.latitude + "," + ne.longitude;
+		return (sw.latitude - BOUNDS_OFFSET) + "," +
+			(sw.longitude - BOUNDS_OFFSET) + "," +
+			(ne.latitude + BOUNDS_OFFSET) + "," +
+			(ne.longitude + BOUNDS_OFFSET);
 	}
 
 	private BoundingBox getMapBoundingBox() {
 		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		BoundingBox boundingBox = new BoundingBox();
-		boundingBox.setSouth((float) bounds.southwest.latitude);
-		boundingBox.setWest((float) bounds.southwest.longitude);
-		boundingBox.setNorth((float) bounds.northeast.latitude);
-		boundingBox.setEast((float) bounds.northeast.longitude);
+		boundingBox.setSouth((float) (bounds.southwest.latitude - BOUNDS_OFFSET));
+		boundingBox.setWest((float) (bounds.southwest.longitude - BOUNDS_OFFSET));
+		boundingBox.setNorth((float) (bounds.northeast.latitude + BOUNDS_OFFSET));
+		boundingBox.setEast((float) (bounds.northeast.longitude + BOUNDS_OFFSET));
 
 		return boundingBox;
 	}
@@ -171,7 +183,11 @@ public class MapsActivity
 			places,
 			sizeConfigs,
 			boundingBox,
-			new CanvasSize(vMain.getMeasuredWidth(), vMain.getMeasuredHeight()));
+			new CanvasSize(
+				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),
+				(int) (vMain.getMeasuredHeight() * canvasHeightRatio)
+			)
+		);
 
 		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
 			Place place = spreadedPlace.getPlace();
