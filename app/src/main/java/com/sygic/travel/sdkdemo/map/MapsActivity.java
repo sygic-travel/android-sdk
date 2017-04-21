@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +35,8 @@ import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
+import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 import com.sygic.travel.sdkdemo.utils.Utils;
@@ -60,6 +64,10 @@ public class MapsActivity
 	private Spreader spreader;
 	private List<SpreadSizeConfig> sizeConfigs;
 
+	private CategoriesDialog categoriesDialog;
+	private String selectedCategoryKey;
+	private String titlePattern;
+
 	private Callback<List<Place>> placesCallback;
 	private View vMain;
 
@@ -71,6 +79,8 @@ public class MapsActivity
 		vMain = findViewById(R.id.ll_main);
 		permissionsUtils = new PermissionsUtils(vMain);
 		spreader = new Spreader();
+		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
+		titlePattern = getString(R.string.title_activity_maps) + " - %s";
 
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -82,6 +92,20 @@ public class MapsActivity
 	protected void onPause() {
 		super.onPause();
 		StSDK.getInstance().unsubscribeObservable();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.places, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.action_filter_places) {
+			categoriesDialog.show();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -146,11 +170,34 @@ public class MapsActivity
 
 		for(String quadkey : quadkeys) {
 			queries.add(new Query(
-				null, getMapBoundsString(), null, null, "city:1", 1, quadkey, null, 32)
+				null, getMapBoundsString(), selectedCategoryKey, null, "city:1", 1, quadkey, null, 32)
 			);
 		}
 
 		StSDK.getInstance().getPlaces(queries, placesCallback);
+	}
+
+	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
+		return new CategoriesAdapter.ViewHolder.CategoryClick() {
+			@Override
+			public void onCategoryClick(String categoryKey, String categoryName) {
+				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+					categoriesDialog.dismiss();
+					return;
+				}
+
+				if(categoryKey.equals("reset")){
+					selectedCategoryKey = null;
+					setTitle(getString(R.string.title_activity_maps));
+				} else {
+					selectedCategoryKey = categoryKey;
+					setTitle(String.format(titlePattern, categoryName));
+				}
+
+				loadPlaces();
+				categoriesDialog.dismiss();
+			}
+		};
 	}
 
 	private String getMapBoundsString() {

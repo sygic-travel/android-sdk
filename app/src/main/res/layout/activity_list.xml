@@ -12,7 +12,6 @@
 		android:id="@+id/rv_places"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:scrollbarSize="0dp"
-		android:scrollbars="none"/>
+		android:scrollbars="vertical"/>
 
 </LinearLayout>
