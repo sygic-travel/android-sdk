@@ -3,11 +3,11 @@ package com.sygic.travel.sdkdemo.filters;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.sygic.travel.sdkdemo.R;
+import com.sygic.travel.sdkdemo.gallery.DividerDecoration;
 
 /**
  * Created by michal.murin on 21.4.2017.
@@ -26,7 +26,7 @@ public class CategoriesDialog extends Dialog{
 		setContentView(R.layout.categories_dialog);
 		RecyclerView rvCategories = (RecyclerView) findViewById(R.id.rv_categories);
 		rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
-//		rvCategories.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+		rvCategories.addItemDecoration(new DividerDecoration(getContext(), R.drawable.line_divider));
 		rvCategories.setAdapter(new CategoriesAdapter(onCategoryClick));
 	}
 }
