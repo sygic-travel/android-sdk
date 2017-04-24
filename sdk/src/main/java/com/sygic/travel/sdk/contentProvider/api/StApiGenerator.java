@@ -32,6 +32,14 @@ public class StApiGenerator {
 		.setLevel(getHttpLoggingInterceptorLevel());
 	private static OkHttpClient httpClient;
 
+	/**
+	 * See {@link retrofit2.Retrofit}
+	 * @param apiClass
+	 * @param cacheDir Directory for request cache.
+	 * @param <S> Generic type of API interface. Until implemented own interface, {@link StApi}
+	 *           ought to be used.
+	 * @return An implementation of the API endpoints defined by the {@code apiClass} interface.
+	 */
 	public static <S> S createStApi(Class<S> apiClass, File cacheDir) {
 		return buildRetrofit(cacheDir).create(apiClass);
 	}
@@ -68,6 +76,9 @@ public class StApiGenerator {
 		return httpClient;
 	}
 
+	/**
+	 * @return Logging level.
+	 */
 	private static HttpLoggingInterceptor.Level getHttpLoggingInterceptorLevel() {
 		if (StEnvironment.debug) {
 			return HttpLoggingInterceptor.Level.BODY;

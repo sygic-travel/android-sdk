@@ -6,11 +6,18 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * Implements {@link okhttp3.Interceptor}, adds API key to requests
+ */
 public class AuthorizationInterceptor implements Interceptor {
 	private static final String X_API_KEY = "x-api-key";
 
 	private String xApiKey;
 
+	/**
+	 * Updates API key
+	 * @param xApiKey new API key, which will be used in API requests
+	 */
 	public void updateXApiKey(String xApiKey){
 		this.xApiKey = xApiKey;
 	}

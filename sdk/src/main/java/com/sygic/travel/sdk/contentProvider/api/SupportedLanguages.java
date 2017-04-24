@@ -4,22 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
 public class SupportedLanguages {
 	private static final List<String> supportedLanguages;
 	public static String EN = "en";
 
-	public static String getAvailableLanguage(String locale){
-		if(!supportedLanguages.contains(locale)){
-			return "en";
-		} else {
-			return locale;
-		}
-	}
-
+	/**
+	 * @return Device's current locale, if it is supported. Returns english locale otherwise.
+	 */
 	public static String getActualLocale(){
 		String locale = Locale.getDefault().getLanguage();
 		if(supportedLanguages.contains(locale)){
