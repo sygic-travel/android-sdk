@@ -71,6 +71,12 @@
 			android:name=".ReferenceActivity"
 			android:screenOrientation="portrait">
 		</activity>
+		<activity
+			android:name=".search.SearchActivity"
+			android:configChanges="orientation|keyboardHidden|screenSize"
+			android:label="@string/title_activity_search"
+			android:screenOrientation="portrait">
+		</activity>
 	</application>
 
 </manifest>

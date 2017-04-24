@@ -5,10 +5,10 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context="com.sygic.travel.sdkdemo.list.PlacesListActivity">
+	tools:context="com.sygic.travel.sdkdemo.search.SearchActivity">
 
 	<android.support.v7.widget.RecyclerView
-		android:id="@+id/rv_places"
+		android:id="@+id/rv_result_places"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:scrollbars="vertical"/>

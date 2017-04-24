@@ -7,6 +7,7 @@
 	<string name="title_activity_gallery">Gallery</string>
 	<string name="title_activity_photo">Photo</string>
 	<string name="title_activity_reference">Reference</string>
+	<string name="title_activity_search">Search</string>
 
 	<string name="settings">Settings</string>
 
@@ -32,4 +33,5 @@
 	<string name="sleeping">Accommodation</string>
 
 	<string name="filter_places">Filter places</string>
+	<string name="places_search">Search places</string>
 </resources>

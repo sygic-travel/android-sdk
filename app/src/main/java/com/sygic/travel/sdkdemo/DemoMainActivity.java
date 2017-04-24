@@ -8,6 +8,7 @@ import android.view.View;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdkdemo.list.PlacesListActivity;
 import com.sygic.travel.sdkdemo.map.MapsActivity;
+import com.sygic.travel.sdkdemo.search.SearchActivity;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
 
@@ -29,11 +30,16 @@ public class DemoMainActivity extends AppCompatActivity {
 				startMapActivity();
 			}
 		});
-
 		findViewById(R.id.btn_list_activity).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startListActivity();
+			}
+		});
+		findViewById(R.id.btn_search_activity).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startSearchActivity();
 			}
 		});
 	}
@@ -46,5 +52,10 @@ public class DemoMainActivity extends AppCompatActivity {
 	private void startListActivity() {
 		Intent mapIntent = new Intent(this, PlacesListActivity.class);
 		startActivity(mapIntent);
+	}
+
+	private void startSearchActivity() {
+		Intent searchIntent = new Intent(this, SearchActivity.class);
+		startActivity(searchIntent);
 	}
 }
