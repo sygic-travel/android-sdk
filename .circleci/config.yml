@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/android-sdk
+    docker:
+      - image: sygictravel/android-docker-build
+    steps:
+      - checkout
+      - run:
+          name: Replace Versions
+          command: echo "SKD versioning"
+      - run:
+          name: Cleanup
+          command: |
+            rm -rf app/build
+            rm -rf sdk/build
+      - run:
+          name: Setup App Environment
+          command: |
+            sed -i 's/public static final boolean debug = true;/public static final boolean debug = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
+            sed -i 's/public static final boolean alpha = true;/public static final boolean alpha = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
+      - run:
+         name: Gradle Build
+         command: |
+            gradle :sdk:assembleRelease;
+            gradle :app:assembleDebug;
+      - store_artifacts:
+          path: sdk/build/outputs/aar/sdk-release.aar
+          destination: st-android-sdk.aar
+      - store_artifacts:
+          path: app/build/outputs/apk/app-debug.apk
+          destination: st-android-sdk-sample.apk
