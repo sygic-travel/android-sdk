@@ -4,14 +4,15 @@ import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.LinkedList;
 
-/**
- * Created by michal.murin on 13.4.2017.
- */
-
 public class SpreadResult {
 	LinkedList<SpreadedPlace> visiblePlaces;
 	LinkedList<Place> hiddenPlaces;
 
+	/**
+	 * Outupt of the spread algorithm.
+	 * @param visiblePlaces Places visible on map.
+	 * @param hiddenPlaces Places, which are not visible.
+	 */
 	public SpreadResult(LinkedList<SpreadedPlace> visiblePlaces, LinkedList<Place> hiddenPlaces) {
 		this.visiblePlaces = visiblePlaces;
 		this.hiddenPlaces = hiddenPlaces;
