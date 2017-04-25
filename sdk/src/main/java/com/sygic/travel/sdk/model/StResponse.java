@@ -7,6 +7,9 @@ import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.List;
 
+/**
+ * API response
+ */
 public class StResponse {
 	public String status;
 	public int statusCode;
@@ -30,7 +33,7 @@ public class StResponse {
 	}
 
 	/**
-	 * Only one of attributes should have assigned value
+	 * Contains data from the API response. Only one property should be assinged.
 	 */
 	public class Data {
 		public static final String PLACE = "place";

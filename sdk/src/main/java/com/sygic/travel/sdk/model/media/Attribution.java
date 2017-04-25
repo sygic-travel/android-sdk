@@ -2,10 +2,6 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
 public class Attribution {
 	public static final String AUTHOR = "author";
 	public static final String AUTHOR_URL = "author_url";

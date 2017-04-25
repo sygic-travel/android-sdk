@@ -6,30 +6,6 @@ import com.sygic.travel.sdk.model.geo.Location;
 
 import java.util.List;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
-/*
-class Place {
-	 guid: string
-	 rating: float
-	 location: Location
-	 quadkey: string
-	 name: string
-	 nameSuffix: string
-	 boundingBox: BoundingBox
-	 perex: string
-	 url: string
-	 photoUrl: string
-	 price: Price
-	 marker: string
-	 categories: array<string>
-	 parentsGuids: array<string>
-	 detail: Detail
- }
- */
-
 public class Place {
 	public static final String GUID = "guid";
 	public static final String RATING = "rating";

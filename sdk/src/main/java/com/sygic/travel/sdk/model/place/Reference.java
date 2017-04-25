@@ -4,10 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
 public class Reference {
 	public static final String ID = "id";
 	public static final String TITLE = "title";

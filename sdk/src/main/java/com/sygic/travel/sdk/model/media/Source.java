@@ -1,9 +1,5 @@
 package com.sygic.travel.sdk.model.media;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
 import com.google.gson.annotations.SerializedName;
 
 public class Source {

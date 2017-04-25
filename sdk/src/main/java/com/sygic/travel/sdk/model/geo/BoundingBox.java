@@ -6,15 +6,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by michal.murin on 16.2.2017.
  */
 
-/*
-class BoundingBox {
-    north: float
-    east: float
-    south: float
-    west: float
-}
-*/
-
 public class BoundingBox {
 	public static final String NORTH = "north";
 	public static final String EAST = "east";

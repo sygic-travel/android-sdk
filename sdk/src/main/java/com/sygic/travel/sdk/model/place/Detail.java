@@ -5,25 +5,6 @@ import com.sygic.travel.sdk.model.media.MainMedia;
 
 import java.util.List;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
-/*
-class Detail {
-    address: string
-    admission: string
-    description: Description
-    email: string
-    duration: int
-    openingHours: string
-    phone: string
-    mainMedia: array<Medium>
-    references: array<Reference>
-    tags: array<string>
-}
-*/
-
 public class Detail extends Place { // shall we do this? (extends Place)
 	public static final String ADDRESS = "address";
 	public static final String ADMISSION = "admission";

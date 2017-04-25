@@ -3,9 +3,9 @@ package com.sygic.travel.sdk.model.query;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by michal.murin on 10.3.2017.
+ * Query contains values for an API request. For parameters explanations see
+ * <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
  */
-
 public class Query {
 	public static final String QUERY = "query";
 	public static final String BOUNDS = "bounds";
@@ -46,26 +46,30 @@ public class Query {
 
 	public Query(){}
 
+	/**
+	 * Query contains values for an API request. For parameters explanations see
+	 * <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+	 */
 	public Query(
 		String query,
-		String bounds,
+		String levels,
 		String categories,
+		String mapTiles,
+		Integer mapSpread,
+		String bounds,
 		String tags,
 		String parents,
-		Integer mapSpread,
-		String mapTiles,
-		String levels,
 		Integer limit
 	) {
 		this.query = query;
-		this.bounds = bounds;
+		this.levels = levels;
 		this.categories = categories;
+		this.mapTiles = mapTiles;
+		this.mapSpread = mapSpread;
+		this.bounds = bounds;
 		this.tags = tags;
 		this.parents = parents;
-		this.mapSpread = mapSpread;
-		this.mapTiles = mapTiles;
 		this.limit = limit;
-		this.levels = levels;
 	}
 
 	public String getQuery() {

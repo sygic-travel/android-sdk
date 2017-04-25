@@ -2,19 +2,6 @@ package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
-/*
-class Description {
-    text: string
-    provider: string
-    translationProvider: string
-    url: string
-}
-*/
-
 public class Description {
 	public static final String TEXT = "text";
 	public static final String PROVIDER = "provider";
