@@ -26,8 +26,7 @@ import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
- * This class provides public methods for user, it is starting point of app and it initialize
- * all inner ?structures?.
+ * Provides public methods for requesting API.
  */
 public class StSDK {
 
@@ -43,6 +42,9 @@ public class StSDK {
 
 	public static volatile StSDK instance = null;
 
+	/**
+	 * @return Instance of {@link StSDK}.
+	 */
 	public static StSDK getInstance() {
 		if (instance == null) {
 			synchronized(StSDK.class) {
@@ -54,6 +56,12 @@ public class StSDK {
 		return instance;
 	}
 
+	/**
+	 * Creates and send a request to get places, e.g. for map or list.
+	 * @param query Query encapsulating data for API request.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaces(
 		Query query,
 		Callback<List<Place>> back
@@ -73,13 +81,24 @@ public class StSDK {
 		subscription = preparedObservable.subscribe(new StObserver(back, PLACES_API_CALL, false));
 	}
 
+	/**
+	 * Creates and sends a request to get place with detailed information.
+	 * @param guid Unique id of a place - detailed information about this place will be requested.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaceDetailed(String guid, Callback<Detail> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(guid);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver(back, DETAIL_API_CALL, false));
 	}
 
-
+	/**
+	 * Creates and sends a request to get place's media.
+	 * @param guid Unique id of a place - media for this place will be requested.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaceMedia(String guid, Callback<List<Medium>> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
@@ -91,7 +110,7 @@ public class StSDK {
 	 ********************************************/
 
 	/**
-	 * Method returns a new prepared Observable.
+	 * Returns a new prepared Observable.
 	 *
 	 * @param unpreparedObservable Observable to be prepared
 	 * @return Observable ready to be subscribed to
@@ -105,7 +124,7 @@ public class StSDK {
 	}
 
 	/**
-	 * Method unsubsribes a subscribed observable
+	 * Unsubsribes a subscribed observable
 	 */
 	public void unsubscribeObservable(){
 		if(subscription != null && !subscription.isUnsubscribed()){
@@ -125,7 +144,7 @@ public class StSDK {
 	}
 
 	/**
-	 * This method should initialize all necessary objects
+	 * Initialization of the SDK
 	 */
 	public static void initialize(String xApiKey, Context context) {
 		StApiGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
@@ -137,7 +156,7 @@ public class StSDK {
 	 * Call<List<Place>> call = stApi.getPlaces(...);
 	 * call.enque(callback)
 	 *
-	 * @return instance of StApi class
+	 * @return instance of {@link StApi}
 	 */
 	private StApi getStApi() {
 		if(stApi == null){
