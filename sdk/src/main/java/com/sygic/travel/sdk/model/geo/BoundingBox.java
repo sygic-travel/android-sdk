@@ -3,9 +3,8 @@ package com.sygic.travel.sdk.model.geo;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Geografical bounds - south, west, north, east.</p>
  */
-
 public class BoundingBox {
 	public static final String NORTH = "north";
 	public static final String EAST = "east";

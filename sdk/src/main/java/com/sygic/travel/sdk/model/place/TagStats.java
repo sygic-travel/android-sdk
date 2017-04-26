@@ -1,5 +1,8 @@
 package com.sygic.travel.sdk.model.place;
 
+/**
+ * <p>Tag's data.</p>
+ */
 public class TagStats {
 	private String name, key;
 	private int count, priority;

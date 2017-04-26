@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.geo.Location;
 import java.util.List;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Place's medium.</p>
  */
 
 public class Medium {

@@ -17,7 +17,7 @@ import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
- * Observer which subscribes to receive a response from API. See {@link rx.Observer}
+ * <p>Observer which subscribes to receive a response from API.</p>
  */
 public class StObserver implements Observer<Result<StResponse>> {
 	private static final String TAG = StObserver.class.getSimpleName();
@@ -30,7 +30,6 @@ public class StObserver implements Observer<Result<StResponse>> {
 	private List<StResponse> stResponses = new ArrayList<>();
 
 	/**
-	 *
 	 * @param userCallback Callback, which methods are called, when the response is processed.
 	 * @param requestType Type of API request.
 	 * @param multipleCallsMerged Flag indicating whether the Observer hes been subscribed to more
@@ -47,7 +46,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	}
 
 	/**
-	 * All API requests have been finished. See {@link Observer#onCompleted()}
+	 * <p>All API requests have been finished.</p>
 	 */
 	@Override
 	public void onCompleted() {
@@ -76,7 +75,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	}
 
 	/**
-	 * A critical error occured. See {@link Observer#onError(Throwable)}
+	 * <p>A critical error occured.</p>
 	 */
 	@Override
 	public void onError(Throwable e) {
@@ -84,7 +83,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	}
 
 	/**
-	 * A single API request has been finished.  See {@link Observer#onNext(Object)}
+	 * <p>A single API request has been finished.</p>
 	 */
 	@Override
 	public void onNext(Result<StResponse> stResponseResult) {
@@ -99,6 +98,11 @@ public class StObserver implements Observer<Result<StResponse>> {
 		}
 	}
 
+	/**
+	 * <p>Determines if an error occured while requesting API.</p>
+	 * @param stResponseResult Result from an API request.
+	 * @return {@code true} if an error occured, {@code false} otherwise.
+	 */
 	private boolean isError(Result<StResponse> stResponseResult) {
 		if(stResponseResult.error() != null){
 			return true;

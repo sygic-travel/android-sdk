@@ -1,15 +1,20 @@
 package com.sygic.travel.sdk.geo.spread;
 
+import com.sygic.travel.sdk.model.geo.BoundingBox;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.LinkedList;
+import java.util.List;
 
+/**
+ * <p>Outupt of the {@link Spreader#spread(List, List, BoundingBox, CanvasSize) spread algorithm}.</p>
+ */
 public class SpreadResult {
 	LinkedList<SpreadedPlace> visiblePlaces;
 	LinkedList<Place> hiddenPlaces;
 
 	/**
-	 * Outupt of the spread algorithm.
+	 * <p>Outupt of the spread algorithm.</p>
 	 * @param visiblePlaces Places visible on map.
 	 * @param hiddenPlaces Places, which are not visible.
 	 */

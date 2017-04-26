@@ -2,6 +2,9 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * <p>Medium's original parameters.</p>
+ */
 public class Original {
 	public static final String WIDTH = "width";
 	public static final String HEIGHT = "height";

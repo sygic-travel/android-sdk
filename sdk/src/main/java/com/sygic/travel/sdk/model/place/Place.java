@@ -6,6 +6,9 @@ import com.sygic.travel.sdk.model.geo.Location;
 
 import java.util.List;
 
+/**
+ * <p>Place.</p>
+ */
 public class Place {
 	public static final String GUID = "guid";
 	public static final String RATING = "rating";
@@ -21,7 +24,6 @@ public class Place {
 	public static final String MARKER = "marker";
 	public static final String CATEGORIES = "categories";
 	public static final String PARENTS = "parentsGuids";
-	public static final String DETAIL = "detail";
 
 	@SerializedName(GUID)
 	private String guid;

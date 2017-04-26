@@ -2,6 +2,9 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * <p>Attribution of a medium, contains information about author, license and title.</p>
+ */
 public class Attribution {
 	public static final String AUTHOR = "author";
 	public static final String AUTHOR_URL = "author_url";

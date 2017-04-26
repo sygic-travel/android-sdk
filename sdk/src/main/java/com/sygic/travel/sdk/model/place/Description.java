@@ -2,6 +2,9 @@ package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * <p>Place's description data.</p>
+ */
 public class Description {
 	public static final String TEXT = "text";
 	public static final String PROVIDER = "provider";

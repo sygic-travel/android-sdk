@@ -5,7 +5,10 @@ import com.sygic.travel.sdk.model.media.MainMedia;
 
 import java.util.List;
 
-public class Detail extends Place { // shall we do this? (extends Place)
+/**
+ * <p>Place's detail, extends {@link Place}.</p>
+ */
+public class Detail extends Place {
 	public static final String ADDRESS = "address";
 	public static final String ADMISSION = "admission";
 	public static final String DESCRIPTION = "description";

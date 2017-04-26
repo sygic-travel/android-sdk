@@ -8,7 +8,7 @@ import com.sygic.travel.sdk.model.place.Place;
 import java.util.List;
 
 /**
- * API response
+ * <p>API response.</p>
  */
 public class StResponse {
 	public String status;

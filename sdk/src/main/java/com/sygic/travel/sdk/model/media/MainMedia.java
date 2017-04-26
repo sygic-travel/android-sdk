@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * <p>Place's main media.</p>
+ */
 public class MainMedia {
 	public static final String USAGE = "usage";
 	public static final String MEDIA = "media";

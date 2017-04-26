@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * <p>Link (Wiki, web site, etc.) related to a specific place.</p>
+ */
 public class Reference {
 	public static final String ID = "id";
 	public static final String TITLE = "title";

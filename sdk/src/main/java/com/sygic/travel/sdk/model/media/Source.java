@@ -2,6 +2,9 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * <p>Medium's source.</p>
+ */
 public class Source {
 	public static final String NAME = "name";
 	public static final String EXTERNAL_ID = "external_id";

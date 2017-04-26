@@ -2,6 +2,9 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Medium's suitable usages.
+ */
 public class Usage {
 	public static final String SQUARE = "square";
 	public static final String PORTRAIT = "portrait";

@@ -11,13 +11,13 @@ import okhttp3.Response;
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_VERSION;
 
 /**
- * Implements {@link okhttp3.Interceptor}, adds API version and locale code
+ * <p>Implements {@link okhttp3.Interceptor}, adds API version and locale code.</p>
  */
 public class LocaleInterceptor implements Interceptor{
 	public static final String TO_INTERCEPT = "[api_version_and_locale]";
 
 	/**
-	 * Device's current locale code
+	 * <p>Device's current locale code</p>
 	 */
 	private String locale;
 
@@ -26,12 +26,15 @@ public class LocaleInterceptor implements Interceptor{
 	}
 
 	/**
-	 * Updates {@link LocaleInterceptor#locale} to device's current locale code
+	 * <p>Updates {@link LocaleInterceptor#locale} to device's current locale code</p>
 	 */
 	public void updateLocale(){
 		locale = SupportedLanguages.getActualLocale();
 	}
 
+	/**
+	 * <p>Modifies the original request by adding an <b>API version</b> and a <b>locale code</b>.</p>
+	 */
 	@Override
 	public Response intercept(Interceptor.Chain chain) throws IOException {
 		Request original = chain.request();

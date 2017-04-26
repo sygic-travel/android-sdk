@@ -9,10 +9,13 @@ import com.sygic.travel.sdk.model.place.Place;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * <p>Performs the main spreading algorithm for places.</p>
+ */
 public class Spreader {
 
 	/**
-	 * Generates a list of spreaded places.
+	 * <p>Generates a list of spreaded places.</p>
 	 * @param places Places to spread.
 	 * @param sizeConfigs Size configurations available for spreading.
 	 * @param bounds Map's bounds, which the places are supposed to be spreaded within.
@@ -64,7 +67,7 @@ public class Spreader {
 	}
 
 	/**
-	 * Determines a given size configuration intersects with any of already spreaded places.
+	 * <p>Determines a given size configuration intersects with any of already spreaded places.</p>
 	 * @param sizeConfig Size configuration of a place.
 	 * @param canvasCoords Place's coordinates on canvas.
 	 * @param spreadedPlaces Already spreaded places.
@@ -95,11 +98,11 @@ public class Spreader {
 	}
 
 	/**
-	 * Converts given location within given bounds to {@code x, y} coordinates within given canvas.
+	 * <p>Converts given location within given bounds to {@code x, y} coordinates within given canvas.</p>
 	 * @param location Location which is supposed be converted to {@code x, y} coordinates.
 	 * @param boundingBox Bounds the location lies within.
 	 * @param canvasSize Size of a canvas the coordinates are supposed to lie within.
-	 * @return
+	 * @return {@link Point} on a canvas.
 	 */
 	private Point locationToCanvasCoords(
 		Location location,

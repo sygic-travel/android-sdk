@@ -3,8 +3,8 @@ package com.sygic.travel.sdk.model.query;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Query contains values for an API request. For parameters explanations see
- * <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+ * <p>Query contains values for an API request. </p>
+ * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
  */
 public class Query {
 	public static final String QUERY = "query";
@@ -47,8 +47,8 @@ public class Query {
 	public Query(){}
 
 	/**
-	 * Query contains values for an API request. For parameters explanations see
-	 * <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+	 * Query contains values for an API request.
+	 * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
 	 */
 	public Query(
 		String query,

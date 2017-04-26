@@ -21,10 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL;
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL_ALPHA;
 
+/**
+ * <p>Generates an implementation of an API interface, which has to follow the Retrofit patterns.</p>
+ * @see StApi
+ */
 public class StApiGenerator {
-	/********************************************
-	 *  		        RETROFIT
-	 ********************************************/
 	public static AuthorizationInterceptor authorizationInterceptor = new AuthorizationInterceptor();
 	public static LocaleInterceptor localeInterceptor = new LocaleInterceptor();
 
@@ -33,11 +34,10 @@ public class StApiGenerator {
 	private static OkHttpClient httpClient;
 
 	/**
-	 * See {@link retrofit2.Retrofit}
-	 * @param apiClass
+	 * <p>Generates an implementation of the API endpoints.</p>
+	 * @param apiClass {@link StApi} ought to be used unless own interface was created.
 	 * @param cacheDir Directory for request cache.
-	 * @param <S> Generic type of API interface. Until implemented own interface, {@link StApi}
-	 *           ought to be used.
+	 * @param <S> Generic type of API interface.
 	 * @return An implementation of the API endpoints defined by the {@code apiClass} interface.
 	 */
 	public static <S> S createStApi(Class<S> apiClass, File cacheDir) {
@@ -51,8 +51,6 @@ public class StApiGenerator {
 	private static Gson apiGson = new GsonBuilder()
 		.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
 		.create();
-
-	//TO_INTERCEPT is replaced by api version and locale in LocaleInterceptor class
 
 	private static String baseUrl = StEnvironment.alpha ? API_BASE_URL_ALPHA : API_BASE_URL;
 

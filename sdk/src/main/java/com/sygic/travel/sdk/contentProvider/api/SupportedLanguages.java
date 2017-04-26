@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * <p>Determines the suitable locale.</p>
+ */
 public class SupportedLanguages {
 	private static final List<String> supportedLanguages;
 	public static String EN = "en";
@@ -35,6 +38,5 @@ public class SupportedLanguages {
 		supportedLanguages.add("ko");
 		supportedLanguages.add("pl");
 		supportedLanguages.add("tr");
-
 	}
 }
