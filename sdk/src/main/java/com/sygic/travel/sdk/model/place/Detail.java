@@ -2,7 +2,6 @@ package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
 import com.sygic.travel.sdk.model.media.MainMedia;
-import com.sygic.travel.sdk.model.media.Media;
 
 import java.util.List;
 

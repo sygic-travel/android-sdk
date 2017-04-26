@@ -3,8 +3,6 @@ package com.sygic.travel.sdk.contentProvider.api;
 import android.util.Log;
 
 import com.sygic.travel.sdk.model.StResponse;
-import com.sygic.travel.sdk.model.media.Media;
-import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.ArrayList;

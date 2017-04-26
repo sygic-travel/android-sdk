@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
-import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
@@ -21,7 +21,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
 	private final ViewHolder.GalleryPhotoClick galleryPhotoClick;
 	private String photoSize;
-	private List<Media> gallery;
+	private List<Medium> gallery;
 
 	public GalleryAdapter(
 		ViewHolder.GalleryPhotoClick galleryPhotoClick,
@@ -56,7 +56,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 		return gallery.size();
 	}
 
-	public void setGallery(List<Media> gallery) {
+	public void setGallery(List<Medium> gallery) {
 		this.gallery = gallery;
 	}
 

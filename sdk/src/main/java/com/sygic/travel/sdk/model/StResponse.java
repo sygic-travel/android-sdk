@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 
@@ -44,7 +44,7 @@ public class StResponse {
 		private Detail detail;
 
 		@SerializedName(MEDIA)
-		private List<Media> media;
+		private List<Medium> media;
 
 		public List<Place> getPlaces() {
 			return places;
@@ -54,7 +54,7 @@ public class StResponse {
 			return detail;
 		}
 
-		public List<Media> getMedia() {
+		public List<Medium> getMedia() {
 			return media;
 		}
 	}
