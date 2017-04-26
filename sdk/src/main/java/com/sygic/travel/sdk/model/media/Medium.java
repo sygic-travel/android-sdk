@@ -9,7 +9,7 @@ import java.util.List;
  * Created by michal.murin on 16.2.2017.
  */
 
-public class Media {
+public class Medium {
 	public static final String GUID = "guid";
 	public static final String TYPE = "type";
 	public static final String URL_TEMPLATE = "url_template";
@@ -63,7 +63,7 @@ public class Media {
 	@SerializedName(SUITABILITY)
 	private List<String> suitability = null;
 
-	public Media() {
+	public Medium() {
 	}
 
 	public String getGuid() {

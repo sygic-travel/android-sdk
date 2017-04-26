@@ -7,7 +7,7 @@ import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StObserver;
 import com.sygic.travel.sdk.model.StResponse;
-import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
@@ -90,7 +90,7 @@ public class StSDK {
 	}
 
 
-	public void getPlaceMedia(String guid, Callback<List<Media>> back){
+	public void getPlaceMedia(String guid, Callback<List<Medium>> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
 		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = mergedObservable.subscribe(new StObserver(back, MEDIA_API_CALL, false));

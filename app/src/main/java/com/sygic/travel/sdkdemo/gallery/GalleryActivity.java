@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
-import com.sygic.travel.sdk.model.media.Media;
+import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
@@ -25,7 +25,7 @@ public class GalleryActivity extends AppCompatActivity {
 	private String guid;
 	private RecyclerView rvGallery;
 	private GalleryAdapter galleryAdapter;
-	private List<Media> gallery;
+	private List<Medium> gallery;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,10 @@ public class GalleryActivity extends AppCompatActivity {
 		};
 	}
 
-	private Callback<List<Media>> getMediaCallback() {
-		return new Callback<List<Media>>() {
+	private Callback<List<Medium>> getMediaCallback() {
+		return new Callback<List<Medium>>() {
 			@Override
-			public void onSuccess(List<Media> gallery) {
+			public void onSuccess(List<Medium> gallery) {
 				GalleryActivity.this.gallery = gallery;
 				galleryAdapter.setGallery(gallery);
 				galleryAdapter.notifyDataSetChanged();

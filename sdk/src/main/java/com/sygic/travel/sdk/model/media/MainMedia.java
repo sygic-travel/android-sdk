@@ -11,13 +11,13 @@ public class MainMedia {
 	@SerializedName(USAGE)
 	private Usage usage;
 	@SerializedName(MEDIA)
-	private List<Media> media;
+	private List<Medium> media;
 
 	public Usage getUsage() {
 		return usage;
 	}
 
-	public List<Media> getMedia() {
+	public List<Medium> getMedia() {
 		return media;
 	}
 }
