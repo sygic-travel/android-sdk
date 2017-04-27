@@ -24,6 +24,9 @@ jobs:
          command: |
             gradle :sdk:assembleRelease;
             gradle :app:assembleDebug;
+      - run:
+         name: Generate Documentation
+         command: javadoc -d ../javadoc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
       - store_artifacts:
           path: sdk/build/outputs/aar/sdk-release.aar
           destination: st-android-sdk.aar
