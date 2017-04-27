@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName;
 /**
  * <p>Attribution of a medium, contains information about author, license and title.</p>
  */
-public class Attribution {
-	public static final String AUTHOR = "author";
-	public static final String AUTHOR_URL = "author_url";
-	public static final String LICENSE = "license";
-	public static final String LICENSE_URL = "license_url";
-	public static final String OTHER = "other";
-	public static final String TITLE = "title";
-	public static final String TITLE_URL = "title_url";
+class Attribution {
+	private static final String AUTHOR = "author";
+	private static final String AUTHOR_URL = "author_url";
+	private static final String LICENSE = "license";
+	private static final String LICENSE_URL = "license_url";
+	private static final String OTHER = "other";
+	private static final String TITLE = "title";
+	private static final String TITLE_URL = "title_url";
 
 	@SerializedName(AUTHOR)
 	private String author;

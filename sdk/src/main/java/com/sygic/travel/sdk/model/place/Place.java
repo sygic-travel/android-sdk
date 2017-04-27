@@ -10,20 +10,20 @@ import java.util.List;
  * <p>Place.</p>
  */
 public class Place {
-	public static final String GUID = "guid";
-	public static final String RATING = "rating";
-	public static final String LOCATION = "location";
-	public static final String QUADKEY = "quadkey";
-	public static final String NAME = "name";
-	public static final String NAME_SUFFIX = "name_suffix";
-	public static final String BOUNDING_BOX = "bounding_box";
-	public static final String PEREX = "perex";
-	public static final String URL = "url";
-	public static final String THUMBNAIL_URL = "thumbnail_url";
-	public static final String PRICE = "price";
-	public static final String MARKER = "marker";
-	public static final String CATEGORIES = "categories";
-	public static final String PARENTS = "parentsGuids";
+	private static final String GUID = "guid";
+	private static final String RATING = "rating";
+	private static final String LOCATION = "location";
+	private static final String QUADKEY = "quadkey";
+	private static final String NAME = "name";
+	private static final String NAME_SUFFIX = "name_suffix";
+	private static final String BOUNDING_BOX = "bounding_box";
+	private static final String PEREX = "perex";
+	private static final String URL = "url";
+	private static final String THUMBNAIL_URL = "thumbnail_url";
+	private static final String PRICE = "price";
+	private static final String MARKER = "marker";
+	private static final String CATEGORIES = "categories";
+	private static final String PARENTS = "parentsGuids";
 
 	@SerializedName(GUID)
 	private String guid;

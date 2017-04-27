@@ -23,12 +23,12 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-import static com.sygic.travel.sdk.model.place.Reference.TITLE;
-import static com.sygic.travel.sdk.model.place.Reference.URL;
-
 public class PlaceDetailActivity extends AppCompatActivity {
 	private static final String TAG = PlaceDetailActivity.class.getSimpleName();
+
+	public static final String GUID = "guid";
+	public static final String REFERENCE_TITLE = "reference_title";
+	public static final String REFERENCE_URL = "reference_url";
 
 	private String guid;
 	private Views views;
@@ -155,8 +155,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				if(referenceUrl != null && !referenceUrl.equals("")){
 					Intent referenceIntent = new Intent(PlaceDetailActivity.this, ReferenceActivity.class);
-					referenceIntent.putExtra(URL, referenceUrl);
-					referenceIntent.putExtra(TITLE, referenceTitle);
+					referenceIntent.putExtra(REFERENCE_URL, referenceUrl);
+					referenceIntent.putExtra(REFERENCE_TITLE, referenceTitle);
 					startActivity(referenceIntent);
 				} else {
 					Toast.makeText(PlaceDetailActivity.this, "No reference URL.", Toast.LENGTH_LONG).show();

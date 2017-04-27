@@ -8,18 +8,18 @@ import java.util.List;
  * <p>Link (Wiki, web site, etc.) related to a specific place.</p>
  */
 public class Reference {
-	public static final String ID = "id";
-	public static final String TITLE = "title";
-	public static final String TYPE = "type";
-	public static final String LANGUAGE_ID = "language_id";
-	public static final String URL = "url";
-	public static final String OFFLINE_FILE = "offline_file";
-	public static final String SUPPLIER = "supplier";
-	public static final String PRIORITY = "priority";
-	public static final String IS_PREMIUM = "is_premium";
-	public static final String CURRENCY = "currency";
-	public static final String PRICE = "price";
-	public static final String FLAGS = "flags";
+	private static final String ID = "id";
+	private static final String TITLE = "title";
+	private static final String TYPE = "type";
+	private static final String LANGUAGE_ID = "language_id";
+	private static final String URL = "url";
+	private static final String OFFLINE_FILE = "offline_file";
+	private static final String SUPPLIER = "supplier";
+	private static final String PRIORITY = "priority";
+	private static final String IS_PREMIUM = "is_premium";
+	private static final String CURRENCY = "currency";
+	private static final String PRICE = "price";
+	private static final String FLAGS = "flags";
 
 	@SerializedName(ID)
 	private int id;

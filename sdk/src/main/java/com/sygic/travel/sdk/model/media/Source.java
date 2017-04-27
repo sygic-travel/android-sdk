@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 /**
  * <p>Medium's source.</p>
  */
-public class Source {
-	public static final String NAME = "name";
-	public static final String EXTERNAL_ID = "external_id";
-	public static final String PROVIDER = "provider";
+class Source {
+	private static final String NAME = "name";
+	private static final String EXTERNAL_ID = "external_id";
+	private static final String PROVIDER = "provider";
 
 	@SerializedName(NAME)
 	private String name;

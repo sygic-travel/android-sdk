@@ -8,9 +8,8 @@ import com.squareup.picasso.Picasso;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
-import static com.sygic.travel.sdk.model.place.Place.THUMBNAIL_URL;
-
 public class PhotoActivity extends AppCompatActivity {
+	public static final String THUMBNAIL_URL = "thumbnail_url";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

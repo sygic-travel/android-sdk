@@ -16,11 +16,11 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-import static com.sygic.travel.sdk.model.place.Place.THUMBNAIL_URL;
-
 public class GalleryActivity extends AppCompatActivity {
 	private static final String TAG = GalleryActivity.class.getSimpleName();
+
+	public static final String GUID = "guid";
+	public static final String THUMBNAIL_URL = "thumbnail_url";
 
 	private String guid;
 	private RecyclerView rvGallery;

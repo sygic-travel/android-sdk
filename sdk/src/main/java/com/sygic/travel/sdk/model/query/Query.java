@@ -7,15 +7,15 @@ import com.google.gson.annotations.SerializedName;
  * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
  */
 public class Query {
-	public static final String QUERY = "query";
-	public static final String BOUNDS = "bounds";
-	public static final String CATEGORIES = "categories";
-	public static final String TAGS = "tags";
-	public static final String PARENTS = "parents";
-	public static final String MAP_SPREAD = "map_spread";
-	public static final String MAP_TILES = "map_tiles";
-	public static final String LIMIT = "limit";
-	public static final String LEVELS = "levels";
+	private static final String QUERY = "query";
+	private static final String BOUNDS = "bounds";
+	private static final String CATEGORIES = "categories";
+	private static final String TAGS = "tags";
+	private static final String PARENTS = "parents";
+	private static final String MAP_SPREAD = "map_spread";
+	private static final String MAP_TILES = "map_tiles";
+	private static final String LIMIT = "limit";
+	private static final String LEVELS = "levels";
 
 	@SerializedName(QUERY)
 	private String query;

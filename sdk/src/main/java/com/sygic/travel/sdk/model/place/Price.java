@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
  * <p>Place's pricing.</p>
  */
 public class Price {
-	public static final String VALUE = "value";
-	public static final String SAVINGS = "savings";
+	private static final String VALUE = "value";
+	private static final String SAVINGS = "savings";
 
 	@SerializedName(VALUE)
 	private float value;

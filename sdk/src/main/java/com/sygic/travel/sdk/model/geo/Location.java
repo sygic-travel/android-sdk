@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
  * <p>Geografical location - latitude, longitude.</p>
  */
 public class Location {
-	public static final String LAT = "lat";
-	public static final String LNG = "lng";
+	private static final String LAT = "lat";
+	private static final String LNG = "lng";
 
 	@SerializedName(LAT)
 	private float lat;

@@ -39,10 +39,10 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
+
+	public static final String GUID = "guid";
 
 	public static final float ZOOM_FOR_DETAIL = 18f;
 	public static final float ZOOM_FOR_CITY = 15f;

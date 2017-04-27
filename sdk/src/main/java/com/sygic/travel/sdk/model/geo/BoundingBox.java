@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
  * <p>Geografical bounds - south, west, north, east.</p>
  */
 public class BoundingBox {
-	public static final String NORTH = "north";
-	public static final String EAST = "east";
-	public static final String SOUTH = "south";
-	public static final String WEST = "west";
+	private static final String NORTH = "north";
+	private static final String EAST = "east";
+	private static final String SOUTH = "south";
+	private static final String WEST = "west";
 
 	@SerializedName(NORTH)
 	private float north;

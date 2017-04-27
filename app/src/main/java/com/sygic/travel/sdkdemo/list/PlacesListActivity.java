@@ -24,10 +24,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-
 public class PlacesListActivity extends AppCompatActivity {
 	private static final String TAG = PlacesListActivity.class.getSimpleName();
+
+	public static final String GUID = "guid";
 
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
