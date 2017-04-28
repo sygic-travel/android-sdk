@@ -20,13 +20,22 @@ jobs:
             sed -i 's/public static final boolean debug = true;/public static final boolean debug = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
             sed -i 's/public static final boolean alpha = true;/public static final boolean alpha = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
       - run:
-         name: Gradle Build
-         command: |
+          name: Gradle Build
+          command: |
             gradle :sdk:assembleRelease;
             gradle :app:assembleDebug;
       - run:
-         name: Generate Documentation
-         command: javadoc -d ../javadoc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
+          name: Generate Documentation
+          command: |
+            if [ $CIRCLE_BRANCH = "STA-386-sdk-javadoc" ]; then
+              javadoc -d ../doc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
+            fi
+      - run:
+          name: Upload Documentation
+          command: |
+            if [ $CIRCLE_BRANCH = "STA-386-sdk-javadoc" ]; then
+              aws s3 sync ../doc s3://docs.sygictravelapi.com/android-sdk/master --delete --acl public-read
+            fi
       - store_artifacts:
           path: sdk/build/outputs/aar/sdk-release.aar
           destination: st-android-sdk.aar
