@@ -9,10 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.gallery.DividerDecoration;
 
-/**
- * Created by michal.murin on 21.4.2017.
- */
-
 public class CategoriesDialog extends Dialog{
 	private CategoriesAdapter.ViewHolder.CategoryClick onCategoryClick;
 

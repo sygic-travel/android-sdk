@@ -53,11 +53,14 @@ public class PlacesListActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		// Observables need to be unsubscribed, when the activity comes to background
 		StSDK.getInstance().unsubscribeObservable();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// There's only one option in the menu - categories filter.
 		getMenuInflater().inflate(R.menu.places, menu);
 		return true;
 	}
@@ -65,20 +68,22 @@ public class PlacesListActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.action_filter_places) {
+			// Show dialog with categories
 			categoriesDialog.show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	// Recycler view initialization - list with dividers
 	private void initRecycler() {
 		rvPlaces = (RecyclerView) findViewById(R.id.rv_places);
 		rvPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//		rvPlaces.addItemDecoration(new DividerDecoration(this, R.drawable.line_divider));
 		rvPlaces.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 		placesAdapter = new PlacesAdapter(getOnPlaceClick(), Utils.getDetailPhotoSize(this));
 		rvPlaces.setAdapter(placesAdapter);
 	}
 
+	// On a place click listener. Opens it's detail.
 	private PlacesAdapter.ViewHolder.PlaceClick getOnPlaceClick() {
 		return new PlacesAdapter.ViewHolder.PlaceClick() {
 			@Override
@@ -90,6 +95,7 @@ public class PlacesListActivity extends AppCompatActivity {
 		};
 	}
 
+	// Use the SDK to load places
 	private void loadPlaces() {
 		List<Query> queries = new ArrayList<>();
 		queries.add(new Query(null, null, selectedCategoryKey, null, "city:1", null, null, null, 128));
@@ -102,6 +108,7 @@ public class PlacesListActivity extends AppCompatActivity {
 		placesAdapter.notifyDataSetChanged();
 	}
 
+	// On a category click listener.
 	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
@@ -111,6 +118,7 @@ public class PlacesListActivity extends AppCompatActivity {
 					return;
 				}
 
+				// Set activity's title
 				if(categoryKey.equals("reset")){
 					selectedCategoryKey = null;
 					setTitle(getString(R.string.title_activity_list));
@@ -119,6 +127,7 @@ public class PlacesListActivity extends AppCompatActivity {
 					setTitle(String.format(titlePattern, categoryName));
 				}
 
+				// Reload places
 				loadPlaces();
 				categoriesDialog.dismiss();
 			}
@@ -129,6 +138,7 @@ public class PlacesListActivity extends AppCompatActivity {
 		return new Callback<List<Place>>() {
 			@Override
 			public void onSuccess(List<Place> places) {
+				// Places are sorted by rating, best rated places are at the top of the list
 				Collections.sort(places, new Comparator<Place>() {
 					@Override
 					public int compare(Place p1, Place p2) {

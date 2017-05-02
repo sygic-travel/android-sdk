@@ -1,9 +1,5 @@
 package com.sygic.travel.sdkdemo.gallery;
 
-/**
- * Created by michal.murin on 29.3.2017.
- */
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -13,6 +9,7 @@ import android.view.View;
 
 import android.support.v7.widget.RecyclerView;
 
+// Puts grey dividers between recycler view's items
 public class DividerDecoration extends RecyclerView.ItemDecoration {
 	private Drawable divider;
 

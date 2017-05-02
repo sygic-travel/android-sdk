@@ -51,10 +51,13 @@ public class PlaceDetailActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		// Observables need to be unsubscribed, when the activity comes to background
 		StSDK.getInstance().unsubscribeObservable();
 	}
 
 	private void loadPlaceDetail() {
+		// Use the SDK to load detailed information about a place
 		StSDK.getInstance().getPlaceDetailed(guid, getDetailCallback());
 	}
 
@@ -184,10 +187,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		return textView;
 	}
 
+	// This callback is passed to SDK's method for loading detailed information
 	private Callback<Detail> getDetailCallback(){
 		return new Callback<Detail>() {
 			@Override
 			public void onSuccess(Detail placeDetail) {
+				// if successful, the SDK return specific data, so it can be displayed
 				renderPlaceDetail(placeDetail);
 			}
 

@@ -19,6 +19,8 @@ public class DemoMainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo_main);
 
+		// Sygic Travel SDK initializaton. Must be called on the application start. You can initialize the SDK
+		// in your Application class' onCreate() method.
 		StSDK.initialize(USER_X_API_KEY, this);
 		initUI();
 	}

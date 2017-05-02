@@ -13,10 +13,6 @@ import com.sygic.travel.sdkdemo.R;
 
 import java.util.List;
 
-/**
- * Created by michal.murin on 31.3.2017.
- */
-
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
 
 	private PlacesAdapter.ViewHolder.PlaceClick placeClick;
