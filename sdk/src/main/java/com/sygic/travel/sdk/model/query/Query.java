@@ -13,7 +13,7 @@ public class Query {
 	public static final String TAGS = "tags";
 	public static final String PARENTS = "parents";
 	public static final String MAP_SPREAD = "map_spread";
-	public static final String MAP_TILE = "map_tile";
+	public static final String MAP_TILES = "map_tiles";
 	public static final String LIMIT = "limit";
 	public static final String LEVELS = "levels";
 
@@ -35,8 +35,8 @@ public class Query {
 	@SerializedName(MAP_SPREAD)
 	private Integer mapSpread;
 
-	@SerializedName(MAP_TILE)
-	private String mapTile;
+	@SerializedName(MAP_TILES)
+	private String mapTiles;
 
 	@SerializedName(LIMIT)
 	private Integer limit;
@@ -53,7 +53,7 @@ public class Query {
 		String tags,
 		String parents,
 		Integer mapSpread,
-		String mapTile,
+		String mapTiles,
 		String levels,
 		Integer limit
 	) {
@@ -63,7 +63,7 @@ public class Query {
 		this.tags = tags;
 		this.parents = parents;
 		this.mapSpread = mapSpread;
-		this.mapTile = mapTile;
+		this.mapTiles = mapTiles;
 		this.limit = limit;
 		this.levels = levels;
 	}
@@ -124,12 +124,12 @@ public class Query {
 		this.limit = limit;
 	}
 
-	public String getMapTile() {
-		return mapTile;
+	public String getMapTiles() {
+		return mapTiles;
 	}
 
-	public void setMapTile(String mapTile) {
-		this.mapTile = mapTile;
+	public void setMapTiles(String mapTiles) {
+		this.mapTiles = mapTiles;
 	}
 
 	public String getLevels() {

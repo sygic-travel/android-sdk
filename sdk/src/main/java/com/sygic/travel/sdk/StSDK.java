@@ -13,7 +13,6 @@ import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.adapter.rxjava.Result;
@@ -56,44 +55,35 @@ public class StSDK {
 	}
 
 	public void getPlaces(
-		List<Query> queries,
+		Query query,
 		Callback<List<Place>> back
 	){
-		List<Observable<Result<StResponse>>> preparedObservables = new ArrayList<>();
-		for(Query query : queries) {
-			preparedObservables.add(getPreparedObservable(
-				getStApi().getPlaces(
-					query.getQuery(),
-					query.getLevels(),
-					query.getCategories(),
-					query.getMapTile(),
-					query.getMapSpread(),
-					query.getBounds(),
-					query.getTags(),
-					query.getParents(),
-					query.getLimit()
-				)
-			));
-		}
-
-		// todo | staet using rxUnsubscribe method
-
-		subscription = Observable
-			.mergeDelayError(preparedObservables)
-			.subscribe(new StObserver(back, PLACES_API_CALL, true));
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaces(
+			query.getQuery(),
+			query.getLevels(),
+			query.getCategories(),
+			query.getMapTiles(),
+			query.getMapSpread(),
+			query.getBounds(),
+			query.getTags(),
+			query.getParents(),
+			query.getLimit()
+		);
+		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = preparedObservable.subscribe(new StObserver(back, PLACES_API_CALL, false));
 	}
 
 	public void getPlaceDetailed(String guid, Callback<Detail> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(guid);
-		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = mergedObservable.subscribe(new StObserver(back, DETAIL_API_CALL, false));
+		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = preparedObservable.subscribe(new StObserver(back, DETAIL_API_CALL, false));
 	}
 
 
 	public void getPlaceMedia(String guid, Callback<List<Medium>> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
-		Observable<Result<StResponse>> mergedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = mergedObservable.subscribe(new StObserver(back, MEDIA_API_CALL, false));
+		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = preparedObservable.subscribe(new StObserver(back, MEDIA_API_CALL, false));
 	}
 
 	/********************************************
