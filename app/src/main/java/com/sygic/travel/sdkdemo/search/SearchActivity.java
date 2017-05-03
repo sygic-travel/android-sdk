@@ -52,18 +52,21 @@ public class SearchActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		// Observables need to be unsubscribed, when the activity comes to background
 		StSDK.getInstance().unsubscribeObservable();
 	}
 
+	// Recycler view initialization - list with dividers
 	private void initRecycler() {
 		rvPlaces = (RecyclerView) findViewById(R.id.rv_result_places);
 		rvPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//		rvPlaces.addItemDecoration(new DividerDecoration(this, R.drawable.line_divider));
 		rvPlaces.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 		placesAdapter = new PlacesAdapter(getOnPlaceClick(), Utils.getDetailPhotoSize(this));
 		rvPlaces.setAdapter(placesAdapter);
 	}
 
+	// On a place click listener. Opens it's detail.
 	private PlacesAdapter.ViewHolder.PlaceClick getOnPlaceClick() {
 		return new PlacesAdapter.ViewHolder.PlaceClick() {
 			@Override
@@ -75,6 +78,7 @@ public class SearchActivity extends AppCompatActivity {
 		};
 	}
 
+	// Use the SDK to load places
 	private void loadPlaces(String query) {
 		List<Query> queries = new ArrayList<>();
 		queries.add(new Query(query, null, null, null, "city:1", null, null, null, 128));
@@ -91,6 +95,7 @@ public class SearchActivity extends AppCompatActivity {
 		return new Callback<List<Place>>() {
 			@Override
 			public void onSuccess(List<Place> places) {
+				// Places are sorted by rating, best rated places are at the top of the list
 				Collections.sort(places, new Comparator<Place>() {
 					@Override
 					public int compare(Place p1, Place p2) {
@@ -122,6 +127,7 @@ public class SearchActivity extends AppCompatActivity {
 		return true;
 	}
 
+	// Sets listners for search edit text.
 	private void setSearchListeners(MenuItem searchItem) {
 		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 		EditText searchEdit = (EditText) searchView.findViewById(R.id.search_src_text);

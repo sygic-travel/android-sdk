@@ -34,6 +34,7 @@ public class ReferenceActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reference);
 
+		// Reference is basically only URL to be loaded in a web view
 		if(getIntent().getExtras() != null) {
 			referenceUrl = getIntent().getExtras().getString(URL, "");
 			referenceTitle = getIntent().getExtras().getString(TITLE, getString(R.string.title_activity_reference));
@@ -43,6 +44,7 @@ public class ReferenceActivity extends AppCompatActivity {
 		loadReferenceUrl();
 	}
 
+	// Web view initialization
 	private void initWebView() {
 		if (loaded) {
 			return;
@@ -101,6 +103,7 @@ public class ReferenceActivity extends AppCompatActivity {
 		};
 	}
 
+	// Since we support Android API versions 15 and newer, we use the deprecated shouldOverrideUrlLoading method
 	private WebViewClient getOnUrlOverrideClient() {
 		return new WebViewClient(){
 			@Override

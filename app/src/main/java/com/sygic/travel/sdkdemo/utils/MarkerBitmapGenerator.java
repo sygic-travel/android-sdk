@@ -11,12 +11,9 @@ import android.support.v4.content.ContextCompat;
 import com.sygic.travel.sdk.R;
 import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
 
-/**
- * Created by michal.murin on 6.4.2017.
- */
-
 public class MarkerBitmapGenerator {
 
+	// Creates a round, coloured bitmap
 	public static Bitmap createMarkerBitmap(Context context, SpreadedPlace spreadedPlace) {
 		try {
 			Bitmap markerBitmap;
@@ -25,7 +22,10 @@ public class MarkerBitmapGenerator {
 			Rect rect;
 			RectF rectF;
 
+			// Default clor
 			int markerColor = ContextCompat.getColor(context, R.color.st_blue);
+
+			// Marker size equals radius * 2
 			int markerSize = spreadedPlace.getSizeConfig().getRadius() << 1;
 
 			if(spreadedPlace.getPlace().getCategories() != null && spreadedPlace.getPlace().getCategories().size() > 0){

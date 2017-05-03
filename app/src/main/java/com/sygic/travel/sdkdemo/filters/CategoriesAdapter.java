@@ -8,10 +8,6 @@ import android.widget.TextView;
 
 import com.sygic.travel.sdkdemo.R;
 
-/**
- * Created by michal.murin on 21.4.2017.
- */
-
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 	private static String[] categoriesKeys = {"reset", "sightseeing", "shopping", "eating", "discovering", "playing",
 		"traveling", "going_out", "hiking", "sports", "relaxing"};

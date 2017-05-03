@@ -19,10 +19,6 @@ import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.MEDIUM;
 import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.POPULAR;
 import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.SMALL;
 
-/**
- * Created by michal.murin on 28.3.2017.
- */
-
 public class Utils {
 	public static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
 
@@ -47,7 +43,6 @@ public class Utils {
 		} else {
 			width = displayMetrics.widthPixels;
 			height = width;
-//			height = (int) ((width >> 3) * 7f);
 		}
 
 		return width + "x" + height;

@@ -34,12 +34,16 @@ public class GalleryActivity extends AppCompatActivity {
 
 		initRecycler();
 		guid = getIntent().getStringExtra(GUID);
+
+		// Load photos from API, using guid
 		StSDK.getInstance().getPlaceMedia(guid, getMediaCallback());
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		// Observables need to be unsubscribed, when the activity comes to background
 		StSDK.getInstance().unsubscribeObservable();
 	}
 
@@ -47,11 +51,11 @@ public class GalleryActivity extends AppCompatActivity {
 		rvGallery = (RecyclerView) findViewById(R.id.rv_gallery);
 		rvGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		rvGallery.addItemDecoration(new DividerDecoration(this, R.drawable.line_divider));
-//		rvGallery.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 		galleryAdapter = new GalleryAdapter(getOnPhotoClick(), Utils.getDetailPhotoSize(this));
 		rvGallery.setAdapter(galleryAdapter);
 	}
 
+	// On a photo click listener. Opens new activity with the chosen photo.
 	private GalleryAdapter.ViewHolder.GalleryPhotoClick getOnPhotoClick() {
 		return new GalleryAdapter.ViewHolder.GalleryPhotoClick() {
 			@Override
@@ -67,6 +71,7 @@ public class GalleryActivity extends AppCompatActivity {
 		return new Callback<List<Medium>>() {
 			@Override
 			public void onSuccess(List<Medium> gallery) {
+				// Update the adapter's data.
 				GalleryActivity.this.gallery = gallery;
 				galleryAdapter.setGallery(gallery);
 				galleryAdapter.notifyDataSetChanged();

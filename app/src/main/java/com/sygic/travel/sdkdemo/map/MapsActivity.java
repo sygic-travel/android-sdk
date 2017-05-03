@@ -91,11 +91,14 @@ public class MapsActivity
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		// Observables need to be unsubscribed, when the activity comes to background
 		StSDK.getInstance().unsubscribeObservable();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// There's only one option in the menu - categories filter.
 		getMenuInflater().inflate(R.menu.places, menu);
 		return true;
 	}
@@ -103,11 +106,13 @@ public class MapsActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.action_filter_places) {
+			// Show dialog with categories
 			categoriesDialog.show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	// Google maps specific method called, when the map is initialiazed and ready.
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		map = googleMap;
@@ -115,8 +120,11 @@ public class MapsActivity
 		sizeConfigs = Utils.getSpreadSizeConfigs(getResources());
 		placesCallback = getPlacesCallback();
 
+		// Center map to London
 		LatLng londonLatLng = new LatLng(51.5116983, -0.1205079);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(londonLatLng, 14));
+
+		// Set on marker's info window (bubble) click listener - starts place's detail activity.
 		map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
@@ -132,6 +140,7 @@ public class MapsActivity
 		loadPlaces();
 	}
 
+	// This method is used only for the purposes of this sample. No ratios should be used in normal app.
 	private void calculateCanvasSizeRatios() {
 		LatLngBounds originalBounds = map.getProjection().getVisibleRegion().latLngBounds;
 		LatLngBounds offsetBounds = new LatLngBounds(
@@ -161,7 +170,9 @@ public class MapsActivity
 		}
 	}
 
+	// Use the SDK to load places
 	private void loadPlaces(){
+		// Generate quadkeys from the map's bondings and zoom
 		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
 			getMapBoundingBox(),
 			(int) map.getCameraPosition().zoom
@@ -177,6 +188,7 @@ public class MapsActivity
 		StSDK.getInstance().getPlaces(queries, placesCallback);
 	}
 
+	// On category click listener
 	private CategoriesAdapter.ViewHolder.CategoryClick getOnCategoriesClick() {
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
@@ -186,6 +198,7 @@ public class MapsActivity
 					return;
 				}
 
+				// Set activity's title
 				if(categoryKey.equals("reset")){
 					selectedCategoryKey = null;
 					setTitle(getString(R.string.title_activity_maps));
@@ -194,26 +207,35 @@ public class MapsActivity
 					setTitle(String.format(titlePattern, categoryName));
 				}
 
+				// Reload places
 				loadPlaces();
 				categoriesDialog.dismiss();
 			}
 		};
 	}
 
+	// Returns the String representation of map's bounds so it can be used for the SDK call.
+	// South, west, north, east. Exclusively in this order.
 	private String getMapBoundsString() {
 		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		LatLng ne = bounds.northeast;
 		LatLng sw = bounds.southwest;
 
+		// Map bounds are widened for the purposes of this sample. In a real app bounds without
+		// the BOUNDS_OFFSET should be used.
 		return (sw.latitude - BOUNDS_OFFSET) + "," +
 			(sw.longitude - BOUNDS_OFFSET) + "," +
 			(ne.latitude + BOUNDS_OFFSET) + "," +
 			(ne.longitude + BOUNDS_OFFSET);
 	}
 
+	// Returns map's BoundingBox, which contains it's bounds
 	private BoundingBox getMapBoundingBox() {
 		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		BoundingBox boundingBox = new BoundingBox();
+
+		// Map bounds are widened for the purposes of this sample. In a real app bounds without
+		// the BOUNDS_OFFSET should be used.
 		boundingBox.setSouth((float) (bounds.southwest.latitude - BOUNDS_OFFSET));
 		boundingBox.setWest((float) (bounds.southwest.longitude - BOUNDS_OFFSET));
 		boundingBox.setNorth((float) (bounds.northeast.latitude + BOUNDS_OFFSET));
@@ -226,16 +248,20 @@ public class MapsActivity
 		BoundingBox boundingBox = getMapBoundingBox();
 
 		map.clear();
+
+		// Spread loaded places
 		SpreadResult spreadResult = spreader.spread(
 			places,
 			sizeConfigs,
 			boundingBox,
+			// Ratios are used only for purposes of this sample, no ratios should be used in normal app.
 			new CanvasSize(
 				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),
 				(int) (vMain.getMeasuredHeight() * canvasHeightRatio)
 			)
 		);
 
+		// Create markers for spread places
 		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
 			Place place = spreadedPlace.getPlace();
 			Marker newMarker = map.addMarker(new MarkerOptions()
@@ -248,8 +274,10 @@ public class MapsActivity
 		}
 	}
 
+	// This method returns bitmap descriptor, which is used for Google maps specifically
 	private BitmapDescriptor getMarkerBitmapDescriptor(SpreadedPlace spreadedPlace) {
 		try {
+			// create marker's custom bitmap descriptor, if possible
 			Bitmap markerBitmap = MarkerBitmapGenerator.createMarkerBitmap(this, spreadedPlace);
 			if(markerBitmap != null) {
 				return BitmapDescriptorFactory.fromBitmap(markerBitmap);
@@ -257,10 +285,12 @@ public class MapsActivity
 				return null;
 			}
 		} catch(Exception e) {
+			// If anything goes wrong, Google maps default pin with specific hue is returned.
 			return BitmapDescriptorFactory.defaultMarker(getMarkerHue(spreadedPlace.getPlace()));
 		}
 	}
 
+	// Return hue for Google maps default pin
 	private float getMarkerHue(Place place) {
 		float markerHue = BitmapDescriptorFactory.HUE_RED;
 		if(place.getCategories() != null && place.getCategories().size() > 0){
