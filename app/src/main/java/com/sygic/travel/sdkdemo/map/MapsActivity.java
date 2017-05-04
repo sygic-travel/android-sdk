@@ -188,9 +188,10 @@ public class MapsActivity
 		for(int i = 0; i < quadkeysSize; i++){
 			quadkeysString.append(quadkeys.get(i));
 			if(i < quadkeysSize - 1){
-				quadkeysString.append("|");
+				quadkeysString.append("%7C");
 			}
 		}
+
 		return quadkeysString.toString();
 	}
 

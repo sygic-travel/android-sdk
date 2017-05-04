@@ -20,7 +20,6 @@ import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -97,8 +96,8 @@ public class PlacesListActivity extends AppCompatActivity {
 
 	// Use the SDK to load places
 	private void loadPlaces() {
-		Query queary = new Query(null, null, selectedCategoryKey, null, "city:1", null, null, null, 128);
-		StSDK.getInstance().getPlaces(queary, getPlacesCallback());
+		Query query = new Query(null, null, selectedCategoryKey, null, "city:1", null, null, null, 128);
+		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
 
 	private void renderPlacesList(List<Place> places) {
