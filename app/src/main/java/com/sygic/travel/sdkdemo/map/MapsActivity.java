@@ -1,11 +1,8 @@
 package com.sygic.travel.sdkdemo.map;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -38,17 +35,13 @@ import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
-import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
 
-public class MapsActivity
-	extends AppCompatActivity
-	implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback
-{
+public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
 
 	public static final float ZOOM_FOR_DETAIL = 18f;
@@ -59,7 +52,6 @@ public class MapsActivity
 	private double canvasWidthRatio, canvasHeightRatio;
 
 	private GoogleMap map;
-	private PermissionsUtils permissionsUtils;
 	private Spreader spreader;
 	private List<SpreadSizeConfig> sizeConfigs;
 
@@ -76,7 +68,6 @@ public class MapsActivity
 		setContentView(R.layout.activity_maps);
 
 		vMain = findViewById(R.id.ll_main);
-		permissionsUtils = new PermissionsUtils(vMain);
 		spreader = new Spreader();
 		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
 		titlePattern = getString(R.string.title_activity_maps) + " - %s";
@@ -135,7 +126,6 @@ public class MapsActivity
 		});
 
 		calculateCanvasSizeRatios();
-		enableMyLocation();
 		loadPlaces();
 	}
 
@@ -155,18 +145,6 @@ public class MapsActivity
 			Math.min(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude));
 		canvasHeightRatio = dOffLat / dOrgLat;
 		canvasWidthRatio = dOffLng / dOrgLng;
-	}
-
-	private void enableMyLocation() {
-		if(permissionsUtils.isPermitted(
-			this,
-			Manifest.permission.ACCESS_FINE_LOCATION,
-			Manifest.permission.ACCESS_COARSE_LOCATION
-		)) {
-			map.setMyLocationEnabled(true);
-		} else {
-			permissionsUtils.requestLocationPermission(this);
-		}
 	}
 
 	// Use the SDK to load places
@@ -322,19 +300,5 @@ public class MapsActivity
 			};
 		}
 		return placesCallback;
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		if (requestCode == PermissionsUtils.REQUEST_LOCATION) {
-			if (permissionsUtils.verifyPermissions(grantResults)){
-				permissionsUtils.showGrantedSnackBar();
-				map.setMyLocationEnabled(true);
-			} else {
-				permissionsUtils.showExplanationSnackbar(this, Manifest.permission.ACCESS_FINE_LOCATION);
-			}
-		} else {
-			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
 	}
 }
