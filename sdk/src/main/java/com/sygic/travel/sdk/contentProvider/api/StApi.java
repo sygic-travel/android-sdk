@@ -28,7 +28,7 @@ public interface StApi {
 		@Query("query") String query,
 		@Query("levels") String levels,
 		@Query("categories") String categories,
-		@Query("map_tile") String mapTile,
+		@Query(encoded = true, value = "map_tiles") String mapTiles,
 		@Query("map_spread") Integer mapSpread,
 		@Query("bounds") String bounds,
 		@Query("tags") String tags,

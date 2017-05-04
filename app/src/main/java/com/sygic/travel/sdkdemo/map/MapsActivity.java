@@ -41,7 +41,6 @@ import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.PermissionsUtils;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.sygic.travel.sdk.model.place.Place.GUID;
@@ -177,15 +176,23 @@ public class MapsActivity
 			getMapBoundingBox(),
 			(int) map.getCameraPosition().zoom
 		);
-		List<Query> queries = new ArrayList<>();
 
-		for(String quadkey : quadkeys) {
-			queries.add(new Query(
-				null, getMapBoundsString(), selectedCategoryKey, null, "city:1", 1, quadkey, null, 32)
-			);
+		Query query = new Query(null, getMapBounds(), selectedCategoryKey, null, "city:1", 1, getQueryQuadkeys(quadkeys), null, 32);
+		StSDK.getInstance().getPlaces(query, placesCallback);
+	}
+
+	private String getQueryQuadkeys(List<String> quadkeys) {
+		StringBuilder quadkeysString = new StringBuilder();
+		int quadkeysSize = quadkeys.size();
+
+		for(int i = 0; i < quadkeysSize; i++){
+			quadkeysString.append(quadkeys.get(i));
+			if(i < quadkeysSize - 1){
+				quadkeysString.append("%7C");
+			}
 		}
 
-		StSDK.getInstance().getPlaces(queries, placesCallback);
+		return quadkeysString.toString();
 	}
 
 	// On category click listener
@@ -216,7 +223,7 @@ public class MapsActivity
 
 	// Returns the String representation of map's bounds so it can be used for the SDK call.
 	// South, west, north, east. Exclusively in this order.
-	private String getMapBoundsString() {
+	private String getMapBounds() {
 		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
 		LatLng ne = bounds.northeast;
 		LatLng sw = bounds.southwest;

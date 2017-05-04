@@ -79,10 +79,9 @@ public class SearchActivity extends AppCompatActivity {
 	}
 
 	// Use the SDK to load places
-	private void loadPlaces(String query) {
-		List<Query> queries = new ArrayList<>();
-		queries.add(new Query(query, null, null, null, "city:1", null, null, null, 128));
-		StSDK.getInstance().getPlaces(queries, getPlacesCallback());
+	private void loadPlaces(String searchQuery) {
+		Query query = new Query(searchQuery, null, null, null, "city:1", null, null, null, 128);
+		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
 
 	private void renderPlacesList(List<Place> places) {

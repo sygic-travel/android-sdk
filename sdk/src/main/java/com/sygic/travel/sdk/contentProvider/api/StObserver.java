@@ -42,15 +42,14 @@ public class StObserver implements Observer<Result<StResponse>> {
 	public void onCompleted() {
 		Object result;
 
+		if(stResponse == null || stResponse.getData() == null){
+			onError(new Exception());
+		}
+
 		switch(requestType) {
 			case PLACES_API_CALL:
-				List<Place> places = new ArrayList<>();
-				for(StResponse stResponse : stResponses) {
-					places.addAll(stResponse.getData().getPlaces());
-				}
-				result = places;
+				result = stResponse.getData().getPlaces();
 				break;
-
 			case DETAIL_API_CALL:
 				result = stResponse.getData().getDetail();
 				break;
