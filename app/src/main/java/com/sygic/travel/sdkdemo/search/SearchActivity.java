@@ -30,10 +30,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-
 public class SearchActivity extends AppCompatActivity {
 	private static final String TAG = SearchActivity.class.getSimpleName();
+	private static final String GUID = "guid";
 
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
@@ -80,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
 
 	// Use the SDK to load places
 	private void loadPlaces(String searchQuery) {
-		Query query = new Query(searchQuery, null, null, null, "city:1", null, null, null, 128);
+		Query query = new Query(searchQuery, null, null, null, null, null, null, "city:1", 128);
 		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
 

@@ -3,13 +3,12 @@ package com.sygic.travel.sdk.model.media;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Medium's original parameters.</p>
  */
-
-public class Original {
-	public static final String WIDTH = "width";
-	public static final String HEIGHT = "height";
-	public static final String SIZE = "size";
+class Original {
+	private static final String WIDTH = "width";
+	private static final String HEIGHT = "height";
+	private static final String SIZE = "size";
 
 	@SerializedName(WIDTH)
 	private int width;

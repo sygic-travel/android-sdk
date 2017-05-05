@@ -1,9 +1,19 @@
 package com.sygic.travel.sdk.model.place;
 
+/**
+ * <p>Tag's data.</p>
+ */
 public class TagStats {
 	private String name, key;
 	private int count, priority;
 
+	/**
+	 * Contructor.
+	 * @param name Tag's name.
+	 * @param key
+	 * @param count
+	 * @param priority
+	 */
 	public TagStats(String name, String key, int count, int priority) {
 		this.name = name;
 		this.key = key;

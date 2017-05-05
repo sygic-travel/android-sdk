@@ -3,19 +3,19 @@ package com.sygic.travel.sdk.model.query;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by michal.murin on 10.3.2017.
+ * <p>Query contains values for an API request. </p>
+ * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
  */
-
 public class Query {
-	public static final String QUERY = "query";
-	public static final String BOUNDS = "bounds";
-	public static final String CATEGORIES = "categories";
-	public static final String TAGS = "tags";
-	public static final String PARENTS = "parents";
-	public static final String MAP_SPREAD = "map_spread";
-	public static final String MAP_TILES = "map_tiles";
-	public static final String LIMIT = "limit";
-	public static final String LEVELS = "levels";
+	private static final String QUERY = "query";
+	private static final String BOUNDS = "bounds";
+	private static final String CATEGORIES = "categories";
+	private static final String TAGS = "tags";
+	private static final String PARENTS = "parents";
+	private static final String MAP_SPREAD = "map_spread";
+	private static final String MAP_TILES = "map_tiles";
+	private static final String LIMIT = "limit";
+	private static final String LEVELS = "levels";
 
 	@SerializedName(QUERY)
 	private String query;
@@ -46,26 +46,30 @@ public class Query {
 
 	public Query(){}
 
+	/**
+	 * Query contains values for an API request.
+	 * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+	 */
 	public Query(
 		String query,
-		String bounds,
+		String levels,
 		String categories,
+		String mapTiles,
+		Integer mapSpread,
+		String bounds,
 		String tags,
 		String parents,
-		Integer mapSpread,
-		String mapTiles,
-		String levels,
 		Integer limit
 	) {
 		this.query = query;
-		this.bounds = bounds;
+		this.levels = levels;
 		this.categories = categories;
+		this.mapTiles = mapTiles;
+		this.mapSpread = mapSpread;
+		this.bounds = bounds;
 		this.tags = tags;
 		this.parents = parents;
-		this.mapSpread = mapSpread;
-		this.mapTiles = mapTiles;
 		this.limit = limit;
-		this.levels = levels;
 	}
 
 	public String getQuery() {

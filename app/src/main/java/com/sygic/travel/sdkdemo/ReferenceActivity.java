@@ -1,23 +1,20 @@
 package com.sygic.travel.sdkdemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Reference.TITLE;
-import static com.sygic.travel.sdk.model.place.Reference.URL;
-
 public class ReferenceActivity extends AppCompatActivity {
+	public static final String REFERENCE_TITLE = "reference_title";
+	public static final String REFERENCE_URL = "reference_url";
 
 	private WebView webView;
 	private ProgressBar progressBar;
@@ -36,8 +33,8 @@ public class ReferenceActivity extends AppCompatActivity {
 
 		// Reference is basically only URL to be loaded in a web view
 		if(getIntent().getExtras() != null) {
-			referenceUrl = getIntent().getExtras().getString(URL, "");
-			referenceTitle = getIntent().getExtras().getString(TITLE, getString(R.string.title_activity_reference));
+			referenceUrl = getIntent().getExtras().getString(REFERENCE_URL, "");
+			referenceTitle = getIntent().getExtras().getString(REFERENCE_TITLE, getString(R.string.title_activity_reference));
 		}
 		setTitle(referenceTitle);
 		initWebView();

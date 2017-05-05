@@ -7,45 +7,23 @@ import com.sygic.travel.sdk.model.geo.Location;
 import java.util.List;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Place.</p>
  */
-
-/*
-class Place {
-	 guid: string
-	 rating: float
-	 location: Location
-	 quadkey: string
-	 name: string
-	 nameSuffix: string
-	 boundingBox: BoundingBox
-	 perex: string
-	 url: string
-	 photoUrl: string
-	 price: Price
-	 marker: string
-	 categories: array<string>
-	 parentsGuids: array<string>
-	 detail: Detail
- }
- */
-
 public class Place {
-	public static final String GUID = "guid";
-	public static final String RATING = "rating";
-	public static final String LOCATION = "location";
-	public static final String QUADKEY = "quadkey";
-	public static final String NAME = "name";
-	public static final String NAME_SUFFIX = "name_suffix";
-	public static final String BOUNDING_BOX = "bounding_box";
-	public static final String PEREX = "perex";
-	public static final String URL = "url";
-	public static final String THUMBNAIL_URL = "thumbnail_url";
-	public static final String PRICE = "price";
-	public static final String MARKER = "marker";
-	public static final String CATEGORIES = "categories";
-	public static final String PARENTS = "parentsGuids";
-	public static final String DETAIL = "detail";
+	private static final String GUID = "guid";
+	private static final String RATING = "rating";
+	private static final String LOCATION = "location";
+	private static final String QUADKEY = "quadkey";
+	private static final String NAME = "name";
+	private static final String NAME_SUFFIX = "name_suffix";
+	private static final String BOUNDING_BOX = "bounding_box";
+	private static final String PEREX = "perex";
+	private static final String URL = "url";
+	private static final String THUMBNAIL_URL = "thumbnail_url";
+	private static final String PRICE = "price";
+	private static final String MARKER = "marker";
+	private static final String CATEGORIES = "categories";
+	private static final String PARENTS = "parentsGuids";
 
 	@SerializedName(GUID)
 	private String guid;

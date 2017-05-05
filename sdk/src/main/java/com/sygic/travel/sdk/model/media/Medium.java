@@ -6,23 +6,23 @@ import com.sygic.travel.sdk.model.geo.Location;
 import java.util.List;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Place's medium.</p>
  */
 
 public class Medium {
-	public static final String GUID = "guid";
-	public static final String TYPE = "type";
-	public static final String URL_TEMPLATE = "url_template";
-	public static final String URL = "url";
-	public static final String CREATED_AT = "created_at";
-	public static final String CREATED_BY = "created_by";
-	public static final String LAT = "lat";
-	public static final String LNG = "lng";
-	public static final String LOCATION = "location";
-	public static final String ORIGINAL = "original";
-	public static final String ATTRIBUTION = "attribution";
-	public static final String SOURCE = "source";
-	public static final String SUITABILITY = "suitability";
+	private static final String GUID = "guid";
+	private static final String TYPE = "type";
+	private static final String URL_TEMPLATE = "url_template";
+	private static final String URL = "url";
+	private static final String CREATED_AT = "created_at";
+	private static final String CREATED_BY = "created_by";
+	private static final String LAT = "lat";
+	private static final String LNG = "lng";
+	private static final String LOCATION = "location";
+	private static final String ORIGINAL = "original";
+	private static final String ATTRIBUTION = "attribution";
+	private static final String SOURCE = "source";
+	private static final String SUITABILITY = "suitability";
 
 	@SerializedName(GUID)
 	private String guid;

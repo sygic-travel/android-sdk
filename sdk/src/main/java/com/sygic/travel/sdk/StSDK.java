@@ -17,6 +17,7 @@ import java.util.List;
 
 import retrofit2.adapter.rxjava.Result;
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,23 +27,25 @@ import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
- * This class provides public methods for user, it is starting point of app and it initialize
- * all inner ?structures?.
+ * <p>Provides public methods for requesting API.</p>
  */
 public class StSDK {
 
-	/********************************************
-	 *  		       CONSTANTS
-	 ********************************************/
+	/*-------------------------------------------
+	    		       CONSTANTS
+	 -------------------------------------------*/
 
 	private static final String TAG = StSDK.class.getSimpleName();
 
-	/********************************************
-	 *  		PUBLIC MEMBERS & METHODS
-	 ********************************************/
+	/*-------------------------------------------
+	    		PUBLIC MEMBERS & METHODS
+	 -------------------------------------------*/
 
 	public static volatile StSDK instance = null;
 
+	/**
+	 * @return Instance of {@link StSDK}.
+	 */
 	public static StSDK getInstance() {
 		if (instance == null) {
 			synchronized(StSDK.class) {
@@ -54,6 +57,12 @@ public class StSDK {
 		return instance;
 	}
 
+	/**
+	 * Creates and send a request to get places, e.g. for map or list.
+	 * @param query Query encapsulating data for API request.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaces(
 		Query query,
 		Callback<List<Place>> back
@@ -73,28 +82,39 @@ public class StSDK {
 		subscription = preparedObservable.subscribe(new StObserver(back, PLACES_API_CALL, false));
 	}
 
+	/**
+	 * <p>Creates and sends a request to get place with detailed information.</p>
+	 * @param guid Unique id of a place - detailed information about this place will be requested.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaceDetailed(String guid, Callback<Detail> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(guid);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver(back, DETAIL_API_CALL, false));
 	}
 
-
+	/**
+	 * <p>Creates and sends a request to get place's media.</p>
+	 * @param guid Unique id of a place - media for this place will be requested.
+	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
+	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
+	 */
 	public void getPlaceMedia(String guid, Callback<List<Medium>> back){
 		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver(back, MEDIA_API_CALL, false));
 	}
 
-	/********************************************
-	 *  		          RX
-	 ********************************************/
+	/*-------------------------------------------
+	    		          RX
+	 -------------------------------------------*/
 
 	/**
-	 * Method returns a new prepared Observable.
+	 * <p>Prepares an {@link Observable} - sets {@link Scheduler schedulers}.</p>
 	 *
-	 * @param unpreparedObservable Observable to be prepared
-	 * @return Observable ready to be subscribed to
+	 * @param unpreparedObservable Observable to be prepared.
+	 * @return Observable ready to be subscribed to.
 	 */
 	public static <T> Observable<T> getPreparedObservable(
 		Observable<T> unpreparedObservable
@@ -105,7 +125,7 @@ public class StSDK {
 	}
 
 	/**
-	 * Method unsubsribes a subscribed observable
+	 * <p>Unsubsribes a subscribed observable.</p>
 	 */
 	public void unsubscribeObservable(){
 		if(subscription != null && !subscription.isUnsubscribed()){
@@ -113,9 +133,9 @@ public class StSDK {
 		}
 	}
 
-	/********************************************
-	 *  		PRIVATE MEMBERS & METHODS
-	 ********************************************/
+	/*-------------------------------------------
+	    		PRIVATE MEMBERS & METHODS
+	 -------------------------------------------*/
 
 	private StApi stApi;
 	private File cacheDir;
@@ -125,7 +145,7 @@ public class StSDK {
 	}
 
 	/**
-	 * This method should initialize all necessary objects
+	 * <p>Initialization of the SDK.</p>
 	 */
 	public static void initialize(String xApiKey, Context context) {
 		StApiGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
@@ -133,11 +153,8 @@ public class StSDK {
 	}
 
 	/**
-	 * Example of usage:
-	 * Call<List<Place>> call = stApi.getPlaces(...);
-	 * call.enque(callback)
-	 *
-	 * @return instance of StApi class
+	 * <p>Creates and returns an instance of the {@link StApi} interface.</p>
+	 * @return Instance of the {@link StApi} interface.
 	 */
 	private StApi getStApi() {
 		if(stApi == null){
@@ -146,6 +163,10 @@ public class StSDK {
 		return stApi;
 	}
 
+	/**
+	 * <p>Sets a cache directory.</p>
+	 * @param cacheDir Cache directorry.
+	 */
 	private void setCacheDir(File cacheDir) {
 		this.cacheDir = cacheDir;
 	}

@@ -3,23 +3,13 @@ package com.sygic.travel.sdk.model.place;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Place's description data.</p>
  */
-
-/*
-class Description {
-    text: string
-    provider: string
-    translationProvider: string
-    url: string
-}
-*/
-
 public class Description {
-	public static final String TEXT = "text";
-	public static final String PROVIDER = "provider";
-	public static final String TRANSLATION_PROVIDER = "translation_provider";
-	public static final String URL = "url";
+	private static final String TEXT = "text";
+	private static final String PROVIDER = "provider";
+	private static final String TRANSLATION_PROVIDER = "translation_provider";
+	private static final String URL = "url";
 
 	@SerializedName(TEXT)
 	private String text;

@@ -10,10 +10,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by michal.murin on 13.4.2017.
+ * <p>Performs the main spreading algorithm for places.</p>
  */
-
 public class Spreader {
+
+	/**
+	 * <p>Generates a list of spreaded places.</p>
+	 * @param places Places to spread.
+	 * @param sizeConfigs Size configurations available for spreading.
+	 * @param bounds Map's bounds, which the places are supposed to be spreaded within.
+	 * @param canvasSize Map's canvas size on display.
+	 * @return Spreaded places as {@link SpreadResult}.
+	 */
 	public SpreadResult spread(
 		List<Place> places,
 		List<SpreadSizeConfig> sizeConfigs,
@@ -58,6 +66,15 @@ public class Spreader {
 		return new SpreadResult(visiblePlaces, hiddenPlaces);
 	}
 
+	/**
+	 * <p>Determines a given size configuration intersects with any of already spreaded places.</p>
+	 * @param sizeConfig Size configuration of a place.
+	 * @param canvasCoords Place's coordinates on canvas.
+	 * @param spreadedPlaces Already spreaded places.
+	 * @return
+	 * <b>True</b> if place with given size configuration would intersect with any of already spreaded places.<br/>
+	 * <b>False</b> otherwise - place can be displayed on a map with given {@param sizeConfig}
+	 */
 	private boolean intersects(
 		SpreadSizeConfig sizeConfig,
 		Point canvasCoords,
@@ -80,6 +97,13 @@ public class Spreader {
 		return false;
 	}
 
+	/**
+	 * <p>Converts given location within given bounds to {@code x, y} coordinates within given canvas.</p>
+	 * @param location Location which is supposed be converted to {@code x, y} coordinates.
+	 * @param boundingBox Bounds the location lies within.
+	 * @param canvasSize Size of a canvas the coordinates are supposed to lie within.
+	 * @return {@link Point} on a canvas.
+	 */
 	private Point locationToCanvasCoords(
 		Location location,
 		BoundingBox boundingBox,

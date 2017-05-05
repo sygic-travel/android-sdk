@@ -6,35 +6,19 @@ import com.sygic.travel.sdk.model.media.MainMedia;
 import java.util.List;
 
 /**
- * Created by michal.murin on 16.2.2017.
+ * <p>Place detailed information, extends {@link Place}.</p>
  */
-
-/*
-class Detail {
-    address: string
-    admission: string
-    description: Description
-    email: string
-    duration: int
-    openingHours: string
-    phone: string
-    mainMedia: array<Medium>
-    references: array<Reference>
-    tags: array<string>
-}
-*/
-
-public class Detail extends Place { // shall we do this? (extends Place)
-	public static final String ADDRESS = "address";
-	public static final String ADMISSION = "admission";
-	public static final String DESCRIPTION = "description";
-	public static final String EMAIL = "email";
-	public static final String DURATION = "duration";
-	public static final String OPENING_HOURS = "opening_hours";
-	public static final String PHONE = "phone";
-	public static final String MAIN_MEDIA = "main_media";
-	public static final String REFERENCES = "references";
-	public static final String TAGS = "tags";
+public class Detail extends Place {
+	private static final String ADDRESS = "address";
+	private static final String ADMISSION = "admission";
+	private static final String DESCRIPTION = "description";
+	private static final String EMAIL = "email";
+	private static final String DURATION = "duration";
+	private static final String OPENING_HOURS = "opening_hours";
+	private static final String PHONE = "phone";
+	private static final String MAIN_MEDIA = "main_media";
+	private static final String REFERENCES = "references";
+	private static final String TAGS = "tags";
 
 	@SerializedName(ADDRESS)
 	private String address;

@@ -39,10 +39,10 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.List;
 
-import static com.sygic.travel.sdk.model.place.Place.GUID;
-
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
+
+	public static final String GUID = "guid";
 
 	public static final float ZOOM_FOR_DETAIL = 18f;
 	public static final float ZOOM_FOR_CITY = 15f;
@@ -155,7 +155,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 			(int) map.getCameraPosition().zoom
 		);
 
-		Query query = new Query(null, getMapBounds(), selectedCategoryKey, null, "city:1", 1, getQueryQuadkeys(quadkeys), null, 32);
+		Query query = new Query(null, null, selectedCategoryKey, getQueryQuadkeys(quadkeys), 1, getMapBounds(), null, "city:1", 32);
 		StSDK.getInstance().getPlaces(query, placesCallback);
 	}
 

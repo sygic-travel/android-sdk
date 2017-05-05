@@ -1,15 +1,14 @@
 package com.sygic.travel.sdk.model.media;
 
-/**
- * Created by michal.murin on 16.2.2017.
- */
-
 import com.google.gson.annotations.SerializedName;
 
-public class Source {
-	public static final String NAME = "name";
-	public static final String EXTERNAL_ID = "external_id";
-	public static final String PROVIDER = "provider";
+/**
+ * <p>Medium's source.</p>
+ */
+class Source {
+	private static final String NAME = "name";
+	private static final String EXTERNAL_ID = "external_id";
+	private static final String PROVIDER = "provider";
 
 	@SerializedName(NAME)
 	private String name;

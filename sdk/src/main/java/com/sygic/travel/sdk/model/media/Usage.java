@@ -2,11 +2,14 @@ package com.sygic.travel.sdk.model.media;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Usage {
-	public static final String SQUARE = "square";
-	public static final String PORTRAIT = "portrait";
-	public static final String LANDSCAPE = "landscape";
-	public static final String VIDEO_PREVIEW = "video_preview";
+/**
+ * Medium's suitable usages.
+ */
+class Usage {
+	private static final String SQUARE = "square";
+	private static final String PORTRAIT = "portrait";
+	private static final String LANDSCAPE = "landscape";
+	private static final String VIDEO_PREVIEW = "video_preview";
 
 	@SerializedName(SQUARE)
 	private String square;

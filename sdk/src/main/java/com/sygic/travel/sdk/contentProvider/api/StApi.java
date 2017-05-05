@@ -12,15 +12,18 @@ import rx.Observable;
 
 import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TYPE_JSON;
 
+/**
+ * <p>Contains available API requests.</p>
+ * @see <a href="http://alpha-docs.sygictravelapi.com/0.1">API Documentation</a>
+ */
 public interface StApi {
-
 	String PLACES_API_CALL = "places_api_call";
 	String DETAIL_API_CALL = "detail_api_call";
 	String MEDIA_API_CALL = "media_api_call";
 
-	/*******************************************************************************/
+	/*-----------------------------------------------------------------------------*/
 	/*                                     GET                                     */
-	/*******************************************************************************/
+	/*-----------------------------------------------------------------------------*/
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places")

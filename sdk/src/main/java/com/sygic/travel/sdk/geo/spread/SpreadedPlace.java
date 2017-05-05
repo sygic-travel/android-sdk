@@ -5,14 +5,19 @@ import android.graphics.Point;
 import com.sygic.travel.sdk.model.place.Place;
 
 /**
- * Created by michal.murin on 13.4.2017.
+ * <p>Wrapper of {@link Place}, which has been already processed by the spread algorithm.</p>
  */
-
 public class SpreadedPlace {
 	private Place place;
 	private Point canvasCoords;
 	private SpreadSizeConfig sizeConfig;
 
+	/**
+	 * <p>Wrapper of {@link Place}, which has been already processed by the spread algorithm.</p>
+	 * @param place A processed place.
+	 * @param canvasCoords Place's {@code x, y} coordinates on map's canvas on display.
+	 * @param sizeConfig Place's {@link SpreadSizeConfig}.
+	 */
 	public SpreadedPlace(Place place, Point canvasCoords, SpreadSizeConfig sizeConfig) {
 		this.place = place;
 		this.canvasCoords = canvasCoords;
