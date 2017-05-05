@@ -96,7 +96,11 @@ public class PlacesListActivity extends AppCompatActivity {
 
 	// Use the SDK to load places
 	private void loadPlaces() {
-		Query query = new Query(null, null, selectedCategoryKey, null, null, null, null, "city:1", 128);
+		Query query = new Query();
+		query.setLevels("poi");
+		query.setCategories(selectedCategoryKey);
+		query.setParents("city:1");
+		query.setLimit(128);
 		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
 
@@ -117,7 +121,7 @@ public class PlacesListActivity extends AppCompatActivity {
 				}
 
 				// Set activity's title
-				if(categoryKey.equals("reset")){
+				if(categoryKey.equals("all")){
 					selectedCategoryKey = null;
 					setTitle(getString(R.string.title_activity_list));
 				} else {

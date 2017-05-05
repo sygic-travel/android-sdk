@@ -9,10 +9,10 @@ import android.widget.TextView;
 import com.sygic.travel.sdkdemo.R;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
-	private static String[] categoriesKeys = {"reset", "sightseeing", "shopping", "eating", "discovering", "playing",
+	private static String[] categoriesKeys = {"all", "sightseeing", "shopping", "eating", "discovering", "playing",
 		"traveling", "going_out", "hiking", "sports", "relaxing"};
 
-	private static String[] categoriesNames = {"Reset", "Sightseeing", "Shopping", "Restaurants", "Museums", "Family",
+	private static String[] categoriesNames = {"All categories", "Sightseeing", "Shopping", "Restaurants", "Museums", "Family",
 		"Transport", "Nightlife", "Outdoors", "Sports", "Relaxation"};
 
 	private ViewHolder.CategoryClick categoryClick;
