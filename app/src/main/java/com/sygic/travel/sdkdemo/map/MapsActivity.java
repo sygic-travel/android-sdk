@@ -155,7 +155,14 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 			(int) map.getCameraPosition().zoom
 		);
 
-		Query query = new Query(null, null, selectedCategoryKey, getQueryQuadkeys(quadkeys), 1, getMapBounds(), null, "city:1", 32);
+		Query query = new Query();
+		query.setLevels("poi");
+		query.setCategories(selectedCategoryKey);
+		query.setMapTiles(getQueryQuadkeys(quadkeys));
+		query.setMapSpread(1);
+		query.setBounds(getMapBounds());
+		query.setParents("city:1");
+		query.setLimit(32);
 		StSDK.getInstance().getPlaces(query, placesCallback);
 	}
 
@@ -184,7 +191,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 				}
 
 				// Set activity's title
-				if(categoryKey.equals("reset")){
+				if(categoryKey.equals("all")){
 					selectedCategoryKey = null;
 					setTitle(getString(R.string.title_activity_maps));
 				} else {
