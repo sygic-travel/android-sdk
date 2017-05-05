@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -301,7 +302,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 
 				@Override
 				public void onFailure(Throwable t) {
-					Log.d(TAG, "Places: onFailure");
+					Toast.makeText(MapsActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
 					t.printStackTrace();
 				}
 			};

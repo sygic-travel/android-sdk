@@ -1,8 +1,7 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import com.sygic.travel.sdk.model.StResponse;
+import com.sygic.travel.sdk.model.api.StResponse;
 
-import retrofit2.Call;
 import retrofit2.adapter.rxjava.Result;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

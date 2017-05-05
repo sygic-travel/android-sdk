@@ -198,7 +198,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 			@Override
 			public void onFailure(Throwable t) {
-
+				Toast.makeText(PlaceDetailActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
 			}
 		};
 	}

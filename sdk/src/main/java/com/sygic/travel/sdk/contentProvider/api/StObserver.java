@@ -1,11 +1,8 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import android.util.Log;
+import com.sygic.travel.sdk.model.api.StResponse;
 
-import com.sygic.travel.sdk.StSDK;
-import com.sygic.travel.sdk.model.StResponse;
-import com.sygic.travel.sdk.model.place.Place;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +18,7 @@ import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
  */
 public class StObserver implements Observer<Result<StResponse>> {
 	private static final String TAG = StObserver.class.getSimpleName();
+	private static final String STATUS_ERROR = "error";
 
 	private String requestType;
 	private Callback userCallback;
@@ -46,14 +44,15 @@ public class StObserver implements Observer<Result<StResponse>> {
 	}
 
 	/**
-	 * <p>All API requests have been finished.</p>
+	 * <p>All API requests have been finished - not necesserily successfully. However an error could
+	 * have occurred, so the response must be checked.</p>
 	 */
 	@Override
 	public void onCompleted() {
 		Object result;
 
-		if(stResponse == null || stResponse.getData() == null){
-			onError(new Exception());
+		if(stResponse == null || stResponse.getStatus() == null || stResponse.getStatus().equals(STATUS_ERROR)){
+			return;
 		}
 
 		switch(requestType) {
@@ -87,11 +86,13 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 */
 	@Override
 	public void onNext(Result<StResponse> stResponseResult) {
-		if(isError(stResponseResult)){
-			Log.e(TAG, "Error: " + stResponseResult.response().errorBody().toString());
-		} else {
-			if(multipleCallsMerged){
+		if(multipleCallsMerged){
+			if(!isError(stResponseResult)) {
 				stResponses.add(stResponseResult.response().body());
+			}
+		} else {
+			if(isError(stResponseResult)){
+				userCallback.onFailure(new Exception(getErrorMessage(stResponseResult)));
 			} else {
 				stResponse = stResponseResult.response().body();
 			}
@@ -99,18 +100,44 @@ public class StObserver implements Observer<Result<StResponse>> {
 	}
 
 	/**
+	 * <p>This method is called only if an error has occured. An API result is passed as an argument
+	 * and an error message is created.</p>
+	 * @param stResponseResult Result from of an API request.
+	 * @return An error message.
+	 */
+	private String getErrorMessage(Result<StResponse> stResponseResult) {
+		StringBuilder error = new StringBuilder("Error: ");
+		if(stResponseResult.response() != null && stResponseResult.response().body() != null){
+			error.append(stResponseResult.response().body().getStatusCode());
+			error.append(": ");
+			error.append(stResponseResult.response().body().getError().getId());
+		} else if(stResponseResult.response().errorBody() != null) {
+			try {
+				error.append(stResponseResult.response().errorBody().string());
+			} catch(IOException e) {
+				error.append(stResponseResult.response().errorBody().toString());
+			}
+		} else if(stResponseResult.isError()) {
+			error.append(stResponseResult.error().getMessage());
+		}
+		return error.toString();
+	}
+
+	/**
 	 * <p>Determines if an error occured while requesting API.</p>
-	 * @param stResponseResult Result from an API request.
+	 * @param stResponseResult Result from of an API request.
 	 * @return {@code true} if an error occured, {@code false} otherwise.
 	 */
 	private boolean isError(Result<StResponse> stResponseResult) {
-		if(stResponseResult.error() != null){
+		if(stResponseResult.isError()){
 			return true;
 		} else {
 			if(stResponseResult.response().errorBody() != null){
 				return true;
+			} else if(stResponseResult.response().body() != null){
+				return stResponseResult.response().body().getStatus().equals(STATUS_ERROR);
 			} else {
-				return stResponseResult.response().body() == null;
+				return true;
 			}
 		}
 	}

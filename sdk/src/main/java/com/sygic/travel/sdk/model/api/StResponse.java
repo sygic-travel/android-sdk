@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.model;
+package com.sygic.travel.sdk.model.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.sygic.travel.sdk.model.media.Medium;
@@ -15,6 +15,7 @@ public class StResponse {
 	public int statusCode;
 	public String statusMessage;
 	public Data data;
+	public Error error;
 
 	public String getStatus() {
 		return status;
@@ -32,8 +33,12 @@ public class StResponse {
 		return data;
 	}
 
+	public Error getError() {
+		return error;
+	}
+
 	/**
-	 * Contains data from the API response. Only one property should be assinged.
+	 * Contains data from an API response. Only one property should be assinged.
 	 */
 	public class Data {
 		public static final String PLACE = "place";
@@ -59,6 +64,22 @@ public class StResponse {
 
 		public List<Medium> getMedia() {
 			return media;
+		}
+	}
+
+	/**
+	 * Contains an error details - in case that an error has occurred.
+	 */
+	public class Error {
+		private String id;
+		private List<String> args;
+
+		public String getId() {
+			return id;
+		}
+
+		public List<String> getArgs() {
+			return args;
 		}
 	}
 }
