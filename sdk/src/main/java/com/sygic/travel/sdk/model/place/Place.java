@@ -193,4 +193,12 @@ public class Place {
 	public void setParentIds(List<String> parentIds) {
 		this.parentIds = parentIds;
 	}
+
+	public boolean hasLocation(){
+		return (location != null && (location.getLat() != 0f || location.getLng() != 0f));
+	}
+
+	public boolean hasThumbnailUrl() {
+		return thumbnailUrl != null && !thumbnailUrl.equals("");
+	}
 }

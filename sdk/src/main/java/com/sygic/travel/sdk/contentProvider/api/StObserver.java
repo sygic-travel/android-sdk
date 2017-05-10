@@ -1,5 +1,9 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
+import com.sygic.travel.sdk.model.api.MediaResponse;
+import com.sygic.travel.sdk.model.api.PlaceResponse;
+import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
+import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.api.StResponse;
 
 import java.io.IOException;
@@ -9,14 +13,16 @@ import java.util.List;
 import retrofit2.adapter.rxjava.Result;
 import rx.Observer;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApi.DETAIL_API_CALL;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_BASIC_API_CALL;
+import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACE_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
 import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
  * <p>Observer which subscribes to receive a response from API.</p>
+ * @param <RT> Response type - must be one of the response classes extending {@link StResponse}.
  */
-public class StObserver implements Observer<Result<StResponse>> {
+public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	private static final String TAG = StObserver.class.getSimpleName();
 	private static final String STATUS_ERROR = "error";
 
@@ -24,8 +30,8 @@ public class StObserver implements Observer<Result<StResponse>> {
 	private Callback userCallback;
 	private boolean multipleCallsMerged;
 
-	private StResponse stResponse;
-	private List<StResponse> stResponses = new ArrayList<>();
+	private RT stResponse;
+	private List<RT> stResponses = new ArrayList<>();
 
 	/**
 	 * @param userCallback Callback, which methods are called, when the response is processed.
@@ -51,19 +57,22 @@ public class StObserver implements Observer<Result<StResponse>> {
 	public void onCompleted() {
 		Object result;
 
-		if(stResponse == null || stResponse.getStatus() == null || stResponse.getStatus().equals(STATUS_ERROR)){
+		if(stResponse == null || (stResponse.getStatus() != null && stResponse.getStatus().equals(STATUS_ERROR))){
 			return;
 		}
 
 		switch(requestType) {
-			case PLACES_API_CALL:
-				result = stResponse.getData().getPlaces();
+			case PLACES_BASIC_API_CALL:
+				result = ((PlacesBasicResponse) stResponse).getData().getPlaces();
 				break;
-			case DETAIL_API_CALL:
-				result = stResponse.getData().getDetail();
+			case PLACE_API_CALL:
+				result = ((PlaceResponse) stResponse).getData().getDetail();
+				break;
+			case PLACES_API_CALL:
+				result = ((PlacesResponse) stResponse).getData().getPlaces();
 				break;
 			case MEDIA_API_CALL:
-				result = stResponse.getData().getMedia();
+				result = ((MediaResponse) stResponse).getData().getMedia();
 				break;
 			default:
 				result = null;
@@ -85,7 +94,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * <p>A single API request has been finished.</p>
 	 */
 	@Override
-	public void onNext(Result<StResponse> stResponseResult) {
+	public void onNext(Result<RT> stResponseResult) {
 		if(multipleCallsMerged){
 			if(!isError(stResponseResult)) {
 				stResponses.add(stResponseResult.response().body());
@@ -105,7 +114,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * @param stResponseResult Result from of an API request.
 	 * @return An error message.
 	 */
-	private String getErrorMessage(Result<StResponse> stResponseResult) {
+	private String getErrorMessage(Result<RT> stResponseResult) {
 		StringBuilder error = new StringBuilder("Error: ");
 		if(stResponseResult.response() != null && stResponseResult.response().body() != null){
 			error.append(stResponseResult.response().body().getStatusCode());
@@ -128,7 +137,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * @param stResponseResult Result from of an API request.
 	 * @return {@code true} if an error occured, {@code false} otherwise.
 	 */
-	private boolean isError(Result<StResponse> stResponseResult) {
+	private boolean isError(Result<RT> stResponseResult) {
 		if(stResponseResult.isError()){
 			return true;
 		} else {

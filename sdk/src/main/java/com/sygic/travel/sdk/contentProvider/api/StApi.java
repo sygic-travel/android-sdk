@@ -1,5 +1,9 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
+import com.sygic.travel.sdk.model.api.MediaResponse;
+import com.sygic.travel.sdk.model.api.PlaceResponse;
+import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
+import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.api.StResponse;
 
 import retrofit2.adapter.rxjava.Result;
@@ -16,8 +20,9 @@ import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TY
  * @see <a href="http://alpha-docs.sygictravelapi.com/0.1">API Documentation</a>
  */
 public interface StApi {
+	String PLACES_BASIC_API_CALL = "places_basic_api_call";
+	String PLACE_API_CALL = "place_api_call";
 	String PLACES_API_CALL = "places_api_call";
-	String DETAIL_API_CALL = "detail_api_call";
 	String MEDIA_API_CALL = "media_api_call";
 
 	/*-----------------------------------------------------------------------------*/
@@ -26,7 +31,7 @@ public interface StApi {
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/list")
-	Observable<Result<StResponse>> getPlaces(
+	Observable<Result<PlacesBasicResponse>> getPlacesBasic(
 		@Query("query") String query,
 		@Query("levels") String levels,
 		@Query("categories") String categories,
@@ -40,19 +45,19 @@ public interface StApi {
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{id}")
-	Observable<Result<StResponse>> getPlaceDetailed(
+	Observable<Result<PlaceResponse>> getPlace(
 		@Path("id") String id
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{ids}")
-	Observable<Result<StResponse>> getPlacesDetailed(
+	Observable<Result<PlacesResponse>> getPlaces(
 		@Path(encoded = true, value = "ids") String ids
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("places/{place_guid}/media")
-	Observable<Result<StResponse>> getPlaceMedia(
-		@Path("place_guid") String placeGuid
+	@GET("places/{id}/media")
+	Observable<Result<MediaResponse>> getPlaceMedia(
+		@Path("id") String id
 	);
 }
