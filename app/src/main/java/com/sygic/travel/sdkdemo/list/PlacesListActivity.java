@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
@@ -156,7 +157,7 @@ public class PlacesListActivity extends AppCompatActivity {
 
 			@Override
 			public void onFailure(Throwable t) {
-				Log.d(TAG, "Places: onFailure");
+				Toast.makeText(PlacesListActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
 				t.printStackTrace();
 			}
 		};

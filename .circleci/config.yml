@@ -27,13 +27,13 @@ jobs:
       - run:
           name: Generate Documentation
           command: |
-            if [ $CIRCLE_BRANCH = "STA-386-sdk-javadoc" ]; then
+            if [ $CIRCLE_BRANCH = "master" ]; then
               javadoc -d ../doc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
             fi
       - run:
           name: Upload Documentation
           command: |
-            if [ $CIRCLE_BRANCH = "STA-386-sdk-javadoc" ]; then
+            if [ $CIRCLE_BRANCH = "master" ]; then
               aws s3 sync ../doc s3://docs.sygictravelapi.com/android-sdk/master --delete --acl public-read
             fi
       - store_artifacts:
