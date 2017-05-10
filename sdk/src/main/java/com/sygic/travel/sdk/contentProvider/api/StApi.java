@@ -25,7 +25,7 @@ public interface StApi {
 	/*-----------------------------------------------------------------------------*/
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("places")
+	@GET("places/list")
 	Observable<Result<StResponse>> getPlaces(
 		@Query("query") String query,
 		@Query("levels") String levels,
