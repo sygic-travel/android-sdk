@@ -26,11 +26,11 @@ import java.util.List;
 public class PlaceDetailActivity extends AppCompatActivity {
 	private static final String TAG = PlaceDetailActivity.class.getSimpleName();
 
-	public static final String GUID = "guid";
+	public static final String ID = "id";
 	public static final String REFERENCE_TITLE = "reference_title";
 	public static final String REFERENCE_URL = "reference_url";
 
-	private String guid;
+	private String id;
 	private Views views;
 	private String pricePattern, ratingPattern;
 	private int tagPadding;
@@ -40,7 +40,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_detail);
 
-		guid = getIntent().getStringExtra(GUID);
+		id = getIntent().getStringExtra(ID);
 		views = new Views();
 		pricePattern = "Price: %.2f";
 		ratingPattern = "Rating: %.2f";
@@ -58,7 +58,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 	private void loadPlaceDetail() {
 		// Use the SDK to load detailed information about a place
-		StSDK.getInstance().getPlaceDetailed(guid, getDetailCallback());
+		StSDK.getInstance().getPlaceDetailed(id, getDetailCallback());
 	}
 
 	private void renderPlaceDetail(Detail placeDetail) {
@@ -111,7 +111,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 	private void startGallery() {
 		Intent galleryIntent = new Intent(this, GalleryActivity.class);
-		galleryIntent.putExtra(GUID, guid);
+		galleryIntent.putExtra(ID, id);
 		startActivity(galleryIntent);
 	}
 

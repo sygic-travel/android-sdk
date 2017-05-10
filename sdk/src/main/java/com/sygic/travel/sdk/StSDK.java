@@ -84,24 +84,24 @@ public class StSDK {
 
 	/**
 	 * <p>Creates and sends a request to get place with detailed information.</p>
-	 * @param guid Unique id of a place - detailed information about this place will be requested.
+	 * @param id Unique id of a place - detailed information about this place will be requested.
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
 	 */
-	public void getPlaceDetailed(String guid, Callback<Detail> back){
-		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(guid);
+	public void getPlaceDetailed(String id, Callback<Detail> back){
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceDetailed(id);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver(back, DETAIL_API_CALL, false));
 	}
 
 	/**
 	 * <p>Creates and sends a request to get place's media.</p>
-	 * @param guid Unique id of a place - media for this place will be requested.
+	 * @param id Unique id of a place - media for this place will be requested.
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
 	 */
-	public void getPlaceMedia(String guid, Callback<List<Medium>> back){
-		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(guid);
+	public void getPlaceMedia(String id, Callback<List<Medium>> back){
+		Observable<Result<StResponse>> unpreparedObservable = getStApi().getPlaceMedia(id);
 		Observable<Result<StResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver(back, MEDIA_API_CALL, false));
 	}

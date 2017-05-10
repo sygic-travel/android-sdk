@@ -19,10 +19,9 @@ import java.util.List;
 public class GalleryActivity extends AppCompatActivity {
 	private static final String TAG = GalleryActivity.class.getSimpleName();
 
-	public static final String GUID = "guid";
+	public static final String ID = "id";
 	public static final String THUMBNAIL_URL = "thumbnail_url";
 
-	private String guid;
 	private RecyclerView rvGallery;
 	private GalleryAdapter galleryAdapter;
 	private List<Medium> gallery;
@@ -33,10 +32,10 @@ public class GalleryActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_gallery);
 
 		initRecycler();
-		guid = getIntent().getStringExtra(GUID);
+		String id = getIntent().getStringExtra(ID);
 
-		// Load photos from API, using guid
-		StSDK.getInstance().getPlaceMedia(guid, getMediaCallback());
+		// Load photos from API, using id
+		StSDK.getInstance().getPlaceMedia(id, getMediaCallback());
 	}
 
 	@Override

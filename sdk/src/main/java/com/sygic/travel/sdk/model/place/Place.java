@@ -10,7 +10,7 @@ import java.util.List;
  * <p>Place.</p>
  */
 public class Place {
-	private static final String GUID = "guid";
+	private static final String ID = "id";
 	private static final String RATING = "rating";
 	private static final String LOCATION = "location";
 	private static final String QUADKEY = "quadkey";
@@ -25,8 +25,8 @@ public class Place {
 	private static final String CATEGORIES = "categories";
 	private static final String PARENTS = "parentsGuids";
 
-	@SerializedName(GUID)
-	private String guid;
+	@SerializedName(ID)
+	private String id;
 
 	@SerializedName(RATING)
 	private float rating;
@@ -70,12 +70,12 @@ public class Place {
 	public Place(){
 	}
 
-	public String getGuid() {
-		return guid;
+	public String getId() {
+		return id;
 	}
 
-	public void setGuid(String guid) {
-		this.guid = guid;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public float getRating() {

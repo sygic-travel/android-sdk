@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ import java.util.List;
 public class PlacesListActivity extends AppCompatActivity {
 	private static final String TAG = PlacesListActivity.class.getSimpleName();
 
-	public static final String GUID = "guid";
+	public static final String ID = "id";
 
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
@@ -89,7 +88,7 @@ public class PlacesListActivity extends AppCompatActivity {
 			@Override
 			public void onPlaceClick(int position) {
 				Intent placeDetailIntent = new Intent(PlacesListActivity.this, PlaceDetailActivity.class);
-				placeDetailIntent.putExtra(GUID, places.get(position).getGuid());
+				placeDetailIntent.putExtra(ID, places.get(position).getId());
 				startActivity(placeDetailIntent);
 			}
 		};

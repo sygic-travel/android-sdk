@@ -8,7 +8,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,14 +25,13 @@ import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.list.PlacesAdapter;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 	private static final String TAG = SearchActivity.class.getSimpleName();
-	private static final String GUID = "guid";
+	private static final String ID = "id";
 
 	private RecyclerView rvPlaces;
 	private PlacesAdapter placesAdapter;
@@ -72,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
 			@Override
 			public void onPlaceClick(int position) {
 				Intent placeDetailIntent = new Intent(SearchActivity.this, PlaceDetailActivity.class);
-				placeDetailIntent.putExtra(GUID, places.get(position).getGuid());
+				placeDetailIntent.putExtra(ID, places.get(position).getId());
 				startActivity(placeDetailIntent);
 			}
 		};

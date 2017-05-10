@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class Medium {
-	private static final String GUID = "guid";
+	private static final String ID = "id";
 	private static final String TYPE = "type";
 	private static final String URL_TEMPLATE = "url_template";
 	private static final String URL = "url";
@@ -24,8 +24,8 @@ public class Medium {
 	private static final String SOURCE = "source";
 	private static final String SUITABILITY = "suitability";
 
-	@SerializedName(GUID)
-	private String guid;
+	@SerializedName(ID)
+	private String id;
 
 	@SerializedName(TYPE)
 	private String type;
@@ -66,12 +66,12 @@ public class Medium {
 	public Medium() {
 	}
 
-	public String getGuid() {
-		return guid;
+	public String getId() {
+		return id;
 	}
 
-	public void setGuid(String guid) {
-		this.guid = guid;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getType() {
