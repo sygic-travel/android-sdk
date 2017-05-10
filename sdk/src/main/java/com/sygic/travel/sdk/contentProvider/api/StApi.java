@@ -39,9 +39,15 @@ public interface StApi {
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
-	@GET("place-details/{place_guid}")
+	@GET("places/{id}")
 	Observable<Result<StResponse>> getPlaceDetailed(
-		@Path("place_guid") String placeGuid
+		@Path("id") String id
+	);
+
+	@Headers(CONTENT_TYPE_JSON)
+	@GET("places/{ids}")
+	Observable<Result<StResponse>> getPlacesDetailed(
+		@Path(encoded = true, value = "ids") String ids
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
