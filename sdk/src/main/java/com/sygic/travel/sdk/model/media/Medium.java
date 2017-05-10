@@ -14,15 +14,14 @@ public class Medium {
 	private static final String TYPE = "type";
 	private static final String URL_TEMPLATE = "url_template";
 	private static final String URL = "url";
-	private static final String CREATED_AT = "created_at";
-	private static final String CREATED_BY = "created_by";
-	private static final String LAT = "lat";
-	private static final String LNG = "lng";
-	private static final String LOCATION = "location";
 	private static final String ORIGINAL = "original";
-	private static final String ATTRIBUTION = "attribution";
-	private static final String SOURCE = "source";
 	private static final String SUITABILITY = "suitability";
+	private static final String CREATED_AT = "created_at";
+	private static final String SOURCE = "source";
+	private static final String CREATED_BY = "created_by";
+	private static final String QUADKEY = "quadkey";
+	private static final String ATTRIBUTION = "attribution";
+	private static final String LOCATION = "location";
 
 	@SerializedName(ID)
 	private String id;
@@ -36,32 +35,29 @@ public class Medium {
 	@SerializedName(URL)
 	private String url;
 
-	@SerializedName(CREATED_AT)
-	private String createdAt;
-	
-	@SerializedName(CREATED_BY)
-	private String createdBy;
-	
-	@SerializedName(LAT)
-	private float lat;
-	
-	@SerializedName(LNG)
-	private float lng;
-	
-	@SerializedName(LOCATION)
-	private Location location;
-	
 	@SerializedName(ORIGINAL)
 	private Original original;
-	
-	@SerializedName(ATTRIBUTION)
-	private Attribution attribution;
-	
-	@SerializedName(SOURCE)
-	private Source source;
-	
+
 	@SerializedName(SUITABILITY)
 	private List<String> suitability = null;
+
+	@SerializedName(CREATED_AT)
+	private String createdAt;
+
+	@SerializedName(SOURCE)
+	private Source source;
+
+	@SerializedName(CREATED_BY)
+	private String createdBy;
+
+	@SerializedName(QUADKEY)
+	private String quadkey;
+
+	@SerializedName(ATTRIBUTION)
+	private Attribution attribution;
+
+	@SerializedName(LOCATION)
+	private Location location;
 
 	public Medium() {
 	}
@@ -98,46 +94,6 @@ public class Medium {
 		this.url = url;
 	}
 
-	public String getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Object getLat() {
-		return lat;
-	}
-
-	public void setLat(float lat) {
-		this.lat = lat;
-	}
-
-	public Object getLng() {
-		return lng;
-	}
-
-	public void setLng(float lng) {
-		this.lng = lng;
-	}
-
-	public Object getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
 	public Original getOriginal() {
 		return original;
 	}
@@ -146,12 +102,20 @@ public class Medium {
 		this.original = original;
 	}
 
-	public Attribution getAttribution() {
-		return attribution;
+	public List<String> getSuitability() {
+		return suitability;
 	}
 
-	public void setAttribution(Attribution attribution) {
-		this.attribution = attribution;
+	public void setSuitability(List<String> suitability) {
+		this.suitability = suitability;
+	}
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Source getSource() {
@@ -162,11 +126,35 @@ public class Medium {
 		this.source = source;
 	}
 
-	public List<String> getSuitability() {
-		return suitability;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setSuitability(List<String> suitability) {
-		this.suitability = suitability;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getQuadkey() {
+		return quadkey;
+	}
+
+	public void setQuadkey(String quadkey) {
+		this.quadkey = quadkey;
+	}
+
+	public Attribution getAttribution() {
+		return attribution;
+	}
+
+	public void setAttribution(Attribution attribution) {
+		this.attribution = attribution;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 }

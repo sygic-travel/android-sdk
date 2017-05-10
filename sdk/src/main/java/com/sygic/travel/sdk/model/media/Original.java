@@ -6,9 +6,12 @@ import com.google.gson.annotations.SerializedName;
  * <p>Medium's original parameters.</p>
  */
 class Original {
+	private static final String SIZE = "size";
 	private static final String WIDTH = "width";
 	private static final String HEIGHT = "height";
-	private static final String SIZE = "size";
+
+	@SerializedName(SIZE)
+	private int size;
 
 	@SerializedName(WIDTH)
 	private int width;
@@ -16,10 +19,15 @@ class Original {
 	@SerializedName(HEIGHT)
 	private int height;
 
-	@SerializedName(SIZE)
-	private int size;
-
 	public Original() {
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	public int getWidth() {
@@ -36,13 +44,5 @@ class Original {
 
 	public void setHeight(int height) {
 		this.height = height;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
 	}
 }

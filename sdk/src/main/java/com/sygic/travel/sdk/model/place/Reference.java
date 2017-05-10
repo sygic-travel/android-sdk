@@ -13,36 +13,39 @@ public class Reference {
 	private static final String TYPE = "type";
 	private static final String LANGUAGE_ID = "language_id";
 	private static final String URL = "url";
-	private static final String OFFLINE_FILE = "offline_file";
 	private static final String SUPPLIER = "supplier";
 	private static final String PRIORITY = "priority";
-	private static final String IS_PREMIUM = "is_premium";
 	private static final String CURRENCY = "currency";
 	private static final String PRICE = "price";
 	private static final String FLAGS = "flags";
 
 	@SerializedName(ID)
 	private int id;
+
 	@SerializedName(TITLE)
 	private String title;
+
 	@SerializedName(TYPE)
 	private String type;
+
 	@SerializedName(LANGUAGE_ID)
 	private String languageId;
+
 	@SerializedName(URL)
 	private String url;
-	@SerializedName(OFFLINE_FILE)
-	private String offlineFile;
+
 	@SerializedName(SUPPLIER)
 	private String supplier;
+
 	@SerializedName(PRIORITY)
 	private int priority;
-	@SerializedName(IS_PREMIUM)
-	private boolean isPremium;
+
 	@SerializedName(CURRENCY)
 	private String currency;
+
 	@SerializedName(PRICE)
 	private float price;
+
 	@SerializedName(FLAGS)
 	private List<String> flags;
 
@@ -81,14 +84,6 @@ public class Reference {
 		this.url = url;
 	}
 
-	public String getOfflineFile() {
-		return offlineFile;
-	}
-
-	public void setOfflineFile(String offlineFile) {
-		this.offlineFile = offlineFile;
-	}
-
 	public String getSupplier() {
 		return supplier;
 	}
@@ -103,14 +98,6 @@ public class Reference {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
-	}
-
-	public boolean isPremium() {
-		return isPremium;
-	}
-
-	public void setPremium(boolean premium) {
-		isPremium = premium;
 	}
 
 	public String getCurrency() {

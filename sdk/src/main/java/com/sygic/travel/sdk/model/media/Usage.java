@@ -14,28 +14,28 @@ class Usage {
 	@SerializedName(SQUARE)
 	private String square;
 
-	@SerializedName(VIDEO_PREVIEW)
-	private String videoPreview;
+	@SerializedName(LANDSCAPE)
+	private String landscape;
 
 	@SerializedName(PORTRAIT)
 	private String portrait;
 
-	@SerializedName(LANDSCAPE)
-	private String landscape;
+	@SerializedName(VIDEO_PREVIEW)
+	private String videoPreview;
 
 	public String getSquare() {
 		return square;
 	}
 
-	public String getVideoPreview() {
-		return videoPreview;
+	public String getLandscape() {
+		return landscape;
 	}
 
 	public String getPortrait() {
 		return portrait;
 	}
 
-	public String getLandscape() {
-		return landscape;
+	public String getVideoPreview() {
+		return videoPreview;
 	}
 }
