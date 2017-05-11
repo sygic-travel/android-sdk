@@ -9,37 +9,30 @@ import java.util.List;
 import retrofit2.adapter.rxjava.Result;
 import rx.Observer;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApi.DETAIL_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
-
 /**
  * <p>Observer which subscribes to receive a response from API.</p>
+ * @param <RT> Response type - must be one of the response classes extending {@link StResponse}.
  */
-public class StObserver implements Observer<Result<StResponse>> {
+public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	private static final String TAG = StObserver.class.getSimpleName();
 	private static final String STATUS_ERROR = "error";
 
-	private String requestType;
 	private Callback userCallback;
 	private boolean multipleCallsMerged;
 
-	private StResponse stResponse;
-	private List<StResponse> stResponses = new ArrayList<>();
+	private RT stResponse;
+	private List<RT> stResponses = new ArrayList<>();
 
 	/**
 	 * @param userCallback Callback, which methods are called, when the response is processed.
-	 * @param requestType Type of API request.
 	 * @param multipleCallsMerged Flag indicating whether the Observer hes been subscribed to more
 	 *                            than 1 request.
 	 */
 	public StObserver(
 		Callback userCallback,
-		String requestType,
 		boolean multipleCallsMerged
 	) {
 		this.userCallback = userCallback;
-		this.requestType = requestType;
 		this.multipleCallsMerged = multipleCallsMerged;
 	}
 
@@ -49,28 +42,11 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 */
 	@Override
 	public void onCompleted() {
-		Object result;
-
-		if(stResponse == null || stResponse.getStatus() == null || stResponse.getStatus().equals(STATUS_ERROR)){
+		if(stResponse == null || (stResponse.getStatus() != null && stResponse.getStatus().equals(STATUS_ERROR))){
 			return;
 		}
 
-		switch(requestType) {
-			case PLACES_API_CALL:
-				result = stResponse.getData().getPlaces();
-				break;
-			case DETAIL_API_CALL:
-				result = stResponse.getData().getDetail();
-				break;
-			case MEDIA_API_CALL:
-				result = stResponse.getData().getMedia();
-				break;
-			default:
-				result = null;
-				break;
-		}
-
-		userCallback.onSuccess(result);
+		userCallback.onSuccess(stResponse.getData());
 	}
 
 	/**
@@ -85,7 +61,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * <p>A single API request has been finished.</p>
 	 */
 	@Override
-	public void onNext(Result<StResponse> stResponseResult) {
+	public void onNext(Result<RT> stResponseResult) {
 		if(multipleCallsMerged){
 			if(!isError(stResponseResult)) {
 				stResponses.add(stResponseResult.response().body());
@@ -105,7 +81,7 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * @param stResponseResult Result from of an API request.
 	 * @return An error message.
 	 */
-	private String getErrorMessage(Result<StResponse> stResponseResult) {
+	private String getErrorMessage(Result<RT> stResponseResult) {
 		StringBuilder error = new StringBuilder("Error: ");
 		if(stResponseResult.response() != null && stResponseResult.response().body() != null){
 			error.append(stResponseResult.response().body().getStatusCode());
@@ -128,14 +104,16 @@ public class StObserver implements Observer<Result<StResponse>> {
 	 * @param stResponseResult Result from of an API request.
 	 * @return {@code true} if an error occured, {@code false} otherwise.
 	 */
-	private boolean isError(Result<StResponse> stResponseResult) {
+	private boolean isError(Result<RT> stResponseResult) {
 		if(stResponseResult.isError()){
 			return true;
 		} else {
 			if(stResponseResult.response().errorBody() != null){
 				return true;
 			} else if(stResponseResult.response().body() != null){
-				return stResponseResult.response().body().getStatus().equals(STATUS_ERROR);
+				// success responses don't have status
+				final String status = stResponseResult.response().body().getStatus();
+				return (status != null && status.equals(STATUS_ERROR));
 			} else {
 				return true;
 			}

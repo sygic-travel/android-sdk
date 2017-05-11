@@ -9,16 +9,22 @@ import java.util.List;
  * <p>Place detailed information, extends {@link Place}.</p>
  */
 public class Detail extends Place {
+	private static final String TAGS = "tags";
+	private static final String DESCRIPTION = "description";
 	private static final String ADDRESS = "address";
 	private static final String ADMISSION = "admission";
-	private static final String DESCRIPTION = "description";
-	private static final String EMAIL = "email";
 	private static final String DURATION = "duration";
+	private static final String EMAIL = "email";
 	private static final String OPENING_HOURS = "opening_hours";
 	private static final String PHONE = "phone";
 	private static final String MAIN_MEDIA = "main_media";
 	private static final String REFERENCES = "references";
-	private static final String TAGS = "tags";
+
+	@SerializedName(TAGS)
+	private List<TagStats> tags;
+
+	@SerializedName(DESCRIPTION)
+	private Description description;
 
 	@SerializedName(ADDRESS)
 	private String address;
@@ -26,14 +32,11 @@ public class Detail extends Place {
 	@SerializedName(ADMISSION)
 	private String admission;
 
-	@SerializedName(DESCRIPTION)
-	private Description description;
+	@SerializedName(DURATION)
+	private int duration;
 
 	@SerializedName(EMAIL)
 	private String email;
-
-	@SerializedName(DURATION)
-	private int duration;
 
 	@SerializedName(OPENING_HOURS)
 	private String openingHours;
@@ -47,10 +50,23 @@ public class Detail extends Place {
 	@SerializedName(REFERENCES)
 	private List<Reference> references;
 
-	@SerializedName(TAGS)
-	private List<TagStats> tags;
-
 	public Detail() {
+	}
+
+	public List<TagStats> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<TagStats> tags) {
+		this.tags = tags;
+	}
+
+	public Description getDescription() {
+		return description;
+	}
+
+	public void setDescription(Description description) {
+		this.description = description;
 	}
 
 	public String getAddress() {
@@ -69,12 +85,12 @@ public class Detail extends Place {
 		this.admission = admission;
 	}
 
-	public Description getDescription() {
-		return description;
+	public int getDuration() {
+		return duration;
 	}
 
-	public void setDescription(Description description) {
-		this.description = description;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	public String getEmail() {
@@ -83,14 +99,6 @@ public class Detail extends Place {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
 	}
 
 	public String getOpeningHours() {
@@ -123,13 +131,5 @@ public class Detail extends Place {
 
 	public void setReferences(List<Reference> references) {
 		this.references = references;
-	}
-
-	public List<TagStats> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<TagStats> tags) {
-		this.tags = tags;
 	}
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +42,7 @@ import java.util.List;
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
 
-	public static final String GUID = "guid";
+	public static final String ID = "id";
 
 	public static final float ZOOM_FOR_DETAIL = 18f;
 	public static final float ZOOM_FOR_CITY = 15f;
@@ -119,9 +118,9 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
-				String guid = ((String) marker.getTag());
+				String id = ((String) marker.getTag());
 				Intent placeDetailIntent = new Intent(MapsActivity.this, PlaceDetailActivity.class);
-				placeDetailIntent.putExtra(GUID, guid);
+				placeDetailIntent.putExtra(ID, id);
 				startActivity(placeDetailIntent);
 			}
 		});
@@ -164,7 +163,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		query.setBounds(getMapBounds());
 		query.setParents("city:1");
 		query.setLimit(32);
-		StSDK.getInstance().getPlaces(query, placesCallback);
+		StSDK.getInstance().getPlacesBasic(query, placesCallback);
 	}
 
 	private String getQueryQuadkeys(List<String> quadkeys) {
@@ -263,7 +262,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 				.snippet(place.getPerex())
 				.icon(getMarkerBitmapDescriptor(spreadedPlace))
 			);
-			newMarker.setTag(place.getGuid());
+			newMarker.setTag(place.getId());
 		}
 	}
 

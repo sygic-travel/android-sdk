@@ -16,16 +16,22 @@ class Attribution {
 
 	@SerializedName(AUTHOR)
 	private String author;
+
 	@SerializedName(AUTHOR_URL)
 	private String authorUrl;
+
 	@SerializedName(LICENSE)
 	private String license;
+
 	@SerializedName(LICENSE_URL)
 	private String licenseUrl;
+
 	@SerializedName(OTHER)
 	private String other;
+
 	@SerializedName(TITLE)
 	private String title;
+
 	@SerializedName(TITLE_URL)
 	private String titleUrl;
 

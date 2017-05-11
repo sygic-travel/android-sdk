@@ -10,41 +10,48 @@ import java.util.List;
  * <p>Place.</p>
  */
 public class Place {
-	private static final String GUID = "guid";
+	private static final String ID = "id";
+	private static final String LEVEL = "level";
+	private static final String CATEGORIES = "categories";
 	private static final String RATING = "rating";
-	private static final String LOCATION = "location";
 	private static final String QUADKEY = "quadkey";
+	private static final String LOCATION = "location";
+	private static final String BOUNDING_BOX = "bounding_box";
 	private static final String NAME = "name";
 	private static final String NAME_SUFFIX = "name_suffix";
-	private static final String BOUNDING_BOX = "bounding_box";
 	private static final String PEREX = "perex";
 	private static final String URL = "url";
 	private static final String THUMBNAIL_URL = "thumbnail_url";
-	private static final String PRICE = "price";
 	private static final String MARKER = "marker";
-	private static final String CATEGORIES = "categories";
-	private static final String PARENTS = "parentsGuids";
+	private static final String PRICE = "price";
+	private static final String PARENT_IDS = "parent_ids";
 
-	@SerializedName(GUID)
-	private String guid;
+	@SerializedName(ID)
+	private String id;
+
+	@SerializedName(LEVEL)
+	private String level;
+
+	@SerializedName(CATEGORIES)
+	private List<String> categories;
 
 	@SerializedName(RATING)
 	private float rating;
 
+	@SerializedName(QUADKEY)
+	private String quadkey;
+
 	@SerializedName(LOCATION)
 	private Location location;
 
-	@SerializedName(QUADKEY)
-	private String quadkey;
+	@SerializedName(BOUNDING_BOX)
+	private BoundingBox boundingBox;
 
 	@SerializedName(NAME)
 	private String name;
 
 	@SerializedName(NAME_SUFFIX)
 	private String nameSuffix;
-
-	@SerializedName(BOUNDING_BOX)
-	private BoundingBox boundingBox;
 
 	@SerializedName(PEREX)
 	private String perex;
@@ -55,27 +62,40 @@ public class Place {
 	@SerializedName(THUMBNAIL_URL)
 	private String thumbnailUrl;
 
-	@SerializedName(PRICE)
-	private Price price;
-
 	@SerializedName(MARKER)
 	private String marker;
 
-	@SerializedName(CATEGORIES)
-	private List<String> categories;
+	@SerializedName(PRICE)
+	private Price price;
 
-	@SerializedName(PARENTS)
-	private List<String> parentsGuids;
+	@SerializedName(PARENT_IDS)
+	private List<String> parentIds;
 
 	public Place(){
 	}
 
-	public String getGuid() {
-		return guid;
+	public String getId() {
+		return id;
 	}
 
-	public void setGuid(String guid) {
-		this.guid = guid;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public List<String> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
 	}
 
 	public float getRating() {
@@ -86,6 +106,14 @@ public class Place {
 		this.rating = rating;
 	}
 
+	public String getQuadkey() {
+		return quadkey;
+	}
+
+	public void setQuadkey(String quadkey) {
+		this.quadkey = quadkey;
+	}
+
 	public Location getLocation() {
 		return location;
 	}
@@ -94,16 +122,12 @@ public class Place {
 		this.location = location;
 	}
 
-	public boolean hasLocation(){
-		return (location != null && (location.getLat() != 0f || location.getLng() != 0f));
+	public BoundingBox getBoundingBox() {
+		return boundingBox;
 	}
 
-	public String getQuadkey() {
-		return quadkey;
-	}
-
-	public void setQuadkey(String quadkey) {
-		this.quadkey = quadkey;
+	public void setBoundingBox(BoundingBox boundingBox) {
+		this.boundingBox = boundingBox;
 	}
 
 	public String getName() {
@@ -120,14 +144,6 @@ public class Place {
 
 	public void setNameSuffix(String nameSuffix) {
 		this.nameSuffix = nameSuffix;
-	}
-
-	public BoundingBox getBoundingBox() {
-		return boundingBox;
-	}
-
-	public void setBoundingBox(BoundingBox boundingBox) {
-		this.boundingBox = boundingBox;
 	}
 
 	public String getPerex() {
@@ -150,20 +166,8 @@ public class Place {
 		return thumbnailUrl;
 	}
 
-	public void setThumbnailUrl(String photoUrl) {
-		this.thumbnailUrl = photoUrl;
-	}
-
-	public boolean hasThumbnailUrl() {
-		return thumbnailUrl != null && !thumbnailUrl.equals("");
-	}
-
-	public Price getPrice() {
-		return price;
-	}
-
-	public void setPrice(Price price) {
-		this.price = price;
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 
 	public String getMarker() {
@@ -174,19 +178,27 @@ public class Place {
 		this.marker = marker;
 	}
 
-	public List<String> getCategories() {
-		return categories;
+	public Price getPrice() {
+		return price;
 	}
 
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
+	public void setPrice(Price price) {
+		this.price = price;
 	}
 
-	public List<String> getParentsGuids() {
-		return parentsGuids;
+	public List<String> getParentIds() {
+		return parentIds;
 	}
 
-	public void setParentsGuids(List<String> parentsGuids) {
-		this.parentsGuids = parentsGuids;
+	public void setParentIds(List<String> parentIds) {
+		this.parentIds = parentIds;
+	}
+
+	public boolean hasLocation(){
+		return (location != null && (location.getLat() != 0f || location.getLng() != 0f));
+	}
+
+	public boolean hasThumbnailUrl() {
+		return thumbnailUrl != null && !thumbnailUrl.equals("");
 	}
 }
