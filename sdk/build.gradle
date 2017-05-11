@@ -13,6 +13,7 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 	}
+
 	buildTypes {
 		release {
 			minifyEnabled false
@@ -22,6 +23,9 @@ android {
 }
 
 dependencies {
+	// local lib files
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+
 	// http request, api calls
 	compile 'com.squareup.retrofit2:retrofit:2.1.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -29,9 +33,6 @@ dependencies {
 	compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
 	compile 'com.google.code.gson:gson:2.7'
 	compile 'io.reactivex:rxandroid:1.2.1'
-
-	// local lib files
-	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	// test
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

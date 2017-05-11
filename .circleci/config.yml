@@ -23,12 +23,12 @@ jobs:
           name: Gradle Build
           command: |
             gradle :sdk:assembleRelease;
-            gradle :app:assembleDebug;
       - run:
           name: Generate Documentation
           command: |
             if [ $CIRCLE_BRANCH = "master" ]; then
               javadoc -d ../doc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
+              sed -i 's|\(<\!-- ========= END OF TOP NAVBAR ========= -->\)|\1\n<div class=\"contentContainer\"><p>For quick \"Getting started\" see our <a href=\"https:\/\/github\.com\/sygic-travel\/android-sdk\/\" target=\"\_blank\">Github<\/a>\.<\/p><\/div>|' ../doc/overview-summary.html
             fi
       - run:
           name: Upload Documentation
@@ -39,6 +39,3 @@ jobs:
       - store_artifacts:
           path: sdk/build/outputs/aar/sdk-release.aar
           destination: st-android-sdk.aar
-      - store_artifacts:
-          path: app/build/outputs/apk/app-debug.apk
-          destination: st-android-sdk-sample.apk
