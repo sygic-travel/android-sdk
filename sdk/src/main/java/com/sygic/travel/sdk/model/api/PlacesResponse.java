@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.model.api;
 
 import com.google.gson.annotations.SerializedName;
-import com.sygic.travel.sdk.model.place.Place;
+import com.sygic.travel.sdk.model.place.Detail;
 
 import java.util.List;
 
@@ -12,20 +12,20 @@ import java.util.List;
 public class PlacesResponse extends StResponse {
 	private Data data;
 
-	public Data getData() {
-		return data;
+	public Object getData() {
+		return data.getPlaces();
 	}
 
 	/**
 	 * Contains multiple detailed places' data from an API response.
 	 */
-	public class Data {
+	private class Data {
 		static final String PLACES = "places";
 
 		@SerializedName(PLACES)
-		private List<Place> places;
+		private List<Detail> places;
 
-		public List<Place> getPlaces() {
+		public List<Detail> getPlaces() {
 			return places;
 		}
 	}

@@ -20,10 +20,6 @@ import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TY
  * @see <a href="http://alpha-docs.sygictravelapi.com/0.1">API Documentation</a>
  */
 public interface StApi {
-	String PLACES_BASIC_API_CALL = "places_basic_api_call";
-	String PLACE_API_CALL = "place_api_call";
-	String PLACES_API_CALL = "places_api_call";
-	String MEDIA_API_CALL = "media_api_call";
 
 	/*-----------------------------------------------------------------------------*/
 	/*                                     GET                                     */

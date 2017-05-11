@@ -12,14 +12,14 @@ import java.util.List;
 public class PlacesBasicResponse extends StResponse {
 	private Data data;
 
-	public Data getData() {
-		return data;
+	public Object getData() {
+		return data.getPlaces();
 	}
 
 	/**
 	 * Contains multiple places' basic data from an API response.
 	 */
-	public class Data {
+	private class Data {
 		static final String PLACES = "places";
 
 		@SerializedName(PLACES)

@@ -9,14 +9,14 @@ import com.sygic.travel.sdk.model.place.Detail;
 public class PlaceResponse extends StResponse {
 	private Data data;
 
-	public Data getData() {
-		return data;
+	public Object getData() {
+		return data.getDetail();
 	}
 
 	/**
 	 * Contains one place's detailed data from an API response.
 	 */
-	public class Data {
+	private class Data {
 		static final String PLACE = "place";
 
 		@SerializedName(PLACE)

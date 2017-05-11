@@ -1,9 +1,5 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
-import com.sygic.travel.sdk.model.api.MediaResponse;
-import com.sygic.travel.sdk.model.api.PlaceResponse;
-import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
-import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.api.StResponse;
 
 import java.io.IOException;
@@ -13,11 +9,6 @@ import java.util.List;
 import retrofit2.adapter.rxjava.Result;
 import rx.Observer;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_BASIC_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACE_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
-
 /**
  * <p>Observer which subscribes to receive a response from API.</p>
  * @param <RT> Response type - must be one of the response classes extending {@link StResponse}.
@@ -26,7 +17,6 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	private static final String TAG = StObserver.class.getSimpleName();
 	private static final String STATUS_ERROR = "error";
 
-	private String requestType;
 	private Callback userCallback;
 	private boolean multipleCallsMerged;
 
@@ -35,17 +25,14 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 
 	/**
 	 * @param userCallback Callback, which methods are called, when the response is processed.
-	 * @param requestType Type of API request.
 	 * @param multipleCallsMerged Flag indicating whether the Observer hes been subscribed to more
 	 *                            than 1 request.
 	 */
 	public StObserver(
 		Callback userCallback,
-		String requestType,
 		boolean multipleCallsMerged
 	) {
 		this.userCallback = userCallback;
-		this.requestType = requestType;
 		this.multipleCallsMerged = multipleCallsMerged;
 	}
 
@@ -55,31 +42,11 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	 */
 	@Override
 	public void onCompleted() {
-		Object result;
-
 		if(stResponse == null || (stResponse.getStatus() != null && stResponse.getStatus().equals(STATUS_ERROR))){
 			return;
 		}
 
-		switch(requestType) {
-			case PLACES_BASIC_API_CALL:
-				result = ((PlacesBasicResponse) stResponse).getData().getPlaces();
-				break;
-			case PLACE_API_CALL:
-				result = ((PlaceResponse) stResponse).getData().getDetail();
-				break;
-			case PLACES_API_CALL:
-				result = ((PlacesResponse) stResponse).getData().getPlaces();
-				break;
-			case MEDIA_API_CALL:
-				result = ((MediaResponse) stResponse).getData().getMedia();
-				break;
-			default:
-				result = null;
-				break;
-		}
-
-		userCallback.onSuccess(result);
+		userCallback.onSuccess(stResponse.getData());
 	}
 
 	/**
@@ -144,7 +111,9 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 			if(stResponseResult.response().errorBody() != null){
 				return true;
 			} else if(stResponseResult.response().body() != null){
-				return stResponseResult.response().body().getStatus().equals(STATUS_ERROR);
+				// success responses don't have status
+				final String status = stResponseResult.response().body().getStatus();
+				return (status != null && status.equals(STATUS_ERROR));
 			} else {
 				return true;
 			}

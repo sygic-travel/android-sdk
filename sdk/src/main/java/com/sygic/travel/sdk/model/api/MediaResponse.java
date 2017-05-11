@@ -11,14 +11,14 @@ import java.util.List;
 public class MediaResponse extends StResponse {
 	private Data data;
 
-	public Data getData() {
-		return data;
+	public Object getData() {
+		return data.getMedia();
 	}
 
 	/**
 	 * Contains media data from an API response.
 	 */
-	public class Data {
+	private class Data {
 		static final String MEDIA = "media";
 
 		@SerializedName(MEDIA)

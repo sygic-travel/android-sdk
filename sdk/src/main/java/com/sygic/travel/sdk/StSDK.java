@@ -9,7 +9,6 @@ import com.sygic.travel.sdk.contentProvider.api.StObserver;
 import com.sygic.travel.sdk.model.api.MediaResponse;
 import com.sygic.travel.sdk.model.api.PlaceResponse;
 import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
-import com.sygic.travel.sdk.model.api.StResponse;
 import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
@@ -24,11 +23,6 @@ import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_BASIC_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACE_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.MEDIA_API_CALL;
-import static com.sygic.travel.sdk.contentProvider.api.StApi.PLACES_API_CALL;
 
 /**
  * <p>Provides public methods for requesting API.</p>
@@ -62,7 +56,7 @@ public class StSDK {
 	}
 
 	/**
-	 * Creates and send a request to get places, e.g. for map or list.
+	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param query Query encapsulating data for API request.
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
@@ -83,7 +77,7 @@ public class StSDK {
 			query.getLimit()
 		);
 		Observable<Result<PlacesBasicResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = preparedObservable.subscribe(new StObserver<PlacesBasicResponse>(back, PLACES_BASIC_API_CALL, false));
+		subscription = preparedObservable.subscribe(new StObserver<PlacesBasicResponse>(back, false));
 	}
 
 	/**
@@ -95,7 +89,7 @@ public class StSDK {
 	public void getPlaceDetailed(String id, Callback<Detail> back){
 		Observable<Result<PlaceResponse>> unpreparedObservable = getStApi().getPlace(id);
 		Observable<Result<PlaceResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = preparedObservable.subscribe(new StObserver<PlaceResponse>(back, PLACE_API_CALL, false));
+		subscription = preparedObservable.subscribe(new StObserver<PlaceResponse>(back, false));
 	}
 
 	/**
@@ -107,7 +101,7 @@ public class StSDK {
 	public void getPlaceMedia(String id, Callback<List<Medium>> back){
 		Observable<Result<MediaResponse>> unpreparedObservable = getStApi().getPlaceMedia(id);
 		Observable<Result<MediaResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = preparedObservable.subscribe(new StObserver<MediaResponse>(back, MEDIA_API_CALL, false));
+		subscription = preparedObservable.subscribe(new StObserver<MediaResponse>(back, false));
 	}
 
 	/*-------------------------------------------
