@@ -1,13 +1,13 @@
 package com.sygic.travel.sdk.model.api;
 
 import com.google.gson.annotations.SerializedName;
-import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.List;
 
 /**
- * <p>Response that contains list of detailed places data. Suitable for showing details in a pager or
- * synchronization.</p>
+ * <p>Response that contains list of basic places data (without detailed data). Suitable for showing
+ * places in a list or spread on a map.</p>
  */
 public class PlacesResponse extends StResponse {
 	private Data data;
@@ -17,15 +17,15 @@ public class PlacesResponse extends StResponse {
 	}
 
 	/**
-	 * Contains multiple detailed places' data from an API response.
+	 * Contains multiple places' basic data from an API response.
 	 */
 	private class Data {
 		static final String PLACES = "places";
 
 		@SerializedName(PLACES)
-		private List<Detail> places;
+		private List<Place> places;
 
-		public List<Detail> getPlaces() {
+		public List<Place> getPlaces() {
 			return places;
 		}
 	}

@@ -163,7 +163,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		query.setBounds(getMapBounds());
 		query.setParents("city:1");
 		query.setLimit(32);
-		StSDK.getInstance().getPlacesBasic(query, placesCallback);
+		StSDK.getInstance().getPlaces(query, placesCallback);
 	}
 
 	private String getQueryQuadkeys(List<String> quadkeys) {

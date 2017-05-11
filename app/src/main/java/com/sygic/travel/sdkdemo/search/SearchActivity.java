@@ -83,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
 		query.setLevels("poi");
 		query.setParents("city:1");
 		query.setLimit(128);
-		StSDK.getInstance().getPlacesBasic(query, getPlacesCallback());
+		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
 
 	private void renderPlacesList(List<Place> places) {
