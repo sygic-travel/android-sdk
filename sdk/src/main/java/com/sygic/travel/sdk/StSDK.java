@@ -7,8 +7,8 @@ import com.sygic.travel.sdk.contentProvider.api.StApi;
 import com.sygic.travel.sdk.contentProvider.api.StApiGenerator;
 import com.sygic.travel.sdk.contentProvider.api.StObserver;
 import com.sygic.travel.sdk.model.api.MediaResponse;
-import com.sygic.travel.sdk.model.api.PlaceResponse;
-import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
+import com.sygic.travel.sdk.model.api.PlaceDetailedResponse;
+import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.media.Medium;
 import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
@@ -61,11 +61,11 @@ public class StSDK {
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
 	 */
-	public void getPlacesBasic(
+	public void getPlaces(
 		Query query,
 		Callback<List<Place>> back
 	){
-		Observable<Result<PlacesBasicResponse>> unpreparedObservable = getStApi().getPlacesBasic(
+		Observable<Result<PlacesResponse>> unpreparedObservable = getStApi().getPlaces(
 			query.getQuery(),
 			query.getLevels(),
 			query.getCategories(),
@@ -76,8 +76,8 @@ public class StSDK {
 			query.getParents(),
 			query.getLimit()
 		);
-		Observable<Result<PlacesBasicResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = preparedObservable.subscribe(new StObserver<PlacesBasicResponse>(back, false));
+		Observable<Result<PlacesResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = preparedObservable.subscribe(new StObserver<PlacesResponse>(back, false));
 	}
 
 	/**
@@ -87,9 +87,9 @@ public class StSDK {
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
 	 */
 	public void getPlaceDetailed(String id, Callback<Detail> back){
-		Observable<Result<PlaceResponse>> unpreparedObservable = getStApi().getPlace(id);
-		Observable<Result<PlaceResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
-		subscription = preparedObservable.subscribe(new StObserver<PlaceResponse>(back, false));
+		Observable<Result<PlaceDetailedResponse>> unpreparedObservable = getStApi().getPlaceDetailed(id);
+		Observable<Result<PlaceDetailedResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
+		subscription = preparedObservable.subscribe(new StObserver<PlaceDetailedResponse>(back, false));
 	}
 
 	/**

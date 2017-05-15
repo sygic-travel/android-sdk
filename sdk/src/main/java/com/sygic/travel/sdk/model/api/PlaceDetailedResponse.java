@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.place.Detail;
 /**
  * <p>Response that contains one detailed place data. Suitable for showing a place detail.</p>
  */
-public class PlaceResponse extends StResponse {
+public class PlaceDetailedResponse extends StResponse {
 	private Data data;
 
 	public Object getData() {

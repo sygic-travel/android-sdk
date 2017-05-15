@@ -9,13 +9,14 @@ import java.util.List;
 import retrofit2.adapter.rxjava.Result;
 import rx.Observer;
 
+import static com.sygic.travel.sdk.model.api.StResponse.STATUS_OK;
+
 /**
  * <p>Observer which subscribes to receive a response from API.</p>
  * @param <RT> Response type - must be one of the response classes extending {@link StResponse}.
  */
 public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	private static final String TAG = StObserver.class.getSimpleName();
-	private static final String STATUS_ERROR = "error";
 
 	private Callback userCallback;
 	private boolean multipleCallsMerged;
@@ -42,7 +43,7 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	 */
 	@Override
 	public void onCompleted() {
-		if(stResponse == null || (stResponse.getStatus() != null && stResponse.getStatus().equals(STATUS_ERROR))){
+		if(stResponse == null || stResponse.getStatusCode() != STATUS_OK){
 			return;
 		}
 
@@ -111,9 +112,7 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 			if(stResponseResult.response().errorBody() != null){
 				return true;
 			} else if(stResponseResult.response().body() != null){
-				// success responses don't have status
-				final String status = stResponseResult.response().body().getStatus();
-				return (status != null && status.equals(STATUS_ERROR));
+				return stResponseResult.response().body().getStatusCode() != STATUS_OK;
 			} else {
 				return true;
 			}

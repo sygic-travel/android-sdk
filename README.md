@@ -19,9 +19,21 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 ## Installation
 TODO
 
-## Quick Usage Introduction
+## Initialization
 
-This quick example shows how to use the SDK to fetch a representative set of data.
+*API key* must be provided, otherwise any `StSDK` method call will result in error.
+
+```java
+// initialize SDK - in onCreate() method of your Application class or first Activity
+// Insert real API key instead of YOUR_API_KEY in the line below. The API key can be
+// defined in the strings.xml resorce file.
+
+StSDK.initialize("YOUR_API_KEY", context);
+```
+
+## Usage Introduction
+
+This example shows how to use the SDK to fetch a representative set of data.
 
 Let's define a set of Places we want:
 
@@ -30,11 +42,7 @@ Let's define a set of Places we want:
 - marked with category _Sightseeing_
 - only the _Top 10_ of them
 
-```java
-// initialize SDK - in onCreate() method of your Application class or first Activity
-TODO - manifest metadata
-StSDK.initialize("YOUR_API_KEY", context);
-	
+```java	
 // Create query to get Top 10 sightseeings in London
 Query query = new Query();
 query.setParents("city:1");
@@ -58,8 +66,6 @@ Callback<List<Place>> placesCallback = new Callback<List<Place>>() {
 // Perform query
 StSDK.getInstance().getPlaces(query, placesCallback);
 ```
-
-*API key* must be provided, otherwise any `StSDK` method call will result in error.
 
 ## Basic Classes
 

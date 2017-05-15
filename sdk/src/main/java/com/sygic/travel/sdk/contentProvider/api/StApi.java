@@ -1,10 +1,9 @@
 package com.sygic.travel.sdk.contentProvider.api;
 
 import com.sygic.travel.sdk.model.api.MediaResponse;
-import com.sygic.travel.sdk.model.api.PlaceResponse;
-import com.sygic.travel.sdk.model.api.PlacesBasicResponse;
+import com.sygic.travel.sdk.model.api.PlaceDetailedResponse;
 import com.sygic.travel.sdk.model.api.PlacesResponse;
-import com.sygic.travel.sdk.model.api.StResponse;
+import com.sygic.travel.sdk.model.api.PlacesDetailedResponse;
 
 import retrofit2.adapter.rxjava.Result;
 import retrofit2.http.GET;
@@ -27,7 +26,7 @@ public interface StApi {
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/list")
-	Observable<Result<PlacesBasicResponse>> getPlacesBasic(
+	Observable<Result<PlacesResponse>> getPlaces(
 		@Query("query") String query,
 		@Query("levels") String levels,
 		@Query("categories") String categories,
@@ -41,13 +40,13 @@ public interface StApi {
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{id}")
-	Observable<Result<PlaceResponse>> getPlace(
+	Observable<Result<PlaceDetailedResponse>> getPlaceDetailed(
 		@Path("id") String id
 	);
 
 	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{ids}")
-	Observable<Result<PlacesResponse>> getPlaces(
+	Observable<Result<PlacesDetailedResponse>> getPlacesDetailed(
 		@Path(encoded = true, value = "ids") String ids
 	);
 

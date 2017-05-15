@@ -7,21 +7,13 @@ import java.util.List;
  * It's abstract, because of the abstract {@link #getData()} method.</p>
  */
 public abstract class StResponse {
-	private String status;
-	private int statusCode;
-	private String statusMessage;
-	private Error error;
+	public static final int STATUS_OK = 200;
 
-	public String getStatus() {
-		return status;
-	}
+	private int statusCode;
+	private Error error;
 
 	public int getStatusCode() {
 		return statusCode;
-	}
-
-	public String getStatusMessage() {
-		return statusMessage;
 	}
 
 	public Error getError() {
