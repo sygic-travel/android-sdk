@@ -15,12 +15,12 @@ import java.util.List;
 public class Spreader {
 
 	/**
-	 * <p>Generates a list of spreaded places.</p>
+	 * <p>Generates a list of spread places.</p>
 	 * @param places Places to spread.
 	 * @param sizeConfigs Size configurations available for spreading.
-	 * @param bounds Map's bounds, which the places are supposed to be spreaded within.
-	 * @param canvasSize Map's canvas size on display.
-	 * @return Spreaded places as {@link SpreadResult}.
+	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param canvasSize Map canvas (view) size in pixels.
+	 * @return Spread places as {@link SpreadResult}.
 	 */
 	public SpreadResult spread(
 		List<Place> places,

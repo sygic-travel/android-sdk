@@ -93,7 +93,7 @@ public class StSDK {
 	}
 
 	/**
-	 * <p>Creates and sends a request to get place's media.</p>
+	 * <p>Creates and sends a request to get the place's media.</p>
 	 * @param id Unique id of a place - media for this place will be requested.
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
@@ -123,7 +123,7 @@ public class StSDK {
 	}
 
 	/**
-	 * <p>Unsubsribes a subscribed observable.</p>
+	 * <p>Unsubscribes a subscribed observable.</p>
 	 */
 	public void unsubscribeObservable(){
 		if(subscription != null && !subscription.isUnsubscribed()){

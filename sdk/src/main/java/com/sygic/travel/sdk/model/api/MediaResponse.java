@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.media.Medium;
 import java.util.List;
 
 /**
- * <p>Response that contains list of place's media. Suitable for a gallery.</p>
+ * <p>Response containing a list of place media. Suitable for a gallery.</p>
  */
 public class MediaResponse extends StResponse {
 	private Data data;

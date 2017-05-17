@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.model.place;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * <p>Place's pricing.</p>
+ * <p>Place pricing.</p>
  */
 public class Price {
 	private static final String VALUE = "value";

@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.place.Detail;
 import java.util.List;
 
 /**
- * <p>Response that contains list of detailed places data. Suitable for showing details in a pager or
+ * <p>Response containing a list of detailed places data. Suitable for showing details in a pager or
  * synchronization.</p>
  */
 public class PlacesDetailedResponse extends StResponse {

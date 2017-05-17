@@ -8,7 +8,7 @@ public class CanvasSize {
 	public int height;
 
 	/**
-	 * Map's canvas size.
+	 * Map canvas size.
 	 * @param width
 	 * @param height
 	 */

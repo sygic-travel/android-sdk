@@ -25,7 +25,7 @@ public class StObserver<RT extends StResponse> implements Observer<Result<RT>> {
 	private List<RT> stResponses = new ArrayList<>();
 
 	/**
-	 * @param userCallback Callback, which methods are called, when the response is processed.
+	 * @param userCallback Callback, whose methods are called, when the response is processed.
 	 * @param multipleCallsMerged Flag indicating whether the Observer hes been subscribed to more
 	 *                            than 1 request.
 	 */

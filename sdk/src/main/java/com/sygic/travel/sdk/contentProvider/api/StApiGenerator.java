@@ -35,7 +35,7 @@ public class StApiGenerator {
 
 	/**
 	 * <p>Generates an implementation of the API endpoints.</p>
-	 * @param apiClass {@link StApi} ought to be used unless own interface was created.
+	 * @param apiClass {@link StApi} ought to be used unless a custom interface was created.
 	 * @param cacheDir Directory for request cache.
 	 * @param <S> Generic type of API interface.
 	 * @return An implementation of the API endpoints defined by the {@code apiClass} interface.
@@ -66,7 +66,6 @@ public class StApiGenerator {
 				.addInterceptor(loggingInterceptor)
 				.addInterceptor(localeInterceptor)
 				.addInterceptor(authorizationInterceptor)
-//				.addInterceptor(apiResponseInterceptor)
 				.cache(new Cache(cacheDir, 10 * 1024 * 1024))
 				.readTimeout(60, TimeUnit.SECONDS)
 				.build();
