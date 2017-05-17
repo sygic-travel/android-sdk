@@ -12,10 +12,14 @@ buildscript {
     }
 }
 
+
+def localMavenRepository = 'file://' + new File(System.getProperty('user.home'), 'LocalRepository').absolutePath
+
 allprojects {
-    repositories {
-        jcenter()
-    }
+	repositories {
+		jcenter()
+		maven {url localMavenRepository}
+	}
 }
 
 task clean(type: Delete) {

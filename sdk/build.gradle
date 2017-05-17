@@ -1,4 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+group = "com.sygic.travel"
+archivesBaseName = "android-sdk"
+version = "1.0.0-alpha"
 
 android {
 	compileSdkVersion 25
@@ -9,9 +14,7 @@ android {
 		targetSdkVersion 25
 		versionCode 1
 		versionName "1.0"
-
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
 	}
 
 	buildTypes {
@@ -26,11 +29,14 @@ dependencies {
 	// local lib files
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
+	compile 'com.android.support:appcompat-v7:25.3.1'
+
 	// http request, api calls
 	compile 'com.squareup.retrofit2:retrofit:2.1.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 	compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-	compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+	compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+	compile 'com.squareup.okhttp3:okhttp:3.4.1'
 	compile 'com.google.code.gson:gson:2.7'
 	compile 'io.reactivex:rxandroid:1.2.1'
 
@@ -39,4 +45,35 @@ dependencies {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
 	testCompile 'junit:junit:4.12'
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: 'file://' + new File(System.getProperty('user.home'),'LocalRepository').absolutePath) { }
+			snapshotRepository(url: 'file://' + new File(System.getProperty('user.home'),'LocalRepository/snapshots').absolutePath) { }
+
+			pom.project {
+				name 'android-sdk-release'
+				packaging 'aar'
+				description 'Android SDK for travel data'
+				url 'https://github.com/sygic-travel/android-sdk'
+
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+
+				developers {
+					developer {
+						id 'MisoMurin'
+						name 'Michal Murín'
+						email 'michal.murin@sygictravel.com'
+					}
+				}
+			}
+		}
+	}
 }

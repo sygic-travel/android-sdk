@@ -25,8 +25,11 @@ dependencies {
 	// local lib files
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-	// SDK
-	compile project(":sdk")
+// SDK
+//	compile project(":sdk")
+	compile ('com.sygic.travel:android-sdk:1.0.0-alpha@aar') {
+		transitive=true;
+	}
 
 	// google
 	compile 'com.google.android.gms:play-services-location:10.2.1'
