@@ -242,7 +242,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		map.clear();
 
 		// Spread loaded places
-		SpreadResult spreadResult = spreader.spread(
+		SpreadResult spreadResult = spreader.spreadPlacesOnMap(
 			places,
 			sizeConfigs,
 			boundingBox,

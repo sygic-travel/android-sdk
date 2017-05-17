@@ -22,7 +22,7 @@ public class Spreader {
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * @return Spread places as {@link SpreadResult}.
 	 */
-	public SpreadResult spread(
+	public SpreadResult spreadPlacesOnMap(
 		List<Place> places,
 		List<SpreadSizeConfig> sizeConfigs,
 		BoundingBox bounds,
