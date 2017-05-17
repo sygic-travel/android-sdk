@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.model.place;
 
 import com.google.gson.annotations.SerializedName;
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.geo.Location;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class Place {
 	private Location location;
 
 	@SerializedName(BOUNDING_BOX)
-	private BoundingBox boundingBox;
+	private Bounds bounds;
 
 	@SerializedName(NAME)
 	private String name;
@@ -122,12 +122,12 @@ public class Place {
 		this.location = location;
 	}
 
-	public BoundingBox getBoundingBox() {
-		return boundingBox;
+	public Bounds getBounds() {
+		return bounds;
 	}
 
-	public void setBoundingBox(BoundingBox boundingBox) {
-		this.boundingBox = boundingBox;
+	public void setBounds(Bounds bounds) {
+		this.bounds = bounds;
 	}
 
 	public String getName() {

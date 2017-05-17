@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.model.query;
 
 import android.text.TextUtils;
 
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Query {
 	private String query;
-	private BoundingBox bounds;
+	private Bounds bounds;
 	private List<String> categories;
 	private Operator categoriesOperator = Operator.OR;
 	private List<String> tags;
@@ -50,7 +50,7 @@ public class Query {
 	 */
 	public Query(
 		String query,
-		BoundingBox bounds,
+		Bounds bounds,
 		List<String> categories,
 		List<String> tags,
 		List<String> parents,
@@ -78,11 +78,11 @@ public class Query {
 		this.query = query;
 	}
 
-	public BoundingBox getBounds() {
+	public Bounds getBounds() {
 		return bounds;
 	}
 
-	public void setBounds(BoundingBox bounds) {
+	public void setBounds(Bounds bounds) {
 		this.bounds = bounds;
 	}
 

@@ -27,7 +27,7 @@ import com.sygic.travel.sdk.geo.spread.SpreadResult;
 import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
 import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
 import com.sygic.travel.sdk.geo.spread.Spreader;
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
@@ -38,7 +38,6 @@ import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -154,7 +153,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 	private void loadPlaces(){
 		// Generate quadkeys from the map's bondings and zoom
 		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
-			getMapBoundingBox(),
+			getMapBounds(),
 			(int) map.getCameraPosition().zoom
 		);
 
@@ -163,7 +162,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		query.setCategories(selectedCateoriesKeys);
 		query.setMapTiles(quadkeys);
 		query.setMapSpread(1);
-		query.setBounds(getMapBoundingBox());
+		query.setBounds(getMapBounds());
 		query.setParents(Collections.singletonList("city:1"));
 		query.setLimit(32);
 		StSDK.getInstance().getPlaces(query, placesCallback);
@@ -195,23 +194,23 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		};
 	}
 
-	// Returns map's BoundingBox, which contains it's bounds
-	private BoundingBox getMapBoundingBox() {
-		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-		BoundingBox boundingBox = new BoundingBox();
+	// Returns map's Bounds
+	private Bounds getMapBounds() {
+		LatLngBounds latLngBounds = map.getProjection().getVisibleRegion().latLngBounds;
+		Bounds bounds = new Bounds();
 
 		// Map bounds are widened for the purposes of this sample. In a real app bounds without
 		// the BOUNDS_OFFSET should be used.
-		boundingBox.setSouth((float) (bounds.southwest.latitude - BOUNDS_OFFSET));
-		boundingBox.setWest((float) (bounds.southwest.longitude - BOUNDS_OFFSET));
-		boundingBox.setNorth((float) (bounds.northeast.latitude + BOUNDS_OFFSET));
-		boundingBox.setEast((float) (bounds.northeast.longitude + BOUNDS_OFFSET));
+		bounds.setSouth((float) (latLngBounds.southwest.latitude - BOUNDS_OFFSET));
+		bounds.setWest((float) (latLngBounds.southwest.longitude - BOUNDS_OFFSET));
+		bounds.setNorth((float) (latLngBounds.northeast.latitude + BOUNDS_OFFSET));
+		bounds.setEast((float) (latLngBounds.northeast.longitude + BOUNDS_OFFSET));
 
-		return boundingBox;
+		return bounds;
 	}
 
 	private void showPlacesOnMap(List<Place> places) {
-		BoundingBox boundingBox = getMapBoundingBox();
+		Bounds bounds = getMapBounds();
 
 		map.clear();
 
@@ -219,7 +218,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		SpreadResult spreadResult = spreader.spread(
 			places,
 			sizeConfigs,
-			boundingBox,
+			bounds,
 			// Ratios are used only for purposes of this sample, no ratios should be used in normal app.
 			new CanvasSize(
 				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),

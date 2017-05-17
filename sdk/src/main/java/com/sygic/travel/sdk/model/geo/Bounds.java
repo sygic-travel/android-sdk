@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * <p>Geografical bounds - south, west, north, east.</p>
  */
-public class BoundingBox {
+public class Bounds {
 	private static final String NORTH = "north";
 	private static final String EAST = "east";
 	private static final String SOUTH = "south";
@@ -23,7 +23,7 @@ public class BoundingBox {
 	@SerializedName(WEST)
 	private float west;
 
-	public BoundingBox() {
+	public Bounds() {
 	}
 
 	public float getNorth() {

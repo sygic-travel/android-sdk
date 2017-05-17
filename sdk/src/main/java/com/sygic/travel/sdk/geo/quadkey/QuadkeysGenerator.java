@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.geo.quadkey;
 
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.geo.Location;
 
 import java.util.ArrayList;
@@ -13,15 +13,15 @@ public class QuadkeysGenerator {
 
 	/**
 	 * <p>Generates quadkeys.</p>
-	 * @param boundingBox Map {@link BoundingBox bounds}, which the quadkeys are supposed be generated fom.
+	 * @param bounds Map {@link Bounds bounds}, which the quadkeys are supposed be generated fom.
 	 * @param zoom Map zoom level.
 	 * @return List of generated quadkeys.
 	 */
-	public static List<String> generateQuadkeys(BoundingBox boundingBox, int zoom){
+	public static List<String> generateQuadkeys(Bounds bounds, int zoom){
 		List<String> quadkeys = new ArrayList<>();
-		int nw[] = getXYFromLatLng(boundingBox.getNorth(), boundingBox.getWest(), zoom);
-		int ne[] = getXYFromLatLng(boundingBox.getNorth(), boundingBox.getEast(), zoom);
-		int sw[] = getXYFromLatLng(boundingBox.getSouth(), boundingBox.getWest(), zoom);
+		int nw[] = getXYFromLatLng(bounds.getNorth(), bounds.getWest(), zoom);
+		int ne[] = getXYFromLatLng(bounds.getNorth(), bounds.getEast(), zoom);
+		int sw[] = getXYFromLatLng(bounds.getSouth(), bounds.getWest(), zoom);
 
 		int xMin = nw[0];
 		int xMax = ne[0];

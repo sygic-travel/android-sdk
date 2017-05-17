@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.geo.spread;
 
 import android.graphics.Point;
 
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.geo.Location;
 import com.sygic.travel.sdk.model.place.Place;
 
@@ -25,7 +25,7 @@ public class Spreader {
 	public SpreadResult spread(
 		List<Place> places,
 		List<SpreadSizeConfig> sizeConfigs,
-		BoundingBox bounds,
+		Bounds bounds,
 		CanvasSize canvasSize
 	){
 		LinkedList<SpreadedPlace> visiblePlaces = new LinkedList<>();
@@ -100,20 +100,20 @@ public class Spreader {
 	/**
 	 * <p>Converts given location within given bounds to {@code x, y} coordinates within given canvas.</p>
 	 * @param location Location which is supposed be converted to {@code x, y} coordinates.
-	 * @param boundingBox Bounds the location lies within.
+	 * @param bounds Bounds the location lies within.
 	 * @param canvasSize Size of a canvas the coordinates are supposed to lie within.
 	 * @return {@link Point} on a canvas.
 	 */
 	private Point locationToCanvasCoords(
 		Location location,
-		BoundingBox boundingBox,
+		Bounds bounds,
 		CanvasSize canvasSize
 	){
 		double south, west, north, east;
-		south = boundingBox.getSouth();
-		west = boundingBox.getWest();
-		north = boundingBox.getNorth();
-		east = boundingBox.getEast();
+		south = bounds.getSouth();
+		west = bounds.getWest();
+		north = bounds.getNorth();
+		east = bounds.getEast();
 
 		double latDiff = north - location.getLat();
 		double lngDiff = location.getLng() - west;
