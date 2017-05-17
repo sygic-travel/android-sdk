@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * <p>Determines the suitable locale.</p>
+ * <p>Determines the appropriate locale.</p>
  */
 public class SupportedLanguages {
 	private static final List<String> supportedLanguages;
 	public static String EN = "en";
 
 	/**
-	 * @return Device's current locale, if it is supported. Returns english locale otherwise.
+	 * @return Device's current locale, if it is supported. Returns English locale otherwise.
 	 */
 	public static String getActualLocale(){
 		String locale = Locale.getDefault().getLanguage();

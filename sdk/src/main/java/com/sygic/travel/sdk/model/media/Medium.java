@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.geo.Location;
 import java.util.List;
 
 /**
- * <p>Place's medium.</p>
+ * <p>Place medium.</p>
  */
 
 public class Medium {

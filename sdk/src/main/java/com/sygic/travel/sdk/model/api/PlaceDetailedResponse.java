@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.sygic.travel.sdk.model.place.Detail;
 
 /**
- * <p>Response that contains one detailed place data. Suitable for showing a place detail.</p>
+ * <p>Response containing one detailed place data. Suitable for showing a place detail.</p>
  */
 public class PlaceDetailedResponse extends StResponse {
 	private Data data;

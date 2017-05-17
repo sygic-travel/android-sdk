@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.place.Place;
 import java.util.List;
 
 /**
- * <p>Response that contains list of basic places data (without detailed data). Suitable for showing
+ * <p>Response that contains a list of basic places data (without detailed data). Suitable for showing
  * places in a list or spread on a map.</p>
  */
 public class PlacesResponse extends StResponse {

@@ -22,7 +22,7 @@ public abstract class StResponse {
 
 	/**
 	 * This method ought to be implemented in every class extending {@code StResponse}.
-	 * @return Response data object, which type depends on a class, which extends {@code StResponse}.
+	 * @return Response data object, whose type depends on a class extending the {@code StResponse}.
 	 */
 	public abstract Object getData();
 

@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.geo.spread;
 
 /**
- * <p>Place's configuration values for spreading.</p>
+ * <p>Place configuration values for spreading.</p>
  */
 public class SpreadSizeConfig {
 	public static final String SMALL = "small";
@@ -17,7 +17,7 @@ public class SpreadSizeConfig {
 	private float minimalRating;
 
 	/**
-	 * <p>Place's configuration values for spreading.</p>
+	 * <p>Place configuration values for spreading.</p>
 	 * @param radius Circular marker's radius.
 	 * @param margin Marker's minimal margin.
 	 * @param name String representation of size. One of following values:
@@ -28,7 +28,7 @@ public class SpreadSizeConfig {
 	 *     <li>{@link SpreadSizeConfig#POPULAR}</li>
 	 * </ul>
 	 * @param photoRequired Flag whether marker photo is required.
-	 * @param minimalRating Minimal rating to show place's marker.
+	 * @param minimalRating Minimal rating to show the place's marker.
 	 */
 	public SpreadSizeConfig(
 		int radius,

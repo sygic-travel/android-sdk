@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.model.place;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * <p>Place's description data.</p>
+ * <p>Place description data.</p>
  */
 public class Description {
 	private static final String TEXT = "text";

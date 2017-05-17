@@ -13,8 +13,8 @@ public class QuadkeysGenerator {
 
 	/**
 	 * <p>Generates quadkeys.</p>
-	 * @param boundingBox Map's {@link BoundingBox bounds}, which the quadkeys are supposed be generated fom.
-	 * @param zoom Map's zoom level.
+	 * @param boundingBox Map {@link BoundingBox bounds}, which the quadkeys are supposed be generated fom.
+	 * @param zoom Map zoom level.
 	 * @return List of generated quadkeys.
 	 */
 	public static List<String> generateQuadkeys(BoundingBox boundingBox, int zoom){
@@ -39,7 +39,7 @@ public class QuadkeysGenerator {
 	/**
 	 * <p>Generates a single quadkey for given location and zoom.</p>
 	 * @param latLng Location, which the quadkey is supposed be generated for.
-	 * @param zoom Map's zoom level.
+	 * @param zoom Map zoom level.
 	 * @return Generated quadkey.
 	 */
 	public static String generateQuadkey(Location latLng, int zoom){
