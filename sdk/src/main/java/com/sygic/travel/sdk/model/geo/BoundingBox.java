@@ -57,4 +57,9 @@ public class BoundingBox {
 	public void setWest(float west) {
 		this.west = west;
 	}
+
+	public String toQueryString(){
+		return south + "," + west + "," + north + "," + east;
+	}
+
 }

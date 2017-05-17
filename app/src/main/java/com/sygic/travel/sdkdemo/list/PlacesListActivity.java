@@ -20,6 +20,7 @@ import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +35,7 @@ public class PlacesListActivity extends AppCompatActivity {
 	private List<Place> places;
 
 	private CategoriesDialog categoriesDialog;
-	private String selectedCategoryKey;
+	private List<String> selectedCateoriesKeys = new ArrayList<>();
 	private String titlePattern;
 
 	@Override
@@ -97,9 +98,9 @@ public class PlacesListActivity extends AppCompatActivity {
 	// Use the SDK to load places
 	private void loadPlaces() {
 		Query query = new Query();
-		query.setLevels("poi");
-		query.setCategories(selectedCategoryKey);
-		query.setParents("city:1");
+		query.setLevels(Collections.singletonList("poi"));
+		query.setCategories(selectedCateoriesKeys);
+		query.setParents(Collections.singletonList("city:1"));
 		query.setLimit(128);
 		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}
@@ -115,17 +116,17 @@ public class PlacesListActivity extends AppCompatActivity {
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
 			public void onCategoryClick(String categoryKey, String categoryName) {
-				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+				if(selectedCateoriesKeys.contains(categoryKey)){
 					categoriesDialog.dismiss();
 					return;
 				}
 
 				// Set activity's title
 				if(categoryKey.equals("all")){
-					selectedCategoryKey = null;
+					selectedCateoriesKeys.clear();
 					setTitle(getString(R.string.title_activity_list));
 				} else {
-					selectedCategoryKey = categoryKey;
+					selectedCateoriesKeys.add(categoryKey);
 					setTitle(String.format(titlePattern, categoryName));
 				}
 

@@ -67,13 +67,13 @@ public class StSDK {
 	){
 		Observable<Result<PlacesResponse>> unpreparedObservable = getStApi().getPlaces(
 			query.getQuery(),
-			query.getLevels(),
-			query.getCategories(),
-			query.getMapTiles(),
+			query.getLevelsQueryString(),
+			query.getCategoriesQueryString(),
+			query.getMapTilesQueryString(),
 			query.getMapSpread(),
-			query.getBounds(),
-			query.getTags(),
-			query.getParents(),
+			query.getBoundsQueryString(),
+			query.getTagsQueryString(),
+			query.getParentsQueryString(),
 			query.getLimit()
 		);
 		Observable<Result<PlacesResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);

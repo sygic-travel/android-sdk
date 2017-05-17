@@ -37,6 +37,9 @@ import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
@@ -56,7 +59,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 	private List<SpreadSizeConfig> sizeConfigs;
 
 	private CategoriesDialog categoriesDialog;
-	private String selectedCategoryKey;
+	private List<String> selectedCateoriesKeys = new ArrayList<>();
 	private String titlePattern;
 
 	private Callback<List<Place>> placesCallback;
@@ -156,28 +159,14 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		);
 
 		Query query = new Query();
-		query.setLevels("poi");
-		query.setCategories(selectedCategoryKey);
-		query.setMapTiles(getQueryQuadkeys(quadkeys));
+		query.setLevels(Collections.singletonList("poi"));
+		query.setCategories(selectedCateoriesKeys);
+		query.setMapTiles(quadkeys);
 		query.setMapSpread(1);
-		query.setBounds(getMapBounds());
-		query.setParents("city:1");
+		query.setBounds(getMapBoundingBox());
+		query.setParents(Collections.singletonList("city:1"));
 		query.setLimit(32);
 		StSDK.getInstance().getPlaces(query, placesCallback);
-	}
-
-	private String getQueryQuadkeys(List<String> quadkeys) {
-		StringBuilder quadkeysString = new StringBuilder();
-		int quadkeysSize = quadkeys.size();
-
-		for(int i = 0; i < quadkeysSize; i++){
-			quadkeysString.append(quadkeys.get(i));
-			if(i < quadkeysSize - 1){
-				quadkeysString.append("%7C");
-			}
-		}
-
-		return quadkeysString.toString();
 	}
 
 	// On category click listener
@@ -185,17 +174,17 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
 			public void onCategoryClick(String categoryKey, String categoryName) {
-				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+				if(selectedCateoriesKeys.contains(categoryKey)){
 					categoriesDialog.dismiss();
 					return;
 				}
 
 				// Set activity's title
 				if(categoryKey.equals("all")){
-					selectedCategoryKey = null;
+					selectedCateoriesKeys.clear();
 					setTitle(getString(R.string.title_activity_maps));
 				} else {
-					selectedCategoryKey = categoryKey;
+					selectedCateoriesKeys.add(categoryKey);
 					setTitle(String.format(titlePattern, categoryName));
 				}
 
@@ -204,21 +193,6 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 				categoriesDialog.dismiss();
 			}
 		};
-	}
-
-	// Returns the String representation of map's bounds so it can be used for the SDK call.
-	// South, west, north, east. Exclusively in this order.
-	private String getMapBounds() {
-		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-		LatLng ne = bounds.northeast;
-		LatLng sw = bounds.southwest;
-
-		// Map bounds are widened for the purposes of this sample. In a real app bounds without
-		// the BOUNDS_OFFSET should be used.
-		return (sw.latitude - BOUNDS_OFFSET) + "," +
-			(sw.longitude - BOUNDS_OFFSET) + "," +
-			(ne.latitude + BOUNDS_OFFSET) + "," +
-			(ne.longitude + BOUNDS_OFFSET);
 	}
 
 	// Returns map's BoundingBox, which contains it's bounds
