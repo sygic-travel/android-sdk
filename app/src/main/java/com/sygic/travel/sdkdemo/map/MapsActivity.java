@@ -27,7 +27,7 @@ import com.sygic.travel.sdk.geo.spread.SpreadResult;
 import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
 import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
 import com.sygic.travel.sdk.geo.spread.Spreader;
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 import com.sygic.travel.sdkdemo.PlaceDetailActivity;
@@ -37,6 +37,8 @@ import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator;
 import com.sygic.travel.sdkdemo.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
@@ -56,7 +58,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 	private List<SpreadSizeConfig> sizeConfigs;
 
 	private CategoriesDialog categoriesDialog;
-	private String selectedCategoryKey;
+	private List<String> selectedCateoriesKeys = new ArrayList<>();
 	private String titlePattern;
 
 	private Callback<List<Place>> placesCallback;
@@ -151,33 +153,19 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 	private void loadPlaces(){
 		// Generate quadkeys from the map's bondings and zoom
 		List<String> quadkeys = QuadkeysGenerator.generateQuadkeys(
-			getMapBoundingBox(),
+			getMapBounds(),
 			(int) map.getCameraPosition().zoom
 		);
 
 		Query query = new Query();
-		query.setLevels("poi");
-		query.setCategories(selectedCategoryKey);
-		query.setMapTiles(getQueryQuadkeys(quadkeys));
+		query.setLevels(Collections.singletonList("poi"));
+		query.setCategories(selectedCateoriesKeys);
+		query.setMapTiles(quadkeys);
 		query.setMapSpread(1);
 		query.setBounds(getMapBounds());
-		query.setParents("city:1");
+		query.setParents(Collections.singletonList("city:1"));
 		query.setLimit(32);
 		StSDK.getInstance().getPlaces(query, placesCallback);
-	}
-
-	private String getQueryQuadkeys(List<String> quadkeys) {
-		StringBuilder quadkeysString = new StringBuilder();
-		int quadkeysSize = quadkeys.size();
-
-		for(int i = 0; i < quadkeysSize; i++){
-			quadkeysString.append(quadkeys.get(i));
-			if(i < quadkeysSize - 1){
-				quadkeysString.append("%7C");
-			}
-		}
-
-		return quadkeysString.toString();
 	}
 
 	// On category click listener
@@ -185,17 +173,17 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		return new CategoriesAdapter.ViewHolder.CategoryClick() {
 			@Override
 			public void onCategoryClick(String categoryKey, String categoryName) {
-				if(selectedCategoryKey != null && selectedCategoryKey.equals(categoryKey)){
+				if(selectedCateoriesKeys.contains(categoryKey)){
 					categoriesDialog.dismiss();
 					return;
 				}
 
 				// Set activity's title
 				if(categoryKey.equals("all")){
-					selectedCategoryKey = null;
+					selectedCateoriesKeys.clear();
 					setTitle(getString(R.string.title_activity_maps));
 				} else {
-					selectedCategoryKey = categoryKey;
+					selectedCateoriesKeys.add(categoryKey);
 					setTitle(String.format(titlePattern, categoryName));
 				}
 
@@ -206,38 +194,23 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		};
 	}
 
-	// Returns the String representation of map's bounds so it can be used for the SDK call.
-	// South, west, north, east. Exclusively in this order.
-	private String getMapBounds() {
-		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-		LatLng ne = bounds.northeast;
-		LatLng sw = bounds.southwest;
+	// Returns map's Bounds
+	private Bounds getMapBounds() {
+		LatLngBounds latLngBounds = map.getProjection().getVisibleRegion().latLngBounds;
+		Bounds bounds = new Bounds();
 
 		// Map bounds are widened for the purposes of this sample. In a real app bounds without
 		// the BOUNDS_OFFSET should be used.
-		return (sw.latitude - BOUNDS_OFFSET) + "," +
-			(sw.longitude - BOUNDS_OFFSET) + "," +
-			(ne.latitude + BOUNDS_OFFSET) + "," +
-			(ne.longitude + BOUNDS_OFFSET);
-	}
+		bounds.setSouth((float) (latLngBounds.southwest.latitude - BOUNDS_OFFSET));
+		bounds.setWest((float) (latLngBounds.southwest.longitude - BOUNDS_OFFSET));
+		bounds.setNorth((float) (latLngBounds.northeast.latitude + BOUNDS_OFFSET));
+		bounds.setEast((float) (latLngBounds.northeast.longitude + BOUNDS_OFFSET));
 
-	// Returns map's BoundingBox, which contains it's bounds
-	private BoundingBox getMapBoundingBox() {
-		LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-		BoundingBox boundingBox = new BoundingBox();
-
-		// Map bounds are widened for the purposes of this sample. In a real app bounds without
-		// the BOUNDS_OFFSET should be used.
-		boundingBox.setSouth((float) (bounds.southwest.latitude - BOUNDS_OFFSET));
-		boundingBox.setWest((float) (bounds.southwest.longitude - BOUNDS_OFFSET));
-		boundingBox.setNorth((float) (bounds.northeast.latitude + BOUNDS_OFFSET));
-		boundingBox.setEast((float) (bounds.northeast.longitude + BOUNDS_OFFSET));
-
-		return boundingBox;
+		return bounds;
 	}
 
 	private void showPlacesOnMap(List<Place> places) {
-		BoundingBox boundingBox = getMapBoundingBox();
+		Bounds bounds = getMapBounds();
 
 		map.clear();
 
@@ -245,7 +218,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		SpreadResult spreadResult = spreader.spreadPlacesOnMap(
 			places,
 			sizeConfigs,
-			boundingBox,
+			bounds,
 			// Ratios are used only for purposes of this sample, no ratios should be used in normal app.
 			new CanvasSize(
 				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),

@@ -80,8 +80,8 @@ public class SearchActivity extends AppCompatActivity {
 	private void loadPlaces(String searchQuery) {
 		Query query = new Query();
 		query.setQuery(searchQuery);
-		query.setLevels("poi");
-		query.setParents("city:1");
+		query.setLevels(Collections.singletonList("poi"));
+		query.setParents(Collections.singletonList("city:1"));
 		query.setLimit(128);
 		StSDK.getInstance().getPlaces(query, getPlacesCallback());
 	}

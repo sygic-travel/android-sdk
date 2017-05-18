@@ -1,13 +1,13 @@
 package com.sygic.travel.sdk.geo.spread;
 
-import com.sygic.travel.sdk.model.geo.BoundingBox;
+import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <p>Outupt of the {@link Spreader#spread(List, List, BoundingBox, CanvasSize) spread algorithm}.</p>
+ * <p>Outupt of the {@link Spreader#spread(List, List, Bounds, CanvasSize) spread algorithm}.</p>
  */
 public class SpreadResult {
 	LinkedList<SpreadedPlace> visiblePlaces;
