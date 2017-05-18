@@ -1,29 +1,32 @@
 package com.sygic.travel.sdk.model.api;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.sygic.travel.sdk.Parser;
 import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.model.place.Place;
+
+import java.lang.reflect.Type;
 
 /**
  * <p>Response containing one detailed place data. Suitable for showing a place detail.</p>
  */
 public class PlaceDetailedResponse extends StResponse {
-	private Data data;
+	private static final String PLACE = "place";
+	private Place place;
+
+	private JsonObject data;
 
 	public Object getData() {
-		return data.getDetail();
-	}
+		if(place == null && data != null) {
+			final String dataJson = data.get(PLACE).toString();
+			final Type placeTypeToken = new TypeToken<Place>(){}.getType();
+			final Type detailTypeToken = new TypeToken<Detail>(){}.getType();
 
-	/**
-	 * Contains one place's detailed data from an API response.
-	 */
-	private class Data {
-		static final String PLACE = "place";
-
-		@SerializedName(PLACE)
-		private Detail detail;
-
-		public Detail getDetail() {
-			return detail;
+			Detail detail = Parser.parseJson(dataJson, detailTypeToken);
+			place = Parser.parseJson(dataJson, placeTypeToken);
+			place.setDetail(detail);
 		}
+		return place;
 	}
 }

@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdk.model.place.TagStats;
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity;
@@ -58,17 +59,19 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 	private void loadPlaceDetail() {
 		// Use the SDK to load detailed information about a place
-		StSDK.getInstance().getPlaceDetailed(id, getDetailCallback());
+		StSDK.getInstance().getPlaceDetailed(id, getPlaceCallback());
 	}
 
-	private void renderPlaceDetail(Detail placeDetail) {
+	private void renderPlaceDetail(Place place) {
+		Detail detail = place.getDetail();
 		String mediaUrlTemplate = "url";
 
-		setTitle(placeDetail.getName());
 
-		if(placeDetail.getMainMedia() != null) {
-			if(placeDetail.getMainMedia().getMedia() != null && placeDetail.getMainMedia().getMedia().size() > 0) {
-				mediaUrlTemplate = placeDetail.getMainMedia().getMedia().get(0).getUrlTemplate();
+		setTitle(place.getName());
+
+		if(detail.getMainMedia() != null) {
+			if(detail.getMainMedia().getMedia() != null && detail.getMainMedia().getMedia().size() > 0) {
+				mediaUrlTemplate = detail.getMainMedia().getMedia().get(0).getUrlTemplate();
 			}
 		}
 
@@ -81,23 +84,23 @@ public class PlaceDetailActivity extends AppCompatActivity {
 		}
 		views.ivPhoto.setOnClickListener(getOnPhotoClickListener());
 
-		views.tvName.setText(placeDetail.getName());
-		views.tvNameSuffix.setText(placeDetail.getNameSuffix());
-		views.tvPerex.setText(placeDetail.getPerex());
-		if(placeDetail.getDescription() != null) {
-			views.tvDescription.setText(placeDetail.getDescription().getText());
+		views.tvName.setText(place.getName());
+		views.tvNameSuffix.setText(place.getNameSuffix());
+		views.tvPerex.setText(place.getPerex());
+		if(detail.getDescription() != null) {
+			views.tvDescription.setText(detail.getDescription().getText());
 		}
-		if(placeDetail.getPrice() != null) {
-			views.tvPrice.setText(String.format(pricePattern, placeDetail.getPrice().getValue()));
+		if(place.getPrice() != null) {
+			views.tvPrice.setText(String.format(pricePattern, place.getPrice().getValue()));
 		}
-		views.tvRating.setText(String.format(ratingPattern, placeDetail.getRating()));
-		views.tvAddress.setText(placeDetail.getAddress());
-		views.tvPhone.setText(placeDetail.getPhone());
-		views.tvEmail.setText(placeDetail.getEmail());
-		views.tvAdmission.setText(placeDetail.getAdmission());
-		views.tvOpeningHours.setText(placeDetail.getOpeningHours());
-		renderTags(placeDetail.getTags());
-		renderReferences(placeDetail.getReferences());
+		views.tvRating.setText(String.format(ratingPattern, place.getRating()));
+		views.tvAddress.setText(detail.getAddress());
+		views.tvPhone.setText(detail.getPhone());
+		views.tvEmail.setText(detail.getEmail());
+		views.tvAdmission.setText(detail.getAdmission());
+		views.tvOpeningHours.setText(detail.getOpeningHours());
+		renderTags(detail.getTags());
+		renderReferences(detail.getReferences());
 	}
 
 	private View.OnClickListener getOnPhotoClickListener() {
@@ -188,12 +191,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
 	}
 
 	// This callback is passed to SDK's method for loading detailed information
-	private Callback<Detail> getDetailCallback(){
-		return new Callback<Detail>() {
+	private Callback<Place> getPlaceCallback(){
+		return new Callback<Place>() {
 			@Override
-			public void onSuccess(Detail placeDetail) {
+			public void onSuccess(Place placeDetailed) {
 				// if successful, the SDK return specific data, so it can be displayed
-				renderPlaceDetail(placeDetail);
+				renderPlaceDetail(placeDetailed);
 			}
 
 			@Override
