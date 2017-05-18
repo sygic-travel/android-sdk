@@ -1,6 +1,8 @@
 package com.sygic.travel.sdk.model.api;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.sygic.travel.sdk.Parser;
 import com.sygic.travel.sdk.model.place.Place;
 
 import java.util.List;
@@ -10,23 +12,18 @@ import java.util.List;
  * places in a list or spread on a map.</p>
  */
 public class PlacesResponse extends StResponse {
-	private Data data;
+	private static final String PLACES = "places";
+	private List<Place> places;
+
+	private JsonObject data;
 
 	public Object getData() {
-		return data.getPlaces();
-	}
-
-	/**
-	 * Contains multiple places' basic data from an API response.
-	 */
-	private class Data {
-		static final String PLACES = "places";
-
-		@SerializedName(PLACES)
-		private List<Place> places;
-
-		public List<Place> getPlaces() {
-			return places;
+		if(places == null && data != null) {
+			places = Parser.parseJson(
+				data.get(PLACES).toString(),
+				new TypeToken<List<Place>>(){}.getType()
+			);
 		}
+		return places;
 	}
 }
