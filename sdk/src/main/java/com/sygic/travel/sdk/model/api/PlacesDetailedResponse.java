@@ -1,8 +1,13 @@
 package com.sygic.travel.sdk.model.api;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.sygic.travel.sdk.Parser;
 import com.sygic.travel.sdk.model.place.Detail;
+import com.sygic.travel.sdk.model.place.Place;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -10,23 +15,25 @@ import java.util.List;
  * synchronization.</p>
  */
 public class PlacesDetailedResponse extends StResponse {
-	private Data data;
+	private static final String PLACE = "place";
+	private List<Place> places;
+
+	private JsonObject data;
 
 	public Object getData() {
-		return data.getPlaces();
-	}
+		if(places == null && data != null) {
+			final String dataJson = data.get(PLACE).toString();
+			final Type placesTypeToken = new TypeToken<List<Place>>(){}.getType();
+			final Type detailsTypeToken = new TypeToken<List<Detail>>(){}.getType();
 
-	/**
-	 * Contains multiple detailed places' data from an API response.
-	 */
-	private class Data {
-		static final String PLACES = "places";
+			List<Detail> details = Parser.parseJson(dataJson, detailsTypeToken);
+			places = Parser.parseJson(dataJson, placesTypeToken);
 
-		@SerializedName(PLACES)
-		private List<Detail> places;
-
-		public List<Detail> getPlaces() {
-			return places;
+			int placesSize = places.size();
+			for(int i = 0; i < placesSize; i++) {
+				places.get(i).setDetail(details.get(i));
+			}
 		}
+		return places;
 	}
 }
