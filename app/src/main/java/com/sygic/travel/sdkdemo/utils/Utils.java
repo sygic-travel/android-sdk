@@ -22,11 +22,6 @@ import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.SMALL;
 public class Utils {
 	public static final String PHOTO_SIZE_PLACEHOLDER = "{size}";
 
-	private static final float MIN_RATING_TIER_1 = 0.3f;
-	private static final float MIN_RATING_TIER_2 = 0.013f;
-	private static final float MIN_RATING_TIER_3 = 0.001f;
-	private static final float MIN_RATING_TIER_4 = 0f;
-
 	public static boolean isLandscape(Resources resources){
 		return resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
@@ -58,22 +53,22 @@ public class Utils {
 		sizeConfigs.add(new SpreadSizeConfig(
 			resources.getDimensionPixelSize(R.dimen.marker_radius_popular),
 			resources.getDimensionPixelSize(R.dimen.marker_margin_popular),
-			POPULAR, false, MIN_RATING_TIER_1
+			POPULAR, false, 0.3f
 		));
 		sizeConfigs.add(new SpreadSizeConfig(
 			resources.getDimensionPixelSize(R.dimen.marker_radius_big),
 			resources.getDimensionPixelSize(R.dimen.marker_margin_big),
-			BIG, false, MIN_RATING_TIER_2
+			BIG, false, 0.013f
 		));
 		sizeConfigs.add(new SpreadSizeConfig(
 			resources.getDimensionPixelSize(R.dimen.marker_radius_medium),
 			resources.getDimensionPixelSize(R.dimen.marker_margin_medium),
-			MEDIUM, false, MIN_RATING_TIER_3
+			MEDIUM, false, 0.001f
 		));
 		sizeConfigs.add(new SpreadSizeConfig(
 			resources.getDimensionPixelSize(R.dimen.marker_radius_small),
 			resources.getDimensionPixelSize(R.dimen.marker_margin_small),
-			SMALL, false, MIN_RATING_TIER_4
+			SMALL, false, 0f
 		));
 		return sizeConfigs;
 	}
