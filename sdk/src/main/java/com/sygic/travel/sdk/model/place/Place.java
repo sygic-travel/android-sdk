@@ -71,6 +71,8 @@ public class Place {
 	@SerializedName(PARENT_IDS)
 	private List<String> parentIds;
 
+	private Detail detail;
+
 	public Place(){
 	}
 
@@ -192,6 +194,14 @@ public class Place {
 
 	public void setParentIds(List<String> parentIds) {
 		this.parentIds = parentIds;
+	}
+
+	public Detail getDetail() {
+		return detail;
+	}
+
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 
 	public boolean hasLocation(){

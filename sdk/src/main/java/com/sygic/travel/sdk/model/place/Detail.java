@@ -6,9 +6,9 @@ import com.sygic.travel.sdk.model.media.MainMedia;
 import java.util.List;
 
 /**
- * <p>Place detailed information, extends {@link Place}.</p>
+ * <p>Place detailed information.</p>
  */
-public class Detail extends Place {
+public class Detail {
 	private static final String TAGS = "tags";
 	private static final String DESCRIPTION = "description";
 	private static final String ADDRESS = "address";

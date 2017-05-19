@@ -86,7 +86,7 @@ public class StSDK {
 	 * @param back Callback. Either {@link Callback#onSuccess(Object)} with places is called, or
 	 *             {@link Callback#onFailure(Throwable)} in case of an error is called.
 	 */
-	public void getPlaceDetailed(String id, Callback<Detail> back){
+	public void getPlaceDetailed(String id, Callback<Place> back){
 		Observable<Result<PlaceDetailedResponse>> unpreparedObservable = getStApi().getPlaceDetailed(id);
 		Observable<Result<PlaceDetailedResponse>> preparedObservable = getPreparedObservable(unpreparedObservable);
 		subscription = preparedObservable.subscribe(new StObserver<PlaceDetailedResponse>(back, false));
