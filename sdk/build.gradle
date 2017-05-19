@@ -1,9 +1,28 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 
-group = "com.sygic.travel"
-archivesBaseName = "android-sdk"
-version = "1.0.0-alpha"
+ext {
+	stRepo = 'maven'
+	stGroupId = 'com.sygic.travel'
+	stArtifactId = 'sdk'
+	stVersion = '0.2.0'
+	stUserOrg = 'sygic-travel'
+	stPackaging = 'aar'
+
+	stName = 'Sygic Travel Android SDK'
+	stDescription = 'Development version of Sygic Travel Android SDK.'
+
+	stWebsiteUrl = 'https://github.com/sygic-travel/android-sdk'
+	stIssueTrackerUrl = 'https://github.com/sygic-travel/android-sdk/issues'
+	stVcsUrl = 'git@github.com:sygic-travel/android-sdk.git'
+
+	stDevId = 'misomurin'
+	stDevName = 'Michal Murín'
+	stDevEmail = 'michal.murin@sygictravel.com'
+
+	stLicense = 'Apache-2.0'
+	stLicenseName = 'The Apache Software License, Version 2.0'
+	stLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+}
 
 android {
 	compileSdkVersion 25
@@ -13,7 +32,7 @@ android {
 		minSdkVersion 15
 		targetSdkVersion 25
 		versionCode 1
-		versionName "1.0"
+		versionName "0.2.0"
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 	}
 
@@ -47,33 +66,5 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 }
 
-uploadArchives {
-	repositories {
-		mavenDeployer {
-			repository(url: 'file://' + new File(System.getProperty('user.home'),'LocalRepository').absolutePath) { }
-			snapshotRepository(url: 'file://' + new File(System.getProperty('user.home'),'LocalRepository/snapshots').absolutePath) { }
-
-			pom.project {
-				name 'android-sdk-release'
-				packaging 'aar'
-				description 'Android SDK for travel data'
-				url 'https://github.com/sygic-travel/android-sdk'
-
-				licenses {
-					license {
-						name 'The Apache Software License, Version 2.0'
-						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-					}
-				}
-
-				developers {
-					developer {
-						id 'MisoMurin'
-						name 'Michal Murín'
-						email 'michal.murin@sygictravel.com'
-					}
-				}
-			}
-		}
-	}
-}
+apply from: 'maven.gradle'
+apply from: 'bintray.gradle'
