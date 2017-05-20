@@ -10,7 +10,6 @@ import com.sygic.travel.sdk.model.api.MediaResponse;
 import com.sygic.travel.sdk.model.api.PlaceDetailedResponse;
 import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.media.Medium;
-import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -146,7 +145,7 @@ public class StSDK {
 	 * <p>Initialization of the SDK.</p>
 	 */
 	public static void initialize(String xApiKey, Context context) {
-		StApiGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
+		StApiGenerator.headersInterceptor.updateXApiKey(xApiKey);
 		StSDK.getInstance().setCacheDir(context.getCacheDir());
 	}
 

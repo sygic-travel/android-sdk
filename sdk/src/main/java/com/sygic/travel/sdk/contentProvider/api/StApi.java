@@ -7,12 +7,9 @@ import com.sygic.travel.sdk.model.api.PlacesDetailedResponse;
 
 import retrofit2.adapter.rxjava.Result;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-
-import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.CONTENT_TYPE_JSON;
 
 /**
  * <p>Contains available API requests.</p>
@@ -24,7 +21,6 @@ public interface StApi {
 	/*                                     GET                                     */
 	/*-----------------------------------------------------------------------------*/
 
-	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/list")
 	Observable<Result<PlacesResponse>> getPlaces(
 		@Query("query") String query,
@@ -38,19 +34,16 @@ public interface StApi {
 		@Query("limit") Integer limit
 	);
 
-	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{id}")
 	Observable<Result<PlaceDetailedResponse>> getPlaceDetailed(
 		@Path("id") String id
 	);
 
-	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{ids}")
 	Observable<Result<PlacesDetailedResponse>> getPlacesDetailed(
 		@Path(encoded = true, value = "ids") String ids
 	);
 
-	@Headers(CONTENT_TYPE_JSON)
 	@GET("places/{id}/media")
 	Observable<Result<MediaResponse>> getPlaceMedia(
 		@Path("id") String id

@@ -6,12 +6,12 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * <p>Implements {@link okhttp3.Interceptor}, adds API key to requests.</p>
- */
-public class AuthorizationInterceptor implements Interceptor {
-	private static final String X_API_KEY = "x-api-key";
+import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.*;
 
+/**
+ * <p>Implements {@link okhttp3.Interceptor}, adds headers to a requests.</p>
+ */
+public class HeadersInterceptor implements Interceptor {
 	private String xApiKey;
 
 	/**
@@ -28,14 +28,11 @@ public class AuthorizationInterceptor implements Interceptor {
 	@Override
 	public Response intercept(Chain chain) throws IOException {
 		Request original = chain.request();
-		if(xApiKey != null && !xApiKey.equals("")) {
-			Request request = original.newBuilder()
-				.addHeader(X_API_KEY, xApiKey)
-				.method(original.method(), original.body())
-				.build();
-			return chain.proceed(request);
-		} else {
-			return chain.proceed(original);
-		}
+		Request request = original.newBuilder()
+			.addHeader(H_NAME_CONTENT_TYPE, H_VALUE_CONTENT_TYPE)
+			.addHeader(H_NAME_API_KEY, xApiKey)
+			.method(original.method(), original.body())
+			.build();
+		return chain.proceed(request);
 	}
 }
