@@ -11,6 +11,8 @@ public class StApiConstants {
 	public static final String H_NAME_CONTENT_TYPE = "Content-Type";
 	public static final String H_VALUE_CONTENT_TYPE = "application/json";
 
+	public static final String H_NAME_USER_AGENT = "User-Agent";
+
 	// BASE URL
 	static String API_BASE_URL = "https://api.sygictravelapi.com/";
 	public static String API_VERSION = "0.2";
