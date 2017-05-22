@@ -11,7 +11,7 @@ import com.sygic.travel.sdkdemo.map.MapsActivity;
 import com.sygic.travel.sdkdemo.search.SearchActivity;
 
 public class DemoMainActivity extends AppCompatActivity {
-	public static final String API_KEY = "qBei674Bdt5lk2rTkphqP1jiXC7M96HR26BFNSGw";
+	public static final String API_KEY = "your-api-key";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
