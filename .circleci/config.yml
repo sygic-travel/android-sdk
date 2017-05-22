@@ -15,11 +15,6 @@ jobs:
             rm -rf app/build
             rm -rf sdk/build
       - run:
-          name: Setup App Environment
-          command: |
-            sed -i 's/public static final boolean debug = true;/public static final boolean debug = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
-            sed -i 's/public static final boolean alpha = true;/public static final boolean alpha = false;/g' sdk/src/main/java/com/sygic/travel/sdk/StEnvironment.java
-      - run:
           name: Gradle Build
           command: |
             gradle :sdk:assembleRelease;
