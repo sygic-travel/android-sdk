@@ -21,12 +21,21 @@ android {
 	}
 }
 
+repositories {
+	maven {
+		url  "http://dl.bintray.com/sygic-travel/maven"
+	}
+}
+
 dependencies {
 	// local lib files
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	// SDK
-	compile project(":sdk")
+//	compile project(":sdk")
+	compile ('com.sygic.travel:sdk:0.2.0@aar'){
+		transitive=true;
+	}
 
 	// google
 	compile 'com.google.android.gms:play-services-location:10.2.1'

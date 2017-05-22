@@ -1,0 +1,61 @@
+apply plugin: 'com.jfrog.bintray'
+
+version = stVersion
+
+if (project.hasProperty("android")) { // Android libraries
+	task sourcesJar(type: Jar) {
+		classifier = 'sources'
+		from android.sourceSets.main.java.srcDirs
+	}
+
+	task javadoc(type: Javadoc) {
+		source = android.sourceSets.main.java.srcDirs
+		classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+	}
+} else { // Java libraries
+	task sourcesJar(type: Jar, dependsOn: classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+tasks.withType(Javadoc) {
+	options.addStringOption('Xdoclint:none', '-quiet')
+	options.addStringOption('encoding', 'UTF-8')
+	options.addStringOption('charSet', 'UTF-8')
+}
+
+artifacts {
+	archives javadocJar
+	archives sourcesJar
+}
+
+bintray {
+	user = stDevId
+	key = 'bintray-api-key'
+	configurations = ['archives']
+
+	pkg {
+		repo = stRepo
+		name = stArtifactId
+		userOrg = stUserOrg
+
+		desc = stDescription
+		websiteUrl = stWebsiteUrl
+		issueTrackerUrl = stIssueTrackerUrl
+		vcsUrl = stVcsUrl
+		licenses = [stLicense]
+		labels = [stPackaging, 'android']
+
+		version {
+			name = stVersion
+			desc = stDescription
+			released  = new Date()
+		}
+	}
+}
