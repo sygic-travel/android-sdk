@@ -1,6 +1,10 @@
 package com.sygic.travel.sdk;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.contentProvider.api.StApi;
@@ -10,7 +14,6 @@ import com.sygic.travel.sdk.model.api.MediaResponse;
 import com.sygic.travel.sdk.model.api.PlaceDetailedResponse;
 import com.sygic.travel.sdk.model.api.PlacesResponse;
 import com.sygic.travel.sdk.model.media.Medium;
-import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
 
@@ -34,6 +37,8 @@ public class StSDK {
 	 -------------------------------------------*/
 
 	private static final String TAG = StSDK.class.getSimpleName();
+	private static final String ST_SDK_NAME_AND_VERSION = "sygic-travel-sdk-android/sdk-version";
+	private static final String ANDROID_VERSION = "Android/" + Build.VERSION.RELEASE;
 
 	/*-------------------------------------------
 	    		PUBLIC MEMBERS & METHODS
@@ -146,8 +151,29 @@ public class StSDK {
 	 * <p>Initialization of the SDK.</p>
 	 */
 	public static void initialize(String xApiKey, Context context) {
-		StApiGenerator.authorizationInterceptor.updateXApiKey(xApiKey);
+		StApiGenerator.headersInterceptor.setApiKey(xApiKey);
+		StApiGenerator.headersInterceptor.setUserAgent(createUserAgent(context));
 		StSDK.getInstance().setCacheDir(context.getCacheDir());
+	}
+
+	/**
+	 * @return UserAgent to be sent as a header in every request.
+	 */
+	private static String createUserAgent(Context context) {
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+		} catch(PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String userAgent = "";
+		userAgent += context.getPackageName() + "/";
+		userAgent += packageInfo != null ? packageInfo.versionName + " " : "";
+		userAgent += ST_SDK_NAME_AND_VERSION + " ";
+		userAgent += ANDROID_VERSION;
+
+		return userAgent;
 	}
 
 	/**

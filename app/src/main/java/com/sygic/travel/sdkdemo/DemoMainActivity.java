@@ -10,18 +10,17 @@ import com.sygic.travel.sdkdemo.list.PlacesListActivity;
 import com.sygic.travel.sdkdemo.map.MapsActivity;
 import com.sygic.travel.sdkdemo.search.SearchActivity;
 
-import static com.sygic.travel.sdk.contentProvider.api.StApiConstants.USER_X_API_KEY;
-
 public class DemoMainActivity extends AppCompatActivity {
+	public static final String API_KEY = "qBei674Bdt5lk2rTkphqP1jiXC7M96HR26BFNSGw";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo_main);
 
-		// Sygic Travel SDK initializaton. Must be called on the application start. You can initialize the SDK
+		// Sygic Travel SDK initialization. Must be called on the application start. You can initialize the SDK
 		// in your Application class' onCreate() method.
-		StSDK.initialize(USER_X_API_KEY, this);
+		StSDK.initialize(API_KEY, this);
 		initUI();
 	}
 
