@@ -7,8 +7,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Replace Versions
-          command: echo "SKD versioning"
+          name: Set SDK Version
+          command: |
+            sed -i "s/\(.*\)\[sdk\-version\]\(.\)/\1${ANDROID_SDK_VERSION}\2/g" sdk/build.gradle
+      - run:
+          name: Set Log Level
+          command: |
+            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/contentProvider/api/StApiGenerator.java
+      - run:
+          name: Set Bintray API Key
+          command: |
+            sed -i 's/\(.\)\[bintray\-api\-key\]\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
       - run:
           name: Cleanup
           command: |

@@ -37,7 +37,7 @@ artifacts {
 
 bintray {
 	user = stDevId
-	key = 'bintray-api-key'
+	key = stBintrayApiKey
 	configurations = ['archives']
 
 	pkg {
