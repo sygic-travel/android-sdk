@@ -12,12 +12,11 @@ jobs:
       - run:
           name: Cleanup
           command: |
-            rm -rf app/build
-            rm -rf sdk/build
+            gradle clean
       - run:
           name: Gradle Build
           command: |
-            gradle :sdk:assembleRelease;
+            gradle :sdk:install
       - run:
           name: Generate Documentation
           command: |

@@ -13,7 +13,7 @@ import rx.Observable;
 
 /**
  * <p>Contains available API requests.</p>
- * @see <a href="http://alpha-docs.sygictravelapi.com/0.1">API Documentation</a>
+ * @see <a href="http://docs.sygictravelapi.com/0.2">API Documentation</a>
  */
 public interface StApi {
 
