@@ -4,7 +4,7 @@ ext {
 	stRepo = 'maven'
 	stGroupId = 'com.sygic.travel'
 	stArtifactId = 'sdk'
-	stVersion = '[sdk-version]'
+	stVersion = 'dev-master'
 	stUserOrg = 'sygic-travel'
 	stPackaging = 'aar'
 
@@ -18,7 +18,7 @@ ext {
 	stDevId = 'misomurin'
 	stDevName = 'Michal Murín'
 	stDevEmail = 'michal.murin@sygictravel.com'
-	stBintrayApiKey = '[bintray-api-key]'
+	stBintrayApiKey = 'bintray-api-key'
 
 	stLicense = 'Apache-2.0'
 	stLicenseName = 'The Apache Software License, Version 2.0'

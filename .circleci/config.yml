@@ -9,7 +9,9 @@ jobs:
       - run:
           name: Set SDK Version
           command: |
-            sed -i "s/\(.*\)\[sdk\-version\]\(.\)/\1${ANDROID_SDK_VERSION}\2/g" sdk/build.gradle
+            if [[ ! -z $CIRCLE_TAG ]]; then
+              sed -i 's/\(.*\)dev\-master\(.\)/\1'"$CIRCLE_TAG"'\2/g' sdk/build.gradle
+            fi
       - run:
           name: Set Log Level
           command: |
@@ -17,31 +19,52 @@ jobs:
       - run:
           name: Set Bintray API Key
           command: |
-            sed -i 's/\(.\)\[bintray\-api\-key\]\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
+            sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
       - run:
-          name: Cleanup
+          name: Set Bintray Override flag
           command: |
-            gradle clean
+            if [[ ! -z $CIRCLE_TAG ]]; then
+              sed -i "s/\(override \= \)true/\1false/g" sdk/bintray.gradle
+            fi
       - run:
-          name: Gradle Build
+          name: Install SDK to Maven Repository
           command: |
+            gradle :sdk:clean
             gradle :sdk:install
+      - run:
+          name: Upload SDK to Bintray
+          command: |
+            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
+              gradle :sdk:bintray
+            fi
       - run:
           name: Generate Documentation
           command: |
-            if [ $CIRCLE_BRANCH = "master" ]; then
+            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
+              PATTERN="\(.*\)\(-- ========= END OF TOP NAVBAR ========= --\)\(.*\)"
+              DIV_START="<div class=\"contentContainer\">"
+              GITHUB='<p>For quick \"Getting started\" see our <a href=\"https:\/\/github\.com\/sygic-travel\/android-sdk\/\" target=\"\_blank\">Github<\/a>\.<\/p>'
+              WARNING="<p>This is a documentation of the <b>dev\-master<\/b> version which contains the newest features, but please note that this version is under development and we do not guarantee it\'s stability\.<\/p>"
+              DIV_END="<\/div>"
+
               javadoc -d ../doc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
-              sed -i 's|\(<\!-- ========= END OF TOP NAVBAR ========= -->\)|\1\n<div class=\"contentContainer\"><p>For quick \"Getting started\" see our <a href=\"https:\/\/github\.com\/sygic-travel\/android-sdk\/\" target=\"\_blank\">Github<\/a>\.<\/p><\/div>|' ../doc/overview-summary.html
+
+              if [[ ! -z $CIRCLE_TAG ]]; then
+                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$DIV_END"'/' ../doc/overview-summary.html
+              else
+                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$WARNING\n$DIV_END"'/' ../doc/overview-summary.html
+              fi
             fi
       - run:
           name: Upload Documentation
           command: |
-            if [ $CIRCLE_BRANCH = "master" ]; then
-              aws s3 sync ../doc s3://docs.sygictravelapi.com/android-sdk/master --delete --acl public-read
+            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
+              DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/master"
+              if [[ ! -z $CIRCLE_TAG ]]; then
+                DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/$CIRCLE_TAG"
+              fi
+              aws s3 sync ../doc $DOC_PATH --delete --acl public-read
             fi
-      - store_artifacts:
-          path: sdk/build/outputs/aar/sdk-release.aar
-          destination: st-android-sdk.aar
 deployment:
   fake_deploy_for_cci2:
     tag: /.*/
