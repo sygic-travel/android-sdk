@@ -7,7 +7,7 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 
 ## Requirements
 
-- Android SDK 7.1.1 (Nougat, API level 25)
+- Android SDK 7.1.1 platform (Nougat, API level 25)
 - Build tools 25.0.3
 - _API key_ for your business or project
 
@@ -17,13 +17,13 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 - Minimal supported Android SDK version is *Ice Cream Sandwich 4.0.3 (API level 15)*
 
 ## Installation
-1. Add the internet permission to your `AndroidManifest.xml` file:
+- Add the internet permission to your `AndroidManifest.xml` file:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-2. Add repository to your project `build.gradle` file:
-```groovy
+- Add repository to your project `build.gradle` file:
+```gradle
 repositories {
 	maven {
 		url  "http://dl.bintray.com/sygic-travel/maven"
@@ -31,10 +31,10 @@ repositories {
 }
 ```
 
-3. Add dependency to your application module `build.gradle` file:
+- Add dependency to your application module `build.gradle` file:
 
-```groovy
-dependencies{
+```gradle
+dependencies {
 	compile ('com.sygic.travel:sdk:version@aar'){
 		transitive=true;
 	}
@@ -66,11 +66,11 @@ Let's define a set of Places we want:
 - only the _Top 10_ of them
 
 ```java	
-// Create query to get Top 10 sightseeings in London
+// Create query to get top 10 sightseeings in London
 Query query = new Query();
-query.setParents("city:1");
-query.setLevel("poi");
-query.setCategories("sightseeing");
+query.setLevels(Collections.singletonList("poi"));
+query.setCategories(Collections.singletonList("sightseeing"));
+query.setParents(Collections.singletonList("city:1"));
 query.setLimit(10);
 	
 // Create Callback
