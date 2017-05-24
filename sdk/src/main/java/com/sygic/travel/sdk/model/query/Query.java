@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>Query contains values for an API request. </p>
- * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+ * @see <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>
  */
 public class Query {
 	private String query;
@@ -46,7 +46,7 @@ public class Query {
 
 	/**
 	 * Query contains values for an API request.
-	 * @see <a href="http://alpha-docs.sygictravelapi.com/0.1/#endpoint-get-places">API Documentation</a>
+	 * @see <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>
 	 */
 	public Query(
 		String query,

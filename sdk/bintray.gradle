@@ -37,8 +37,11 @@ artifacts {
 
 bintray {
 	user = stDevId
-	key = 'bintray-api-key'
+	key = stBintrayApiKey
+
 	configurations = ['archives']
+	publish = true
+	override = true
 
 	pkg {
 		repo = stRepo
@@ -56,6 +59,7 @@ bintray {
 			name = stVersion
 			desc = stDescription
 			released  = new Date()
+			vcsTag = stVersion
 		}
 	}
 }
