@@ -17,7 +17,30 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 - Minimal supported Android SDK version is *Ice Cream Sandwich 4.0.3 (API level 15)*
 
 ## Installation
-TODO
+1. Add the internet permission to your `AndroidManifest.xml` file:
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
+2. Add repository to your project `build.gradle` file:
+```groovy
+repositories {
+	maven {
+		url  "http://dl.bintray.com/sygic-travel/maven"
+	}
+}
+```
+
+3. Add dependency to your application module `build.gradle` file:
+
+```groovy
+dependencies{
+	compile ('com.sygic.travel:sdk:version@aar'){
+		transitive=true;
+	}
+}
+```
+Note that `transitive` is set to `true` - this is neccessary since the library has it's own dependencies.
 
 ## Initialization
 
