@@ -1,4 +1,4 @@
-package com.sygic.travel.sdkdemo;
+package com.sygic.travel.sdkdemo.detail;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -19,6 +19,7 @@ import com.sygic.travel.sdk.model.place.Detail;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.place.Reference;
 import com.sygic.travel.sdk.model.place.TagStats;
+import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity;
 import com.sygic.travel.sdkdemo.utils.Utils;
 

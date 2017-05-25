@@ -22,7 +22,7 @@
         -->
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="@string/google_maps_key"/>
+			android:value="your_google_maps_api_key"/>
 
 		<activity
 			android:name=".DemoMainActivity"
@@ -45,7 +45,7 @@
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
-			android:name=".PlaceDetailActivity"
+			android:name=".detail.PlaceDetailActivity"
 			android:label="@string/title_activity_place_detail"
 			android:screenOrientation="portrait">
 		</activity>
@@ -65,7 +65,7 @@
 				android:value="com.sygic.travel.sdkdemo.gallery.GalleryActivity"/>
 		</activity>
 		<activity
-			android:name=".ReferenceActivity"
+			android:name=".detail.ReferenceActivity"
 			android:screenOrientation="portrait">
 		</activity>
 		<activity

@@ -29,7 +29,7 @@ import com.sygic.travel.sdk.geo.spread.Spreader;
 import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
-import com.sygic.travel.sdkdemo.PlaceDetailActivity;
+import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
