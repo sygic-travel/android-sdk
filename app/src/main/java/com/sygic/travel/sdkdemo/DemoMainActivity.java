@@ -11,8 +11,6 @@ import com.sygic.travel.sdkdemo.map.MapsActivity;
 import com.sygic.travel.sdkdemo.search.SearchActivity;
 
 public class DemoMainActivity extends AppCompatActivity {
-	public static final String API_KEY = "your-api-key";
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,7 +18,7 @@ public class DemoMainActivity extends AppCompatActivity {
 
 		// Sygic Travel SDK initialization. Must be called on the application start. You can initialize the SDK
 		// in your Application class' onCreate() method.
-		StSDK.initialize(API_KEY, this);
+		StSDK.initialize(getString(R.string.demo_api_key), this);
 		initUI();
 	}
 
