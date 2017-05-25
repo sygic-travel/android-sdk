@@ -24,7 +24,6 @@ import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator;
 import com.sygic.travel.sdk.geo.spread.CanvasSize;
 import com.sygic.travel.sdk.geo.spread.SpreadResult;
-import com.sygic.travel.sdk.geo.spread.SpreadSizeConfig;
 import com.sygic.travel.sdk.geo.spread.SpreadedPlace;
 import com.sygic.travel.sdk.geo.spread.Spreader;
 import com.sygic.travel.sdk.model.geo.Bounds;
@@ -39,14 +38,13 @@ import com.sygic.travel.sdkdemo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
 	public static final String ID = "id";
-	private static final double BOUNDS_OFFSET = 0.05;
-
-	private double canvasWidthRatio, canvasHeightRatio;
 
 	private GoogleMap map;
 	private Spreader spreader;
@@ -57,6 +55,9 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 
 	private Callback<List<Place>> placesCallback;
 	private View vMain;
+
+	int mapMovesCounter = 0;
+	private Map<String, Marker> currentMarkers = new HashMap<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,27 +121,37 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 			}
 		});
 
-		calculateCanvasSizeRatios();
+		// Set on camera move listener, so we can load new places
+		map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+			@Override
+			public void onCameraMove() {
+				if(++mapMovesCounter % 15 == 0) {
+					removeOutOfBoundsMarkers();
+					loadPlaces();
+					mapMovesCounter = 0;
+				}
+			}
+		});
+
 		loadPlaces();
 	}
 
-	// This method is used only for the purposes of this sample. No ratios should be used in normal app.
-	private void calculateCanvasSizeRatios() {
-		LatLngBounds originalBounds = map.getProjection().getVisibleRegion().latLngBounds;
-		LatLngBounds offsetBounds = new LatLngBounds(
-			new LatLng(originalBounds.southwest.latitude - BOUNDS_OFFSET, originalBounds.southwest.longitude - BOUNDS_OFFSET),  //sw
-			new LatLng(originalBounds.northeast.latitude + BOUNDS_OFFSET, originalBounds.northeast.longitude + BOUNDS_OFFSET)  //ne
-		);
+	private void removeOutOfBoundsMarkers() {
+		LatLngBounds latLngBounds = map.getProjection().getVisibleRegion().latLngBounds;
+		List<String> toRemove = new ArrayList<>();
 
-		final double dOffLat = offsetBounds.northeast.latitude - offsetBounds.southwest.latitude;
-		final double dOrgLat = originalBounds.northeast.latitude - originalBounds.southwest.latitude;
-		final double dOffLng = Math.max(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude)) -
-			Math.min(Math.abs(offsetBounds.northeast.longitude), Math.abs(offsetBounds.southwest.longitude));
-		final double dOrgLng = Math.max(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude)) -
-			Math.min(Math.abs(originalBounds.northeast.longitude), Math.abs(originalBounds.southwest.longitude));
-		canvasHeightRatio = dOffLat / dOrgLat;
-		canvasWidthRatio = dOffLng / dOrgLng;
+		for(Marker visibleMarker : currentMarkers.values()) {
+			if(!latLngBounds.contains(visibleMarker.getPosition())) {
+				toRemove.add((String) visibleMarker.getTag());
+			}
+		}
+
+		for(String idToRemove : toRemove) {
+			currentMarkers.get(idToRemove).remove();
+			currentMarkers.remove(idToRemove);
+		}
 	}
+
 
 	// Use the SDK to load places
 	private void loadPlaces(){
@@ -194,33 +205,81 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 
 		// Map bounds are widened for the purposes of this sample. In a real app bounds without
 		// the BOUNDS_OFFSET should be used.
-		bounds.setSouth((float) (latLngBounds.southwest.latitude - BOUNDS_OFFSET));
-		bounds.setWest((float) (latLngBounds.southwest.longitude - BOUNDS_OFFSET));
-		bounds.setNorth((float) (latLngBounds.northeast.latitude + BOUNDS_OFFSET));
-		bounds.setEast((float) (latLngBounds.northeast.longitude + BOUNDS_OFFSET));
+		bounds.setSouth((float) (latLngBounds.southwest.latitude));
+		bounds.setWest((float) (latLngBounds.southwest.longitude));
+		bounds.setNorth((float) (latLngBounds.northeast.latitude));
+		bounds.setEast((float) (latLngBounds.northeast.longitude));
 
 		return bounds;
 	}
 
 	private void showPlacesOnMap(List<Place> places) {
-		Bounds bounds = getMapBounds();
-
-		map.clear();
-
 		// Spread loaded places
 		SpreadResult spreadResult = spreader.spreadPlacesOnMap(
 			places,
-			bounds,
-			// Ratios are used only for purposes of this sample, no ratios should be used in normal app.
-			new CanvasSize(
-				(int) (vMain.getMeasuredWidth() * canvasWidthRatio),
-				(int) (vMain.getMeasuredHeight() * canvasHeightRatio)
-			)
+			getMapBounds(),
+			new CanvasSize(vMain.getMeasuredWidth(), vMain.getMeasuredHeight())
 		);
 
+		// Remove markers, which would not be visible with new spread result
+		removeHiddenPlaces(spreadResult);
+
+		// Remove markers which are on map, but no in new spread result
+		removeOldMarkers(spreadResult);
+
+		// Update icons for marker which stay on the map after new spread result
+		updateCurrentMarkers(spreadResult);
+
 		// Create markers for spread places
+		createNewMarkers(spreadResult);
+	}
+
+	private void removeHiddenPlaces(SpreadResult spreadResult) {
+		for(Place hiddenPlace : spreadResult.getHiddenPlaces()) {
+			Marker removedMarker = currentMarkers.remove(hiddenPlace.getId());
+			if(removedMarker != null){
+				removedMarker.remove();
+			}
+		}
+	}
+
+	private void removeOldMarkers(SpreadResult spreadResult) {
+		List<String> toRemove = new ArrayList<>();
+		for(String visibleMarkerId : currentMarkers.keySet()) {
+			boolean shouldRemove = true;
+			for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
+				if(visibleMarkerId.equals(spreadedPlace.getPlace().getId())) {
+					shouldRemove = false;
+					break;
+				}
+			}
+			if(shouldRemove){
+				toRemove.add(visibleMarkerId);
+			}
+		}
+
+		for(String idToRemove : toRemove) {
+			currentMarkers.get(idToRemove).remove();
+			currentMarkers.remove(idToRemove);
+		}
+	}
+
+	private void updateCurrentMarkers(SpreadResult spreadResult) {
+		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
+			Marker visibleMarker = currentMarkers.get(spreadedPlace.getPlace().getId());
+			if(visibleMarker != null) {
+				visibleMarker.setIcon(getMarkerBitmapDescriptor(spreadedPlace));
+			}
+		}
+	}
+
+	private void createNewMarkers(SpreadResult spreadResult) {
 		for(SpreadedPlace spreadedPlace : spreadResult.getVisiblePlaces()) {
 			Place place = spreadedPlace.getPlace();
+			if(currentMarkers.keySet().contains(place.getId())){
+				continue;
+			}
+
 			Marker newMarker = map.addMarker(new MarkerOptions()
 				.position(new LatLng(place.getLocation().getLat(), place.getLocation().getLng()))
 				.title(place.getName())
@@ -228,6 +287,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 				.icon(getMarkerBitmapDescriptor(spreadedPlace))
 			);
 			newMarker.setTag(place.getId());
+			currentMarkers.put(place.getId(), newMarker);
 		}
 	}
 
