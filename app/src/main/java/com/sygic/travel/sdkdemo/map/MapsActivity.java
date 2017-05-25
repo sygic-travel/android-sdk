@@ -43,19 +43,13 @@ import java.util.List;
 
 public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallback {
 	private static final String TAG = "SdkDemoApp-MapActivity";
-
 	public static final String ID = "id";
-
-	public static final float ZOOM_FOR_DETAIL = 18f;
-	public static final float ZOOM_FOR_CITY = 15f;
-	public static final float ZOOM_FOR_COUNTRY = 7f;
 	private static final double BOUNDS_OFFSET = 0.05;
 
 	private double canvasWidthRatio, canvasHeightRatio;
 
 	private GoogleMap map;
 	private Spreader spreader;
-	private List<SpreadSizeConfig> sizeConfigs;
 
 	private CategoriesDialog categoriesDialog;
 	private List<String> selectedCateoriesKeys = new ArrayList<>();
@@ -70,7 +64,7 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		setContentView(R.layout.activity_maps);
 
 		vMain = findViewById(R.id.ll_main);
-		spreader = new Spreader();
+		spreader = new Spreader(getResources());
 		categoriesDialog = new CategoriesDialog(this, getOnCategoriesClick());
 		titlePattern = getString(R.string.title_activity_maps) + " - %s";
 
@@ -109,7 +103,6 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 	public void onMapReady(GoogleMap googleMap) {
 		map = googleMap;
 
-		sizeConfigs = Utils.getSpreadSizeConfigs(getResources());
 		placesCallback = getPlacesCallback();
 
 		// Center map to London
@@ -217,7 +210,6 @@ public class MapsActivity extends AppCompatActivity	implements OnMapReadyCallbac
 		// Spread loaded places
 		SpreadResult spreadResult = spreader.spreadPlacesOnMap(
 			places,
-			sizeConfigs,
 			bounds,
 			// Ratios are used only for purposes of this sample, no ratios should be used in normal app.
 			new CanvasSize(

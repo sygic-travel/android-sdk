@@ -48,31 +48,6 @@ public class Utils {
 		return width + "x" + height;
 	}
 
-	public static List<SpreadSizeConfig> getSpreadSizeConfigs(Resources resources){
-		List<SpreadSizeConfig> sizeConfigs = new ArrayList<>();
-		sizeConfigs.add(new SpreadSizeConfig(
-			resources.getDimensionPixelSize(R.dimen.marker_radius_popular),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_popular),
-			POPULAR, false, 0.3f
-		));
-		sizeConfigs.add(new SpreadSizeConfig(
-			resources.getDimensionPixelSize(R.dimen.marker_radius_big),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_big),
-			BIG, false, 0.013f
-		));
-		sizeConfigs.add(new SpreadSizeConfig(
-			resources.getDimensionPixelSize(R.dimen.marker_radius_medium),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_medium),
-			MEDIUM, false, 0.001f
-		));
-		sizeConfigs.add(new SpreadSizeConfig(
-			resources.getDimensionPixelSize(R.dimen.marker_radius_small),
-			resources.getDimensionPixelSize(R.dimen.marker_margin_small),
-			SMALL, false, 0f
-		));
-		return sizeConfigs;
-	}
-
 	public static float getMarkerHue(String category){
 		switch(category){
 			case "sightseeing":
