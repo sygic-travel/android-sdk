@@ -13,10 +13,20 @@ import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.MEDIUM;
 import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.POPULAR;
 import static com.sygic.travel.sdk.geo.spread.SpreadSizeConfig.SMALL;
 
+/**
+ * SDK's internal generator of sizes configurations for spreading.
+ */
 public class SpreadConfigGenerator {
 	private static final double LN2 = 0.6931471805599453;
 	private static final int GLOBE_SIZE = 256;
 
+	/**
+	 * Creates a list of wanted sizes configurations.
+	 * @param resources Resources needed to get dimensions.
+	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param canvasSize Map canvas (view) size in pixels.
+	 * @return List of wanted sizes configurations.
+	 */
 	static List<SpreadSizeConfig> getSpreadSizeConfigs(
 		Resources resources,
 		Bounds bounds,
@@ -56,6 +66,12 @@ public class SpreadConfigGenerator {
 		return sizeConfigs;
 	}
 
+	/**
+	 * Calculates a zoom level for current bounds and canvas size.
+	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param canvasSize Map canvas (view) size in pixels.
+	 * @return Zoom level for current bounds and canvas size.
+	 */
 	private static int getZoom(Bounds bounds, CanvasSize canvasSize){
 		float angle = bounds.getEast() - bounds.getWest();
 		if (angle < 0) {
