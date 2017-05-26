@@ -20,9 +20,9 @@ ext {
 	stDevEmail = 'michal.murin@sygictravel.com'
 	stBintrayApiKey = 'bintray-api-key'
 
-	stLicense = 'Apache-2.0'
-	stLicenseName = 'The Apache Software License, Version 2.0'
-	stLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	stLicense = 'MIT'
+	stLicenseName = 'The MIT License'
+	stLicenseUrl = 'http://www.opensource.org/licenses/mit-license.php'
 }
 
 android {

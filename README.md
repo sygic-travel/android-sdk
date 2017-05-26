@@ -101,3 +101,6 @@ Class               | Description
 **`Detail`**        | Detailed object including additional `Place` properties, extends `Place`
 **`Medium`**        | Basic `Medium` entity
 **`Reference`**     | External `Reference` link
+
+## License
+This SDK is available under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
