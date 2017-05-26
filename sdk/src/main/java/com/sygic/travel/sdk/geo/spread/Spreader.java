@@ -1,6 +1,8 @@
 package com.sygic.travel.sdk.geo.spread;
 
+import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.Log;
 
 import com.sygic.travel.sdk.model.geo.Bounds;
 import com.sygic.travel.sdk.model.geo.Location;
@@ -13,23 +15,32 @@ import java.util.List;
  * <p>Performs the main spreading algorithm for places.</p>
  */
 public class Spreader {
+	private Resources resources;
+
+	/**
+	 * <p>Performs the main spreading algorithm for places.</p>
+	 * @param resources Resources needed to get markers' dimensions.
+	 */
+	public Spreader(Resources resources) {
+		this.resources = resources;
+	}
 
 	/**
 	 * <p>Generates a list of spread places.</p>
 	 * @param places Places to spread.
-	 * @param sizeConfigs Size configurations available for spreading.
 	 * @param bounds Map bounds withing which the places are supposed to be spread.
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * @return Spread places as {@link SpreadResult}.
 	 */
 	public SpreadResult spreadPlacesOnMap(
 		List<Place> places,
-		List<SpreadSizeConfig> sizeConfigs,
 		Bounds bounds,
 		CanvasSize canvasSize
 	){
 		LinkedList<SpreadedPlace> visiblePlaces = new LinkedList<>();
 		LinkedList<Place> hiddenPlaces = new LinkedList<>();
+
+		List<SpreadSizeConfig> sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize);
 
 		for(Place place : places) {
 			if(!place.hasLocation()){

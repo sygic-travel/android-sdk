@@ -7,11 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <p>Outupt of the {@link Spreader#spread(List, List, Bounds, CanvasSize) spread algorithm}.</p>
+ * <p>Outupt of the {@link Spreader#spreadPlacesOnMap(List, Bounds, CanvasSize)} spread algorithm.</p>
  */
 public class SpreadResult {
-	LinkedList<SpreadedPlace> visiblePlaces;
-	LinkedList<Place> hiddenPlaces;
+	private LinkedList<SpreadedPlace> visiblePlaces;
+	private LinkedList<Place> hiddenPlaces;
 
 	/**
 	 * <p>Outupt of the spread algorithm.</p>

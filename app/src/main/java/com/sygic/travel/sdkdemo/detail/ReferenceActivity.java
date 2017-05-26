@@ -1,4 +1,4 @@
-package com.sygic.travel.sdkdemo;
+package com.sygic.travel.sdkdemo.detail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+
+import com.sygic.travel.sdkdemo.R;
 
 import java.util.ArrayList;
 import java.util.List;

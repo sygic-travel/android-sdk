@@ -14,7 +14,7 @@ import com.sygic.travel.sdk.StSDK;
 import com.sygic.travel.sdk.contentProvider.api.Callback;
 import com.sygic.travel.sdk.model.place.Place;
 import com.sygic.travel.sdk.model.query.Query;
-import com.sygic.travel.sdkdemo.PlaceDetailActivity;
+import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity;
 import com.sygic.travel.sdkdemo.R;
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter;
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog;
