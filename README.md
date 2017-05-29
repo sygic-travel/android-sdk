@@ -90,6 +90,18 @@ Callback<List<Place>> placesCallback = new Callback<List<Place>>() {
 StSDK.getInstance().getPlaces(query, placesCallback);
 ```
 
+Since the SDK uses RxAndroid it is important to unsubscribe an observable, when an activity comes 
+to background:
+```java
+@Override
+protected void onPause() {
+	super.onPause();
+
+	// Observables need to be unsubscribed, when the activity comes to background
+	StSDK.getInstance().unsubscribeObservable();
+}
+```
+
 ## Basic Classes
 
 Class               | Description
