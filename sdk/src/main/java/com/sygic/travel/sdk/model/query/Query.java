@@ -7,8 +7,9 @@ import com.sygic.travel.sdk.model.geo.Bounds;
 import java.util.List;
 
 /**
- * <p>Query contains values for an API request. </p>
- * @see <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>
+ * <p>Query contains values which define the places to be fetched. </br>
+ * To see what the parameters mean check the
+ * <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>.</p>
  */
 public class Query {
 	private String query;
@@ -45,8 +46,9 @@ public class Query {
 	public Query(){}
 
 	/**
-	 * Query contains values for an API request.
-	 * @see <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>
+	 * <p>Query contains values which define the places to be fetched. </br>
+	 * To see what the parameters mean check the
+	 * <a href="http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list">API Documentation</a>.</p>
 	 */
 	public Query(
 		String query,
