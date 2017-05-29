@@ -17,7 +17,7 @@ public class HeadersInterceptor implements Interceptor {
 
 	/**
 	 * <p>Sets API key</p>
-	 * @param apiKey API keyto be sent as a header in every request.
+	 * @param apiKey API key to be sent as a header in every request.
 	 */
 	public void setApiKey(String apiKey){
 		this.apiKey = apiKey;
