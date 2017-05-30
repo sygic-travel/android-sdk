@@ -36,7 +36,7 @@ repositories {
 Add dependency to your application module `build.gradle` file:
 ```gradle
 dependencies {
-	compile ('com.sygic.travel:sdk:0.2.0@aar'){
+	compile ('com.sygic.travel:sdk:0.2.0-beta@aar'){
 		transitive=true;
 	}
 }
@@ -69,7 +69,7 @@ To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 ## Usage Introduction
 
 This example shows how to use the SDK to fetch a representative set of data. To define a set of places
-you need to create a [Query](http://docs.sygictravelapi.com/android-sdk/0.2.0/com/sygic/travel/sdk/model/query/Query.html)
+you need to create a [Query](http://docs.sygictravelapi.com/android-sdk/0.2.0-beta/com/sygic/travel/sdk/model/query/Query.html)
 which describes the places which will be fetched - see
 [API documentation](http://docs.sygictravelapi.com/0.2/#section-places).
 
@@ -118,7 +118,7 @@ protected void onPause() {
 ```
 
 ## Basic Classes
-For more details check our [documentation](http://docs.sygictravelapi.com/android-sdk/0.2.0).
+For more details check our [documentation](http://docs.sygictravelapi.com/android-sdk/0.2.0-beta).
 
 Class               | Description
 :-------------------|:---------------------
