@@ -1,7 +1,8 @@
 # Sygic Travel Android SDK
 
 
-Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your application. It gives you an access to millions of Places covering the whole world.
+Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
+application. It gives you an access to millions of places covering the whole world.
 
 For further details see [Full SDK documentation](http://docs.sygictravelapi.com/android-sdk/master).
 
@@ -22,7 +23,7 @@ Add the internet permission to your `AndroidManifest.xml` file:
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-###Gradle
+### Gradle
 Add repository to your project `build.gradle` file:
 ```gradle
 repositories {
@@ -40,9 +41,9 @@ dependencies {
 	}
 }
 ```
-Note that `transitive` is set to `true` - this is neccessary since the library has it's own dependencies.
+Note that `transitive` is set to `true` - this is necessary since the library has it's own dependencies.
 
-###Download from Github
+### Download from Github
 Download zipped project from our [Github](https://github.com/sygic-travel/android-sdk). The project's
 `sdk` directory can be added to your own project as a new module. Then add dependency to your 
 application module `build.gradle` file:
@@ -59,7 +60,7 @@ dependencies {
 ```java
 // initialize SDK - in onCreate() method of your Application class or a launcher Activity
 // Insert real API key instead of YOUR_API_KEY in the line below. The API key can be
-// defined in the strings.xml resorce file.
+// defined in the strings.xml resource file.
 
 StSDK.initialize("YOUR_API_KEY", context);
 ```
@@ -67,12 +68,12 @@ To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 
 ## Usage Introduction
 
-This example shows how to use the SDK to fetch a representative set of data. To define set of places
+This example shows how to use the SDK to fetch a representative set of data. To define a set of places
 you need to create a [Query](http://docs.sygictravelapi.com/android-sdk/0.2.0/com/sygic/travel/sdk/model/query/Query.html)
 which describes the places which will be fetched - see
 [API documentation](http://docs.sygictravelapi.com/0.2/#section-places).
 
-Let's define a set of Places we want:
+Let's define a set of places we want:
 
 - placed in _London_
 - marked as _Points of interest_
