@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Set Log Level
           command: |
-            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/contentProvider/api/StApiGenerator.java
+            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/contentProvider/api/StApiGenerator.kt
       - run:
           name: Set Bintray API Key
           command: |

@@ -38,3 +38,6 @@ captures/
 
 # Keystore files
 *.jks
+
+# Ignored strings
+sdk/src/main/res/values/strings-non-vcs.xml
