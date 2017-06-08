@@ -70,4 +70,5 @@ dependencies {
 }
 
 apply from: 'maven.gradle'
+apply from: 'dokka.gradle'
 apply from: 'bintray.gradle'
