@@ -7,36 +7,25 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Set SDK Version
+          name: Modify files
           command: |
             if [[ ! -z $CIRCLE_TAG ]]; then
+              echo "Set Version"
               sed -i 's/\(.*\)dev\-master\(.\)/\1'"$CIRCLE_TAG"'\2/g' sdk/build.gradle
-            fi
-      - run:
-          name: Set Log Level
-          command: |
-            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/contentProvider/api/StApiGenerator.kt
-      - run:
-          name: Set Bintray API Key
-          command: |
-            sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
-      - run:
-          name: Set Bintray Override flag
-          command: |
-            if [[ ! -z $CIRCLE_TAG ]]; then
+
+              echo "Set Bintray Override flag"
               sed -i "s/\(override \= \)true/\1false/g" sdk/bintray.gradle
             fi
+
+            echo "Set Bintray API Key"
+            sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
+
+            echo "Disable OkHttp Logging"
+            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/contentProvider/api/StApiGenerator.kt
       - run:
-          name: Install SDK to Maven Repository
+          name: Clean
           command: |
             gradle :sdk:clean
-            gradle :sdk:install
-      - run:
-          name: Upload SDK to Bintray
-          command: |
-            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
-              gradle :sdk:bintray
-            fi
       - run:
           name: Generate Documentation
           command: |
@@ -47,7 +36,7 @@ jobs:
               WARNING="<p>This is a documentation of the <b>dev\-master<\/b> version which contains the newest features, but please note that this version is under development and we do not guarantee it\'s stability\.<\/p>"
               DIV_END="<\/div>"
 
-              javadoc -d ../doc -sourcepath sdk/src/main/java/ -subpackages com.sygic.travel
+              gradle :sdk:dokka
 
               if [[ ! -z $CIRCLE_TAG ]]; then
                 sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$DIV_END"'/' ../doc/overview-summary.html
@@ -63,7 +52,17 @@ jobs:
               if [[ ! -z $CIRCLE_TAG ]]; then
                 DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/$CIRCLE_TAG"
               fi
-              aws s3 sync ../doc $DOC_PATH --delete --acl public-read
+              aws s3 sync ./sdk/build/dokkaDoc $DOC_PATH --delete --acl public-read
+            fi
+      - run:
+          name: Install SDK to Maven Repository
+          command: |
+            gradle :sdk:install
+      - run:
+          name: Upload SDK to Bintray
+          command: |
+            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
+              gradle :sdk:bintray
             fi
 deployment:
   fake_deploy_for_cci2:
