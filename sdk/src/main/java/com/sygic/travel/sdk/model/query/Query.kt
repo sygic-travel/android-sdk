@@ -39,7 +39,7 @@ class Query {
         }
     }
 
-    constructor() {}
+    constructor()
 
     /**
      *

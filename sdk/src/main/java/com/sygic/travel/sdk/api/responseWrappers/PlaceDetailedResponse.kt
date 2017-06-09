@@ -12,37 +12,39 @@ class PlaceDetailedResponse : StResponse() {
     private val data: Data? = null
 
     fun getPlace(): Place? {
-        if (data == null || data.place == null) return null
-
         val detail = Detail()
-        detail.tags = data.place!!.tags
-        detail.description = data.place!!.description
-        detail.address = data.place!!.address
-        detail.admission = data.place!!.admission
-        detail.duration = data.place!!.duration
-        detail.email = data.place!!.email
-        detail.openingHours = data.place!!.openingHours
-        detail.phone = data.place!!.phone
-        detail.mainMedia = data.place!!.mainMedia
-        detail.references = data.place!!.references
-
         val place = Place()
-        place.id = data.place!!.id
-        place.level = data.place!!.level
-        place.categories = data.place!!.categories
-        place.rating = data.place!!.rating
-        place.quadkey = data.place!!.quadkey
-        place.location = data.place!!.location
-        place.bounds = data.place!!.bounds
-        place.name = data.place!!.name
-        place.nameSuffix = data.place!!.nameSuffix
-        place.perex = data.place!!.perex
-        place.url = data.place!!.url
-        place.thumbnailUrl = data.place!!.thumbnailUrl
-        place.marker = data.place!!.marker
-        place.price = data.place!!.price
-        place.parentIds = data.place!!.parentIds
-        place.detail = detail
+
+        val dataPlace = data?.place
+        dataPlace?.let {
+            detail.tags = dataPlace.tags
+            detail.description = dataPlace.description
+            detail.address = dataPlace.address
+            detail.admission = dataPlace.admission
+            detail.duration = dataPlace.duration
+            detail.email = dataPlace.email
+            detail.openingHours = dataPlace.openingHours
+            detail.phone = dataPlace.phone
+            detail.mainMedia = dataPlace.mainMedia
+            detail.references = dataPlace.references
+
+            place.id = dataPlace.id
+            place.level = dataPlace.level
+            place.categories = dataPlace.categories
+            place.rating = dataPlace.rating
+            place.quadkey = dataPlace.quadkey
+            place.location = dataPlace.location
+            place.bounds = dataPlace.bounds
+            place.name = dataPlace.name
+            place.nameSuffix = dataPlace.nameSuffix
+            place.perex = dataPlace.perex
+            place.url = dataPlace.url
+            place.thumbnailUrl = dataPlace.thumbnailUrl
+            place.marker = dataPlace.marker
+            place.price = dataPlace.price
+            place.parentIds = dataPlace.parentIds
+            place.detail = detail
+        }
         return place
     }
 

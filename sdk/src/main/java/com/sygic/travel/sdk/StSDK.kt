@@ -70,12 +70,12 @@ class StSDK internal constructor() {
      * @param back Callback. Either [Callback.onSuccess] with places is called, or
      * *             [Callback.onFailure] in case of an error is called.
      */
-    fun getPlaceDetailed(id: String, back: Callback<Place>) {
+    fun getPlaceDetailed(id: String, back: Callback<Place?>) {
         val unpreparedObservable = getStApi().getPlaceDetailed(id)
         val preparedObservable = getPreparedObservable(unpreparedObservable)
         val callback = object : Callback<PlaceDetailedResponse>() {
             override fun onSuccess(data: PlaceDetailedResponse) {
-                back.onSuccess(data.getPlace()!!)
+                back.onSuccess(data.getPlace())
             }
 
             override fun onFailure(t: Throwable) {

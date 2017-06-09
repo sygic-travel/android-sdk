@@ -36,7 +36,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var spreader: Spreader? = null
 
     private var categoriesDialog: CategoriesDialog? = null
-    private val selectedCateoriesKeys = ArrayList<String>()
+    private val selectedCategoriesKeys = ArrayList<String>()
     private var titlePattern: String? = null
 
     private var placesCallback: Callback<List<Place>?>? = null
@@ -138,7 +138,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val query = Query()
         query.levels = listOf("poi")
-        query.categories = selectedCateoriesKeys
+        query.categories = selectedCategoriesKeys
         query.mapTiles = quadkeys
         query.mapSpread = 1
         query.bounds = mapBounds
@@ -153,15 +153,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     val onCategoriesClick: CategoriesAdapter.ViewHolder.CategoryClick
         get() = object : CategoriesAdapter.ViewHolder.CategoryClick {
             override fun onCategoryClick(categoryKey: String, categoryName: String) {
-                if (selectedCateoriesKeys.contains(categoryKey)) {
+                if (selectedCategoriesKeys.contains(categoryKey)) {
                     categoriesDialog!!.dismiss()
                     return
                 }
                 if (categoryKey == "all") {
-                    selectedCateoriesKeys.clear()
+                    selectedCategoriesKeys.clear()
                     title = getString(R.string.title_activity_maps)
                 } else {
-                    selectedCateoriesKeys.add(categoryKey)
+                    selectedCategoriesKeys.add(categoryKey)
                     title = String.format(titlePattern!!, categoryName)
                 }
                 loadPlaces()

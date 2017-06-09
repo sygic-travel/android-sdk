@@ -56,7 +56,7 @@ object StApiGenerator {
             .addConverterFactory(GsonConverterFactory.create(apiGson))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 
-    private fun getHttpClient(cacheDir: File): OkHttpClient {
+    private fun getHttpClient(cacheDir: File): OkHttpClient? {
         if (httpClient == null) {
             httpClient = OkHttpClient().newBuilder()
                     .addInterceptor(loggingInterceptor)
@@ -66,6 +66,6 @@ object StApiGenerator {
                     .readTimeout(60, TimeUnit.SECONDS)
                     .build()
         }
-        return httpClient!!
+        return httpClient
     }
 }
