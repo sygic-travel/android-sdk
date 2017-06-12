@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-	package="com.sygic.travel.sdkdemo"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.sygic.travel.sdkdemo">
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 
@@ -14,7 +13,7 @@
 
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="@string/google_maps_api_key"/>
+			android:value="@string/google_maps_api_key" />
 
 		<activity
 			android:name=".DemoMainActivity"
@@ -22,7 +21,6 @@
 			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
-
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
