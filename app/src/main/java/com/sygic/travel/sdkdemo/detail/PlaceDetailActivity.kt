@@ -173,10 +173,10 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     // This callback is passed to SDK's method for loading detailed information
     private // if successful, the SDK return specific data, so it can be displayed
-    val placeCallback: Callback<Place>
-        get() = object : Callback<Place>() {
-            override fun onSuccess(data: Place) {
-                renderPlaceDetail(data)
+    val placeCallback: Callback<Place?>
+        get() = object : Callback<Place?>() {
+            override fun onSuccess(data: Place?) {
+                renderPlaceDetail(data!!)
             }
 
             override fun onFailure(t: Throwable) {

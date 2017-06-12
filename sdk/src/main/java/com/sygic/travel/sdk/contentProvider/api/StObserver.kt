@@ -33,16 +33,14 @@ class StObserver<RT : StResponse>
      * have occurred, so the response must be checked.
      */
     override fun onCompleted() {
-        if (stResponse!!.statusCode != STATUS_OK) {
-            return
+        if (stResponse?.statusCode == STATUS_OK) {
+            userCallback.onSuccess(stResponse!!)
         }
-
-        userCallback.onSuccess(stResponse!!)
     }
 
     /**
      *
-     * A critical error occured.
+     * A critical error occurred.
      */
     override fun onError(e: Throwable) {
         userCallback.onFailure(e)
@@ -79,7 +77,7 @@ class StObserver<RT : StResponse>
         if (stResponseResult.response() != null && stResponseResult.response().body() != null) {
             error.append(stResponseResult.response().body().statusCode)
             error.append(": ")
-            error.append(stResponseResult.response().body().error!!.id)
+            error.append(stResponseResult.response().body().error?.id)
         } else if (stResponseResult.response().errorBody() != null) {
             try {
                 error.append(stResponseResult.response().errorBody().string())
