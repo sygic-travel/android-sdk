@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.support.v4.content.ContextCompat
 import com.sygic.travel.sdk.geo.spread.SpreadedPlace
+import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdkdemo.R
 
 object MarkerBitmapGenerator {
@@ -21,10 +22,13 @@ object MarkerBitmapGenerator {
             var markerColor = ContextCompat.getColor(context, R.color.st_blue)
 
             // Marker size equals radius * 2
-            val markerSize = spreadedPlace.sizeConfig!!.radius shl 1
+            val markerSize = spreadedPlace.sizeConfig?.radius?.shl(1) ?: 0
 
-            if (spreadedPlace.place!!.categories != null && spreadedPlace.place!!.categories!!.isNotEmpty()) {
-                markerColor = Utils.getMarkerColor(context, spreadedPlace.place!!.categories!![0])
+            val place: Place? = spreadedPlace.place
+            val categories = place?.categories
+
+            if (categories != null && categories.isNotEmpty()) {
+                markerColor = Utils.getMarkerColor(context, categories[0])
             }
 
             markerBitmap = Bitmap.createBitmap(markerSize, markerSize, Bitmap.Config.ARGB_8888)
@@ -34,13 +38,16 @@ object MarkerBitmapGenerator {
 
             paint.style = Paint.Style.FILL
             paint.color = markerColor
-            canvas.drawRoundRect(rectF, (markerSize shr 1).toFloat(), (markerSize shr 1).toFloat(), paint)
+            canvas.drawRoundRect(
+                    rectF,
+                    (markerSize shr 1).toFloat(),
+                    (markerSize shr 1).toFloat(),
+                    paint)
 
             return markerBitmap
         } catch (exception: Exception) {
             exception.printStackTrace()
             return null
         }
-
     }
 }

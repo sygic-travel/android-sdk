@@ -26,16 +26,18 @@ class GalleryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Picasso
                 .with(holder.ivPhoto.context)
-                .load(gallery!![position].urlTemplate!!.replace(Utils.PHOTO_SIZE_PLACEHOLDER, photoSize))
+                .load(gallery?.get(position)?.urlTemplate?.
+                        replace(Utils.PHOTO_SIZE_PLACEHOLDER, photoSize))
                 .placeholder(R.drawable.ic_photo_camera)
                 .into(holder.ivPhoto)
     }
 
     override fun getItemCount(): Int {
-        if (gallery == null) {
+        if (gallery != null) {
+            return gallery!!.size
+        } else {
             return 0
         }
-        return gallery!!.size
     }
 
     fun setGallery(gallery: List<Medium>) {
