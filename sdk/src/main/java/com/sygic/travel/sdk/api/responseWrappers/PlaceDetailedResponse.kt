@@ -41,7 +41,6 @@ class PlaceDetailedResponse : StResponse() {
             place.url = dataPlace.url
             place.thumbnailUrl = dataPlace.thumbnailUrl
             place.marker = dataPlace.marker
-            place.price = dataPlace.price
             place.parentIds = dataPlace.parentIds
             place.detail = detail
         }

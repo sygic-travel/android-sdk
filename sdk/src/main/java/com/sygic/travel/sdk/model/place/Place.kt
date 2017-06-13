@@ -45,9 +45,6 @@ open class Place {
     @SerializedName("marker")
     var marker: String? = null
 
-    @SerializedName("price")
-    var price: Price? = null
-
     @SerializedName("parent_ids")
     var parentIds: List<String>? = null
 
