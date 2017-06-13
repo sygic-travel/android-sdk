@@ -72,14 +72,13 @@ class PlacesListActivity : AppCompatActivity() {
     }
 
     // On a place click listener. Opens it's detail.
-    private val onPlaceClick: PlacesAdapter.ViewHolder.PlaceClick
-        get() = object : PlacesAdapter.ViewHolder.PlaceClick {
-            override fun onPlaceClick(position: Int) {
-                val placeDetailIntent = Intent(this@PlacesListActivity, PlaceDetailActivity::class.java)
-                placeDetailIntent.putExtra(ID, places!![position].id)
-                startActivity(placeDetailIntent)
-            }
+    private val onPlaceClick = object: PlacesAdapter.ViewHolder.PlaceClick {
+        override fun onPlaceClick(position: Int) {
+            val placeDetailIntent = Intent(this@PlacesListActivity, PlaceDetailActivity::class.java)
+            placeDetailIntent.putExtra(ID, places!![position].id)
+            startActivity(placeDetailIntent)
         }
+    }
 
     // Use the SDK to load places
     private fun loadPlaces() {
@@ -98,47 +97,42 @@ class PlacesListActivity : AppCompatActivity() {
     }
 
     // On a category click listener.
-    private // Set activity's title
-            // Reload places
-    val onCategoriesClick: CategoriesAdapter.ViewHolder.CategoryClick
-        get() = object : CategoriesAdapter.ViewHolder.CategoryClick {
-            override fun onCategoryClick(categoryKey: String, categoryName: String) {
-                if (selectedCateoriesKeys.contains(categoryKey)) {
-                    categoriesDialog!!.dismiss()
-                    return
-                }
-                if (categoryKey == "all") {
-                    selectedCateoriesKeys.clear()
-                    title = getString(R.string.title_activity_list)
-                } else {
-                    selectedCateoriesKeys.add(categoryKey)
-                    title = String.format(titlePattern!!, categoryName)
-                }
-                loadPlaces()
+    private val onCategoriesClick = object: CategoriesAdapter.ViewHolder.CategoryClick {
+        override fun onCategoryClick(categoryKey: String, categoryName: String) {
+            if (selectedCateoriesKeys.contains(categoryKey)) {
                 categoriesDialog!!.dismiss()
+                return
             }
+            if (categoryKey == "all") {
+                selectedCateoriesKeys.clear()
+                title = getString(R.string.title_activity_list)  // Set activity's title
+            } else {
+                selectedCateoriesKeys.add(categoryKey)
+                title = String.format(titlePattern!!, categoryName)  // Set activity's title
+            }
+            loadPlaces()  // Reload places
+            categoriesDialog!!.dismiss()
         }
+    }
 
-    private // Places are sorted by rating, best rated places are at the top of the list
-    val placesCallback: Callback<List<Place>?>
-        get() = object : Callback<List<Place>?>() {
-            override fun onSuccess(data: List<Place>?) {
-                // Places are sorted by rating, best rated places are at the top of the list
-                Collections.sort(data) { p1, p2 ->
-                    if (p1.rating == p2.rating) {
-                        0
-                    } else {
-                        if (p1.rating > p2.rating) -1 else 1
-                    }
+    private val placesCallback = object: Callback<List<Place>?>() {
+        override fun onSuccess(data: List<Place>?) {
+            // Places are sorted by rating, best rated places are at the top of the list
+            Collections.sort(data) { p1, p2 ->
+                if (p1.rating == p2.rating) {
+                    0
+                } else {
+                    if (p1.rating > p2.rating) -1 else 1
                 }
-                renderPlacesList(data!!)
             }
-
-            override fun onFailure(t: Throwable) {
-                Toast.makeText(this@PlacesListActivity, t.message, Toast.LENGTH_LONG).show()
-                t.printStackTrace()
-            }
+            renderPlacesList(data!!)
         }
+
+        override fun onFailure(t: Throwable) {
+            Toast.makeText(this@PlacesListActivity, t.message, Toast.LENGTH_LONG).show()
+            t.printStackTrace()
+        }
+    }
 
     companion object {
         private val TAG = PlacesListActivity::class.java.simpleName

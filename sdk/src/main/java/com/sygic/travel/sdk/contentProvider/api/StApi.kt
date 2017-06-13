@@ -36,10 +36,10 @@ interface StApi {
             @Path("id") id: String
     ): Observable<Result<PlaceDetailedResponse>>
 
-    @GET("places/{ids}")
+    @GET("places")
     fun getPlacesDetailed(
-            @Path(encoded = true, value = "ids") ids: String
-    ): Observable<Result<PlacesDetailedResponse>>
+            @Query(encoded = true, value = "ids") ids: String
+    ): Observable<Result<PlacesResponse>>
 
     @GET("places/{id}/media")
     fun getPlaceMedia(
