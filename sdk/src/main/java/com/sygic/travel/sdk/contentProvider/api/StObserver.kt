@@ -51,15 +51,16 @@ class StObserver<RT : StResponse>
      * A single API request has been finished.
      */
     override fun onNext(stResponseResult: Result<RT>) {
+        val body = stResponseResult.response().body()
         if (multipleCallsMerged) {
             if (!isError(stResponseResult)) {
-                stResponses.add(stResponseResult.response().body())
+                stResponses.add(body)
             }
         } else {
             if (isError(stResponseResult)) {
                 userCallback.onFailure(Exception(getErrorMessage(stResponseResult)))
             } else {
-                stResponse = stResponseResult.response().body()
+                stResponse = body
             }
         }
     }
@@ -74,19 +75,25 @@ class StObserver<RT : StResponse>
      */
     private fun getErrorMessage(stResponseResult: Result<RT>): String {
         val error = StringBuilder("Error: ")
-        if (stResponseResult.response() != null && stResponseResult.response().body() != null) {
-            error.append(stResponseResult.response().body().statusCode)
-            error.append(": ")
-            error.append(stResponseResult.response().body().error?.id)
-        } else if (stResponseResult.response().errorBody() != null) {
-            try {
-                error.append(stResponseResult.response().errorBody().string())
-            } catch (e: IOException) {
-                error.append(stResponseResult.response().errorBody().toString())
-            }
+        val response = stResponseResult.response()
+        val body = response.body()
 
-        } else if (stResponseResult.isError) {
-            error.append(stResponseResult.error().message)
+        if (response != null && body != null) {
+            error.append(body.statusCode)
+            error.append(": ")
+            error.append(body.error?.id)
+        } else {
+            val errorBody = response.errorBody()
+            if (errorBody != null) {
+                try {
+                    error.append(errorBody)
+                } catch (e: IOException) {
+                    error.append(errorBody)
+                }
+
+            } else if (stResponseResult.isError) {
+                error.append(stResponseResult.error().message)
+            }
         }
         return error.toString()
     }
@@ -102,10 +109,11 @@ class StObserver<RT : StResponse>
         if (stResponseResult.isError) {
             return true
         } else {
-            if (stResponseResult.response().errorBody() != null) {
+            val response = stResponseResult.response()
+            if (response.errorBody() != null) {
                 return true
-            } else if (stResponseResult.response().body() != null) {
-                return stResponseResult.response().body().statusCode != STATUS_OK
+            } else if (response.body() != null) {
+                return response.body().statusCode != STATUS_OK
             } else {
                 return true
             }
