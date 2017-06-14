@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.sygic.travel.sdk.api.model.geo.Bounds
 import com.sygic.travel.sdk.api.model.geo.Location
 import com.sygic.travel.sdk.api.model.media.MainMedia
+import com.sygic.travel.sdk.model.place.Detail
+import com.sygic.travel.sdk.model.place.Place
 
 internal class PlaceDetail {
     // PLACE
@@ -81,4 +83,53 @@ internal class PlaceDetail {
 
 	@SerializedName("references")
 	var references: List<Reference>? = null
+
+	fun convert(): Place{
+		val place = Place()
+		
+		place.id = id
+		place.level = level
+		place.categories = categories
+		place.rating = rating
+		place.quadkey = quadkey
+		place.location= location?.convert()
+		place.bounds = bounds?.convert()
+		place.name = name
+		place.nameSuffix = nameSuffix
+		place.perex = perex
+		place.url = url
+		place.thumbnailUrl = thumbnailUrl
+		place.marker = marker
+		place.parentIds = parentIds
+		place.detail = convertDetail()
+		
+		return place
+	}
+
+	fun convertDetail(): Detail {
+		val detail = Detail()
+		
+		val convertedTags: MutableList<com.sygic.travel.sdk.model.place.Tag> = mutableListOf()
+		tags?.mapTo(convertedTags) {
+			it.convert()
+		}
+
+		val convertedReferences: MutableList<com.sygic.travel.sdk.model.place.Reference> = mutableListOf()
+		references?.mapTo(convertedReferences){
+			it.convert()
+		}
+
+		detail.tags = convertedTags
+		detail.description = description?.convert()
+		detail.address = address
+		detail.admission = admission
+		detail.duration = duration
+		detail.email = email
+		detail.openingHours = openingHours
+		detail.phone = phone
+		detail.mainMedia = mainMedia?.convert()
+		detail.references = convertedReferences
+
+		return detail
+	}
 }

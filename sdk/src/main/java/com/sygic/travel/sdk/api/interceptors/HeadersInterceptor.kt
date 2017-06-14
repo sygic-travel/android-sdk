@@ -9,7 +9,7 @@ import com.sygic.travel.sdk.api.StApiConstants.H_VALUE_CONTENT_TYPE
  *
  * Implements [okhttp3.Interceptor], adds headers to a requests.
  */
-class HeadersInterceptor : okhttp3.Interceptor {
+internal class HeadersInterceptor : okhttp3.Interceptor {
     private var apiKey: String? = null
     private var userAgent: String? = null
 

@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName
 class MainMedia {
 
     @SerializedName("usage")
-    val usage: Usage? = null
+    var usage: Usage? = null
 
     @SerializedName("media")
-    val media: List<Medium>? = null
+    var media: List<Medium>? = null
 
 }

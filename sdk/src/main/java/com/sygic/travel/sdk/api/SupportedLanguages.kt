@@ -1,12 +1,9 @@
 package com.sygic.travel.sdk.api
 
-import java.util.*
-
 /**
- *
  * Determines the appropriate locale.
  */
-object SupportedLanguages {
+internal object SupportedLanguages {
     private val supportedLanguages: MutableList<String>
     var EN = "en"
 
@@ -16,27 +13,27 @@ object SupportedLanguages {
     val actualLocale: String
         get() {
             val locale = java.util.Locale.getDefault().language
-            if (com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.contains(locale)) {
+            if (supportedLanguages.contains(locale)) {
                 return locale
             } else {
-                return com.sygic.travel.sdk.api.SupportedLanguages.EN
+                return SupportedLanguages.EN
             }
         }
 
     init {
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages = java.util.ArrayList<String>()
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("fr")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("de")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("es")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("nl")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("pt")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("it")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("ru")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("cs")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("sk")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("zh")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("ko")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("pl")
-        com.sygic.travel.sdk.api.SupportedLanguages.supportedLanguages.add("tr")
+        supportedLanguages = java.util.ArrayList<String>()
+        supportedLanguages.add("fr")
+        supportedLanguages.add("de")
+        supportedLanguages.add("es")
+        supportedLanguages.add("nl")
+        supportedLanguages.add("pt")
+        supportedLanguages.add("it")
+        supportedLanguages.add("ru")
+        supportedLanguages.add("cs")
+        supportedLanguages.add("sk")
+        supportedLanguages.add("zh")
+        supportedLanguages.add("ko")
+        supportedLanguages.add("pl")
+        supportedLanguages.add("tr")
     }
 }

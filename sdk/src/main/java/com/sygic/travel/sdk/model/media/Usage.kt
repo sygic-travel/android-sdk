@@ -8,15 +8,15 @@ import com.google.gson.annotations.SerializedName
 class Usage {
 
     @SerializedName("square")
-    val square: String? = null
+    var square: String? = null
 
     @SerializedName("landscape")
-    val landscape: String? = null
+    var landscape: String? = null
 
     @SerializedName("portrait")
-    val portrait: String? = null
+    var portrait: String? = null
 
     @SerializedName("video_preview")
-    val videoPreview: String? = null
+    var videoPreview: String? = null
 
 }
