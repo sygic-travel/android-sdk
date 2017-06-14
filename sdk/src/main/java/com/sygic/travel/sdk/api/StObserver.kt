@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
 import com.sygic.travel.sdk.api.responseWrappers.StResponse
 import com.sygic.travel.sdk.api.responseWrappers.StResponse.Companion.STATUS_OK
@@ -12,7 +12,7 @@ import java.util.*
  * Observer which subscribes to receive a response from API.
  * @param <RT> Response type - must be one of the response classes extending [StResponse].
 </RT> */
-class StObserver<RT : StResponse>
+internal class StObserver<RT : StResponse>
 /**
  * @param userCallback Callback, whose methods are called, when the response is processed.
  * *
