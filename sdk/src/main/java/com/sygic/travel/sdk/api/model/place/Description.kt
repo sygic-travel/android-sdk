@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.model.place.Description
 
 /**
  * Place description data.
@@ -18,5 +19,16 @@ internal class Description {
 
     @SerializedName("url")
     var url: String? = null
+
+    fun convert(): Description {
+        val description = Description()
+
+        description.text = text
+        description.provider = provider
+        description.translationProvider = translationProvider
+        description.url = url
+
+        return description
+    }
 
 }
