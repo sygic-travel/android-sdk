@@ -8,10 +8,10 @@ import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
 import com.sygic.travel.sdk.api.responseWrappers.TourResponse
-import com.sygic.travel.sdk.contentProvider.api.Callback
-import com.sygic.travel.sdk.contentProvider.api.StApi
-import com.sygic.travel.sdk.contentProvider.api.StApiGenerator
-import com.sygic.travel.sdk.contentProvider.api.StObserver
+import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdk.api.StApi
+import com.sygic.travel.sdk.api.StApiGenerator
+import com.sygic.travel.sdk.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
