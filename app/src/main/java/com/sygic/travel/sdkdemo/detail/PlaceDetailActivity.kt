@@ -24,7 +24,6 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     private var id: String? = null
     private var views: Views? = null
-    private var pricePattern: String? = null
     private var ratingPattern: String? = null
     private var tagPadding: Int = 0
 
@@ -34,7 +33,6 @@ class PlaceDetailActivity : AppCompatActivity() {
 
         id = intent.getStringExtra(ID)
         views = Views()
-        pricePattern = "Price: %.2f"
         ratingPattern = "Rating: %.2f"
         tagPadding = resources.getDimensionPixelSize(R.dimen.tag_padding)
         loadPlaceDetail()
@@ -79,9 +77,6 @@ class PlaceDetailActivity : AppCompatActivity() {
         views!!.tvPerex.text = place.perex
         if (detail.description != null) {
             views!!.tvDescription.text = detail.description!!.text
-        }
-        if (place.price != null) {
-            views!!.tvPrice.text = String.format(pricePattern!!, place.price!!.value)
         }
         views!!.tvRating.text = String.format(ratingPattern!!, place.rating)
         views!!.tvAddress.text = detail.address
@@ -190,7 +185,6 @@ class PlaceDetailActivity : AppCompatActivity() {
         internal var tvNameSuffix: TextView
         internal var tvPerex: TextView
         internal var tvDescription: TextView
-        internal var tvPrice: TextView
         internal var tvRating: TextView
         internal var tvAddress: TextView
         internal var tvPhone: TextView
@@ -206,7 +200,6 @@ class PlaceDetailActivity : AppCompatActivity() {
             tvNameSuffix = findViewById(R.id.tv_name_suffix) as TextView
             tvPerex = findViewById(R.id.tv_perex) as TextView
             tvDescription = findViewById(R.id.tv_description) as TextView
-            tvPrice = findViewById(R.id.tv_price) as TextView
             tvRating = findViewById(R.id.tv_rating) as TextView
             tvAddress = findViewById(R.id.tv_address) as TextView
             tvPhone = findViewById(R.id.tv_phone) as TextView
