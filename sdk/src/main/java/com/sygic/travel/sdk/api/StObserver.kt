@@ -1,9 +1,11 @@
 package com.sygic.travel.sdk.api
 
 import com.sygic.travel.sdk.api.responseWrappers.StResponse
+import com.sygic.travel.sdk.api.responseWrappers.StResponse.Companion.STATUS_OK
 import retrofit2.adapter.rxjava.Result
 import rx.Observer
 import java.io.IOException
+import java.util.*
 
 /**
  *
@@ -31,7 +33,7 @@ internal class StObserver<RT : StResponse>
      * have occurred, so the response must be checked.
      */
     override fun onCompleted() {
-        if (stResponse?.statusCode == StResponse.Companion.STATUS_OK) {
+        if (stResponse?.statusCode == STATUS_OK) {
             userCallback.onSuccess(stResponse!!)
         }
     }
@@ -111,7 +113,7 @@ internal class StObserver<RT : StResponse>
             if (response.errorBody() != null) {
                 return true
             } else if (response.body() != null) {
-                return response.body().statusCode != StResponse.Companion.STATUS_OK
+                return response.body().statusCode != STATUS_OK
             } else {
                 return true
             }
