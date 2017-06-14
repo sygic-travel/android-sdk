@@ -12,11 +12,13 @@ import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.api.StApi
 import com.sygic.travel.sdk.api.StApiGenerator
 import com.sygic.travel.sdk.api.StObserver
+import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdk.api.StApi
+import com.sygic.travel.sdk.api.StApiGenerator
+import com.sygic.travel.sdk.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.place.Tour
-import com.sygic.travel.sdk.model.query.PlacesQuery
-import com.sygic.travel.sdk.model.query.ToursQuery
+import com.sygic.travel.sdk.model.query.Query
 import rx.Observable
 import rx.Scheduler
 import rx.Subscription
