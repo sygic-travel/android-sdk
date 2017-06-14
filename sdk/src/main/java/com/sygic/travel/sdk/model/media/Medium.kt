@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import com.sygic.travel.sdk.model.geo.Location
 
 /**
- *
  * Place medium.
  */
 

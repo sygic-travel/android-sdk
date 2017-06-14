@@ -8,7 +8,7 @@ import com.sygic.travel.sdk.api.SupportedLanguages
  *
  * Implements [okhttp3.Interceptor], adds API version and locale code.
  */
-class LocaleInterceptor : okhttp3.Interceptor {
+internal class LocaleInterceptor : okhttp3.Interceptor {
     /**
      *
      * Device's current locale code

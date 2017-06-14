@@ -8,7 +8,7 @@ import retrofit2.adapter.rxjava.Result
  * Observer which subscribes to receive a response from API.
  * @param <RT> Response type - must be one of the response classes extending [StResponse].
 </RT> */
-class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StResponse>
+internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StResponse>
 /**
  * @param userCallback Callback, whose methods are called, when the response is processed.
  * *

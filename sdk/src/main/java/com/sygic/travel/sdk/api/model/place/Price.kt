@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.model.place.Price
 
 internal class Price {
 
@@ -10,4 +11,12 @@ internal class Price {
     @SerializedName("savings")
     var savings: Float = 0.toFloat()
 
+    fun convert(): Price {
+        val price = Price()
+
+        price.value = value
+        price.savings = savings
+
+        return price
+    }
 }

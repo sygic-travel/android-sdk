@@ -1,10 +1,8 @@
 package com.sygic.travel.sdk.api.model.media
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.model.geo.Location
-import com.sygic.travel.sdk.model.media.Attribution
-import com.sygic.travel.sdk.model.media.Original
-import com.sygic.travel.sdk.model.media.Source
+import com.sygic.travel.sdk.api.model.geo.Location
+import com.sygic.travel.sdk.model.media.Medium
 
 /**
  * Place medium.
@@ -48,4 +46,22 @@ internal class Medium {
     @SerializedName("location")
     var location: Location? = null
 
+    fun convert(): Medium {
+        val medium = Medium()
+
+        medium.id = id
+        medium.type = type
+        medium.urlTemplate = urlTemplate
+        medium.url = url
+        medium.original = original?.convert()
+        medium.suitability = suitability
+        medium.createdAt = createdAt
+        medium.source = source?.convert()
+        medium.createdBy = createdBy
+        medium.quadkey = quadkey
+        medium.attribution = attribution?.convert()
+        medium.location = location?.convert()
+
+        return medium
+    }
 }
