@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.ToursQuery
 import com.sygic.travel.sdkdemo.R

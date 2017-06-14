@@ -1,11 +1,14 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
-import com.sygic.travel.sdk.api.responseWrappers.*
+import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
+import io.reactivex.Observable
 import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import io.reactivex.Observable
 
 /**
  *

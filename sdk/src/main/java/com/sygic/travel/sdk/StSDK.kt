@@ -8,10 +8,10 @@ import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
 import com.sygic.travel.sdk.api.responseWrappers.TourResponse
-import com.sygic.travel.sdk.contentProvider.api.Callback
-import com.sygic.travel.sdk.contentProvider.api.StApi
-import com.sygic.travel.sdk.contentProvider.api.StApiGenerator
-import com.sygic.travel.sdk.contentProvider.api.StObserver
+import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdk.api.StApi
+import com.sygic.travel.sdk.api.StApiGenerator
+import com.sygic.travel.sdk.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
@@ -97,7 +97,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
-        val queryIds = ids.joinToString(Query.Operator.OR.operator)
+        val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
         val unpreparedObservable = getStApi().getPlacesDetailed(queryIds)
         val preparedObservable = getPreparedObservable(unpreparedObservable)
         val callback = object : Callback<PlacesResponse>() {
@@ -109,7 +109,7 @@ class StSDK internal constructor() {
                 back.onFailure(t)
             }
         }
-        subscription = preparedObservable.subscribe(StObserver(callback, false))
+        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
     }
 
     /**

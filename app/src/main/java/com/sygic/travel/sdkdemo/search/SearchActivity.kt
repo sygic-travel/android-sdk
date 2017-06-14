@@ -15,7 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.R
