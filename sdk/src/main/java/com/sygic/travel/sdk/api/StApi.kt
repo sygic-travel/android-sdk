@@ -15,7 +15,7 @@ import retrofit2.http.Query
  * Contains available API requests.
  * @see [API Documentation](http://docs.sygictravelapi.com/0.2)
  */
-interface StApi {
+internal interface StApi {
 
     /*-----------------------------------------------------------------------------*/
     /*                                     GET                                     */

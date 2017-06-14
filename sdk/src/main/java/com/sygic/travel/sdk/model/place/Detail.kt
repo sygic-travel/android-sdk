@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.model.media.MainMedia
  * Place detailed information.
  */
 class Detail {
+
     @SerializedName("tags")
     var tags: List<Tag>? = null
 

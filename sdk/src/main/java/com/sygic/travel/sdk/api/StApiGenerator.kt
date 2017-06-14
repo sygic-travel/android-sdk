@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
  * Generates an implementation of an API interface, which has to follow the Retrofit patterns.
  * @see StApi
  */
-object StApiGenerator {
+internal object StApiGenerator {
     var headersInterceptor = HeadersInterceptor()
     var localeInterceptor = LocaleInterceptor()
 

@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.media
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.model.media.Attribution
 
 /**
  * Attribution of a medium, contains information about author, license and title.
@@ -27,5 +28,19 @@ internal class Attribution {
 
     @SerializedName("title_url")
     var titleUrl: String? = null
+    
+    fun convert(): Attribution {
+        val attribution = Attribution()
+
+        attribution.author = author
+        attribution.authorUrl = authorUrl
+        attribution.license = license
+        attribution.licenseUrl = licenseUrl
+        attribution.other = other
+        attribution.title = title
+        attribution.titleUrl = titleUrl
+
+        return Attribution()
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.geo
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.model.geo.Bounds
 
 /**
  * Geographical bounds - south, west, north, east.
@@ -17,4 +18,15 @@ internal class Bounds {
 
     @SerializedName("west")
     var west: Float = 0.toFloat()
+
+    fun convert(): Bounds {
+        val bounds = Bounds()
+
+        bounds.north = north
+        bounds.east = east
+        bounds.south = south
+        bounds.west = west
+
+        return bounds
+    }
 }

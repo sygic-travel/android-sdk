@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.model.place.Reference
 
 /**
  * Link (Wiki, web site, etc.) related to a specific place.
@@ -36,5 +37,22 @@ internal class Reference {
 
     @SerializedName("flags")
     var flags: List<String>? = null
+
+    fun convert(): Reference {
+        val reference = Reference()
+
+        reference.id = id
+        reference.title = title
+        reference.type = type
+        reference.languageId = languageId
+        reference.url = url
+        reference.supplier = supplier
+        reference.priority = priority
+        reference.currency = currency
+        reference.price = price
+        reference.flags = flags
+
+        return reference
+    }
 
 }
