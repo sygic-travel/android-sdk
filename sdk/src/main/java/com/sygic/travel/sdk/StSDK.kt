@@ -14,6 +14,7 @@ import com.sygic.travel.sdk.api.StApiGenerator
 import com.sygic.travel.sdk.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
+
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
@@ -22,6 +23,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
+
 import java.io.File
 
 /**

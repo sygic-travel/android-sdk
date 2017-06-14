@@ -1,14 +1,16 @@
 package com.sygic.travel.sdk.api.interceptors
 
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_API_KEY
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_CONTENT_TYPE
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_USER_AGENT
+import com.sygic.travel.sdk.api.StApiConstants.H_VALUE_CONTENT_TYPE
+
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-import com.sygic.travel.sdk.api.StApiConstants.H_NAME_API_KEY
-import com.sygic.travel.sdk.api.StApiConstants.H_NAME_CONTENT_TYPE
-import com.sygic.travel.sdk.api.StApiConstants.H_NAME_USER_AGENT
-import com.sygic.travel.sdk.api.StApiConstants.H_VALUE_CONTENT_TYPE
+
 
 /**
  * Implements [okhttp3.Interceptor], adds headers to a requests.
