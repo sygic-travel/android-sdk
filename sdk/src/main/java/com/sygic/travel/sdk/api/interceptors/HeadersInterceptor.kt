@@ -1,18 +1,15 @@
-package com.sygic.travel.sdk.contentProvider.api.interceptors
+package com.sygic.travel.sdk.api.interceptors
 
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.H_NAME_API_KEY
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.H_NAME_CONTENT_TYPE
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.H_NAME_USER_AGENT
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.H_VALUE_CONTENT_TYPE
-import okhttp3.Interceptor
-import okhttp3.Response
-import java.io.IOException
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_API_KEY
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_CONTENT_TYPE
+import com.sygic.travel.sdk.api.StApiConstants.H_NAME_USER_AGENT
+import com.sygic.travel.sdk.api.StApiConstants.H_VALUE_CONTENT_TYPE
 
 /**
  *
  * Implements [okhttp3.Interceptor], adds headers to a requests.
  */
-class HeadersInterceptor : Interceptor {
+class HeadersInterceptor : okhttp3.Interceptor {
     private var apiKey: String? = null
     private var userAgent: String? = null
 
@@ -38,8 +35,8 @@ class HeadersInterceptor : Interceptor {
      *
      * Modifies the original request by adding an **API key**.
      */
-    @Throws(IOException::class)
-    override fun intercept(chain: Interceptor.Chain): Response {
+    @Throws(java.io.IOException::class)
+    override fun intercept(chain: okhttp3.Interceptor.Chain): okhttp3.Response {
         val original = chain.request()
         val request = original.newBuilder()
                 .addHeader(H_NAME_CONTENT_TYPE, H_VALUE_CONTENT_TYPE)
