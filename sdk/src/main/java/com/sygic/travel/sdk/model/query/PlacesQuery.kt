@@ -6,11 +6,11 @@ import com.sygic.travel.sdk.model.geo.Bounds
 
 /**
  *
- * Query contains values which define the places to be fetched.
+ * PlacesQuery contains values which define the places to be fetched.
  * To see what the parameters mean check the
  * [API Documentation](http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list).
  */
-class Query {
+class PlacesQuery {
     var query: String? = null
     var bounds: Bounds? = null
     var categories: List<String>? = null
