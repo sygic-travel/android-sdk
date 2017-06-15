@@ -2,13 +2,15 @@ package com.sygic.travel.sdk.api
 
 import com.sygic.travel.sdk.api.responseWrappers.StResponse
 import retrofit2.adapter.rxjava.Result
+import rx.Observer
+import java.io.IOException
 
 /**
  *
  * Observer which subscribes to receive a response from API.
  * @param <RT> Response type - must be one of the response classes extending [StResponse].
 </RT> */
-internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StResponse>
+internal class StObserver<RT : StResponse>
 /**
  * @param userCallback Callback, whose methods are called, when the response is processed.
  * *
@@ -18,10 +20,10 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
 (
         private val userCallback: Callback<RT>,
         private val multipleCallsMerged: Boolean
-) : rx.Observer<Result<RT>> {
+) : Observer<Result<RT>> {
 
     private var stResponse: RT? = null
-    private val stResponses = java.util.ArrayList<RT>()
+    private val stResponses = ArrayList<RT>()
 
     /**
      *
@@ -29,7 +31,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
      * have occurred, so the response must be checked.
      */
     override fun onCompleted() {
-        if (stResponse?.statusCode == com.sygic.travel.sdk.api.responseWrappers.StResponse.Companion.STATUS_OK) {
+        if (stResponse?.statusCode == StResponse.Companion.STATUS_OK) {
             userCallback.onSuccess(stResponse!!)
         }
     }
@@ -46,7 +48,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
      *
      * A single API request has been finished.
      */
-    override fun onNext(stResponseResult: retrofit2.adapter.rxjava.Result<RT>) {
+    override fun onNext(stResponseResult: Result<RT>) {
         val body = stResponseResult.response().body()
         if (multipleCallsMerged) {
             if (!isError(stResponseResult)) {
@@ -69,7 +71,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
      * *
      * @return An error message.
      */
-    private fun getErrorMessage(stResponseResult: retrofit2.adapter.rxjava.Result<RT>): String {
+    private fun getErrorMessage(stResponseResult: Result<RT>): String {
         val error = StringBuilder("Error: ")
         val response = stResponseResult.response()
         val body = response.body()
@@ -83,7 +85,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
             if (errorBody != null) {
                 try {
                     error.append(errorBody)
-                } catch (e: java.io.IOException) {
+                } catch (e: IOException) {
                     error.append(errorBody)
                 }
 
@@ -101,7 +103,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
      * *
      * @return `true` if an error occurred, `false` otherwise.
      */
-    private fun isError(stResponseResult: retrofit2.adapter.rxjava.Result<RT>): Boolean {
+    private fun isError(stResponseResult: Result<RT>): Boolean {
         if (stResponseResult.isError) {
             return true
         } else {
@@ -109,7 +111,7 @@ internal class StObserver<RT : com.sygic.travel.sdk.api.responseWrappers.StRespo
             if (response.errorBody() != null) {
                 return true
             } else if (response.body() != null) {
-                return response.body().statusCode != com.sygic.travel.sdk.api.responseWrappers.StResponse.Companion.STATUS_OK
+                return response.body().statusCode != StResponse.Companion.STATUS_OK
             } else {
                 return true
             }

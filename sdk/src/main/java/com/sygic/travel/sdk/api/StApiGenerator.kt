@@ -1,9 +1,19 @@
 package com.sygic.travel.sdk.api
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import com.sygic.travel.sdk.api.StApiConstants.API_BASE_URL
 import com.sygic.travel.sdk.api.StApiConstants.VERSION_AND_LOCALE
 import com.sygic.travel.sdk.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.api.interceptors.LocaleInterceptor
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -14,9 +24,9 @@ internal object StApiGenerator {
     var headersInterceptor = HeadersInterceptor()
     var localeInterceptor = LocaleInterceptor()
 
-    private val loggingInterceptor = okhttp3.logging.HttpLoggingInterceptor()
-            .setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY)
-    private var httpClient: okhttp3.OkHttpClient? = null
+    private val loggingInterceptor = HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY)
+    private var httpClient: OkHttpClient? = null
 
     /**
      *
@@ -29,33 +39,33 @@ internal object StApiGenerator {
      * *
      * @return An implementation of the API endpoints defined by the `apiClass` interface.
     </S> */
-    fun <S> createStApi(apiClass: Class<S>, cacheDir: java.io.File): S {
-        return com.sygic.travel.sdk.api.StApiGenerator.buildRetrofit(cacheDir).create(apiClass)
+    fun <S> createStApi(apiClass: Class<S>, cacheDir: File): S {
+        return buildRetrofit(cacheDir).create(apiClass)
     }
 
-    private fun buildRetrofit(cacheDir: java.io.File): retrofit2.Retrofit {
-        return com.sygic.travel.sdk.api.StApiGenerator.builder.client(com.sygic.travel.sdk.api.StApiGenerator.getHttpClient(cacheDir)).build()
+    private fun buildRetrofit(cacheDir: File): Retrofit {
+        return builder.client(getHttpClient(cacheDir)).build()
     }
 
-    private val apiGson = com.google.gson.GsonBuilder()
-            .setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    private val apiGson = GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create()
 
-    private val builder = retrofit2.Retrofit.Builder()
+    private val builder = Retrofit.Builder()
             .baseUrl(API_BASE_URL + VERSION_AND_LOCALE + "/")
-            .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(com.sygic.travel.sdk.api.StApiGenerator.apiGson))
-            .addCallAdapterFactory(retrofit2.adapter.rxjava.RxJavaCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(apiGson))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 
-    private fun getHttpClient(cacheDir: java.io.File): okhttp3.OkHttpClient? {
-        if (com.sygic.travel.sdk.api.StApiGenerator.httpClient == null) {
-            com.sygic.travel.sdk.api.StApiGenerator.httpClient = okhttp3.OkHttpClient().newBuilder()
-                    .addInterceptor(com.sygic.travel.sdk.api.StApiGenerator.loggingInterceptor)
-                    .addInterceptor(com.sygic.travel.sdk.api.StApiGenerator.localeInterceptor)
-                    .addInterceptor(com.sygic.travel.sdk.api.StApiGenerator.headersInterceptor)
-                    .cache(okhttp3.Cache(cacheDir, (10 * 1024 * 1024).toLong()))
-                    .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+    private fun getHttpClient(cacheDir: File): OkHttpClient? {
+        if (httpClient == null) {
+            httpClient = OkHttpClient().newBuilder()
+                    .addInterceptor(loggingInterceptor)
+                    .addInterceptor(localeInterceptor)
+                    .addInterceptor(headersInterceptor)
+                    .cache(Cache(cacheDir, (10 * 1024 * 1024).toLong()))
+                    .readTimeout(60, TimeUnit.SECONDS)
                     .build()
         }
-        return com.sygic.travel.sdk.api.StApiGenerator.httpClient
+        return httpClient
     }
 }
