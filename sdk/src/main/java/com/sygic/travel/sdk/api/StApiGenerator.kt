@@ -6,7 +6,6 @@ import com.sygic.travel.sdk.api.StApiConstants.API_BASE_URL
 import com.sygic.travel.sdk.api.StApiConstants.VERSION_AND_LOCALE
 import com.sygic.travel.sdk.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.api.interceptors.LocaleInterceptor
-import com.sygic.travel.sdk.api.StApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
