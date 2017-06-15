@@ -1,5 +1,7 @@
 package com.sygic.travel.sdk.api
 
+import java.util.*
+
 /**
  * Determines the appropriate locale.
  */
@@ -12,16 +14,16 @@ internal object SupportedLanguages {
      */
     val actualLocale: String
         get() {
-            val locale = java.util.Locale.getDefault().language
+            val locale = Locale.getDefault().language
             if (supportedLanguages.contains(locale)) {
                 return locale
             } else {
-                return SupportedLanguages.EN
+                return EN
             }
         }
 
     init {
-        supportedLanguages = java.util.ArrayList<String>()
+        supportedLanguages = ArrayList<String>()
         supportedLanguages.add("fr")
         supportedLanguages.add("de")
         supportedLanguages.add("es")
