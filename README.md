@@ -69,7 +69,7 @@ To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 ## Usage Introduction
 
 This example shows how to use the SDK to fetch a representative set of data. To define a set of places
-you need to create a [Query](http://docs.sygictravelapi.com/android-sdk/0.2.0-beta/com/sygic/travel/sdk/model/query/Query.html)
+you need to create a [placeQuery](http://docs.sygictravelapi.com/android-sdk/0.2.0-beta/com/sygic/travel/sdk/model/placeQuery/Query.html)
 which describes the places which will be fetched - see
 [API documentation](http://docs.sygictravelapi.com/0.2/#section-places).
 
@@ -81,12 +81,12 @@ Let's define a set of places we want:
 - only the _Top 10_ of them
 
 ```java	
-// Create query to get top 10 sightseeings in London
-Query query = new Query();
-query.setLevels(Collections.singletonList("poi"));
-query.setCategories(Collections.singletonList("sightseeing"));
-query.setParents(Collections.singletonList("city:1"));
-query.setLimit(10);
+// Create placeQuery to get top 10 sightseeings in London
+PlaceQuery placeQuery = new PlaceQuery();
+placeQuery.setLevels(Collections.singletonList("poi"));
+placeQuery.setCategories(Collections.singletonList("sightseeing"));
+placeQuery.setParents(Collections.singletonList("city:1"));
+placeQuery.setLimit(10);
 	
 // Create Callback
 Callback<List<Place>> placesCallback = new Callback<List<Place>>() {
@@ -101,8 +101,8 @@ Callback<List<Place>> placesCallback = new Callback<List<Place>>() {
 	}
 };
 
-// Perform query
-StSDK.getInstance().getPlaces(query, placesCallback);
+// Perform placeQuery
+StSDK.getInstance().getPlaces(placeQuery, placesCallback);
 ```
 
 Since the SDK uses RxAndroid it is important to unsubscribe an observable, when an activity comes 

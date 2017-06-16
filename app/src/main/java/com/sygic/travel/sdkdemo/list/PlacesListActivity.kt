@@ -12,7 +12,7 @@ import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
 import com.sygic.travel.sdk.contentProvider.api.Callback
 import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.Query
+import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
@@ -83,7 +83,7 @@ class PlacesListActivity : AppCompatActivity() {
 
     // Use the SDK to load places
     private fun loadPlaces() {
-        val query = Query()
+        val query = PlacesQuery()
         query.levels = listOf("poi")
         query.categories = selectedCateoriesKeys
         query.parents = listOf("city:1")

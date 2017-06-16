@@ -1,9 +1,6 @@
 package com.sygic.travel.sdk.contentProvider.api
 
-import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlacesDetailedResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.*
 import retrofit2.adapter.rxjava.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -48,4 +45,12 @@ interface StApi {
     fun getPlaceMedia(
             @Path("id") id: String
     ): Observable<Result<MediaResponse>>
+
+    @GET("tours/viator")
+    fun getTours(
+            @Query("destination_id") destinationId: String?,
+            @Query("page") page: Int?,
+            @Query("sort_by") sortBy: String?,
+            @Query("sort_direction") sortDirection: String?
+    ): Observable<Result<TourResponse>>
 }

@@ -7,13 +7,16 @@ import android.os.Build
 import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import com.sygic.travel.sdk.contentProvider.api.Callback
 import com.sygic.travel.sdk.contentProvider.api.StApi
 import com.sygic.travel.sdk.contentProvider.api.StApiGenerator
 import com.sygic.travel.sdk.contentProvider.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.Query
+import com.sygic.travel.sdk.model.place.Tour
+import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.model.query.ToursQuery
 import rx.Observable
 import rx.Scheduler
 import rx.Subscription
@@ -29,25 +32,25 @@ class StSDK internal constructor() {
 
     /**
      * Creates and sends a request to get places, e.g. for map or list.
-     * @param query Query encapsulating data for API request.
+     * @param placesQuery PlacesQuery encapsulating data for API request.
      * *
      * @param back Callback. Either [Callback.onSuccess] with places is called, or
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaces(
-            query: Query,
+            placesQuery: PlacesQuery,
             back: Callback<List<Place>?>?
     ) {
         val unpreparedObservable = getStApi().getPlaces(
-                query.query,
-                query.levelsQueryString,
-                query.categoriesQueryString,
-                query.mapTilesQueryString,
-                query.mapSpread,
-                query.boundsQueryString,
-                query.tagsQueryString,
-                query.parentsQueryString,
-                query.limit
+                placesQuery.query,
+                placesQuery.levelsQueryString,
+                placesQuery.categoriesQueryString,
+                placesQuery.mapTilesQueryString,
+                placesQuery.mapSpread,
+                placesQuery.boundsQueryString,
+                placesQuery.tagsQueryString,
+                placesQuery.parentsQueryString,
+                placesQuery.limit
         )
         val callback = object : Callback<PlacesResponse>() {
             override fun onSuccess(data: PlacesResponse) {
@@ -103,6 +106,33 @@ class StSDK internal constructor() {
 
             override fun onFailure(t: Throwable) {
                 back.onFailure(t)
+            }
+        }
+        subscription = preparedObservable.subscribe(StObserver(callback, false))
+    }
+
+    /**
+     * Creates and sends a request to get the Tours.
+     * @param toursQuery ToursQuery encapsulating data for API request.
+     *
+     * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+     *            [Callback.onFailure] in case of an error is called.
+     */
+    fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?) {
+        val unpreparedObservable = getStApi().getTours(
+                destinationId = toursQuery.destinationId,
+                page = toursQuery.page,
+                sortBy = toursQuery.sortBy.string,
+                sortDirection = toursQuery.sortDirection.string
+        )
+        val preparedObservable = getPreparedObservable(unpreparedObservable)
+        val callback = object : Callback<TourResponse>() {
+            override fun onSuccess(data: TourResponse) {
+                back?.onSuccess(data.getTours())
+            }
+
+            override fun onFailure(t: Throwable) {
+                back?.onFailure(t)
             }
         }
         subscription = preparedObservable.subscribe(StObserver(callback, false))

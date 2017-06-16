@@ -21,7 +21,7 @@ import com.sygic.travel.sdk.geo.spread.SpreadedPlace
 import com.sygic.travel.sdk.geo.spread.Spreader
 import com.sygic.travel.sdk.model.geo.Bounds
 import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.Query
+import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
@@ -136,7 +136,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 map!!.cameraPosition.zoom.toInt()
         )
 
-        val query = Query()
+        val query = PlacesQuery()
         query.levels = listOf("poi")
         query.categories = selectedCategoriesKeys
         query.mapTiles = quadkeys
