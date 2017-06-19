@@ -1,12 +1,13 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.place.Reference
 
 /**
  * Link (Wiki, web site, etc.) related to a specific place.
  */
-internal class Reference {
+internal class ApiReference : ApiModel<Reference> {
 
     @SerializedName("id")
     var id: Int = 0
@@ -38,7 +39,7 @@ internal class Reference {
     @SerializedName("flags")
     var flags: List<String>? = null
 
-    fun convert(): Reference {
+    override fun convert(): Reference {
         val reference = Reference()
 
         reference.id = id
