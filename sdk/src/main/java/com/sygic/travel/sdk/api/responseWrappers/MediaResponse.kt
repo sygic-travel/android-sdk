@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.api.responseWrappers
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.api.model.media.Medium
+import com.sygic.travel.sdk.api.model.media.ApiMedium
 
 /**
  * Response containing a list of place media. Suitable for a gallery.
@@ -22,6 +22,6 @@ internal class MediaResponse : StResponse() {
 
     inner class Data {
         @SerializedName("media")
-        var media: List<Medium>? = null
+        var media: List<ApiMedium>? = null
     }
 }

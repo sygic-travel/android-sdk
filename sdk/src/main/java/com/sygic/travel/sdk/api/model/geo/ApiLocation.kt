@@ -1,12 +1,13 @@
 package com.sygic.travel.sdk.api.model.geo
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.geo.Location
 
 /**
  * Geographic location - latitude, longitude.
  */
-internal class Location {
+internal class ApiLocation : ApiModel<Location> {
 
     @SerializedName("lat")
     var lat: Float = 0.toFloat()
@@ -14,7 +15,7 @@ internal class Location {
     @SerializedName("lng")
     var lng: Float = 0.toFloat()
 
-    fun convert(): Location {
+    override fun convert(): Location {
         val location = Location()
 
         location.lat = lat

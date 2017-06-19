@@ -75,7 +75,7 @@ class PlacesListActivity : AppCompatActivity() {
     private val onPlaceClick = object: PlacesAdapter.ViewHolder.PlaceClick {
         override fun onPlaceClick(position: Int) {
             val placeDetailIntent = Intent(this@PlacesListActivity, PlaceDetailActivity::class.java)
-            placeDetailIntent.putExtra(ID, places!![position].id)
+            placeDetailIntent.putExtra(ID, places?.get(position)?.id)
             startActivity(placeDetailIntent)
         }
     }
