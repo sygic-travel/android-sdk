@@ -1,12 +1,13 @@
 package com.sygic.travel.sdk.api.model.media
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.media.Original
 
 /**
  * Medium's original parameters.
  */
-internal class Original {
+internal class ApiOriginal : ApiModel<Original> {
 
     @SerializedName("size")
     var size: Int = 0
@@ -17,7 +18,7 @@ internal class Original {
     @SerializedName("height")
     var height: Int = 0
 
-    fun convert(): Original {
+    override fun convert(): Original {
         val original = Original()
 
         original.size = size

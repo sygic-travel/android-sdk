@@ -1,12 +1,13 @@
 package com.sygic.travel.sdk.api.model.media
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.media.Attribution
 
 /**
  * Attribution of a medium, contains information about author, license and title.
  */
-internal class Attribution {
+internal class ApiAttribution : ApiModel<Attribution> {
 
     @SerializedName("author")
     var author: String? = null
@@ -28,8 +29,8 @@ internal class Attribution {
 
     @SerializedName("title_url")
     var titleUrl: String? = null
-    
-    fun convert(): Attribution {
+
+    override fun convert(): Attribution {
         val attribution = Attribution()
 
         attribution.author = author
@@ -42,5 +43,4 @@ internal class Attribution {
 
         return Attribution()
     }
-
 }

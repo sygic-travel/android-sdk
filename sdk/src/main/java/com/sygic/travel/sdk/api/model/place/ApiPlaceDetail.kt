@@ -1,13 +1,13 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.api.model.geo.Bounds
-import com.sygic.travel.sdk.api.model.geo.Location
-import com.sygic.travel.sdk.api.model.media.MainMedia
+import com.sygic.travel.sdk.api.model.geo.ApiBounds
+import com.sygic.travel.sdk.api.model.geo.ApiLocation
+import com.sygic.travel.sdk.api.model.media.ApiMainMedia
 import com.sygic.travel.sdk.model.place.Detail
 import com.sygic.travel.sdk.model.place.Place
 
-internal class PlaceDetail {
+internal class ApiPlaceDetail {
     // PLACE
 
 	@SerializedName("id")
@@ -26,10 +26,10 @@ internal class PlaceDetail {
 	var quadkey: String? = null
 
 	@SerializedName("location")
-	var location: Location? = null
+	var location: ApiLocation? = null
 
 	@SerializedName("bounding_box")
-	var bounds: Bounds? = null
+	var bounds: ApiBounds? = null
 
 	@SerializedName("name")
 	var name: String? = null
@@ -55,10 +55,10 @@ internal class PlaceDetail {
 	// DETAIL
 
 	@SerializedName("tags")
-	var tags: List<Tag>? = null
+	var tags: List<ApiTag>? = null
 
 	@SerializedName("description")
-	var description: Description? = null
+	var description: ApiDescription? = null
 
 	@SerializedName("address")
 	var address: String? = null
@@ -79,10 +79,10 @@ internal class PlaceDetail {
 	var phone: String? = null
 
 	@SerializedName("main_media")
-	var mainMedia: MainMedia? = null
+	var mainMedia: ApiMainMedia? = null
 
 	@SerializedName("references")
-	var references: List<Reference>? = null
+	var references: List<ApiReference>? = null
 
 	fun convert(): Place{
 		val place = Place()

@@ -1,14 +1,15 @@
 package com.sygic.travel.sdk.api.model.media
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.api.model.geo.Location
+import com.sygic.travel.sdk.api.model.converter.ApiModel
+import com.sygic.travel.sdk.api.model.geo.ApiLocation
 import com.sygic.travel.sdk.model.media.Medium
 
 /**
  * Place medium.
  */
 
-internal class Medium {
+internal class ApiMedium : ApiModel<Medium> {
 
     @SerializedName("id")
     var id: String? = null
@@ -23,7 +24,7 @@ internal class Medium {
     var url: String? = null
 
     @SerializedName("original")
-    var original: Original? = null
+    var original: ApiOriginal? = null
 
     @SerializedName("suitability")
     var suitability: List<String>? = null
@@ -32,7 +33,7 @@ internal class Medium {
     var createdAt: String? = null
 
     @SerializedName("source")
-    var source: Source? = null
+    var source: ApiSource? = null
 
     @SerializedName("created_by")
     var createdBy: String? = null
@@ -41,12 +42,12 @@ internal class Medium {
     var quadkey: String? = null
 
     @SerializedName("attribution")
-    var attribution: Attribution? = null
+    var attribution: ApiAttribution? = null
 
     @SerializedName("location")
-    var location: Location? = null
+    var location: ApiLocation? = null
 
-    fun convert(): Medium {
+    override fun convert(): Medium {
         val medium = Medium()
 
         medium.id = id
