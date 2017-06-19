@@ -27,7 +27,7 @@ class PlacesQuery {
     /**
      * Enumaration of possible logical operators.
      */
-    enum class Operator private constructor(operator: String) {
+    enum class Operator constructor(operator: String) {
         AND(","),
         OR("%7C");
 
