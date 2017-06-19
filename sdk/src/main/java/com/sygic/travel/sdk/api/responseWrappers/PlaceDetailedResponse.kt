@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.api.responseWrappers
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.api.model.place.PlaceDetail
+import com.sygic.travel.sdk.api.model.place.ApiPlaceDetail
 import com.sygic.travel.sdk.model.place.*
 
 /**
@@ -11,7 +11,7 @@ internal class PlaceDetailedResponse : StResponse() {
     private val data: Data? = null
 
     fun getPlace(): Place? {
-        val placeDetail = data?.place
+        val placeDetail = data?.apiPlace
         val place = placeDetail?.convert()
 
         return place
@@ -19,6 +19,6 @@ internal class PlaceDetailedResponse : StResponse() {
 
     inner class Data {
         @SerializedName("place")
-        var place: PlaceDetail? = null
+        var apiPlace: ApiPlaceDetail? = null
     }
 }

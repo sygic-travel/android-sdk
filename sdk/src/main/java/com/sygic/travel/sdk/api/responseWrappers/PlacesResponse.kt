@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.api.responseWrappers
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.api.model.place.PlaceDetail
+import com.sygic.travel.sdk.api.model.place.ApiPlaceDetail
 import com.sygic.travel.sdk.model.place.Place
 
 /**
@@ -12,7 +12,7 @@ internal class PlacesResponse : StResponse() {
     private var data: Data? = null
 
     fun getPlaces(): List<Place>? {
-        val places = data?.places
+        val places = data?.apiPlaces
         val convertedPlaces: MutableList<Place> = mutableListOf()
 
         places?.mapTo(convertedPlaces) {
@@ -24,6 +24,6 @@ internal class PlacesResponse : StResponse() {
 
     inner class Data {
         @SerializedName("places")
-        var places: List<PlaceDetail>? = null
+        var apiPlaces: List<ApiPlaceDetail>? = null
     }
 }
