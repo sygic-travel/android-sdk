@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.api.model.media
 import com.google.gson.annotations.SerializedName
 import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.media.MainMedia
+import com.sygic.travel.sdk.model.media.Medium
 
 /**
  * Place main media.
@@ -18,7 +19,7 @@ internal class ApiMainMedia : ApiModel<MainMedia> {
     override fun convert(): MainMedia {
         val mainMedia = MainMedia()
 
-        val convertedMedia: MutableList<com.sygic.travel.sdk.model.media.Medium> = mutableListOf()
+        val convertedMedia: MutableList<Medium> = mutableListOf()
         media?.mapTo(convertedMedia) {
             it.convert()
         }

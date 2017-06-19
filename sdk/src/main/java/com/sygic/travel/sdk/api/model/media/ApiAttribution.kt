@@ -41,6 +41,6 @@ internal class ApiAttribution : ApiModel<Attribution> {
         attribution.title = title
         attribution.titleUrl = titleUrl
 
-        return Attribution()
+        return attribution
     }
 }
