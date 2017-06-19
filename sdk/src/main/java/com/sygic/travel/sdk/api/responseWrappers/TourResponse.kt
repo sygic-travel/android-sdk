@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.model.place.Tour
 /**
  * Response that contains a list of Tour classes.
  */
-class TourResponse : StResponse() {
+internal class TourResponse : StResponse() {
     private var data: Data? = null
 
     fun getTours(): List<Tour>? = data?.tours
