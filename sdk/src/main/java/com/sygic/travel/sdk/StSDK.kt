@@ -97,7 +97,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
-        val queryIds = ids.joinToString(Query.Operator.OR.operator)
+        val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
         val unpreparedObservable = getStApi().getPlacesDetailed(queryIds)
         val preparedObservable = getPreparedObservable(unpreparedObservable)
         val callback = object : Callback<PlacesResponse>() {
