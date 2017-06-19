@@ -6,6 +6,8 @@ import com.sygic.travel.sdk.api.model.geo.ApiLocation
 import com.sygic.travel.sdk.api.model.media.ApiMainMedia
 import com.sygic.travel.sdk.model.place.Detail
 import com.sygic.travel.sdk.model.place.Place
+import com.sygic.travel.sdk.model.place.Reference
+import com.sygic.travel.sdk.model.place.Tag
 
 internal class ApiPlaceDetail {
     // PLACE
@@ -106,16 +108,16 @@ internal class ApiPlaceDetail {
 		return place
 	}
 
-	fun convertDetail(): Detail {
+	private fun convertDetail(): Detail {
 		val detail = Detail()
 		
-		val convertedTags: MutableList<com.sygic.travel.sdk.model.place.Tag> = mutableListOf()
+		val convertedTags: MutableList<Tag> = mutableListOf()
 		tags?.mapTo(convertedTags) {
 			it.convert()
 		}
 
-		val convertedReferences: MutableList<com.sygic.travel.sdk.model.place.Reference> = mutableListOf()
-		references?.mapTo(convertedReferences){
+		val convertedReferences: MutableList<Reference> = mutableListOf()
+		references?.mapTo(convertedReferences) {
 			it.convert()
 		}
 
