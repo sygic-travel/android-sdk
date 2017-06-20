@@ -17,6 +17,11 @@ jobs:
               sed -i "s/\(override \= \)true/\1false/g" sdk/bintray.gradle
             fi
 
+            echo "Set Android Gradle plugin version"
+            sed -i 's/.*local\.properties.*//g' build.gradle
+            sed -i 's/.*gradle\.plugin\.version.*//g' build.gradle
+            sed -i 's/\${gradle_plugin_version}/'"$ANDROID_SDK_GRADLE_PLUGIN_VERSION"'/g' build.gradle
+
             echo "Set Bintray API Key"
             sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
 
