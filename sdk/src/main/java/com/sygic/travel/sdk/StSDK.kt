@@ -122,8 +122,8 @@ class StSDK internal constructor() {
         val unpreparedObservable = getStApi().getTours(
                 destinationId = toursQuery.destinationId,
                 page = toursQuery.page,
-                sortBy = toursQuery.sortBy.string,
-                sortDirection = toursQuery.sortDirection.string
+                sortBy = toursQuery.sortBy?.string,
+                sortDirection = toursQuery.sortDirection?.string
         )
         val preparedObservable = getPreparedObservable(unpreparedObservable)
         val callback = object : Callback<TourResponse>() {

@@ -40,10 +40,13 @@
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
+			android:name=".tours.ToursActivity"
+			android:label="@string/title_activity_list"
+			android:screenOrientation="portrait"></activity>
+		<activity
 			android:name=".gallery.GalleryActivity"
 			android:label="@string/title_activity_gallery"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".gallery.PhotoActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
@@ -65,5 +68,4 @@
 			android:screenOrientation="portrait">
 		</activity>
 	</application>
-
 </manifest>
