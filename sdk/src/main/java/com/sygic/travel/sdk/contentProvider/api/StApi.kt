@@ -21,13 +21,13 @@ interface StApi {
     @GET("places/list")
     fun getPlaces(
             @Query("query") query: String?,
-            @Query("levels") levels: String?,
-            @Query("categories") categories: String?,
+            @Query(encoded = true, value = "levels") levels: String?,
+            @Query(encoded = true, value = "categories") categories: String?,
             @Query(encoded = true, value = "map_tiles") mapTiles: String?,
             @Query("map_spread") mapSpread: Int?,
             @Query("bounds") bounds: String?,
-            @Query("tags") tags: String?,
-            @Query("parents") parents: String?,
+            @Query(encoded = true, value = "tags") tags: String?,
+            @Query(encoded = true, value = "parents") parents: String?,
             @Query("limit") limit: Int?
     ): Observable<Result<PlacesResponse>>
 
