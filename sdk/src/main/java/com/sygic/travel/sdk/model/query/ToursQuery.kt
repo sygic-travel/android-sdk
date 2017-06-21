@@ -8,8 +8,8 @@ package com.sygic.travel.sdk.model.query
 class ToursQuery(
         val destinationId: String,
         val page: Int?,
-        val sortBy: SortBy,
-        val sortDirection: SortDirection
+        val sortBy: SortBy?,
+        val sortDirection: SortDirection?
 ) {
 
     enum class SortBy constructor(sortBy: String) {

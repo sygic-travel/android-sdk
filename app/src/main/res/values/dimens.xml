@@ -6,4 +6,5 @@
 	<dimen name="reference_padding">8dp</dimen>
 	<dimen name="gallery_photo_spacing">10px</dimen>
 	<dimen name="places_item_photo_size">240px</dimen>
+	<dimen name="tours_item_photo_size">240px</dimen>
 </resources>

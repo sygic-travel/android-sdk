@@ -39,8 +39,8 @@ dependencies {
 //	}
 
     // google
-    compile 'com.google.android.gms:play-services-location:10.2.6'
-    compile 'com.google.android.gms:play-services-maps:10.2.6'
+    compile 'com.google.android.gms:play-services-location:11.0.1'
+    compile 'com.google.android.gms:play-services-maps:11.0.1'
     compile 'com.google.android:flexbox:0.3.0-alpha2'
 
     // Android

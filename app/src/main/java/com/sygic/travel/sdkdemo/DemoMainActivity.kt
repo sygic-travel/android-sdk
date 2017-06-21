@@ -7,8 +7,10 @@ import com.sygic.travel.sdk.StSDK
 import com.sygic.travel.sdkdemo.list.PlacesListActivity
 import com.sygic.travel.sdkdemo.map.MapsActivity
 import com.sygic.travel.sdkdemo.search.SearchActivity
+import com.sygic.travel.sdkdemo.tours.ToursActivity
 
 class DemoMainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo_main)
@@ -23,6 +25,12 @@ class DemoMainActivity : AppCompatActivity() {
         findViewById(R.id.btn_map_activity).setOnClickListener { startMapActivity() }
         findViewById(R.id.btn_list_activity).setOnClickListener { startListActivity() }
         findViewById(R.id.btn_search_activity).setOnClickListener { startSearchActivity() }
+        findViewById(R.id.btn_tours_activity).setOnClickListener { startToursActivity() }
+    }
+
+    private fun startToursActivity() {
+        val toursIntent = Intent(this, ToursActivity::class.java)
+        startActivity(toursIntent)
     }
 
     private fun startMapActivity() {
