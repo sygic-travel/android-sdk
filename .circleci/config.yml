@@ -44,9 +44,9 @@ jobs:
               gradle :sdk:dokka
 
               if [[ ! -z $CIRCLE_TAG ]]; then
-                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$DIV_END"'/' ../doc/overview-summary.html
+                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$DIV_END"'/' ./sdk/build/dokkaDoc/overview-summary.html
               else
-                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$WARNING\n$DIV_END"'/' ../doc/overview-summary.html
+                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$WARNING\n$DIV_END"'/' ./sdk/build/dokkaDoc/overview-summary.html
               fi
             fi
       - run:
