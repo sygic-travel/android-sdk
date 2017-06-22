@@ -15,7 +15,7 @@ out/
 
 # Gradle files
 .gradle/
-gradle/wrapper
+gradle/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -48,3 +48,5 @@ google-services.json
 
 # Ignored resources
 app/src/main/res/values/strings-non-vcs.xml
+app/libs/
+sdk/libs/
