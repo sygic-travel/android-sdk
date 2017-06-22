@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.model.place
 import com.sygic.travel.sdk.model.geo.Bounds
 import com.sygic.travel.sdk.model.geo.Location
 
-open class Place {
+class Place {
     var id: String? = null
     var level: String? = null
     var categories: List<String>? = null
@@ -18,7 +18,6 @@ open class Place {
     var thumbnailUrl: String? = null
     var marker: String? = null
     var parentIds: List<String>? = null
-
     var detail: Detail? = null
 
     fun hasLocation(): Boolean {

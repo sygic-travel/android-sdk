@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.api.model.place
 
 import com.google.gson.annotations.SerializedName
+import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.api.model.geo.ApiBounds
 import com.sygic.travel.sdk.api.model.geo.ApiLocation
 import com.sygic.travel.sdk.api.model.media.ApiMainMedia
@@ -9,7 +10,7 @@ import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag
 
-internal class ApiPlaceDetail {
+internal class ApiPlaceDetail : ApiModel<Place> {
     // PLACE
 
 	@SerializedName("id")
@@ -86,7 +87,7 @@ internal class ApiPlaceDetail {
 	@SerializedName("references")
 	var references: List<ApiReference>? = null
 
-	fun convert(): Place{
+	override fun convert(): Place{
 		val place = Place()
 		
 		place.id = id
