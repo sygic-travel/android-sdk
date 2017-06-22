@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.api.responseWrappers
 
 import com.google.gson.annotations.SerializedName
 import com.sygic.travel.sdk.api.model.media.ApiMedium
+import com.sygic.travel.sdk.model.media.Medium
 
 /**
  * Response containing a list of place media. Suitable for a gallery.
@@ -9,9 +10,9 @@ import com.sygic.travel.sdk.api.model.media.ApiMedium
 internal class MediaResponse : StResponse() {
     private var data: Data? = null
 
-    fun getMedia(): List<com.sygic.travel.sdk.model.media.Medium>? {
-        val media = data?.media
-        val convertedMedia: MutableList<com.sygic.travel.sdk.model.media.Medium> = mutableListOf()
+    fun getMedia(): List<Medium>? {
+        val media = data?.apiMedia
+        val convertedMedia: MutableList<Medium> = mutableListOf()
 
         media?.mapTo(convertedMedia) {
             it.convert()
@@ -22,6 +23,6 @@ internal class MediaResponse : StResponse() {
 
     inner class Data {
         @SerializedName("media")
-        var media: List<ApiMedium>? = null
+        var apiMedia: List<ApiMedium>? = null
     }
 }

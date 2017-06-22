@@ -1,17 +1,19 @@
 package com.sygic.travel.sdk
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
-import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.api.StApi
 import com.sygic.travel.sdk.api.StApiGenerator
 import com.sygic.travel.sdk.api.StObserver
+import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
+import com.sygic.travel.sdk.db.StDb
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
@@ -220,9 +222,10 @@ class StSDK internal constructor() {
     companion object {
         private val ST_SDK_NAME_AND_VERSION = "sygic-travel-sdk-android/sdk-version"
         private val ANDROID_VERSION = "Android/" + Build.VERSION.RELEASE
+        private val DATABASE_NAME = "st-sdk-db"
 
         private var _instance: StSDK? = null
-
+        internal var stDb: StDb? = null
 
         fun getInstance(): StSDK {
             if (_instance == null) {
@@ -241,6 +244,13 @@ class StSDK internal constructor() {
         fun initialize(xApiKey: String, context: Context) {
             StApiGenerator.headersInterceptor.setApiKey(xApiKey)
             StApiGenerator.headersInterceptor.setUserAgent(createUserAgent(context))
+
+            stDb = Room.databaseBuilder(
+                    context,
+                    StDb::class.java,
+                    DATABASE_NAME
+            ).build()
+
             getInstance().setCacheDir(context.cacheDir)
         }
 
