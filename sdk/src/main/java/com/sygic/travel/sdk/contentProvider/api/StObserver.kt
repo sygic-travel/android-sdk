@@ -25,7 +25,7 @@ class StObserver<RT : StResponse>
 ) : Observer<Result<RT>> {
 
     private var stResponse: RT? = null
-    private val stResponses = ArrayList<RT>()
+    private val stResponses = ArrayList<RT?>()
 
     /**
      *
@@ -51,7 +51,7 @@ class StObserver<RT : StResponse>
      * A single API request has been finished.
      */
     override fun onNext(stResponseResult: Result<RT>) {
-        val body = stResponseResult.response().body()
+        val body = stResponseResult.response()?.body()
         if (multipleCallsMerged) {
             if (!isError(stResponseResult)) {
                 stResponses.add(body)
@@ -76,14 +76,14 @@ class StObserver<RT : StResponse>
     private fun getErrorMessage(stResponseResult: Result<RT>): String {
         val error = StringBuilder("Error: ")
         val response = stResponseResult.response()
-        val body = response.body()
+        val body = response?.body()
 
         if (response != null && body != null) {
             error.append(body.statusCode)
             error.append(": ")
             error.append(body.error?.id)
         } else {
-            val errorBody = response.errorBody()
+            val errorBody = response?.errorBody()
             if (errorBody != null) {
                 try {
                     error.append(errorBody)
@@ -92,7 +92,7 @@ class StObserver<RT : StResponse>
                 }
 
             } else if (stResponseResult.isError) {
-                error.append(stResponseResult.error().message)
+                error.append(stResponseResult.error()?.message)
             }
         }
         return error.toString()
@@ -110,10 +110,10 @@ class StObserver<RT : StResponse>
             return true
         } else {
             val response = stResponseResult.response()
-            if (response.errorBody() != null) {
+            if (response?.errorBody() != null) {
                 return true
-            } else if (response.body() != null) {
-                return response.body().statusCode != STATUS_OK
+            } else if (response?.body() != null) {
+                return response.body()?.statusCode != STATUS_OK
             } else {
                 return true
             }
