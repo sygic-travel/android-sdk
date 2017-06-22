@@ -13,7 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator
 import com.sygic.travel.sdk.geo.spread.CanvasSize
 import com.sygic.travel.sdk.geo.spread.SpreadResult

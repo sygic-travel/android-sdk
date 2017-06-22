@@ -1,6 +1,9 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
-import com.sygic.travel.sdk.api.responseWrappers.*
+import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import retrofit2.adapter.rxjava.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,7 +15,7 @@ import rx.Observable
  * Contains available API requests.
  * @see [API Documentation](http://docs.sygictravelapi.com/0.2)
  */
-interface StApi {
+internal interface StApi {
 
     /*-----------------------------------------------------------------------------*/
     /*                                     GET                                     */
@@ -21,13 +24,13 @@ interface StApi {
     @GET("places/list")
     fun getPlaces(
             @Query("query") query: String?,
-            @Query(encoded = true, value = "levels") levels: String?,
-            @Query(encoded = true, value = "categories") categories: String?,
+            @Query("levels") levels: String?,
+            @Query("categories") categories: String?,
             @Query(encoded = true, value = "map_tiles") mapTiles: String?,
             @Query("map_spread") mapSpread: Int?,
             @Query("bounds") bounds: String?,
-            @Query(encoded = true, value = "tags") tags: String?,
-            @Query(encoded = true, value = "parents") parents: String?,
+            @Query("tags") tags: String?,
+            @Query("parents") parents: String?,
             @Query("limit") limit: Int?
     ): Observable<Result<PlacesResponse>>
 
@@ -36,10 +39,10 @@ interface StApi {
             @Path("id") id: String
     ): Observable<Result<PlaceDetailedResponse>>
 
-    @GET("places/{ids}")
+    @GET("places")
     fun getPlacesDetailed(
-            @Path(encoded = true, value = "ids") ids: String
-    ): Observable<Result<PlacesDetailedResponse>>
+            @Query(encoded = true, value = "ids") ids: String
+    ): Observable<Result<PlacesResponse>>
 
     @GET("places/{id}/media")
     fun getPlaceMedia(

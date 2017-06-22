@@ -8,10 +8,10 @@ import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
 import com.sygic.travel.sdk.api.responseWrappers.TourResponse
-import com.sygic.travel.sdk.contentProvider.api.Callback
-import com.sygic.travel.sdk.contentProvider.api.StApi
-import com.sygic.travel.sdk.contentProvider.api.StApiGenerator
-import com.sygic.travel.sdk.contentProvider.api.StObserver
+import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdk.api.StApi
+import com.sygic.travel.sdk.api.StApiGenerator
+import com.sygic.travel.sdk.api.StObserver
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
@@ -70,7 +70,7 @@ class StSDK internal constructor() {
      * Creates and sends a request to get place with detailed information.
      * @param id Unique id of a place - detailed information about this place will be requested.
      * *
-     * @param back Callback. Either [Callback.onSuccess] with places is called, or
+     * @param back Callback. Either [Callback.onSuccess] with place is called, or
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaceDetailed(id: String, back: Callback<Place?>) {
@@ -79,6 +79,30 @@ class StSDK internal constructor() {
         val callback = object : Callback<PlaceDetailedResponse>() {
             override fun onSuccess(data: PlaceDetailedResponse) {
                 back.onSuccess(data.getPlace())
+            }
+
+            override fun onFailure(t: Throwable) {
+                back.onFailure(t)
+            }
+        }
+        subscription = preparedObservable.subscribe(StObserver(callback, false))
+    }
+
+    /**
+     *
+     * Creates and sends a request to get places with detailed information.
+     * @param ids Ids of places - detailed information about these places will be requested.
+     * *
+     * @param back Callback. Either [Callback.onSuccess] with places is called, or
+     * *             [Callback.onFailure] in case of an error is called.
+     */
+    fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
+        val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
+        val unpreparedObservable = getStApi().getPlacesDetailed(queryIds)
+        val preparedObservable = getPreparedObservable(unpreparedObservable)
+        val callback = object : Callback<PlacesResponse>() {
+            override fun onSuccess(data: PlacesResponse) {
+                back.onSuccess(data.getPlaces())
             }
 
             override fun onFailure(t: Throwable) {

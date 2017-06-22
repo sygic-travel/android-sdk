@@ -12,7 +12,7 @@ import android.widget.Toast
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag

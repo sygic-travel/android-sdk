@@ -1,6 +1,6 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
-object StApiConstants {
+internal object StApiConstants {
 
     // HEADERS
     val H_NAME_API_KEY = "x-api-key"
