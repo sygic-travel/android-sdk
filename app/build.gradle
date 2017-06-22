@@ -34,7 +34,7 @@ dependencies {
 
     // SDK
     compile project(":sdk")
-//	compile ('com.sygic.travel:sdk:0.2.0-beta@aar'){
+//	compile ('com.sygic.travel:sdk:0.3.0-beta@aar'){
 //		transitive=true;
 //	}
 
