@@ -46,7 +46,7 @@ interface StApi {
             @Path("id") id: String
     ): Observable<Result<MediaResponse>>
 
-    @GET("tours/viator")
+    @GET("tours")
     fun getTours(
             @Query("destination_id") destinationId: String?,
             @Query("page") page: Int?,
