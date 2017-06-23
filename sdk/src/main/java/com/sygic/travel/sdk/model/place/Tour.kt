@@ -9,6 +9,9 @@ class Tour {
     @SerializedName("id")
     var id: String? = null
 
+    @SerializedName("supplier")
+    var supplier: String? = null
+
     @SerializedName("title")
     var title: String? = null
 
