@@ -5,6 +5,7 @@ package com.sygic.travel.sdk.model.place
  */
 class Tour {
     var id: String? = null
+    var supplier: String? = null
     var title: String? = null
     var perex: String? = null
     var url: String? = null
