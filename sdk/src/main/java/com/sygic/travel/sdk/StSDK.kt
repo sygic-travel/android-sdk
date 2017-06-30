@@ -8,26 +8,18 @@ import android.os.Build
 import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.api.StApi
 import com.sygic.travel.sdk.api.StApiGenerator
-import com.sygic.travel.sdk.api.StObserver
-import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
-import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import com.sygic.travel.sdk.db.StDb
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
-import io.reactivex.schedulers.Schedulers
+import com.sygic.travel.sdk.provider.DataProvider
 import java.io.File
 
 /**
- *
  * Provides public methods for requesting API.
  */
 class StSDK internal constructor() {
@@ -39,33 +31,10 @@ class StSDK internal constructor() {
      * @param back Callback. Either [Callback.onSuccess] with places is called, or
      * *             [Callback.onFailure] in case of an error is called.
      */
-    fun getPlaces(
-            placesQuery: PlacesQuery,
-            back: Callback<List<Place>?>?
-    ) {
-        val unpreparedObservable = getStApi().getPlaces(
-                placesQuery.query,
-                placesQuery.levelsQueryString,
-                placesQuery.categoriesQueryString,
-                placesQuery.mapTilesQueryString,
-                placesQuery.mapSpread,
-                placesQuery.boundsQueryString,
-                placesQuery.tagsQueryString,
-                placesQuery.parentsQueryString,
-                placesQuery.limit
-        )
-        val callback = object : Callback<PlacesResponse>() {
-            override fun onSuccess(data: PlacesResponse) {
-                back?.onSuccess(data.getPlaces())
-            }
-
-            override fun onFailure(t: Throwable) {
-                back?.onFailure(t)
-            }
-        }
-        val preparedObservable = getPreparedObservable(unpreparedObservable)
-        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
+    fun getPlaces(placesQuery: PlacesQuery, back: Callback<List<Place>?>?) {
+        disposable = dataProvider?.getPlaces(placesQuery, back)
     }
+
 
     /**
      *
@@ -76,19 +45,9 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaceDetailed(id: String, back: Callback<Place?>) {
-        val unpreparedObservable = getStApi().getPlaceDetailed(id)
-        val preparedObservable = getPreparedObservable(unpreparedObservable)
-        val callback = object : Callback<PlaceDetailedResponse>() {
-            override fun onSuccess(data: PlaceDetailedResponse) {
-                back.onSuccess(data.getPlace())
-            }
-
-            override fun onFailure(t: Throwable) {
-                back.onFailure(t)
-            }
-        }
-        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
+	    disposable = dataProvider?.getPlaceDetailed(id, back)
     }
+
 
     /**
      *
@@ -99,20 +58,9 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
-        val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
-        val unpreparedObservable = getStApi().getPlacesDetailed(queryIds)
-        val preparedObservable = getPreparedObservable(unpreparedObservable)
-        val callback = object : Callback<PlacesResponse>() {
-            override fun onSuccess(data: PlacesResponse) {
-                back.onSuccess(data.getPlaces())
-            }
-
-            override fun onFailure(t: Throwable) {
-                back.onFailure(t)
-            }
-        }
-        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
+        disposable = dataProvider?.getPlacesDetailed(ids, back)
     }
+
 
     /**
      *
@@ -123,19 +71,9 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaceMedia(id: String, back: Callback<List<Medium>?>) {
-        val unpreparedObservable = getStApi().getPlaceMedia(id)
-        val preparedObservable = getPreparedObservable(unpreparedObservable)
-        val callback = object : Callback<MediaResponse>() {
-            override fun onSuccess(data: MediaResponse) {
-                back.onSuccess(data.getMedia())
-            }
-
-            override fun onFailure(t: Throwable) {
-                back.onFailure(t)
-            }
-        }
-        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
+        disposable = dataProvider?.getPlaceMedia(id, back)
     }
+
 
     /**
      * Creates and sends a request to get the Tours.
@@ -145,27 +83,11 @@ class StSDK internal constructor() {
      *            [Callback.onFailure] in case of an error is called.
      */
     fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?) {
-        val unpreparedObservable = getStApi().getTours(
-                destinationId = toursQuery.destinationId,
-                page = toursQuery.page,
-                sortBy = toursQuery.sortBy?.string,
-                sortDirection = toursQuery.sortDirection?.string
-        )
-        val preparedObservable = getPreparedObservable(unpreparedObservable)
-        val callback = object : Callback<TourResponse>() {
-            override fun onSuccess(data: TourResponse) {
-                back?.onSuccess(data.getTours())
-            }
-
-            override fun onFailure(t: Throwable) {
-                back?.onFailure(t)
-            }
-        }
-        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
+        disposable = dataProvider?.getTours(toursQuery, back)
     }
 
+
     /**
-     *
      * Unsubscribes a subscribed observable.
      */
     fun unsubscribeObservable() {
@@ -177,56 +99,83 @@ class StSDK internal constructor() {
     /*-------------------------------------------
                 PRIVATE MEMBERS & METHODS
      -------------------------------------------*/
+	private val ST_SDK_NAME_AND_VERSION = "sygic-travel-sdk-android/sdk-version"
+	private val ANDROID_VERSION = "Android/" + Build.VERSION.RELEASE
+	private val DATABASE_NAME = "st-sdk-db"
 
-    private var stApi: StApi? = null
-    private var cacheDir: File? = null
+	private var dataProvider: DataProvider? = null
+	private var stApi: StApi? = null
+	private var stDb: StDb? = null
     private var disposable : Disposable = Disposables.empty()
 
-    /**
-     *
-     * Creates and returns an _instance of the [StApi] interface.
-     * @return Instance of the [StApi] interface.
-     */
-    private fun getStApi(): StApi {
-        if (stApi == null) {
-            assert(cacheDir != null)
-            stApi = StApiGenerator.createStApi(StApi::class.java, cacheDir as File)
-        }
-        return stApi as StApi
-    }
 
-    /**
-     *
-     * Sets a cache directory.
-     * @param cacheDir Cache directorry.
-     */
-    internal fun setCacheDir(cacheDir: File) {
-        this.cacheDir = cacheDir
-    }
+	/**
+	 * @return UserAgent to be sent as a header in every request.
+	 */
+	private fun createUserAgent(context: Context): String {
+		var packageInfo: PackageInfo? = null
+		try {
+			packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+		} catch (e: PackageManager.NameNotFoundException) {
+			e.printStackTrace()
+		}
+
+		var userAgent = ""
+		userAgent += context.packageName + "/"
+		userAgent += if (packageInfo != null) packageInfo.versionName + " " else ""
+		userAgent += ST_SDK_NAME_AND_VERSION + " "
+		userAgent += ANDROID_VERSION
+		return userAgent
+	}
 
 
-    /**
-     *
-     * Prepares an [Observable] - sets [schedulers][Scheduler].
-     * @param unpreparedObservable Observable to be prepared.
-     * *
-     * @return Disposable ready to be subscribed to.
-     */
-    fun <T> getPreparedObservable(unpreparedObservable: Observable<T>): Observable<T> {
-        return unpreparedObservable
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-    }
+	/**
+	 * Creates an instance of [DataProvider].
+	 * @param context Application's context.
+	 */
+	private fun intializeDataProvider(context: Context) {
+		if (dataProvider == null) {
+			dataProvider = DataProvider(getStApi(context.cacheDir), getStDb(context))
+		}
+	}
+
+
+	/**
+	 * Creates and returns an instance of the [StApi] interface.
+	 * @return Instance of the [StApi] interface.
+	 */
+	private fun getStApi(cacheDir: File?): StApi {
+		if (stApi == null) {
+			assert(cacheDir != null)
+			stApi = StApiGenerator.createStApi(StApi::class.java, cacheDir as File)
+		}
+		return stApi as StApi
+	}
+
+	/**
+	 * Creates and returns an instance of [StDb].
+	 * @return Instance of the [StDb] interface.
+	 */
+	private fun getStDb(context: Context): StDb {
+		if (stDb == null) {
+			stDb = Room.databaseBuilder(
+					context,
+					StDb::class.java,
+					DATABASE_NAME
+			).build()
+		}
+		return stDb as StDb
+	}
 
 
     companion object {
-        private val ST_SDK_NAME_AND_VERSION = "sygic-travel-sdk-android/sdk-version"
-        private val ANDROID_VERSION = "Android/" + Build.VERSION.RELEASE
-        private val DATABASE_NAME = "st-sdk-db"
-
         private var _instance: StSDK? = null
-        internal var stDb: StDb? = null
 
+
+	    /**
+	     * Creates and returns an instance of [StSDK].
+	     * @return SDK instance
+	     */
         fun getInstance(): StSDK {
             if (_instance == null) {
                 synchronized(StSDK::class.java) {
@@ -238,39 +187,17 @@ class StSDK internal constructor() {
             return _instance!!
         }
 
+
         /**
          * Initialization of the SDK.
+         * @param xApiKey Api key - must be provided.
+         * @param context Application's context.
          */
         fun initialize(xApiKey: String, context: Context) {
             StApiGenerator.headersInterceptor.setApiKey(xApiKey)
-            StApiGenerator.headersInterceptor.setUserAgent(createUserAgent(context))
+            StApiGenerator.headersInterceptor.setUserAgent(getInstance().createUserAgent(context))
 
-            stDb = Room.databaseBuilder(
-                    context,
-                    StDb::class.java,
-                    DATABASE_NAME
-            ).build()
-
-            getInstance().setCacheDir(context.cacheDir)
-        }
-
-        /**
-         * @return UserAgent to be sent as a header in every request.
-         */
-        private fun createUserAgent(context: Context): String {
-            var packageInfo: PackageInfo? = null
-            try {
-                packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            } catch (e: PackageManager.NameNotFoundException) {
-                e.printStackTrace()
-            }
-
-            var userAgent = ""
-            userAgent += context.packageName + "/"
-            userAgent += if (packageInfo != null) packageInfo.versionName + " " else ""
-            userAgent += ST_SDK_NAME_AND_VERSION + " "
-            userAgent += ANDROID_VERSION
-            return userAgent
+	        getInstance().intializeDataProvider(context)
         }
     }
 }
