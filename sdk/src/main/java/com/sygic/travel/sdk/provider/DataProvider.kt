@@ -1,0 +1,174 @@
+package com.sygic.travel.sdk.provider
+
+import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdk.api.StApi
+import com.sygic.travel.sdk.api.StObserver
+import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
+import com.sygic.travel.sdk.db.StDb
+import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdk.model.place.Place
+import com.sygic.travel.sdk.model.place.Tour
+import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.model.query.ToursQuery
+import rx.Observable
+import rx.Scheduler
+import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+
+internal class DataProvider(
+	val stApi: StApi? = null,
+	val stDb: StDb? = null
+) {
+	/**
+	 * Creates and sends a request to get places, e.g. for map or list.
+	 * @param placesQuery PlacesQuery encapsulating data for API request.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaces(
+			placesQuery: PlacesQuery,
+			back: Callback<List<Place>?>?
+	): Subscription {
+		val unpreparedObservable = stApi?.getPlaces(
+				placesQuery.query,
+				placesQuery.levelsQueryString,
+				placesQuery.categoriesQueryString,
+				placesQuery.mapTilesQueryString,
+				placesQuery.mapSpread,
+				placesQuery.boundsQueryString,
+				placesQuery.tagsQueryString,
+				placesQuery.parentsQueryString,
+				placesQuery.limit
+		)
+		val callback = object : Callback<PlacesResponse>() {
+			override fun onSuccess(data: PlacesResponse) {
+				back?.onSuccess(data.getPlaces())
+			}
+
+			override fun onFailure(t: Throwable) {
+				back?.onFailure(t)
+			}
+		}
+		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
+		return preparedObservable.subscribe(StObserver(callback, false))
+	}
+
+
+	/**
+	 *
+	 * Creates and sends a request to get place with detailed information.
+	 * @param id Unique id of a place - detailed information about this place will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with place is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaceDetailed(id: String, back: Callback<Place?>?): Subscription {
+		val unpreparedObservable = stApi?.getPlaceDetailed(id)
+		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
+		val callback = object : Callback<PlaceDetailedResponse>() {
+			override fun onSuccess(data: PlaceDetailedResponse) {
+				back?.onSuccess(data.getPlace())
+			}
+
+			override fun onFailure(t: Throwable) {
+				back?.onFailure(t)
+			}
+		}
+		return preparedObservable.subscribe(StObserver(callback, false))
+	}
+
+	/**
+	 *
+	 * Creates and sends a request to get places with detailed information.
+	 * @param ids Ids of places - detailed information about these places will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>?): Subscription {
+		val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
+		val unpreparedObservable = stApi?.getPlacesDetailed(queryIds)
+		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
+		val callback = object : Callback<PlacesResponse>() {
+			override fun onSuccess(data: PlacesResponse) {
+				back?.onSuccess(data.getPlaces())
+			}
+
+			override fun onFailure(t: Throwable) {
+				back?.onFailure(t)
+			}
+		}
+		return preparedObservable.subscribe(StObserver(callback, false))
+	}
+
+	/**
+	 *
+	 * Creates and sends a request to get the place's media.
+	 * @param id Unique id of a place - media for this place will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaceMedia(id: String, back: Callback<List<Medium>?>?): Subscription {
+		val unpreparedObservable = stApi?.getPlaceMedia(id)
+		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
+		val callback = object : Callback<MediaResponse>() {
+			override fun onSuccess(data: MediaResponse) {
+				back?.onSuccess(data.getMedia())
+			}
+
+			override fun onFailure(t: Throwable) {
+				back?.onFailure(t)
+			}
+		}
+		return preparedObservable.subscribe(StObserver(callback, false))
+	}
+
+	/**
+	 * Creates and sends a request to get the Tours.
+	 * @param toursQuery ToursQuery encapsulating data for API request.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
+	fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?): Subscription {
+		val unpreparedObservable = stApi?.getTours(
+				destinationId = toursQuery.destinationId,
+				page = toursQuery.page,
+				sortBy = toursQuery.sortBy?.string,
+				sortDirection = toursQuery.sortDirection?.string
+		)
+		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
+		val callback = object : Callback<TourResponse>() {
+			override fun onSuccess(data: TourResponse) {
+				back?.onSuccess(data.getTours())
+			}
+
+			override fun onFailure(t: Throwable) {
+				back?.onFailure(t)
+			}
+		}
+		return preparedObservable.subscribe(StObserver(callback, false))
+	}
+	
+	
+	/**
+	 *
+	 * Prepares an [Observable] - sets [schedulers][Scheduler].
+	 * @param unpreparedObservable Observable to be prepared.
+	 * *
+	 * @return Observable ready to be subscribed to.
+	 */
+	fun <T> getPreparedObservable(
+			unpreparedObservable: Observable<T>
+	): Observable<T> {
+		return unpreparedObservable
+				.subscribeOn(Schedulers.newThread())
+				.observeOn(AndroidSchedulers.mainThread())
+	}
+}
