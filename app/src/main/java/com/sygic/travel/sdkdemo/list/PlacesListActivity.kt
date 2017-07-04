@@ -35,7 +35,7 @@ class PlacesListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list)
 
         categoriesDialog = CategoriesDialog(this, onCategoriesClick)
-        titlePattern = getString(R.string.title_activity_list) + " - %s"
+        titlePattern = getString(R.string.title_activity_places) + " - %s"
 
         initRecycler()
         loadPlaces()
@@ -105,7 +105,7 @@ class PlacesListActivity : AppCompatActivity() {
             }
             if (categoryKey == "all") {
                 selectedCateoriesKeys.clear()
-                title = getString(R.string.title_activity_list)  // Set activity's title
+                title = getString(R.string.title_activity_places)  // Set activity's title
             } else {
                 selectedCateoriesKeys.add(categoryKey)
                 title = String.format(titlePattern!!, categoryName)  // Set activity's title

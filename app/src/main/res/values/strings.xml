@@ -2,12 +2,14 @@
 	<string name="app_name">SDK Demo</string>
 	<string name="title_activity_demo_main">SDK Demo</string>
 	<string name="title_activity_maps">Map</string>
-	<string name="title_activity_list">List</string>
+	<string name="title_activity_places">Places</string>
 	<string name="title_activity_place_detail">Place Detail</string>
 	<string name="title_activity_gallery">Gallery</string>
 	<string name="title_activity_photo">Photo</string>
 	<string name="title_activity_reference">Reference</string>
 	<string name="title_activity_search">Search</string>
+	<string name="title_activity_tours">Tours</string>
+	<string name="title_activity_favorites">Favorites</string>
 
 	<string name="settings">Settings</string>
 
