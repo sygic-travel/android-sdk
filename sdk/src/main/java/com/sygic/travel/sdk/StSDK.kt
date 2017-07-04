@@ -86,6 +86,21 @@ class StSDK internal constructor() {
     }
 
 
+	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
+		dataProvider?.addPlaceToFavorites(id, back)
+	}
+
+
+	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
+		dataProvider?.removePlaceFromFavorites(id, back)
+	}
+
+
+	fun getFavoritesIds(callback: Callback<List<String>?>?) {
+		dataProvider?.getFavoritesIds(callback)
+	}
+
+
     /**
      * Unsubscribes a subscribed observable.
      */

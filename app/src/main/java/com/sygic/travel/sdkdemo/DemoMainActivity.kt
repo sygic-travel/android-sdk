@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdkdemo.list.PlacesListActivity
 import com.sygic.travel.sdkdemo.map.MapsActivity
 import com.sygic.travel.sdkdemo.search.SearchActivity
@@ -28,11 +29,6 @@ class DemoMainActivity : AppCompatActivity() {
         findViewById(R.id.btn_tours_activity).setOnClickListener { startToursActivity() }
     }
 
-    private fun startToursActivity() {
-        val toursIntent = Intent(this, ToursActivity::class.java)
-        startActivity(toursIntent)
-    }
-
     private fun startMapActivity() {
         val mapIntent = Intent(this, MapsActivity::class.java)
         startActivity(mapIntent)
@@ -46,5 +42,10 @@ class DemoMainActivity : AppCompatActivity() {
     private fun startSearchActivity() {
         val searchIntent = Intent(this, SearchActivity::class.java)
         startActivity(searchIntent)
+    }
+
+    private fun startToursActivity() {
+        val toursIntent = Intent(this, ToursActivity::class.java)
+        startActivity(toursIntent)
     }
 }
