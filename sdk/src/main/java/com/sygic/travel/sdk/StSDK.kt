@@ -32,7 +32,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaces(placesQuery: PlacesQuery, back: Callback<List<Place>?>?) {
-        disposable = dataProvider?.getPlaces(placesQuery, back)
+        disposable = dataProvider?.getPlaces(placesQuery, back)!!
     }
 
 
@@ -45,7 +45,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaceDetailed(id: String, back: Callback<Place?>) {
-	    disposable = dataProvider?.getPlaceDetailed(id, back)
+	    disposable = dataProvider?.getPlaceDetailed(id, back)!!
     }
 
 
@@ -58,7 +58,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
-        disposable = dataProvider?.getPlacesDetailed(ids, back)
+        disposable = dataProvider?.getPlacesDetailed(ids, back)!!
     }
 
 
@@ -71,7 +71,7 @@ class StSDK internal constructor() {
      * *             [Callback.onFailure] in case of an error is called.
      */
     fun getPlaceMedia(id: String, back: Callback<List<Medium>?>) {
-        disposable = dataProvider?.getPlaceMedia(id, back)
+        disposable = dataProvider?.getPlaceMedia(id, back)!!
     }
 
 
@@ -83,8 +83,23 @@ class StSDK internal constructor() {
      *            [Callback.onFailure] in case of an error is called.
      */
     fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?) {
-        disposable = dataProvider?.getTours(toursQuery, back)
+        disposable = dataProvider?.getTours(toursQuery, back)!!
     }
+
+
+	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
+		dataProvider?.addPlaceToFavorites(id, back)
+	}
+
+
+	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
+		dataProvider?.removePlaceFromFavorites(id, back)
+	}
+
+
+	fun getFavoritesIds(callback: Callback<List<String>?>?) {
+		dataProvider?.getFavoritesIds(callback)
+	}
 
 
     /**

@@ -9,6 +9,7 @@ import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
 import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import com.sygic.travel.sdk.db.StDb
 import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdk.model.place.Favorite
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
@@ -154,6 +155,48 @@ internal class DataProvider(
 			}
 		}
 		return preparedObservable.subscribeWith(StObserver(callback, false))
+	}
+
+
+	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
+		Thread(Runnable {
+			val insertedCount = stDb?.favoriteDao()?.insert(Favorite(id))
+			if (insertedCount == 1L) {
+				back?.onSuccess("Success")
+			} else {
+				back?.onFailure(Exception("Favorite not added!"))
+			}
+
+		}).start()
+	}
+
+
+	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
+		Thread(Runnable {
+			val insertedCount = stDb?.favoriteDao()?.delete(Favorite(id))
+			if (insertedCount == 1) {
+				back?.onSuccess("Success")
+			} else {
+				back?.onFailure(Exception("Favorite not removed!"))
+			}
+		}).start()
+	}
+
+
+	fun getFavoritesIds(back: Callback<List<String>?>?) {
+		Thread(Runnable {
+			val favorites = stDb?.favoriteDao()?.loadAll()
+			val favoritesIds: MutableList<String> = mutableListOf()
+			favorites?.mapTo(favoritesIds) {
+				it.id!!
+			}
+
+			if (favoritesIds.size > 0) {
+				back?.onSuccess(favoritesIds)
+			} else {
+				back?.onFailure(Exception("No favorites loaded from DB!"))
+			}
+		}).start()
 	}
 	
 	
