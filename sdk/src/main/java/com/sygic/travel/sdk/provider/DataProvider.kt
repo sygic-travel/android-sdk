@@ -161,7 +161,7 @@ internal class DataProvider(
 	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
 		Thread(Runnable {
 			val insertedCount = stDb?.favoriteDao()?.insert(Favorite(id))
-			if (insertedCount == 1L) {
+			if (insertedCount != null && insertedCount > 0L) {
 				back?.onSuccess("Success")
 			} else {
 				back?.onFailure(Exception("Favorite not added!"))

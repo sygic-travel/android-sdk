@@ -28,7 +28,9 @@ class FavoritesActivity : AppCompatActivity() {
 		}
 
 		override fun onFailure(t: Throwable) {
-			Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
+			runOnUiThread {
+				Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
+			}
 			t.printStackTrace()
 		}
 	}
@@ -40,7 +42,9 @@ class FavoritesActivity : AppCompatActivity() {
 		}
 
 		override fun onFailure(t: Throwable) {
-			Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
+			runOnUiThread {
+				Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
+			}
 			t.printStackTrace()
 		}
 	}
