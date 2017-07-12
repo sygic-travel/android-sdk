@@ -36,4 +36,8 @@
 
 	<string name="filter_places">Filter places</string>
 	<string name="places_search">Search places</string>
+
+	<!-- Favourites -->
+	<string name="favorite_add">Add favorite</string>
+	<string name="favorite">Favorite</string>
 </resources>

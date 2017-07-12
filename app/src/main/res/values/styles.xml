@@ -8,4 +8,7 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="FavoriteStar">
+		<item name="android:button">@drawable/favorite_selector</item>
+	</style>
 </resources>
