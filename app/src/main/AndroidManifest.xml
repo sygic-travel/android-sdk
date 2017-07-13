@@ -31,7 +31,7 @@
 		</activity>
 		<activity
 			android:name=".list.PlacesListActivity"
-			android:label="@string/title_activity_list"
+			android:label="@string/title_activity_places"
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
@@ -40,13 +40,10 @@
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
-			android:name=".tours.ToursActivity"
-			android:label="@string/title_activity_list"
-			android:screenOrientation="portrait"></activity>
-		<activity
 			android:name=".gallery.GalleryActivity"
 			android:label="@string/title_activity_gallery"
-			android:screenOrientation="portrait"></activity>
+			android:screenOrientation="portrait">
+		</activity>
 		<activity
 			android:name=".gallery.PhotoActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
@@ -65,6 +62,16 @@
 			android:name=".search.SearchActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:label="@string/title_activity_search"
+			android:screenOrientation="portrait">
+		</activity>
+		<activity
+			android:name=".tours.ToursActivity"
+			android:label="@string/title_activity_tours"
+			android:screenOrientation="portrait">
+		</activity>
+		<activity
+			android:name=".favorites.FavoritesActivity"
+			android:label="@string/title_activity_favorites"
 			android:screenOrientation="portrait">
 		</activity>
 	</application>

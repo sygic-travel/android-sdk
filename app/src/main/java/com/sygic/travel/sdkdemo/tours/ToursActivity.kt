@@ -19,7 +19,6 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 
     private var rvTours: RecyclerView? = null
     private var toursAdapter: ToursAdapter? = null
-    private var titlePattern: String? = null
     private var tourCallback: Callback<List<Tour>?>? = null
     private var tours: List<Tour>? = null
 
@@ -39,8 +38,6 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tours_list)
-
-        titlePattern = getString(R.string.title_activity_list) + " - %s"
 
         initRecycler()
         loadTours()
