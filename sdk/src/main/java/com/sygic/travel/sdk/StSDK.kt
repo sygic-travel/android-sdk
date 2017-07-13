@@ -17,11 +17,11 @@ import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
-import rx.Observable
-import rx.Scheduler
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 
 /**
@@ -62,7 +62,7 @@ class StSDK internal constructor() {
             }
         }
         val preparedObservable = getPreparedObservable(unpreparedObservable)
-        subscription = preparedObservable.subscribe(StObserver(callback, false))
+        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
     }
 
     /**
@@ -85,7 +85,7 @@ class StSDK internal constructor() {
                 back.onFailure(t)
             }
         }
-        subscription = preparedObservable.subscribe(StObserver(callback, false))
+        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
     }
 
     /**
@@ -108,7 +108,7 @@ class StSDK internal constructor() {
                 back.onFailure(t)
             }
         }
-        subscription = preparedObservable.subscribe(StObserver(callback, false))
+        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
     }
 
     /**
@@ -135,7 +135,7 @@ class StSDK internal constructor() {
                 back?.onFailure(t)
             }
         }
-        subscription = preparedObservable.subscribe(StObserver(callback, false))
+        disposable = preparedObservable.subscribeWith(StObserver(callback, false))
     }
 
     /**
@@ -143,8 +143,8 @@ class StSDK internal constructor() {
      * Unsubscribes a subscribed observable.
      */
     fun unsubscribeObservable() {
-        if (subscription != null && !subscription!!.isUnsubscribed) {
-            subscription!!.unsubscribe()
+        if (!disposable.isDisposed) {
+            disposable.dispose()
         }
     }
 
@@ -154,7 +154,7 @@ class StSDK internal constructor() {
 
     private var stApi: StApi? = null
     private var cacheDir: File? = null
-    private var subscription: Subscription? = null
+    private var disposable : Disposable = Disposables.empty()
 
     /**
      *
@@ -184,11 +184,9 @@ class StSDK internal constructor() {
      * Prepares an [Observable] - sets [schedulers][Scheduler].
      * @param unpreparedObservable Observable to be prepared.
      * *
-     * @return Observable ready to be subscribed to.
+     * @return Disposable ready to be subscribed to.
      */
-    fun <T> getPreparedObservable(
-            unpreparedObservable: Observable<T>
-    ): Observable<T> {
+    fun <T> getPreparedObservable(unpreparedObservable: Observable<T>): Observable<T> {
         return unpreparedObservable
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
