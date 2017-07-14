@@ -2,8 +2,8 @@ package com.sygic.travel.sdk.contentProvider.api
 
 import com.sygic.travel.sdk.api.responseWrappers.StResponse
 import com.sygic.travel.sdk.api.responseWrappers.StResponse.Companion.STATUS_OK
-import retrofit2.adapter.rxjava.Result
-import rx.Observer
+import io.reactivex.observers.DisposableObserver
+import retrofit2.adapter.rxjava2.Result
 import java.io.IOException
 import java.util.*
 
@@ -22,7 +22,7 @@ class StObserver<RT : StResponse>
 (
         private val userCallback: Callback<RT>,
         private val multipleCallsMerged: Boolean
-) : Observer<Result<RT>> {
+) : DisposableObserver<Result<RT>>() {
 
     private var stResponse: RT? = null
     private val stResponses = ArrayList<RT?>()
@@ -32,7 +32,7 @@ class StObserver<RT : StResponse>
      * All API requests have been finished - not necessarily successfully. However an error could
      * have occurred, so the response must be checked.
      */
-    override fun onCompleted() {
+    override fun onComplete() {
         if (stResponse?.statusCode == STATUS_OK) {
             userCallback.onSuccess(stResponse!!)
         }
