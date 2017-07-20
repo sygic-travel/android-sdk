@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 ext {
     stRepo = 'maven'
@@ -57,8 +58,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.google.code.gson:gson:2.8.0'
 
     // RX
@@ -81,4 +82,3 @@ dependencies {
 apply from: 'maven.gradle'
 apply from: 'dokka.gradle'
 apply from: 'bintray.gradle'
-apply plugin: 'kotlin-android-extensions'
