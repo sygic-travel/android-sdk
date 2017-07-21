@@ -8,7 +8,7 @@ import com.sygic.travel.sdk.model.geo.Bounds
  *
  * PlacesQuery contains values which define the places to be fetched.
  * To see what the parameters mean check the
- * [API Documentation](http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list).
+ * [API Documentation](http://docs.sygictravelapi.com/1.0/#endpoint-get-places-list).
  */
 class PlacesQuery {
     var query: String? = null
@@ -45,7 +45,7 @@ class PlacesQuery {
      *
      * Query contains values which define the places to be fetched.
      * To see what the parameters mean check the
-     * [API Documentation](http://docs.sygictravelapi.com/0.2/#endpoint-get-places-list).
+     * [API Documentation](http://docs.sygictravelapi.com/1.0/#endpoint-get-places-list).
      */
     constructor(
             query: String,

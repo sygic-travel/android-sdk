@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.model.query
 /**
  * ToursQuery contains values which define the tours to be fetched.
  * To see what the parameters mean check the
- * [API Documentation](http://docs.sygictravelapi.com/0.2/#section-tours).
+ * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
 class ToursQuery(
         val destinationId: String,
