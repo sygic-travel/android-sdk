@@ -86,19 +86,36 @@ class StSDK internal constructor() {
         disposable = dataProvider?.getTours(toursQuery, back)!!
     }
 
-
+	/**
+	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
+	 * @param id A place's id, which is stored.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
 	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
 		dataProvider?.addPlaceToFavorites(id, back)
 	}
 
 
+	/**
+	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
+	 * @param id A place's id, which is removed.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
 	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
 		dataProvider?.removePlaceFromFavorites(id, back)
 	}
 
-
-	fun getFavoritesIds(callback: Callback<List<String>?>?) {
-		dataProvider?.getFavoritesIds(callback)
+	/**
+	 * Method returns a list of all favorite places' ids.
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
+	fun getFavoritesIds(back: Callback<List<String>?>?) {
+		dataProvider?.getFavoritesIds(back)
 	}
 
 

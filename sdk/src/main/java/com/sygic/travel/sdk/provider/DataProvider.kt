@@ -20,6 +20,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
+/**
+ * Data provider contains methods for fetching data either from API or a database.
+ */
 internal class DataProvider(
 	val stApi: StApi? = null,
 	val stDb: StDb? = null
@@ -83,6 +86,7 @@ internal class DataProvider(
 		return preparedObservable.subscribeWith(StObserver(callback, false))
 	}
 
+
 	/**
 	 *
 	 * Creates and sends a request to get places with detailed information.
@@ -107,6 +111,7 @@ internal class DataProvider(
 		return preparedObservable.subscribeWith(StObserver(callback, false))
 	}
 
+
 	/**
 	 *
 	 * Creates and sends a request to get the place's media.
@@ -129,6 +134,7 @@ internal class DataProvider(
 		}
 		return preparedObservable.subscribeWith(StObserver(callback, false))
 	}
+
 
 	/**
 	 * Creates and sends a request to get the Tours.
@@ -158,10 +164,17 @@ internal class DataProvider(
 	}
 
 
+	/**
+	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
+	 * @param id A place's id, which is stored.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
 	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
 		Thread(Runnable {
-			val insertedCount = stDb?.favoriteDao()?.insert(Favorite(id))
-			if (insertedCount != null && insertedCount > 0L) {
+			val rowid = stDb?.favoriteDao()?.insert(Favorite(id))
+			if (rowid != null && rowid > 0L) {
 				back?.onSuccess("Success")
 			} else {
 				back?.onFailure(Exception("Favorite not added!"))
@@ -171,10 +184,17 @@ internal class DataProvider(
 	}
 
 
+	/**
+	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
+	 * @param id A place's id, which is removed.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
 	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
 		Thread(Runnable {
-			val insertedCount = stDb?.favoriteDao()?.delete(Favorite(id))
-			if (insertedCount == 1) {
+			val removedCount = stDb?.favoriteDao()?.delete(Favorite(id))
+			if (removedCount == 1) {
 				back?.onSuccess("Success")
 			} else {
 				back?.onFailure(Exception("Favorite not removed!"))
@@ -183,6 +203,11 @@ internal class DataProvider(
 	}
 
 
+	/**
+	 * Method returns a list of all favorite places' ids.
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
 	fun getFavoritesIds(back: Callback<List<String>?>?) {
 		Thread(Runnable {
 			val favorites = stDb?.favoriteDao()?.loadAll()
