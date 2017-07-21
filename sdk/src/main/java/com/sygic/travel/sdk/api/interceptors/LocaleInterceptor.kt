@@ -1,19 +1,18 @@
-package com.sygic.travel.sdk.contentProvider.api.interceptors
+package com.sygic.travel.sdk.api.interceptors
 
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_VERSION
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.VERSION_AND_LOCALE
-import com.sygic.travel.sdk.contentProvider.api.SupportedLanguages
+import com.sygic.travel.sdk.api.StApiConstants.API_VERSION
+import com.sygic.travel.sdk.api.StApiConstants.VERSION_AND_LOCALE
+import com.sygic.travel.sdk.api.SupportedLanguages
 import okhttp3.Interceptor
+import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
 /**
- *
  * Implements [okhttp3.Interceptor], adds API version and locale code.
  */
-class LocaleInterceptor : Interceptor {
+internal class LocaleInterceptor : Interceptor {
     /**
-     *
      * Device's current locale code
      */
     private var locale: String? = null
@@ -23,7 +22,6 @@ class LocaleInterceptor : Interceptor {
     }
 
     /**
-     *
      * Updates [LocaleInterceptor.locale] to device's current locale code
      */
     fun updateLocale() {
@@ -31,11 +29,10 @@ class LocaleInterceptor : Interceptor {
     }
 
     /**
-     *
      * Modifies the original request by adding an **API version** and a **locale code**.
      */
     @Throws(IOException::class)
-    override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Chain): Response {
         val original = chain.request()
         var url = original.url().toString()
 

@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
 abstract class Callback<in T> {
     abstract fun onSuccess(data: T)

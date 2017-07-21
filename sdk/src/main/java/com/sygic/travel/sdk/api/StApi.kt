@@ -1,18 +1,21 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
-import com.sygic.travel.sdk.api.responseWrappers.*
+import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
+import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
+import com.sygic.travel.sdk.api.responseWrappers.TourResponse
+import io.reactivex.Observable
 import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import io.reactivex.Observable
 
 /**
  *
  * Contains available API requests.
  * @see [API Documentation](http://docs.sygictravelapi.com/0.2)
  */
-interface StApi {
+internal interface StApi {
 
     /*-----------------------------------------------------------------------------*/
     /*                                     GET                                     */
@@ -36,10 +39,10 @@ interface StApi {
             @Path("id") id: String
     ): Observable<Result<PlaceDetailedResponse>>
 
-    @GET("places/{ids}")
+    @GET("places")
     fun getPlacesDetailed(
-            @Path(encoded = true, value = "ids") ids: String
-    ): Observable<Result<PlacesDetailedResponse>>
+            @Query(encoded = true, value = "ids") ids: String
+    ): Observable<Result<PlacesResponse>>
 
     @GET("places/{id}/media")
     fun getPlaceMedia(

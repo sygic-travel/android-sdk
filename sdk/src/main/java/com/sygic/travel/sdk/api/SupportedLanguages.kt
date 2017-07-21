@@ -1,12 +1,11 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
 import java.util.*
 
 /**
- *
  * Determines the appropriate locale.
  */
-object SupportedLanguages {
+internal object SupportedLanguages {
     private val supportedLanguages: MutableList<String>
     var EN = "en"
 

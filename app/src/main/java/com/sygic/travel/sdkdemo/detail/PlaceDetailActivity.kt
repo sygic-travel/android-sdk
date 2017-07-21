@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag
@@ -21,11 +18,33 @@ import com.sygic.travel.sdkdemo.gallery.GalleryActivity
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class PlaceDetailActivity : AppCompatActivity() {
+    private val stSdk = StSDK.getInstance()
 
-    private var id: String? = null
     private var views: Views? = null
+    private var id: String? = null
     private var ratingPattern: String? = null
     private var tagPadding: Int = 0
+
+    private val favoriteAddRemoveCallback = object : Callback<String?>() {
+        override fun onSuccess(data: String?) {}
+
+        override fun onFailure(t: Throwable) {
+	        runOnUiThread { Toast.makeText(this@PlaceDetailActivity, t.message, Toast.LENGTH_LONG).show() }
+	        t.printStackTrace()
+        }
+    }
+
+    private val loadAllFavoritesIdsCallback = object : Callback<List<String>?>() {
+        override fun onSuccess(data: List<String>?) {
+            val isFavorite = data?.contains(id)!!
+            views?.cbFavorite?.isChecked = isFavorite
+            setOnFavoriteChangeListener()
+        }
+
+        override fun onFailure(t: Throwable) {
+	        setOnFavoriteChangeListener()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +55,21 @@ class PlaceDetailActivity : AppCompatActivity() {
         ratingPattern = "Rating: %.2f"
         tagPadding = resources.getDimensionPixelSize(R.dimen.tag_padding)
         loadPlaceDetail()
+        loadAllFavoritesIds()
+    }
+
+    private fun loadAllFavoritesIds() {
+        stSdk.getFavoritesIds(loadAllFavoritesIdsCallback)
+    }
+
+    private fun setOnFavoriteChangeListener() {
+        views?.cbFavorite?.setOnCheckedChangeListener( { _, isChecked ->
+            if (isChecked) {
+                StSDK.getInstance().addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
+            } else {
+                StSDK.getInstance().removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
+            }
+        } )
     }
 
     override fun onPause() {
@@ -180,35 +214,20 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
 
     private inner class Views internal constructor() {
-        internal var ivPhoto: ImageView
-        internal var tvName: TextView
-        internal var tvNameSuffix: TextView
-        internal var tvPerex: TextView
-        internal var tvDescription: TextView
-        internal var tvRating: TextView
-        internal var tvAddress: TextView
-        internal var tvPhone: TextView
-        internal var tvEmail: TextView
-        internal var tvAdmission: TextView
-        internal var tvOpeningHours: TextView
-        internal var fblTags: FlexboxLayout
-        internal var llReferencesList: LinearLayout
-
-        init {
-            ivPhoto = findViewById(R.id.iv_detail_photo) as ImageView
-            tvName = findViewById(R.id.tv_name) as TextView
-            tvNameSuffix = findViewById(R.id.tv_name_suffix) as TextView
-            tvPerex = findViewById(R.id.tv_perex) as TextView
-            tvDescription = findViewById(R.id.tv_description) as TextView
-            tvRating = findViewById(R.id.tv_rating) as TextView
-            tvAddress = findViewById(R.id.tv_address) as TextView
-            tvPhone = findViewById(R.id.tv_phone) as TextView
-            tvEmail = findViewById(R.id.tv_email) as TextView
-            tvAdmission = findViewById(R.id.tv_admission) as TextView
-            tvOpeningHours = findViewById(R.id.tv_opening_hours) as TextView
-            fblTags = findViewById(R.id.fbl_tags) as FlexboxLayout
-            llReferencesList = findViewById(R.id.ll_references_list) as LinearLayout
-        }
+        internal var ivPhoto: ImageView = findViewById(R.id.iv_detail_photo) as ImageView
+        internal var tvName: TextView = findViewById(R.id.tv_name) as TextView
+        internal var tvNameSuffix: TextView = findViewById(R.id.tv_name_suffix) as TextView
+        internal var tvPerex: TextView = findViewById(R.id.tv_perex) as TextView
+        internal var tvDescription: TextView = findViewById(R.id.tv_description) as TextView
+        internal var tvRating: TextView = findViewById(R.id.tv_rating) as TextView
+        internal var tvAddress: TextView = findViewById(R.id.tv_address) as TextView
+        internal var tvPhone: TextView = findViewById(R.id.tv_phone) as TextView
+        internal var tvEmail: TextView = findViewById(R.id.tv_email) as TextView
+        internal var tvAdmission: TextView = findViewById(R.id.tv_admission) as TextView
+        internal var tvOpeningHours: TextView = findViewById(R.id.tv_opening_hours) as TextView
+        internal var fblTags: FlexboxLayout = findViewById(R.id.fbl_tags) as FlexboxLayout
+        internal var llReferencesList: LinearLayout = findViewById(R.id.ll_references_list) as LinearLayout
+        internal var cbFavorite: CheckBox = findViewById(R.id.cb_favorite) as CheckBox
     }
 
     companion object {

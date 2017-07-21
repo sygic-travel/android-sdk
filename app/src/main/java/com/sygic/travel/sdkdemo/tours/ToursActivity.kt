@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.contentProvider.api.Callback
+import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.ToursQuery
 import com.sygic.travel.sdkdemo.R
@@ -19,7 +19,6 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 
     private var rvTours: RecyclerView? = null
     private var toursAdapter: ToursAdapter? = null
-    private var titlePattern: String? = null
     private var tourCallback: Callback<List<Tour>?>? = null
     private var tours: List<Tour>? = null
 
@@ -39,8 +38,6 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tours_list)
-
-        titlePattern = getString(R.string.title_activity_list) + " - %s"
 
         initRecycler()
         loadTours()

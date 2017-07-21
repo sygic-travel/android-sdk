@@ -1,11 +1,11 @@
-package com.sygic.travel.sdk.contentProvider.api
+package com.sygic.travel.sdk.api
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.API_BASE_URL
-import com.sygic.travel.sdk.contentProvider.api.StApiConstants.VERSION_AND_LOCALE
-import com.sygic.travel.sdk.contentProvider.api.interceptors.HeadersInterceptor
-import com.sygic.travel.sdk.contentProvider.api.interceptors.LocaleInterceptor
+import com.sygic.travel.sdk.api.StApiConstants.API_BASE_URL
+import com.sygic.travel.sdk.api.StApiConstants.VERSION_AND_LOCALE
+import com.sygic.travel.sdk.api.interceptors.HeadersInterceptor
+import com.sygic.travel.sdk.api.interceptors.LocaleInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * Generates an implementation of an API interface, which has to follow the Retrofit patterns.
  * @see StApi
  */
-object StApiGenerator {
+internal object StApiGenerator {
     var headersInterceptor = HeadersInterceptor()
     var localeInterceptor = LocaleInterceptor()
 
