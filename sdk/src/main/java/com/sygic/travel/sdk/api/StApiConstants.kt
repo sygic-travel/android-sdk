@@ -12,7 +12,7 @@ internal object StApiConstants {
 
     // BASE URL
     internal var API_BASE_URL = "https://api.sygictravelapi.com/"
-    var API_VERSION = "0.2"
+    var API_VERSION = "1.0"
 
     // PATTERNS
     val VERSION_AND_LOCALE = "[api_version_and_locale]"

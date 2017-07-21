@@ -13,7 +13,7 @@ import retrofit2.http.Query
 /**
  *
  * Contains available API requests.
- * @see [API Documentation](http://docs.sygictravelapi.com/0.2)
+ * @see [API Documentation](http://docs.sygictravelapi.com/1.0)
  */
 internal interface StApi {
 
