@@ -18,8 +18,8 @@ internal class ApiDescription : ApiModel<Description> {
     @SerializedName("translation_provider")
     var translationProvider: String? = null
 
-    @SerializedName("url")
-    var url: String? = null
+    @SerializedName("link")
+    var link: String? = null
 
     override fun convert(): Description {
         val description = Description()
@@ -27,7 +27,7 @@ internal class ApiDescription : ApiModel<Description> {
         description.text = text
         description.provider = provider
         description.translationProvider = translationProvider
-        description.url = url
+        description.link = link
 
         return description
     }
