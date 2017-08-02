@@ -15,7 +15,7 @@ class CategoriesDialog(context: Context, private val onCategoryClick: Categories
 
     private fun render() {
         setContentView(R.layout.categories_dialog)
-        val rvCategories = findViewById(R.id.rv_categories) as RecyclerView
+        val rvCategories = findViewById<RecyclerView>(R.id.rv_categories)
         rvCategories.layoutManager = LinearLayoutManager(context)
         rvCategories.addItemDecoration(DividerDecoration(context, R.drawable.line_divider))
         rvCategories.adapter = CategoriesAdapter(onCategoryClick)

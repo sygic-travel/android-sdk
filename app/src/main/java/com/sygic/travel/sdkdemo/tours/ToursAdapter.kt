@@ -59,8 +59,8 @@ internal class ToursAdapter(
     }
 
     internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        internal val ivTourPhoto: ImageView = itemView.findViewById(R.id.iv_tour_item_photo) as ImageView
-        internal val tvTourName: TextView = itemView.findViewById(R.id.tv_tour_item_name) as TextView
+        internal val ivTourPhoto: ImageView = itemView.findViewById(R.id.iv_tour_item_photo)
+        internal val tvTourName: TextView = itemView.findViewById(R.id.tv_tour_item_name)
 
         init {
             itemView.setOnClickListener(this)

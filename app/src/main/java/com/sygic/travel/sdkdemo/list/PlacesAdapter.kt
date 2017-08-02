@@ -52,9 +52,8 @@ class PlacesAdapter(
     }
 
     class ViewHolder(vItem: View, private val placeClick: ViewHolder.PlaceClick) : RecyclerView.ViewHolder(vItem), View.OnClickListener {
-        internal val ivPlacePhoto: ImageView = vItem.findViewById(R.id.iv_place_item_photo) as ImageView
-        internal val tvPlaceName: TextView = vItem.findViewById(R.id.tv_place_item_name) as TextView
-
+        internal val ivPlacePhoto: ImageView = vItem.findViewById(R.id.iv_place_item_photo)
+        internal val tvPlaceName: TextView = vItem.findViewById(R.id.tv_place_item_name)
         init {
             vItem.setOnClickListener(this)
         }

@@ -74,7 +74,7 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 
     // Recycler view initialization - list with dividers
     private fun initRecycler() {
-        rvTours = findViewById(R.id.rv_tours) as RecyclerView
+        rvTours = findViewById(R.id.rv_tours)
         rvTours!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvTours!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         toursAdapter = ToursAdapter(this)

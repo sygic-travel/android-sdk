@@ -29,7 +29,7 @@ class PhotoActivity : AppCompatActivity() {
                 .with(this)
                 .load(photoUrl)
                 .placeholder(R.drawable.ic_photo_camera)
-                .into(findViewById(R.id.iv_gallery_photo) as ImageView)
+                .into(findViewById<ImageView>(R.id.iv_gallery_photo))
     }
 
     companion object {
