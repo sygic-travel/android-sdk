@@ -38,7 +38,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        rvGallery = findViewById(R.id.rv_gallery) as RecyclerView
+        rvGallery = findViewById(R.id.rv_gallery)
         rvGallery!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvGallery!!.addItemDecoration(DividerDecoration(this, R.drawable.line_divider))
         galleryAdapter = GalleryAdapter(onPhotoClick, Utils.getDetailPhotoSize(this))

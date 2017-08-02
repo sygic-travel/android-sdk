@@ -41,9 +41,9 @@ class ReferenceActivity : AppCompatActivity() {
         if (loaded) {
             return
         }
-        progressBar = findViewById(R.id.pb_reference) as ProgressBar
+        progressBar = findViewById(R.id.pb_reference)
 
-        webView = findViewById(R.id.wv_reference) as WebView
+        webView = findViewById(R.id.wv_reference)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.domStorageEnabled = true
         webView!!.settings.setSupportZoom(true)

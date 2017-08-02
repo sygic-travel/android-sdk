@@ -214,20 +214,20 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
 
     private inner class Views internal constructor() {
-        internal var ivPhoto: ImageView = findViewById(R.id.iv_detail_photo) as ImageView
-        internal var tvName: TextView = findViewById(R.id.tv_name) as TextView
-        internal var tvNameSuffix: TextView = findViewById(R.id.tv_name_suffix) as TextView
-        internal var tvPerex: TextView = findViewById(R.id.tv_perex) as TextView
-        internal var tvDescription: TextView = findViewById(R.id.tv_description) as TextView
-        internal var tvRating: TextView = findViewById(R.id.tv_rating) as TextView
-        internal var tvAddress: TextView = findViewById(R.id.tv_address) as TextView
-        internal var tvPhone: TextView = findViewById(R.id.tv_phone) as TextView
-        internal var tvEmail: TextView = findViewById(R.id.tv_email) as TextView
-        internal var tvAdmission: TextView = findViewById(R.id.tv_admission) as TextView
-        internal var tvOpeningHours: TextView = findViewById(R.id.tv_opening_hours) as TextView
-        internal var fblTags: FlexboxLayout = findViewById(R.id.fbl_tags) as FlexboxLayout
-        internal var llReferencesList: LinearLayout = findViewById(R.id.ll_references_list) as LinearLayout
-        internal var cbFavorite: CheckBox = findViewById(R.id.cb_favorite) as CheckBox
+        internal var ivPhoto: ImageView = findViewById(R.id.iv_detail_photo)
+        internal var tvName: TextView = findViewById(R.id.tv_name)
+        internal var tvNameSuffix: TextView = findViewById(R.id.tv_name_suffix)
+        internal var tvPerex: TextView = findViewById(R.id.tv_perex)
+        internal var tvDescription: TextView = findViewById(R.id.tv_description)
+        internal var tvRating: TextView = findViewById(R.id.tv_rating)
+        internal var tvAddress: TextView = findViewById(R.id.tv_address)
+        internal var tvPhone: TextView = findViewById(R.id.tv_phone)
+        internal var tvEmail: TextView = findViewById(R.id.tv_email)
+        internal var tvAdmission: TextView = findViewById(R.id.tv_admission)
+        internal var tvOpeningHours: TextView = findViewById(R.id.tv_opening_hours)
+        internal var fblTags: FlexboxLayout = findViewById(R.id.fbl_tags)
+        internal var llReferencesList: LinearLayout = findViewById(R.id.ll_references_list)
+        internal var cbFavorite: CheckBox = findViewById(R.id.cb_favorite)
     }
 
     companion object {

@@ -64,7 +64,7 @@ class PlacesListActivity : AppCompatActivity() {
 
     // Recycler view initialization - list with dividers
     private fun initRecycler() {
-        rvPlaces = findViewById(R.id.rv_places) as RecyclerView
+        rvPlaces = findViewById(R.id.rv_places)
         rvPlaces!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvPlaces!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         placesAdapter = PlacesAdapter(onPlaceClick, Utils.getDetailPhotoSize(this))

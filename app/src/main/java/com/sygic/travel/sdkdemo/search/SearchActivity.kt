@@ -48,7 +48,7 @@ class SearchActivity : AppCompatActivity() {
 
     // Recycler view initialization - list with dividers
     private fun initRecycler() {
-        rvPlaces = findViewById(R.id.rv_result_places) as RecyclerView
+        rvPlaces = findViewById(R.id.rv_result_places)
         rvPlaces!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvPlaces!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         placesAdapter = PlacesAdapter(onPlaceClick, Utils.getDetailPhotoSize(this))
@@ -113,7 +113,7 @@ class SearchActivity : AppCompatActivity() {
     // Sets listners for search edit text.
     private fun setSearchListeners(searchItem: MenuItem) {
         val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
-        val searchEdit = searchView.findViewById(R.id.search_src_text) as EditText
+        val searchEdit = searchView.findViewById<EditText>(R.id.search_src_text)
 
         searchEdit.imeOptions = EditorInfo.IME_ACTION_SEARCH
         searchEdit.setOnEditorActionListener(getOnKeyboardEnterClickListener())

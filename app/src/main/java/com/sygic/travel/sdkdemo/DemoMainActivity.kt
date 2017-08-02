@@ -3,6 +3,7 @@ package com.sygic.travel.sdkdemo
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import com.sygic.travel.sdk.StSDK
 import com.sygic.travel.sdkdemo.favorites.FavoritesActivity
 import com.sygic.travel.sdkdemo.list.PlacesListActivity
@@ -23,11 +24,11 @@ class DemoMainActivity : AppCompatActivity() {
 	}
 
 	private fun initUI() {
-		findViewById(R.id.btn_map_activity).setOnClickListener { startMapActivity() }
-		findViewById(R.id.btn_list_activity).setOnClickListener { startListActivity() }
-		findViewById(R.id.btn_search_activity).setOnClickListener { startSearchActivity() }
-		findViewById(R.id.btn_tours_activity).setOnClickListener { startToursActivity() }
-		findViewById(R.id.btn_favorites_activity).setOnClickListener { startFavoritesActivity() }
+		findViewById<Button>(R.id.btn_map_activity).setOnClickListener { startMapActivity() }
+		findViewById<Button>(R.id.btn_list_activity).setOnClickListener { startListActivity() }
+		findViewById<Button>(R.id.btn_search_activity).setOnClickListener { startSearchActivity() }
+		findViewById<Button>(R.id.btn_tours_activity).setOnClickListener { startToursActivity() }
+		findViewById<Button>(R.id.btn_favorites_activity).setOnClickListener { startFavoritesActivity() }
 	}
 
 	private fun startMapActivity() {

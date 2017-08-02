@@ -48,7 +48,7 @@ class GalleryAdapter(
             vItem: View,
             private val galleryPhotoClick: ViewHolder.GalleryPhotoClick
     ) : RecyclerView.ViewHolder(vItem), View.OnClickListener {
-        var ivPhoto: ImageView = vItem.findViewById(R.id.iv_gallery_photo) as ImageView
+        var ivPhoto: ImageView = vItem.findViewById(R.id.iv_gallery_photo)
 
         init {
             vItem.setOnClickListener(this)
