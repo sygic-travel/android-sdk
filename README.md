@@ -8,13 +8,13 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 
 ## Requirements
 
-- Android SDK 7.1.1 platform (Nougat, API level 25)
-- Build tools 25.0.3
+- Android SDK 8.0.0 platform (O, API level 26)
+- Build tools 26.0.1
 - _API key_ for your business or project
 
 ## Deployment
 
-- Target Android SDK version is *Nougat 7.1.1 (API level 25)*
+- Target Android SDK version is *O 8.0.0 (API level 26)*
 - Minimal supported Android SDK version is *Ice Cream Sandwich 4.0.3 (API level 15)*
 
 ## Installation
