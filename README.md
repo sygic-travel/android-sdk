@@ -4,7 +4,7 @@
 Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
 application. It gives you an access to millions of places covering the whole world.
 
-For further details see [Full SDK documentation](http://docs.sygictravelapi.com/android-sdk/1.0.0).
+For further details see [Full SDK documentation](http://docs.sygictravelapi.com/android-sdk/1.0.1).
 
 ## Requirements
 
@@ -36,7 +36,7 @@ repositories {
 Add dependency to your application module `build.gradle` file:
 ```gradle
 dependencies {
-	compile ('com.sygic.travel:sdk:1.0.0@aar'){
+	compile ('com.sygic.travel:sdk:1.0.1@aar'){
 		transitive=true;
 	}
 }
@@ -70,7 +70,7 @@ To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 ## Usage Introduction
 
 This example shows how to use the SDK to fetch a representative set of data. To define a set of places
-you need to create a [placeQuery](http://docs.sygictravelapi.com/android-sdk/1.0.0/com/sygic/travel/sdk/model/placeQuery/Query.html)
+you need to create a [placeQuery](http://docs.sygictravelapi.com/android-sdk/1.0.1/com/sygic/travel/sdk/model/placeQuery/Query.html)
 which describes the places which will be fetched - see
 [API documentation](http://docs.sygictravelapi.com/1.0/#section-places).
 
@@ -156,7 +156,7 @@ override fun onPause() {
 ```
 
 ## Basic Classes
-For more details check our [documentation](http://docs.sygictravelapi.com/android-sdk/1.0.0).
+For more details check our [documentation](http://docs.sygictravelapi.com/android-sdk/1.0.1).
 
 Class               | Description
 :-------------------|:---------------------
