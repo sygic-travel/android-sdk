@@ -6,18 +6,18 @@ import com.sygic.travel.sdk.model.place.Tag
 
 internal class ApiTag : ApiModel<Tag> {
 
-    @SerializedName("key")
-    var key: String? = null
+	@SerializedName("key")
+	var key: String? = null
 
-    @SerializedName("name")
-    var name: String? = null
+	@SerializedName("name")
+	var name: String? = null
 
-    override fun convert(): Tag {
-        val tag = Tag()
+	override fun convert(): Tag {
+		val tag = Tag()
 
-        tag.key = key
-        tag.name = name
+		tag.key = key
+		tag.name = name
 
-        return tag
-    }
+		return tag
+	}
 }

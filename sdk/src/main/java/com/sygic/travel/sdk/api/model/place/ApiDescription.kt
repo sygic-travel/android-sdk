@@ -9,27 +9,27 @@ import com.sygic.travel.sdk.model.place.Description
  */
 internal class ApiDescription : ApiModel<Description> {
 
-    @SerializedName("text")
-    var text: String? = null
+	@SerializedName("text")
+	var text: String? = null
 
-    @SerializedName("provider")
-    var provider: String? = null
+	@SerializedName("provider")
+	var provider: String? = null
 
-    @SerializedName("translation_provider")
-    var translationProvider: String? = null
+	@SerializedName("translation_provider")
+	var translationProvider: String? = null
 
-    @SerializedName("link")
-    var link: String? = null
+	@SerializedName("link")
+	var link: String? = null
 
-    override fun convert(): Description {
-        val description = Description()
+	override fun convert(): Description {
+		val description = Description()
 
-        description.text = text
-        description.provider = provider
-        description.translationProvider = translationProvider
-        description.link = link
+		description.text = text
+		description.provider = provider
+		description.translationProvider = translationProvider
+		description.link = link
 
-        return description
-    }
+		return description
+	}
 
 }

@@ -8,21 +8,21 @@ import com.sygic.travel.sdk.model.place.Tour
  * Response that contains a list of Tour classes.
  */
 internal class TourResponse : StResponse() {
-    private var data: Data? = null
+	private var data: Data? = null
 
-    fun getTours(): List<Tour>? {
-        val apiTours = data?.apiTours
-        val convertedTours: MutableList<Tour> = mutableListOf()
+	fun getTours(): List<Tour>? {
+		val apiTours = data?.apiTours
+		val convertedTours: MutableList<Tour> = mutableListOf()
 
-        apiTours?.mapTo(convertedTours) {
-            it.convert()
-        }
+		apiTours?.mapTo(convertedTours) {
+			it.convert()
+		}
 
-        return convertedTours
-    }
+		return convertedTours
+	}
 
-    inner class Data {
-        @SerializedName("tours")
-        var apiTours: List<ApiTour>? = null
-    }
+	inner class Data {
+		@SerializedName("tours")
+		var apiTours: List<ApiTour>? = null
+	}
 }

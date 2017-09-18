@@ -22,136 +22,136 @@ import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.Collections
 
 class SearchActivity : AppCompatActivity() {
 
-    private var rvPlaces: RecyclerView? = null
-    private var placesAdapter: PlacesAdapter? = null
-    private var places: List<Place>? = null
-    private var lastQuery: String? = null
+	private var rvPlaces: RecyclerView? = null
+	private var placesAdapter: PlacesAdapter? = null
+	private var places: List<Place>? = null
+	private var lastQuery: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_search)
 
-        initRecycler()
-        loadPlaces(null)
-    }
+		initRecycler()
+		loadPlaces(null)
+	}
 
-    override fun onPause() {
-        super.onPause()
+	override fun onPause() {
+		super.onPause()
 
-        // Observables need to be unsubscribed, when the activity comes to background
-        StSDK.getInstance().unsubscribeObservable()
-    }
+		// Observables need to be unsubscribed, when the activity comes to background
+		StSDK.getInstance().unsubscribeObservable()
+	}
 
-    // Recycler view initialization - list with dividers
-    private fun initRecycler() {
-        rvPlaces = findViewById(R.id.rv_result_places)
-        rvPlaces!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvPlaces!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        placesAdapter = PlacesAdapter(onPlaceClick, Utils.getDetailPhotoSize(this))
-        rvPlaces!!.adapter = placesAdapter
-    }
+	// Recycler view initialization - list with dividers
+	private fun initRecycler() {
+		rvPlaces = findViewById(R.id.rv_result_places)
+		rvPlaces!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+		rvPlaces!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+		placesAdapter = PlacesAdapter(onPlaceClick, Utils.getDetailPhotoSize(this))
+		rvPlaces!!.adapter = placesAdapter
+	}
 
-    // On a place click listener. Opens it's detail.
-    private val onPlaceClick: PlacesAdapter.ViewHolder.PlaceClick
-        get() = object : PlacesAdapter.ViewHolder.PlaceClick {
-            override fun onPlaceClick(position: Int) {
-                val placeDetailIntent = Intent(this@SearchActivity, PlaceDetailActivity::class.java)
-                placeDetailIntent.putExtra(ID, places!![position].id)
-                startActivity(placeDetailIntent)
-            }
-        }
+	// On a place click listener. Opens it's detail.
+	private val onPlaceClick: PlacesAdapter.ViewHolder.PlaceClick
+		get() = object : PlacesAdapter.ViewHolder.PlaceClick {
+			override fun onPlaceClick(position: Int) {
+				val placeDetailIntent = Intent(this@SearchActivity, PlaceDetailActivity::class.java)
+				placeDetailIntent.putExtra(ID, places!![position].id)
+				startActivity(placeDetailIntent)
+			}
+		}
 
-    // Use the SDK to load places
-    private fun loadPlaces(searchQuery: String?) {
-        val query = PlacesQuery()
-        query.query = searchQuery
-        query.levels = listOf("poi")
-        query.parents = listOf("city:1")
-        query.limit = 128
-        StSDK.getInstance().getPlaces(query, placesCallback)
-    }
+	// Use the SDK to load places
+	private fun loadPlaces(searchQuery: String?) {
+		val query = PlacesQuery()
+		query.query = searchQuery
+		query.levels = listOf("poi")
+		query.parents = listOf("city:1")
+		query.limit = 128
+		StSDK.getInstance().getPlaces(query, placesCallback)
+	}
 
-    private fun renderPlacesList(places: List<Place>?) {
-        this.places = places
-        placesAdapter!!.setPlaces(places!!)
-        placesAdapter!!.notifyDataSetChanged()
-    }
+	private fun renderPlacesList(places: List<Place>?) {
+		this.places = places
+		placesAdapter!!.setPlaces(places!!)
+		placesAdapter!!.notifyDataSetChanged()
+	}
 
-    private // Places are sorted by rating, best rated places are at the top of the list
-    val placesCallback: Callback<List<Place>?>
-        get() = object : Callback<List<Place>?>() {
-            override fun onSuccess(data: List<Place>?) {
-                Collections.sort(data) { p1, p2 ->
-                    if (p1.rating == p2.rating) {
-                        0
-                    } else {
-                        if (p1.rating > p2.rating) -1 else 1
-                    }
-                }
-                renderPlacesList(data)
-            }
+	private // Places are sorted by rating, best rated places are at the top of the list
+	val placesCallback: Callback<List<Place>?>
+		get() = object : Callback<List<Place>?>() {
+			override fun onSuccess(data: List<Place>?) {
+				Collections.sort(data) { p1, p2 ->
+					if (p1.rating == p2.rating) {
+						0
+					} else {
+						if (p1.rating > p2.rating) -1 else 1
+					}
+				}
+				renderPlacesList(data)
+			}
 
-            override fun onFailure(t: Throwable) {
-                Toast.makeText(this@SearchActivity, t.message, Toast.LENGTH_LONG).show()
-                t.printStackTrace()
-            }
-        }
+			override fun onFailure(t: Throwable) {
+				Toast.makeText(this@SearchActivity, t.message, Toast.LENGTH_LONG).show()
+				t.printStackTrace()
+			}
+		}
 
-    // SEARCH
+	// SEARCH
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.search, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        setSearchListeners(searchItem)
-        return true
-    }
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
+		menuInflater.inflate(R.menu.search, menu)
+		val searchItem = menu.findItem(R.id.action_search)
+		setSearchListeners(searchItem)
+		return true
+	}
 
-    // Sets listners for search edit text.
-    private fun setSearchListeners(searchItem: MenuItem) {
-        val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
-        val searchEdit = searchView.findViewById<EditText>(R.id.search_src_text)
+	// Sets listners for search edit text.
+	private fun setSearchListeners(searchItem: MenuItem) {
+		val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
+		val searchEdit = searchView.findViewById<EditText>(R.id.search_src_text)
 
-        searchEdit.imeOptions = EditorInfo.IME_ACTION_SEARCH
-        searchEdit.setOnEditorActionListener(getOnKeyboardEnterClickListener())
-        searchView.setOnQueryTextListener(onQueryTextListener)
-    }
+		searchEdit.imeOptions = EditorInfo.IME_ACTION_SEARCH
+		searchEdit.setOnEditorActionListener(getOnKeyboardEnterClickListener())
+		searchView.setOnQueryTextListener(onQueryTextListener)
+	}
 
 
-    private fun getOnKeyboardEnterClickListener(): TextView.OnEditorActionListener {
-        return TextView.OnEditorActionListener { tv, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                search(tv.text.toString())
-            }
-            false
-        }
-    }
+	private fun getOnKeyboardEnterClickListener(): TextView.OnEditorActionListener {
+		return TextView.OnEditorActionListener { tv, actionId, event ->
+			if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+				search(tv.text.toString())
+			}
+			false
+		}
+	}
 
-    private val onQueryTextListener: SearchView.OnQueryTextListener
-        get() = object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                search(query)
-                return true
-            }
+	private val onQueryTextListener: SearchView.OnQueryTextListener
+		get() = object : SearchView.OnQueryTextListener {
+			override fun onQueryTextSubmit(query: String): Boolean {
+				search(query)
+				return true
+			}
 
-            override fun onQueryTextChange(query: String): Boolean {
-                search(query)
-                return true
-            }
-        }
+			override fun onQueryTextChange(query: String): Boolean {
+				search(query)
+				return true
+			}
+		}
 
-    fun search(query: String) {
-        if (query != lastQuery) {
-            lastQuery = query
-            loadPlaces(query)
-        }
-    }
+	fun search(query: String) {
+		if (query != lastQuery) {
+			lastQuery = query
+			loadPlaces(query)
+		}
+	}
 
-    companion object {
-        private val TAG = SearchActivity::class.java.simpleName
-        private val ID = "id"
-    }
+	companion object {
+		private val TAG = SearchActivity::class.java.simpleName
+		private val ID = "id"
+	}
 }

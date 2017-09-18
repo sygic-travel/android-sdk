@@ -9,26 +9,26 @@ import com.sygic.travel.sdk.model.media.Usage
  */
 internal class ApiUsage : ApiModel<Usage> {
 
-    @SerializedName("square")
-    val square: String? = null
+	@SerializedName("square")
+	val square: String? = null
 
-    @SerializedName("landscape")
-    val landscape: String? = null
+	@SerializedName("landscape")
+	val landscape: String? = null
 
-    @SerializedName("portrait")
-    val portrait: String? = null
+	@SerializedName("portrait")
+	val portrait: String? = null
 
-    @SerializedName("video_preview")
-    val videoPreview: String? = null
+	@SerializedName("video_preview")
+	val videoPreview: String? = null
 
-    override fun convert(): Usage {
-        val usage = Usage()
+	override fun convert(): Usage {
+		val usage = Usage()
 
-        usage.square = square
-        usage.landscape = landscape
-        usage.portrait = portrait
-        usage.videoPreview = videoPreview
+		usage.square = square
+		usage.landscape = landscape
+		usage.portrait = portrait
+		usage.videoPreview = videoPreview
 
-        return usage
-    }
+		return usage
+	}
 }

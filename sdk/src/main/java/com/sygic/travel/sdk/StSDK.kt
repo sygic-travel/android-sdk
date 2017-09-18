@@ -14,9 +14,9 @@ import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
+import com.sygic.travel.sdk.provider.DataProvider
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
-import com.sygic.travel.sdk.provider.DataProvider
 import java.io.File
 
 /**
@@ -24,67 +24,67 @@ import java.io.File
  */
 class StSDK internal constructor() {
 
-    /**
-     * Creates and sends a request to get places, e.g. for map or list.
-     * @param placesQuery PlacesQuery encapsulating data for API request.
-     * *
-     * @param back Callback. Either [Callback.onSuccess] with places is called, or
-     * *             [Callback.onFailure] in case of an error is called.
-     */
-    fun getPlaces(placesQuery: PlacesQuery, back: Callback<List<Place>?>?) {
-        disposable = dataProvider?.getPlaces(placesQuery, back)!!
-    }
+	/**
+	 * Creates and sends a request to get places, e.g. for map or list.
+	 * @param placesQuery PlacesQuery encapsulating data for API request.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaces(placesQuery: PlacesQuery, back: Callback<List<Place>?>?) {
+		disposable = dataProvider?.getPlaces(placesQuery, back)!!
+	}
 
 
-    /**
-     *
-     * Creates and sends a request to get place with detailed information.
-     * @param id Unique id of a place - detailed information about this place will be requested.
-     * *
-     * @param back Callback. Either [Callback.onSuccess] with place is called, or
-     * *             [Callback.onFailure] in case of an error is called.
-     */
-    fun getPlaceDetailed(id: String, back: Callback<Place?>) {
-	    disposable = dataProvider?.getPlaceDetailed(id, back)!!
-    }
+	/**
+	 *
+	 * Creates and sends a request to get place with detailed information.
+	 * @param id Unique id of a place - detailed information about this place will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with place is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaceDetailed(id: String, back: Callback<Place?>) {
+		disposable = dataProvider?.getPlaceDetailed(id, back)!!
+	}
 
 
-    /**
-     *
-     * Creates and sends a request to get places with detailed information.
-     * @param ids Ids of places - detailed information about these places will be requested.
-     * *
-     * @param back Callback. Either [Callback.onSuccess] with places is called, or
-     * *             [Callback.onFailure] in case of an error is called.
-     */
-    fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
-        disposable = dataProvider?.getPlacesDetailed(ids, back)!!
-    }
+	/**
+	 *
+	 * Creates and sends a request to get places with detailed information.
+	 * @param ids Ids of places - detailed information about these places will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>) {
+		disposable = dataProvider?.getPlacesDetailed(ids, back)!!
+	}
 
 
-    /**
-     *
-     * Creates and sends a request to get the place's media.
-     * @param id Unique id of a place - media for this place will be requested.
-     * *
-     * @param back Callback. Either [Callback.onSuccess] with places is called, or
-     * *             [Callback.onFailure] in case of an error is called.
-     */
-    fun getPlaceMedia(id: String, back: Callback<List<Medium>?>) {
-        disposable = dataProvider?.getPlaceMedia(id, back)!!
-    }
+	/**
+	 *
+	 * Creates and sends a request to get the place's media.
+	 * @param id Unique id of a place - media for this place will be requested.
+	 * *
+	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
+	 * *             [Callback.onFailure] in case of an error is called.
+	 */
+	fun getPlaceMedia(id: String, back: Callback<List<Medium>?>) {
+		disposable = dataProvider?.getPlaceMedia(id, back)!!
+	}
 
 
-    /**
-     * Creates and sends a request to get the Tours.
-     * @param toursQuery ToursQuery encapsulating data for API request.
-     *
-     * @param back Callback. Either [Callback.onSuccess] with tours is called, or
-     *            [Callback.onFailure] in case of an error is called.
-     */
-    fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?) {
-        disposable = dataProvider?.getTours(toursQuery, back)!!
-    }
+	/**
+	 * Creates and sends a request to get the Tours.
+	 * @param toursQuery ToursQuery encapsulating data for API request.
+	 *
+	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
+	 *            [Callback.onFailure] in case of an error is called.
+	 */
+	fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?) {
+		disposable = dataProvider?.getTours(toursQuery, back)!!
+	}
 
 	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
@@ -119,18 +119,18 @@ class StSDK internal constructor() {
 	}
 
 
-    /**
-     * Unsubscribes a subscribed observable.
-     */
-    fun unsubscribeObservable() {
-        if (!disposable.isDisposed) {
-            disposable.dispose()
-        }
-    }
+	/**
+	 * Unsubscribes a subscribed observable.
+	 */
+	fun unsubscribeObservable() {
+		if (!disposable.isDisposed) {
+			disposable.dispose()
+		}
+	}
 
-    /*-------------------------------------------
-                PRIVATE MEMBERS & METHODS
-     -------------------------------------------*/
+	/*-------------------------------------------
+				PRIVATE MEMBERS & METHODS
+	 -------------------------------------------*/
 	private val ST_SDK_NAME_AND_VERSION = "sygic-travel-sdk-android/sdk-version"
 	private val ANDROID_VERSION = "Android/" + Build.VERSION.RELEASE
 	private val DATABASE_NAME = "st-sdk-db"
@@ -138,7 +138,7 @@ class StSDK internal constructor() {
 	private var dataProvider: DataProvider? = null
 	private var stApi: StApi? = null
 	private var stDb: StDb? = null
-    private var disposable : Disposable = Disposables.empty()
+	private var disposable: Disposable = Disposables.empty()
 
 
 	/**
@@ -191,45 +191,45 @@ class StSDK internal constructor() {
 	private fun getStDb(context: Context): StDb {
 		if (stDb == null) {
 			stDb = Room.databaseBuilder(
-					context,
-					StDb::class.java,
-					DATABASE_NAME
+				context,
+				StDb::class.java,
+				DATABASE_NAME
 			).build()
 		}
 		return stDb as StDb
 	}
 
 
-    companion object {
-        private var _instance: StSDK? = null
+	companion object {
+		private var _instance: StSDK? = null
 
 
-	    /**
-	     * Creates and returns an instance of [StSDK].
-	     * @return SDK instance
-	     */
-        fun getInstance(): StSDK {
-            if (_instance == null) {
-                synchronized(StSDK::class.java) {
-                    if (_instance == null) {
-                        _instance = StSDK()
-                    }
-                }
-            }
-            return _instance!!
-        }
+		/**
+		 * Creates and returns an instance of [StSDK].
+		 * @return SDK instance
+		 */
+		fun getInstance(): StSDK {
+			if (_instance == null) {
+				synchronized(StSDK::class.java) {
+					if (_instance == null) {
+						_instance = StSDK()
+					}
+				}
+			}
+			return _instance!!
+		}
 
 
-        /**
-         * Initialization of the SDK.
-         * @param xApiKey Api key - must be provided.
-         * @param context Application's context.
-         */
-        fun initialize(xApiKey: String, context: Context) {
-            StApiGenerator.headersInterceptor.setApiKey(xApiKey)
-            StApiGenerator.headersInterceptor.setUserAgent(getInstance().createUserAgent(context))
+		/**
+		 * Initialization of the SDK.
+		 * @param xApiKey Api key - must be provided.
+		 * @param context Application's context.
+		 */
+		fun initialize(xApiKey: String, context: Context) {
+			StApiGenerator.headersInterceptor.setApiKey(xApiKey)
+			StApiGenerator.headersInterceptor.setUserAgent(getInstance().createUserAgent(context))
 
-	        getInstance().intializeDataProvider(context)
-        }
-    }
+			getInstance().intializeDataProvider(context)
+		}
+	}
 }

@@ -35,19 +35,19 @@ internal class DataProvider(
 	 * *             [Callback.onFailure] in case of an error is called.
 	 */
 	fun getPlaces(
-			placesQuery: PlacesQuery,
-			back: Callback<List<Place>?>?
+		placesQuery: PlacesQuery,
+		back: Callback<List<Place>?>?
 	): Disposable {
 		val unpreparedObservable = stApi?.getPlaces(
-				placesQuery.query,
-				placesQuery.levelsQueryString,
-				placesQuery.categoriesQueryString,
-				placesQuery.mapTilesQueryString,
-				placesQuery.mapSpread,
-				placesQuery.boundsQueryString,
-				placesQuery.tagsQueryString,
-				placesQuery.parentsQueryString,
-				placesQuery.limit
+			placesQuery.query,
+			placesQuery.levelsQueryString,
+			placesQuery.categoriesQueryString,
+			placesQuery.mapTilesQueryString,
+			placesQuery.mapSpread,
+			placesQuery.boundsQueryString,
+			placesQuery.tagsQueryString,
+			placesQuery.parentsQueryString,
+			placesQuery.limit
 		)
 		val callback = object : Callback<PlacesResponse>() {
 			override fun onSuccess(data: PlacesResponse) {
@@ -145,10 +145,10 @@ internal class DataProvider(
 	 */
 	fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?): Disposable {
 		val unpreparedObservable = stApi?.getTours(
-				destinationId = toursQuery.destinationId,
-				page = toursQuery.page,
-				sortBy = toursQuery.sortBy?.string,
-				sortDirection = toursQuery.sortDirection?.string
+			destinationId = toursQuery.destinationId,
+			page = toursQuery.page,
+			sortBy = toursQuery.sortBy?.string,
+			sortDirection = toursQuery.sortDirection?.string
 		)
 		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
 		val callback = object : Callback<TourResponse>() {
@@ -223,8 +223,8 @@ internal class DataProvider(
 			}
 		}).start()
 	}
-	
-	
+
+
 	/**
 	 *
 	 * Prepares an [Observable] - sets [schedulers][Scheduler].
@@ -233,10 +233,10 @@ internal class DataProvider(
 	 * @return Observable ready to be subscribed to.
 	 */
 	fun <T> getPreparedObservable(
-			unpreparedObservable: Observable<T>
+		unpreparedObservable: Observable<T>
 	): Observable<T> {
 		return unpreparedObservable
-				.subscribeOn(Schedulers.newThread())
-				.observeOn(AndroidSchedulers.mainThread())
+			.subscribeOn(Schedulers.newThread())
+			.observeOn(AndroidSchedulers.mainThread())
 	}
 }

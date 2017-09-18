@@ -7,8 +7,8 @@ import com.sygic.travel.sdk.db.dao.FavoriteDao
 import com.sygic.travel.sdk.model.place.Favorite
 
 @Database(
-		entities = arrayOf(Favorite::class),
-		version = 1
+	entities = arrayOf(Favorite::class),
+	version = 1
 )
 @TypeConverters(Converters::class)
 internal abstract class StDb : RoomDatabase() {

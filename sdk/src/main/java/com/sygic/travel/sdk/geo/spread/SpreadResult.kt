@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.geo.spread
 
 import com.sygic.travel.sdk.model.place.Place
-import java.util.*
+import java.util.LinkedList
 
 /**
  *

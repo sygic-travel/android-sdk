@@ -8,21 +8,21 @@ import com.sygic.travel.sdk.model.media.Medium
  * Response containing a list of place media. Suitable for a gallery.
  */
 internal class MediaResponse : StResponse() {
-    private var data: Data? = null
+	private var data: Data? = null
 
-    fun getMedia(): List<Medium>? {
-        val media = data?.apiMedia
-        val convertedMedia: MutableList<Medium> = mutableListOf()
+	fun getMedia(): List<Medium>? {
+		val media = data?.apiMedia
+		val convertedMedia: MutableList<Medium> = mutableListOf()
 
-        media?.mapTo(convertedMedia) {
-            it.convert()
-        }
+		media?.mapTo(convertedMedia) {
+			it.convert()
+		}
 
-        return convertedMedia
-    }
+		return convertedMedia
+	}
 
-    inner class Data {
-        @SerializedName("media")
-        var apiMedia: List<ApiMedium>? = null
-    }
+	inner class Data {
+		@SerializedName("media")
+		var apiMedia: List<ApiMedium>? = null
+	}
 }

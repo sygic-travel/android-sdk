@@ -9,19 +9,19 @@ import com.sygic.travel.sdk.model.geo.Location
  */
 internal class ApiLocation : ApiModel<Location> {
 
-    @SerializedName("lat")
-    var lat: Float = 0.toFloat()
+	@SerializedName("lat")
+	var lat: Float = 0.toFloat()
 
-    @SerializedName("lng")
-    var lng: Float = 0.toFloat()
+	@SerializedName("lng")
+	var lng: Float = 0.toFloat()
 
-    override fun convert(): Location {
-        val location = Location()
+	override fun convert(): Location {
+		val location = Location()
 
-        location.lat = lat
-        location.lng = lng
+		location.lat = lat
+		location.lng = lng
 
-        return location
-    }
+		return location
+	}
 
 }

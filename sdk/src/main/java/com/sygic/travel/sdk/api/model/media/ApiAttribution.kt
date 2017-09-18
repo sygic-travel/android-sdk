@@ -9,38 +9,38 @@ import com.sygic.travel.sdk.model.media.Attribution
  */
 internal class ApiAttribution : ApiModel<Attribution> {
 
-    @SerializedName("author")
-    var author: String? = null
+	@SerializedName("author")
+	var author: String? = null
 
-    @SerializedName("author_url")
-    var authorUrl: String? = null
+	@SerializedName("author_url")
+	var authorUrl: String? = null
 
-    @SerializedName("license")
-    var license: String? = null
+	@SerializedName("license")
+	var license: String? = null
 
-    @SerializedName("license_url")
-    var licenseUrl: String? = null
+	@SerializedName("license_url")
+	var licenseUrl: String? = null
 
-    @SerializedName("other")
-    var other: String? = null
+	@SerializedName("other")
+	var other: String? = null
 
-    @SerializedName("title")
-    var title: String? = null
+	@SerializedName("title")
+	var title: String? = null
 
-    @SerializedName("title_url")
-    var titleUrl: String? = null
+	@SerializedName("title_url")
+	var titleUrl: String? = null
 
-    override fun convert(): Attribution {
-        val attribution = Attribution()
+	override fun convert(): Attribution {
+		val attribution = Attribution()
 
-        attribution.author = author
-        attribution.authorUrl = authorUrl
-        attribution.license = license
-        attribution.licenseUrl = licenseUrl
-        attribution.other = other
-        attribution.title = title
-        attribution.titleUrl = titleUrl
+		attribution.author = author
+		attribution.authorUrl = authorUrl
+		attribution.license = license
+		attribution.licenseUrl = licenseUrl
+		attribution.other = other
+		attribution.title = title
+		attribution.titleUrl = titleUrl
 
-        return attribution
-    }
+		return attribution
+	}
 }

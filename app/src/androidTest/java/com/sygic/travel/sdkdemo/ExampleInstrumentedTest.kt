@@ -13,12 +13,12 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    @Test
-    @Throws(Exception::class)
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+	@Test
+	@Throws(Exception::class)
+	fun useAppContext() {
+		// Context of the app under test.
+		val appContext = InstrumentationRegistry.getTargetContext()
 
-        assertEquals("com.sygic.travel.sdkdemo", appContext.packageName)
-    }
+		assertEquals("com.sygic.travel.sdkdemo", appContext.packageName)
+	}
 }

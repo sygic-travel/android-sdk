@@ -13,7 +13,7 @@
 
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="@string/google_maps_api_key" />
+			android:value="@string/google_maps_api_key"/>
 
 		<activity
 			android:name=".DemoMainActivity"
@@ -27,23 +27,19 @@
 		<activity
 			android:name=".map.MapsActivity"
 			android:label="@string/title_activity_maps"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".list.PlacesListActivity"
 			android:label="@string/title_activity_places"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".detail.PlaceDetailActivity"
 			android:label="@string/title_activity_place_detail"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".gallery.GalleryActivity"
 			android:label="@string/title_activity_gallery"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".gallery.PhotoActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
@@ -56,23 +52,19 @@
 		</activity>
 		<activity
 			android:name=".detail.ReferenceActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".search.SearchActivity"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:label="@string/title_activity_search"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".tours.ToursActivity"
 			android:label="@string/title_activity_tours"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 		<activity
 			android:name=".favorites.FavoritesActivity"
 			android:label="@string/title_activity_favorites"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait"></activity>
 	</application>
 </manifest>

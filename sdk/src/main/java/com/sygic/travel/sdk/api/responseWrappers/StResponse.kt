@@ -7,18 +7,18 @@ import com.google.gson.annotations.SerializedName
  * It's abstract, because of the abstract [.getData] method.
  */
 internal abstract class StResponse {
-    @SerializedName("status_code")
-    val statusCode: Int = 0
+	@SerializedName("status_code")
+	val statusCode: Int = 0
 
-    @SerializedName("error")
-    val error: Error? = null
+	@SerializedName("error")
+	val error: Error? = null
 
-    inner class Error {
-        val id: String? = null
-        val args: List<String>? = null
-    }
+	inner class Error {
+		val id: String? = null
+		val args: List<String>? = null
+	}
 
-    companion object {
-        val STATUS_OK = 200
-    }
+	companion object {
+		val STATUS_OK = 200
+	}
 }

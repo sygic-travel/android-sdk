@@ -1,6 +1,10 @@
 package com.sygic.travel.sdk.db.dao
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import com.sygic.travel.sdk.model.place.Favorite
 
 /**
@@ -21,7 +25,7 @@ interface FavoriteDao {
 	 * @return A rowid of the inserted place id (row).
 	 */
 	@Insert(onConflict = OnConflictStrategy.IGNORE)
-	fun insert(placeId: Favorite) : Long
+	fun insert(placeId: Favorite): Long
 
 	/**
 	 * Removes a given place id from the favorite table.
@@ -29,5 +33,5 @@ interface FavoriteDao {
 	 * @return A number of deleted rows.
 	 */
 	@Delete
-	fun delete(placeId: Favorite) : Int
+	fun delete(placeId: Favorite): Int
 }

@@ -21,51 +21,51 @@ import java.util.concurrent.TimeUnit
  * @see StApi
  */
 internal object StApiGenerator {
-    var headersInterceptor = HeadersInterceptor()
-    var localeInterceptor = LocaleInterceptor()
+	var headersInterceptor = HeadersInterceptor()
+	var localeInterceptor = LocaleInterceptor()
 
-    private val loggingInterceptor = HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
-    private var httpClient: OkHttpClient? = null
+	private val loggingInterceptor = HttpLoggingInterceptor()
+		.setLevel(HttpLoggingInterceptor.Level.BODY)
+	private var httpClient: OkHttpClient? = null
 
-    /**
-     *
-     * Generates an implementation of the API endpoints.
-     * @param apiClass [StApi] ought to be used unless a custom interface was created.
-     * *
-     * @param cacheDir Directory for request cache.
-     * *
-     * @param <S> Generic type of API interface.
-     * *
-     * @return An implementation of the API endpoints defined by the `apiClass` interface.
-    </S> */
-    fun <S> createStApi(apiClass: Class<S>, cacheDir: File): S {
-        return buildRetrofit(cacheDir).create(apiClass)
-    }
+	/**
+	 *
+	 * Generates an implementation of the API endpoints.
+	 * @param apiClass [StApi] ought to be used unless a custom interface was created.
+	 * *
+	 * @param cacheDir Directory for request cache.
+	 * *
+	 * @param <S> Generic type of API interface.
+	 * *
+	 * @return An implementation of the API endpoints defined by the `apiClass` interface.
+	</S> */
+	fun <S> createStApi(apiClass: Class<S>, cacheDir: File): S {
+		return buildRetrofit(cacheDir).create(apiClass)
+	}
 
-    private fun buildRetrofit(cacheDir: File): Retrofit {
-        return builder.client(getHttpClient(cacheDir)).build()
-    }
+	private fun buildRetrofit(cacheDir: File): Retrofit {
+		return builder.client(getHttpClient(cacheDir)).build()
+	}
 
-    private val apiGson = GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create()
+	private val apiGson = GsonBuilder()
+		.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+		.create()
 
-    private val builder = Retrofit.Builder()
-            .baseUrl(API_BASE_URL + VERSION_AND_LOCALE + "/")
-            .addConverterFactory(GsonConverterFactory.create(apiGson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	private val builder = Retrofit.Builder()
+		.baseUrl(API_BASE_URL + VERSION_AND_LOCALE + "/")
+		.addConverterFactory(GsonConverterFactory.create(apiGson))
+		.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
-    private fun getHttpClient(cacheDir: File): OkHttpClient? {
-        if (httpClient == null) {
-            httpClient = OkHttpClient().newBuilder()
-                    .addInterceptor(loggingInterceptor)
-                    .addInterceptor(localeInterceptor)
-                    .addInterceptor(headersInterceptor)
-                    .cache(Cache(cacheDir, (10 * 1024 * 1024).toLong()))
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .build()
-        }
-        return httpClient
-    }
+	private fun getHttpClient(cacheDir: File): OkHttpClient? {
+		if (httpClient == null) {
+			httpClient = OkHttpClient().newBuilder()
+				.addInterceptor(loggingInterceptor)
+				.addInterceptor(localeInterceptor)
+				.addInterceptor(headersInterceptor)
+				.cache(Cache(cacheDir, (10 * 1024 * 1024).toLong()))
+				.readTimeout(60, TimeUnit.SECONDS)
+				.build()
+		}
+		return httpClient
+	}
 }

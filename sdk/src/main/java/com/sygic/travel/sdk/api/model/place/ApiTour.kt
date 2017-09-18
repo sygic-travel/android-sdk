@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.api.model.place
 import com.sygic.travel.sdk.api.model.converter.ApiModel
 import com.sygic.travel.sdk.model.place.Tour
 
-internal class ApiTour: ApiModel<Tour> {
+internal class ApiTour : ApiModel<Tour> {
 	var id: String? = null
 	var supplier: String? = null
 	var title: String? = null

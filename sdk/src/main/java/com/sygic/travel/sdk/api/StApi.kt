@@ -17,43 +17,43 @@ import retrofit2.http.Query
  */
 internal interface StApi {
 
-    /*-----------------------------------------------------------------------------*/
-    /*                                     GET                                     */
-    /*-----------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------*/
+	/*                                     GET                                     */
+	/*-----------------------------------------------------------------------------*/
 
-    @GET("places/list")
-    fun getPlaces(
-            @Query("query") query: String?,
-            @Query(encoded = true, value = "levels") levels: String?,
-            @Query(encoded = true, value = "categories") categories: String?,
-            @Query(encoded = true, value = "map_tiles") mapTiles: String?,
-            @Query("map_spread") mapSpread: Int?,
-            @Query("bounds") bounds: String?,
-            @Query(encoded = true, value = "tags") tags: String?,
-            @Query(encoded = true, value = "parents") parents: String?,
-            @Query("limit") limit: Int?
-    ): Observable<Result<PlacesResponse>>
+	@GET("places/list")
+	fun getPlaces(
+		@Query("query") query: String?,
+		@Query(encoded = true, value = "levels") levels: String?,
+		@Query(encoded = true, value = "categories") categories: String?,
+		@Query(encoded = true, value = "map_tiles") mapTiles: String?,
+		@Query("map_spread") mapSpread: Int?,
+		@Query("bounds") bounds: String?,
+		@Query(encoded = true, value = "tags") tags: String?,
+		@Query(encoded = true, value = "parents") parents: String?,
+		@Query("limit") limit: Int?
+	): Observable<Result<PlacesResponse>>
 
-    @GET("places/{id}")
-    fun getPlaceDetailed(
-            @Path("id") id: String
-    ): Observable<Result<PlaceDetailedResponse>>
+	@GET("places/{id}")
+	fun getPlaceDetailed(
+		@Path("id") id: String
+	): Observable<Result<PlaceDetailedResponse>>
 
-    @GET("places")
-    fun getPlacesDetailed(
-            @Query(encoded = true, value = "ids") ids: String
-    ): Observable<Result<PlacesResponse>>
+	@GET("places")
+	fun getPlacesDetailed(
+		@Query(encoded = true, value = "ids") ids: String
+	): Observable<Result<PlacesResponse>>
 
-    @GET("places/{id}/media")
-    fun getPlaceMedia(
-            @Path("id") id: String
-    ): Observable<Result<MediaResponse>>
+	@GET("places/{id}/media")
+	fun getPlaceMedia(
+		@Path("id") id: String
+	): Observable<Result<MediaResponse>>
 
-    @GET("tours")
-    fun getTours(
-            @Query("destination_id") destinationId: String?,
-            @Query("page") page: Int?,
-            @Query("sort_by") sortBy: String?,
-            @Query("sort_direction") sortDirection: String?
-    ): Observable<Result<TourResponse>>
+	@GET("tours")
+	fun getTours(
+		@Query("destination_id") destinationId: String?,
+		@Query("page") page: Int?,
+		@Query("sort_by") sortBy: String?,
+		@Query("sort_direction") sortDirection: String?
+	): Observable<Result<TourResponse>>
 }

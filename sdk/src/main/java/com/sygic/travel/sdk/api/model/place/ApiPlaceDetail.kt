@@ -11,7 +11,7 @@ import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag
 
 internal class ApiPlaceDetail : ApiModel<Place> {
-    // PLACE
+	// PLACE
 
 	@SerializedName("id")
 	var id: String? = null
@@ -87,15 +87,15 @@ internal class ApiPlaceDetail : ApiModel<Place> {
 	@SerializedName("references")
 	var references: List<ApiReference>? = null
 
-	override fun convert(): Place{
+	override fun convert(): Place {
 		val place = Place()
-		
+
 		place.id = id
 		place.level = level
 		place.categories = categories
 		place.rating = rating
 		place.quadkey = quadkey
-		place.location= location?.convert()
+		place.location = location?.convert()
 		place.bounds = bounds?.convert()
 		place.name = name
 		place.nameSuffix = nameSuffix
@@ -105,13 +105,13 @@ internal class ApiPlaceDetail : ApiModel<Place> {
 		place.marker = marker
 		place.parentIds = parentIds
 		place.detail = convertDetail()
-		
+
 		return place
 	}
 
 	private fun convertDetail(): Detail {
 		val detail = Detail()
-		
+
 		val convertedTags: MutableList<Tag> = mutableListOf()
 		tags?.mapTo(convertedTags) {
 			it.convert()

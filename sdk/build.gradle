@@ -3,81 +3,81 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 ext {
-    stRepo = 'maven'
-    stGroupId = 'com.sygic.travel'
-    stArtifactId = 'sdk'
-    stVersion = 'dev-master'
-    stUserOrg = 'sygic-travel'
-    stPackaging = 'aar'
+	stRepo = 'maven'
+	stGroupId = 'com.sygic.travel'
+	stArtifactId = 'sdk'
+	stVersion = 'dev-master'
+	stUserOrg = 'sygic-travel'
+	stPackaging = 'aar'
 
-    stName = 'Sygic Travel Android SDK'
-    stDescription = 'Development version of Sygic Travel Android SDK.'
+	stName = 'Sygic Travel Android SDK'
+	stDescription = 'Development version of Sygic Travel Android SDK.'
 
-    stWebsiteUrl = 'https://github.com/sygic-travel/android-sdk'
-    stIssueTrackerUrl = 'https://github.com/sygic-travel/android-sdk/issues'
-    stVcsUrl = 'git@github.com:sygic-travel/android-sdk.git'
+	stWebsiteUrl = 'https://github.com/sygic-travel/android-sdk'
+	stIssueTrackerUrl = 'https://github.com/sygic-travel/android-sdk/issues'
+	stVcsUrl = 'git@github.com:sygic-travel/android-sdk.git'
 
-    stDevId = 'misomurin'
-    stDevName = 'Michal Murín'
-    stDevEmail = 'michal.murin@sygictravel.com'
-    stBintrayApiKey = 'bintray-api-key'
+	stDevId = 'misomurin'
+	stDevName = 'Michal Murín'
+	stDevEmail = 'michal.murin@sygictravel.com'
+	stBintrayApiKey = 'bintray-api-key'
 
-    stLicense = 'MIT'
-    stLicenseName = 'The MIT License'
-    stLicenseUrl = 'http://www.opensource.org/licenses/mit-license.php'
+	stLicense = 'MIT'
+	stLicenseName = 'The MIT License'
+	stLicenseUrl = 'http://www.opensource.org/licenses/mit-license.php'
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+	compileSdkVersion 26
+	buildToolsVersion "26.0.1"
 
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName stVersion
+	defaultConfig {
+		minSdkVersion 15
+		targetSdkVersion 26
+		versionCode 1
+		versionName stVersion
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    // http request, api calls
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.google.code.gson:gson:2.8.0'
+	// http request, api calls
+	compile 'com.squareup.retrofit2:retrofit:2.3.0'
+	compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+	compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+	compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+	compile 'com.squareup.okhttp3:okhttp:3.8.1'
+	compile 'com.google.code.gson:gson:2.8.0'
 
-    // RX
+	// RX
 	compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 	compile 'io.reactivex.rxjava2:rxjava:2.1.1'
 
-    // room persistance
-    compile "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
-    testCompile "android.arch.persistence.room:testing:$room_version"
+	// room persistance
+	compile "android.arch.persistence.room:runtime:$room_version"
+	kapt "android.arch.persistence.room:compiler:$room_version"
+	testCompile "android.arch.persistence.room:testing:$room_version"
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    testCompile "junit:junit:4.12"
-    testCompile "com.nhaarman:mockito-kotlin:1.4.0"
+	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+	compile 'com.android.support:appcompat-v7:26.0.0'
+	testCompile "junit:junit:4.12"
+	testCompile "com.nhaarman:mockito-kotlin:1.4.0"
 }
 
 apply from: 'maven.gradle'

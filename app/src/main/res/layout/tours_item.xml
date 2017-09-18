@@ -15,7 +15,7 @@
 		android:scaleType="centerInside"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintLeft_toLeftOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"/>
 
 	<TextView
 		android:id="@+id/tv_tour_item_name"
@@ -30,5 +30,5 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintLeft_toRightOf="@+id/iv_tour_item_photo"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_bias="0.5" />
+		app:layout_constraintVertical_bias="0.5"/>
 </android.support.constraint.ConstraintLayout>

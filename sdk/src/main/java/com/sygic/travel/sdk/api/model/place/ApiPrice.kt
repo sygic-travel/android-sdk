@@ -6,18 +6,18 @@ import com.sygic.travel.sdk.model.place.Price
 
 internal class ApiPrice : ApiModel<Price> {
 
-    @SerializedName("value")
-    var value: Float = 0.toFloat()
+	@SerializedName("value")
+	var value: Float = 0.toFloat()
 
-    @SerializedName("savings")
-    var savings: Float = 0.toFloat()
+	@SerializedName("savings")
+	var savings: Float = 0.toFloat()
 
-    override fun convert(): Price {
-        val price = Price()
+	override fun convert(): Price {
+		val price = Price()
 
-        price.value = value
-        price.savings = savings
+		price.value = value
+		price.savings = savings
 
-        return price
-    }
+		return price
+	}
 }

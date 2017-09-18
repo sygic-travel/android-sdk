@@ -9,15 +9,15 @@ import com.sygic.travel.sdkdemo.gallery.DividerDecoration
 
 class CategoriesDialog(context: Context, private val onCategoryClick: CategoriesAdapter.ViewHolder.CategoryClick) : Dialog(context) {
 
-    init {
-        render()
-    }
+	init {
+		render()
+	}
 
-    private fun render() {
-        setContentView(R.layout.categories_dialog)
-        val rvCategories = findViewById<RecyclerView>(R.id.rv_categories)
-        rvCategories.layoutManager = LinearLayoutManager(context)
-        rvCategories.addItemDecoration(DividerDecoration(context, R.drawable.line_divider))
-        rvCategories.adapter = CategoriesAdapter(onCategoryClick)
-    }
+	private fun render() {
+		setContentView(R.layout.categories_dialog)
+		val rvCategories = findViewById<RecyclerView>(R.id.rv_categories)
+		rvCategories.layoutManager = LinearLayoutManager(context)
+		rvCategories.addItemDecoration(DividerDecoration(context, R.drawable.line_divider))
+		rvCategories.adapter = CategoriesAdapter(onCategoryClick)
+	}
 }

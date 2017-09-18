@@ -10,23 +10,23 @@ import com.sygic.travel.sdk.model.media.Medium
  */
 internal class ApiMainMedia : ApiModel<MainMedia> {
 
-    @SerializedName("usage")
-    val usage: ApiUsage? = null
+	@SerializedName("usage")
+	val usage: ApiUsage? = null
 
-    @SerializedName("media")
-    val media: List<ApiMedium>? = null
+	@SerializedName("media")
+	val media: List<ApiMedium>? = null
 
-    override fun convert(): MainMedia {
-        val mainMedia = MainMedia()
+	override fun convert(): MainMedia {
+		val mainMedia = MainMedia()
 
-        val convertedMedia: MutableList<Medium> = mutableListOf()
-        media?.mapTo(convertedMedia) {
-            it.convert()
-        }
+		val convertedMedia: MutableList<Medium> = mutableListOf()
+		media?.mapTo(convertedMedia) {
+			it.convert()
+		}
 
-        mainMedia.usage = usage?.convert()
-        mainMedia.media = convertedMedia
+		mainMedia.usage = usage?.convert()
+		mainMedia.media = convertedMedia
 
-        return mainMedia
-    }
+		return mainMedia
+	}
 }

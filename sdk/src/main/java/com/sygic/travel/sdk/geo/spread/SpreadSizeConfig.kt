@@ -25,17 +25,17 @@ class SpreadSizeConfig
  * @param minimalRating Minimal rating to show the place's marker.
  */
 (
-        val radius: Int,
-        val margin: Int,
-        val name: String,
-        val isPhotoRequired: Boolean,
-        val minimalRating: Float
+	val radius: Int,
+	val margin: Int,
+	val name: String,
+	val isPhotoRequired: Boolean,
+	val minimalRating: Float
 ) {
-    companion object {
-        val SMALL = "small"
-        val MEDIUM = "medium"
-        val BIG = "big"
-        val POPULAR = "popular"
-        val INVISIBLE = "invisible"
-    }
+	companion object {
+		val SMALL = "small"
+		val MEDIUM = "medium"
+		val BIG = "big"
+		val POPULAR = "popular"
+		val INVISIBLE = "invisible"
+	}
 }

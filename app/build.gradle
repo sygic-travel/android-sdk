@@ -2,73 +2,73 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+	compileSdkVersion 26
+	buildToolsVersion "26.0.1"
 
-    defaultConfig {
-        applicationId "com.sygic.travel.sdkdemo"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+	defaultConfig {
+		applicationId "com.sygic.travel.sdkdemo"
+		minSdkVersion 15
+		targetSdkVersion 26
+		versionCode 1
+		versionName "1.0"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+	}
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
 }
 
 dependencies {
-    // local lib files
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+	// local lib files
+	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    // SDK
-    compile project(":sdk")
+	// SDK
+	compile project(":sdk")
 
-    // google
-    compile 'com.google.android.gms:play-services-location:11.0.4'
-    compile 'com.google.android.gms:play-services-maps:11.0.4'
-    compile 'com.google.android:flexbox:0.3.0'
+	// google
+	compile 'com.google.android.gms:play-services-location:11.0.4'
+	compile 'com.google.android.gms:play-services-maps:11.0.4'
+	compile 'com.google.android:flexbox:0.3.0'
 
-    // Android
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.android.support:design:26.0.0'
-    compile 'com.android.support:cardview-v7:26.0.0'
-    compile 'com.android.support:recyclerview-v7:26.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+	// Android
+	compile 'com.android.support:appcompat-v7:26.0.0'
+	compile 'com.android.support:design:26.0.0'
+	compile 'com.android.support:cardview-v7:26.0.0'
+	compile 'com.android.support:recyclerview-v7:26.0.0'
+	compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    // photos
-    compile 'com.squareup.picasso:picasso:2.5.2'
+	// photos
+	compile 'com.squareup.picasso:picasso:2.5.2'
 
-    // tests
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
+	// tests
+	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	testCompile 'junit:junit:4.12'
 
-    // add 2 task in run config to make kotlin test working
-    // for junit
-    task copyTestClasses(type: Copy) {
-        from "build/tmp/kotlin-classes/debugUnitTest"
-        into "build/intermediates/classes/debug"
-    }
-    // for instrumented test
-    task copySdkClasses(type: Copy) {
-        from "build/tmp/kotlin-classes/debug"
-        into "build/intermediates/classes/debug"
-    }
+	// add 2 task in run config to make kotlin test working
+	// for junit
+	task copyTestClasses(type: Copy) {
+		from "build/tmp/kotlin-classes/debugUnitTest"
+		into "build/intermediates/classes/debug"
+	}
+	// for instrumented test
+	task copySdkClasses(type: Copy) {
+		from "build/tmp/kotlin-classes/debug"
+		into "build/intermediates/classes/debug"
+	}
 
-    afterEvaluate {
-        compileDebugUnitTestSources.dependsOn copyTestClasses
-        compileDebugAndroidTestSources.dependsOn copySdkClasses
-    }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+	afterEvaluate {
+		compileDebugUnitTestSources.dependsOn copyTestClasses
+		compileDebugAndroidTestSources.dependsOn copySdkClasses
+	}
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 repositories {
-    mavenCentral()
-    google()
+	mavenCentral()
+	google()
 }

@@ -9,23 +9,23 @@ import com.sygic.travel.sdk.model.media.Source
  */
 internal class ApiSource : ApiModel<Source> {
 
-    @SerializedName("name")
-    var name: String? = null
+	@SerializedName("name")
+	var name: String? = null
 
-    @SerializedName("external_id")
-    var externalId: String? = null
+	@SerializedName("external_id")
+	var externalId: String? = null
 
-    @SerializedName("provider")
-    var provider: String? = null
+	@SerializedName("provider")
+	var provider: String? = null
 
-    override fun convert(): Source {
-        val source = Source()
+	override fun convert(): Source {
+		val source = Source()
 
-        source.name = name
-        source.externalId = externalId
-        source.provider = provider
+		source.name = name
+		source.externalId = externalId
+		source.provider = provider
 
-        return source
-    }
+		return source
+	}
 
 }

@@ -6,34 +6,34 @@ package com.sygic.travel.sdk.model.query
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
 class ToursQuery(
-        val destinationId: String,
-        val page: Int?,
-        val sortBy: SortBy?,
-        val sortDirection: SortDirection?
+	val destinationId: String,
+	val page: Int?,
+	val sortBy: SortBy?,
+	val sortDirection: SortDirection?
 ) {
 
-    enum class SortBy constructor(sortBy: String) {
-        PRICE("price"),
-        RATING("rating"),
-        TOP_SELLERS("top_sellers");
+	enum class SortBy constructor(sortBy: String) {
+		PRICE("price"),
+		RATING("rating"),
+		TOP_SELLERS("top_sellers");
 
-        var string: String
-            internal set
+		var string: String
+			internal set
 
-        init {
-            this.string = sortBy
-        }
-    }
+		init {
+			this.string = sortBy
+		}
+	}
 
-    enum class SortDirection constructor(sortDirection: String) {
-        ASC("asc"),
-        DESC("desc");
+	enum class SortDirection constructor(sortDirection: String) {
+		ASC("asc"),
+		DESC("desc");
 
-        var string: String
-            internal set
+		var string: String
+			internal set
 
-        init {
-            this.string = sortDirection
-        }
-    }
+		init {
+			this.string = sortDirection
+		}
+	}
 }

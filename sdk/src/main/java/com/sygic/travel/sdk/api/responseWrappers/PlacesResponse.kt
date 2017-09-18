@@ -9,21 +9,21 @@ import com.sygic.travel.sdk.model.place.Place
  * spread on a map.
  */
 internal class PlacesResponse : StResponse() {
-    private var data: Data? = null
+	private var data: Data? = null
 
-    fun getPlaces(): List<Place>? {
-        val places = data?.apiPlaces
-        val convertedPlaces: MutableList<Place> = mutableListOf()
+	fun getPlaces(): List<Place>? {
+		val places = data?.apiPlaces
+		val convertedPlaces: MutableList<Place> = mutableListOf()
 
-        places?.mapTo(convertedPlaces) {
-            it.convert()
-        }
+		places?.mapTo(convertedPlaces) {
+			it.convert()
+		}
 
-        return convertedPlaces
-    }
+		return convertedPlaces
+	}
 
-    inner class Data {
-        @SerializedName("places")
-        var apiPlaces: List<ApiPlaceDetail>? = null
-    }
+	inner class Data {
+		@SerializedName("places")
+		var apiPlaces: List<ApiPlaceDetail>? = null
+	}
 }
