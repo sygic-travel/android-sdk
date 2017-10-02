@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.sygic.travel.sdk.StSDK
 import com.sygic.travel.sdkdemo.favorites.FavoritesActivity
 import com.sygic.travel.sdkdemo.list.PlacesListActivity
 import com.sygic.travel.sdkdemo.map.MapsActivity
@@ -19,7 +18,6 @@ class DemoMainActivity : AppCompatActivity() {
 
 		// Sygic Travel SDK initialization. Must be called on the application start. You can initialize the SDK
 		// in your Application class' onCreate() method.
-		StSDK.initialize(getString(R.string.api_key), this)
 		initUI()
 	}
 

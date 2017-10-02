@@ -7,14 +7,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.ImageView
+import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class GalleryActivity : AppCompatActivity() {
-
+	private lateinit var stSdk: StSDK
 	private var rvGallery: RecyclerView? = null
 	private var galleryAdapter: GalleryAdapter? = null
 	private var gallery: List<Medium>? = null
@@ -22,19 +24,13 @@ class GalleryActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_gallery)
+		stSdk = (application as Application).stSdk
 
 		initRecycler()
 		val id = intent.getStringExtra(ID)
 
 		// Load photos from API, using id
-		StSDK.getInstance().getPlaceMedia(id, mediaCallback)
-	}
-
-	override fun onPause() {
-		super.onPause()
-
-		// Observables need to be unsubscribed, when the activity comes to background
-		StSDK.getInstance().unsubscribeObservable()
+		stSdk.getPlaceMedia(id, mediaCallback)
 	}
 
 	private fun initRecycler() {
@@ -57,16 +53,16 @@ class GalleryActivity : AppCompatActivity() {
 
 	private // Update the adapter's data.
 	val mediaCallback: Callback<List<Medium>?>
-		get() = object : Callback<List<Medium>?>() {
-			override fun onSuccess(data: List<Medium>?) {
+		get() = object : UiCallback<List<Medium>?>(this) {
+			override fun onUiSuccess(data: List<Medium>?) {
 				this@GalleryActivity.gallery = data
 				galleryAdapter!!.setGallery(data!!)
 				galleryAdapter!!.notifyDataSetChanged()
 			}
 
-			override fun onFailure(t: Throwable) {
+			override fun onUiFailure(exception: Throwable) {
 				Log.d(TAG, "Media: onFailure")
-				t.printStackTrace()
+				exception.printStackTrace()
 			}
 		}
 

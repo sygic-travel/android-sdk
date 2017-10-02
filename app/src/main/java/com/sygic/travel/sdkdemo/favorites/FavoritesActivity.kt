@@ -8,50 +8,48 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
+import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class FavoritesActivity : AppCompatActivity() {
-
+	private lateinit var stSdk: StSDK
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
 
-	private val favoritesIdsCallback = object : Callback<List<String>?>() {
+	private val favoritesIdsCallback = object : UiCallback<List<String>?>(this) {
 		override fun onSuccess(data: List<String>?) {
 			// Places are sorted by rating, best rated places are at the top of the list
 			loadFavorites(data!!)
 		}
 
-		override fun onFailure(t: Throwable) {
-			runOnUiThread {
-				Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
-			}
-			t.printStackTrace()
+		override fun onUiFailure(exception: Throwable) {
+			Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
+			exception.printStackTrace()
 		}
 	}
 
-	private val favoritesCallback = object : Callback<List<Place>?>() {
-		override fun onSuccess(data: List<Place>?) {
+	private val favoritesCallback = object : UiCallback<List<Place>?>(this) {
+		override fun onUiSuccess(data: List<Place>?) {
 			// Places are sorted by rating, best rated places are at the top of the list
 			renderPlacesList(data!!)
 		}
 
-		override fun onFailure(t: Throwable) {
-			runOnUiThread {
-				Toast.makeText(this@FavoritesActivity, t.message, Toast.LENGTH_LONG).show()
-			}
-			t.printStackTrace()
+		override fun onUiFailure(exception: Throwable) {
+			Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
+			exception.printStackTrace()
 		}
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_list)
+		stSdk = (application as Application).stSdk
 
 		initRecycler()
 	}
@@ -81,12 +79,12 @@ class FavoritesActivity : AppCompatActivity() {
 
 	// Use the SDK to load favorite places' ids from database
 	private fun loadFavoritesIds() {
-		StSDK.getInstance().getFavoritesIds(favoritesIdsCallback)
+		stSdk.getFavoritesIds(favoritesIdsCallback)
 	}
 
 	// Use the SDK to load favorite place from api
 	private fun loadFavorites(favoritesIds: List<String>) {
-		StSDK.getInstance().getPlacesDetailed(favoritesIds, favoritesCallback)
+		stSdk.getPlacesDetailed(favoritesIds, favoritesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>) {

@@ -5,47 +5,44 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
+import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag
+import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class PlaceDetailActivity : AppCompatActivity() {
-	private val stSdk = StSDK.getInstance()
-
+	private lateinit var stSdk: StSDK
 	private var views: Views? = null
 	private var id: String? = null
 	private var ratingPattern: String? = null
 	private var tagPadding: Int = 0
 
-	private val favoriteAddRemoveCallback = object : Callback<String?>() {
-		override fun onSuccess(data: String?) {}
+	private val favoriteAddRemoveCallback = object : UiCallback<Unit>(this) {
+		override fun onUiSuccess(data: Unit) {}
 
-		override fun onFailure(t: Throwable) {
-			runOnUiThread { Toast.makeText(this@PlaceDetailActivity, t.message, Toast.LENGTH_LONG).show() }
-			t.printStackTrace()
+		override fun onUiFailure(exception: Throwable) {
+			Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
+			exception.printStackTrace()
 		}
 	}
 
-	private val loadAllFavoritesIdsCallback = object : Callback<List<String>?>() {
+	private val loadAllFavoritesIdsCallback = object : UiCallback<List<String>?>(this) {
 		override fun onSuccess(data: List<String>?) {
 			val isFavorite = data?.contains(id)!!
 			views?.cbFavorite?.isChecked = isFavorite
 			setOnFavoriteChangeListener()
 		}
 
-		override fun onFailure(t: Throwable) {
+		override fun onFailure(exception: Throwable) {
 			setOnFavoriteChangeListener()
 		}
 	}
@@ -53,6 +50,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_place_detail)
+		stSdk = (application as Application).stSdk
 
 		id = intent.getStringExtra(ID)
 		views = Views()
@@ -69,23 +67,16 @@ class PlaceDetailActivity : AppCompatActivity() {
 	private fun setOnFavoriteChangeListener() {
 		views?.cbFavorite?.setOnCheckedChangeListener({ _, isChecked ->
 			if (isChecked) {
-				StSDK.getInstance().addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
+				stSdk.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
 			} else {
-				StSDK.getInstance().removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
+				stSdk.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
 			}
 		})
 	}
 
-	override fun onPause() {
-		super.onPause()
-
-		// Observables need to be unsubscribed, when the activity comes to background
-		StSDK.getInstance().unsubscribeObservable()
-	}
-
 	private fun loadPlaceDetail() {
 		// Use the SDK to load detailed information about a place
-		StSDK.getInstance().getPlaceDetailed(id!!, placeCallback)
+		stSdk.getPlaceDetailed(id!!, placeCallback)
 	}
 
 	private fun renderPlaceDetail(place: Place) {
@@ -207,13 +198,13 @@ class PlaceDetailActivity : AppCompatActivity() {
 	// This callback is passed to SDK's method for loading detailed information
 	private // if successful, the SDK return specific data, so it can be displayed
 	val placeCallback: Callback<Place?>
-		get() = object : Callback<Place?>() {
-			override fun onSuccess(data: Place?) {
+		get() = object : UiCallback<Place?>(this) {
+			override fun onUiSuccess(data: Place?) {
 				renderPlaceDetail(data!!)
 			}
 
-			override fun onFailure(t: Throwable) {
-				Toast.makeText(this@PlaceDetailActivity, t.message, Toast.LENGTH_LONG).show()
+			override fun onUiFailure(exception: Throwable) {
+				Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
 			}
 		}
 
