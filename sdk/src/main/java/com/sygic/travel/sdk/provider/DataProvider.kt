@@ -1,12 +1,6 @@
 package com.sygic.travel.sdk.provider
 
-import com.sygic.travel.sdk.api.Callback
 import com.sygic.travel.sdk.api.StApi
-import com.sygic.travel.sdk.api.StObserver
-import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
-import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
-import com.sygic.travel.sdk.api.responseWrappers.TourResponse
 import com.sygic.travel.sdk.db.StDb
 import com.sygic.travel.sdk.model.media.Medium
 import com.sygic.travel.sdk.model.place.Favorite
@@ -14,31 +8,23 @@ import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 
 /**
  * Data provider contains methods for fetching data either from API or a database.
  */
 internal class DataProvider(
-	val stApi: StApi? = null,
-	val stDb: StDb? = null
+	private val stApi: StApi,
+	private val stDb: StDb
 ) {
 	/**
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.
-	 * *
-	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
-	 * *             [Callback.onFailure] in case of an error is called.
 	 */
 	fun getPlaces(
-		placesQuery: PlacesQuery,
-		back: Callback<List<Place>?>?
-	): Disposable {
-		val unpreparedObservable = stApi?.getPlaces(
+		placesQuery: PlacesQuery
+	): List<Place>? {
+		val request = stApi.getPlaces(
 			placesQuery.query,
 			placesQuery.levelsQueryString,
 			placesQuery.categoriesQueryString,
@@ -49,194 +35,84 @@ internal class DataProvider(
 			placesQuery.parentsQueryString,
 			placesQuery.limit
 		)
-		val callback = object : Callback<PlacesResponse>() {
-			override fun onSuccess(data: PlacesResponse) {
-				back?.onSuccess(data.getPlaces())
-			}
-
-			override fun onFailure(t: Throwable) {
-				back?.onFailure(t)
-			}
-		}
-		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
-		return preparedObservable.subscribeWith(StObserver(callback, false))
+		val response = request.execute()
+		return response.body()?.getPlaces()
 	}
 
 
 	/**
-	 *
 	 * Creates and sends a request to get place with detailed information.
 	 * @param id Unique id of a place - detailed information about this place will be requested.
-	 * *
-	 * @param back Callback. Either [Callback.onSuccess] with place is called, or
-	 * *             [Callback.onFailure] in case of an error is called.
 	 */
-	fun getPlaceDetailed(id: String, back: Callback<Place?>?): Disposable {
-		val unpreparedObservable = stApi?.getPlaceDetailed(id)
-		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
-		val callback = object : Callback<PlaceDetailedResponse>() {
-			override fun onSuccess(data: PlaceDetailedResponse) {
-				back?.onSuccess(data.getPlace())
-			}
-
-			override fun onFailure(t: Throwable) {
-				back?.onFailure(t)
-			}
-		}
-		return preparedObservable.subscribeWith(StObserver(callback, false))
+	fun getPlaceDetailed(id: String): Place? {
+		val request = stApi.getPlaceDetailed(id)
+		return request.execute().body()?.getPlace()
 	}
 
 
 	/**
-	 *
 	 * Creates and sends a request to get places with detailed information.
 	 * @param ids Ids of places - detailed information about these places will be requested.
-	 * *
-	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
-	 * *             [Callback.onFailure] in case of an error is called.
 	 */
-	fun getPlacesDetailed(ids: List<String>, back: Callback<List<Place>?>?): Disposable {
+	fun getPlacesDetailed(ids: List<String>): List<Place>? {
 		val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
-		val unpreparedObservable = stApi?.getPlacesDetailed(queryIds)
-		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
-		val callback = object : Callback<PlacesResponse>() {
-			override fun onSuccess(data: PlacesResponse) {
-				back?.onSuccess(data.getPlaces())
-			}
-
-			override fun onFailure(t: Throwable) {
-				back?.onFailure(t)
-			}
-		}
-		return preparedObservable.subscribeWith(StObserver(callback, false))
+		val request = stApi.getPlacesDetailed(queryIds)
+		return request.execute().body()?.getPlaces()
 	}
 
 
 	/**
-	 *
 	 * Creates and sends a request to get the place's media.
 	 * @param id Unique id of a place - media for this place will be requested.
-	 * *
-	 * @param back Callback. Either [Callback.onSuccess] with places is called, or
-	 * *             [Callback.onFailure] in case of an error is called.
 	 */
-	fun getPlaceMedia(id: String, back: Callback<List<Medium>?>?): Disposable {
-		val unpreparedObservable = stApi?.getPlaceMedia(id)
-		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
-		val callback = object : Callback<MediaResponse>() {
-			override fun onSuccess(data: MediaResponse) {
-				back?.onSuccess(data.getMedia())
-			}
-
-			override fun onFailure(t: Throwable) {
-				back?.onFailure(t)
-			}
-		}
-		return preparedObservable.subscribeWith(StObserver(callback, false))
+	fun getPlaceMedia(id: String): List<Medium>? {
+		val request = stApi.getPlaceMedia(id)
+		return request.execute().body()?.getMedia()
 	}
 
 
 	/**
 	 * Creates and sends a request to get the Tours.
 	 * @param toursQuery ToursQuery encapsulating data for API request.
-	 *
-	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
-	 *            [Callback.onFailure] in case of an error is called.
 	 */
-	fun getTours(toursQuery: ToursQuery, back: Callback<List<Tour>?>?): Disposable {
-		val unpreparedObservable = stApi?.getTours(
+	fun getTours(toursQuery: ToursQuery): List<Tour>? {
+		val request = stApi.getTours(
 			destinationId = toursQuery.destinationId,
 			page = toursQuery.page,
 			sortBy = toursQuery.sortBy?.string,
 			sortDirection = toursQuery.sortDirection?.string
 		)
-		val preparedObservable = getPreparedObservable(unpreparedObservable!!)
-		val callback = object : Callback<TourResponse>() {
-			override fun onSuccess(data: TourResponse) {
-				back?.onSuccess(data.getTours())
-			}
-
-			override fun onFailure(t: Throwable) {
-				back?.onFailure(t)
-			}
-		}
-		return preparedObservable.subscribeWith(StObserver(callback, false))
+		return request.execute().body()?.getTours()
 	}
 
 
 	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
 	 * @param id A place's id, which is stored.
-	 *
-	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
-	 *            [Callback.onFailure] in case of an error is called.
 	 */
-	fun addPlaceToFavorites(id: String, back: Callback<String>?) {
-		Thread(Runnable {
-			val rowid = stDb?.favoriteDao()?.insert(Favorite(id))
-			if (rowid != null && rowid > 0L) {
-				back?.onSuccess("Success")
-			} else {
-				back?.onFailure(Exception("Favorite not added!"))
-			}
-
-		}).start()
+	fun addPlaceToFavorites(id: String) {
+		val favorite = Favorite()
+		favorite.id = id
+		stDb.favoriteDao().insert(favorite)
 	}
 
 
 	/**
 	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
 	 * @param id A place's id, which is removed.
-	 *
-	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
-	 *            [Callback.onFailure] in case of an error is called.
 	 */
-	fun removePlaceFromFavorites(id: String, back: Callback<String>?) {
-		Thread(Runnable {
-			val removedCount = stDb?.favoriteDao()?.delete(Favorite(id))
-			if (removedCount == 1) {
-				back?.onSuccess("Success")
-			} else {
-				back?.onFailure(Exception("Favorite not removed!"))
-			}
-		}).start()
+	fun removePlaceFromFavorites(id: String) {
+		val favorite = Favorite()
+		favorite.id = id
+		stDb.favoriteDao().delete(favorite)
 	}
 
 
 	/**
 	 * Method returns a list of all favorite places' ids.
-	 * @param back Callback. Either [Callback.onSuccess] with tours is called, or
-	 *            [Callback.onFailure] in case of an error is called.
 	 */
-	fun getFavoritesIds(back: Callback<List<String>?>?) {
-		Thread(Runnable {
-			val favorites = stDb?.favoriteDao()?.loadAll()
-			val favoritesIds: MutableList<String> = mutableListOf()
-			favorites?.mapTo(favoritesIds) {
-				it.id!!
-			}
-
-			if (favoritesIds.size > 0) {
-				back?.onSuccess(favoritesIds)
-			} else {
-				back?.onFailure(Exception("No favorites loaded from DB!"))
-			}
-		}).start()
-	}
-
-
-	/**
-	 *
-	 * Prepares an [Observable] - sets [schedulers][Scheduler].
-	 * @param unpreparedObservable Observable to be prepared.
-	 * *
-	 * @return Observable ready to be subscribed to.
-	 */
-	fun <T> getPreparedObservable(
-		unpreparedObservable: Observable<T>
-	): Observable<T> {
-		return unpreparedObservable
-			.subscribeOn(Schedulers.newThread())
-			.observeOn(AndroidSchedulers.mainThread())
+	fun getFavoritesIds(): List<String> {
+		val favorites = stDb.favoriteDao().loadAll()
+		return favorites.map { it.id!! }
 	}
 }

@@ -4,8 +4,7 @@ import com.sygic.travel.sdk.api.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlaceDetailedResponse
 import com.sygic.travel.sdk.api.responseWrappers.PlacesResponse
 import com.sygic.travel.sdk.api.responseWrappers.TourResponse
-import io.reactivex.Observable
-import retrofit2.adapter.rxjava2.Result
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -32,22 +31,22 @@ internal interface StApi {
 		@Query(encoded = true, value = "tags") tags: String?,
 		@Query(encoded = true, value = "parents") parents: String?,
 		@Query("limit") limit: Int?
-	): Observable<Result<PlacesResponse>>
+	): Call<PlacesResponse>
 
 	@GET("places/{id}")
 	fun getPlaceDetailed(
 		@Path("id") id: String
-	): Observable<Result<PlaceDetailedResponse>>
+	): Call<PlaceDetailedResponse>
 
 	@GET("places")
 	fun getPlacesDetailed(
 		@Query(encoded = true, value = "ids") ids: String
-	): Observable<Result<PlacesResponse>>
+	): Call<PlacesResponse>
 
 	@GET("places/{id}/media")
 	fun getPlaceMedia(
 		@Path("id") id: String
-	): Observable<Result<MediaResponse>>
+	): Call<MediaResponse>
 
 	@GET("tours")
 	fun getTours(
@@ -55,5 +54,5 @@ internal interface StApi {
 		@Query("page") page: Int?,
 		@Query("sort_by") sortBy: String?,
 		@Query("sort_direction") sortDirection: String?
-	): Observable<Result<TourResponse>>
+	): Call<TourResponse>
 }
