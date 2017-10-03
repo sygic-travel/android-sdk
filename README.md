@@ -59,11 +59,7 @@ dependencies {
 
 **Java/Kotlin:**
 ```java
-// initialize SDK - in onCreate() method of your Application class or a launcher Activity
-// Insert real API key instead of YOUR_API_KEY in the line below. The API key can be
-// defined in the strings.xml resource file.
-
-StSDK.initialize("YOUR_API_KEY", context);
+StSDK sdk = StSDK.create("YOUR_API_KEY", context);
 ```
 To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 
@@ -71,8 +67,7 @@ To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 
 This example shows how to use the SDK to fetch a representative set of data. To define a set of places
 you need to create a [placeQuery](http://docs.sygictravelapi.com/android-sdk/1.0.1/com/sygic/travel/sdk/model/placeQuery/Query.html)
-which describes the places which will be fetched - see
-[API documentation](http://docs.sygictravelapi.com/1.0/#section-places).
+which describes the places which will be fetched - see [API documentation](http://docs.sygictravelapi.com/1.0/#section-places).
 
 Let's define a set of places we want:
 
@@ -80,6 +75,8 @@ Let's define a set of places we want:
 - marked as _Points of interest_
 - marked with category _Sightseeing_
 - only the _Top 10_ of them
+
+The callback has to implement Callback interface. The demo app contains custom UICallback helper class that will run the callback's methods on UI thread.
 
 **Java:**
 ```java	
@@ -89,70 +86,22 @@ placeQuery.setLevels(Collections.singletonList("poi"));
 placeQuery.setCategories(Collections.singletonList("sightseeing"));
 placeQuery.setParents(Collections.singletonList("city:1"));
 placeQuery.setLimit(10);
-	
+
 // Create Callback
-Callback<List<Place>> placesCallback = new Callback<List<Place>>() {
+Callback<List<Place>> placesCallback = new UICallback<List<Place>>(this) { // this is activity
 	@Override
-	public void onSuccess(List<Place> places) {
+	public void onUiSuccess(List<Place> places) {
 		// success
 	}
 
 	@Override
-	public void onFailure(Throwable t) {
+	public void onUiFailure(Throwable exception) {
 		// something went wrong
 	}
 };
 
 // Perform placeQuery
-StSDK.getInstance().getPlaces(placeQuery, placesCallback);
-```
-
-**Kotlin:**
-```kotlin	
-// Create placeQuery to get top 10 sightseeings in London
-val placeQuery = PlacesQuery()
-placeQuery.levels = listOf("poi")
-placeQuery.categories = listOf("sightseeing")
-placeQuery.parents = listOf("city:1")
-placeQuery.limit = 10
-	
-// Create Callback
-private val placesCallback = object: Callback<List<Place>?>() {
-	override fun onSuccess(data: List<Place>?) {
-		// success
-	}
-
-	override fun onFailure(t: Throwable) {
-		// something went wrong
-	}
-}
-
-// Perform placeQuery
-StSDK.getInstance().getPlaces(query, placesCallback)
-```
-
-Since the SDK uses RxAndroid it is important to unsubscribe an observable, when an activity comes 
-to background.
-
-**Java:**
-```java
-@Override
-protected void onPause() {
-	super.onPause();
-
-	// Observables need to be unsubscribed, when the activity comes to background
-	StSDK.getInstance().unsubscribeObservable();
-}
-```
-
-**Kotlin:**
-```kotlin
-override fun onPause() {
-	super.onPause()
-
-	// Observables need to be unsubscribed, when the activity comes to background
-	StSDK.getInstance().unsubscribeObservable()
-}
+sdk.getPlaces(placeQuery, placesCallback);
 ```
 
 ## Basic Classes
@@ -161,7 +110,7 @@ For more details check our [documentation](http://docs.sygictravelapi.com/androi
 Class               | Description
 :-------------------|:---------------------
 **`StSDK`**         | Singleton instance for fetching data
-**`Callback<T>`**   | Callback class with `onSuccess(T data)` and `onFailure(Throwable t)` methods. `T` is a generic type.
+**`Callback<T>`**   | Callback interface with `onSuccess(T data)` and `onFailure(Throwable t)` methods. `T` is a generic type.
 **`PlaceQuery`**    | Entity used when querying for `Places`
 **`Place`**         | Basic `Place` entity
 **`Detail`**        | Detailed object including additional `Place` properties, extends `Place`

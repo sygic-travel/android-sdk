@@ -10,7 +10,6 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -54,7 +53,6 @@ internal object StApiGenerator {
 	private val builder = Retrofit.Builder()
 		.baseUrl(API_BASE_URL + VERSION_AND_LOCALE + "/")
 		.addConverterFactory(GsonConverterFactory.create(apiGson))
-		.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
 	private fun getHttpClient(cacheDir: File): OkHttpClient? {
 		if (httpClient == null) {

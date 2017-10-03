@@ -53,20 +53,18 @@ dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19'
 
 	// http request, api calls
 	implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 	implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-	implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 	implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 	implementation 'com.google.code.gson:gson:2.8.0'
 
-	// RX
-	implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-	implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
 
-	// room persistance
+	// room persistence
 	implementation "android.arch.persistence.room:runtime:$room_version"
 	kapt "android.arch.persistence.room:compiler:$room_version"
 	testImplementation "android.arch.persistence.room:testing:$room_version"
@@ -78,6 +76,12 @@ dependencies {
 	implementation 'com.android.support:appcompat-v7:26.1.0'
 	testImplementation "junit:junit:4.12"
 	testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
+}
+
+kotlin {
+	experimental {
+		coroutines "enable"
+	}
 }
 
 apply from: 'maven.gradle'

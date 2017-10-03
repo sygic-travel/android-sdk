@@ -2,7 +2,6 @@ package com.sygic.travel.sdkdemo.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -14,18 +13,20 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.Collections
+import java.util.*
 
 class SearchActivity : AppCompatActivity() {
-
+	private lateinit var stSdk: StSDK
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
@@ -34,16 +35,10 @@ class SearchActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_search)
+		stSdk = (application as Application).stSdk
 
 		initRecycler()
 		loadPlaces(null)
-	}
-
-	override fun onPause() {
-		super.onPause()
-
-		// Observables need to be unsubscribed, when the activity comes to background
-		StSDK.getInstance().unsubscribeObservable()
 	}
 
 	// Recycler view initialization - list with dividers
@@ -72,7 +67,7 @@ class SearchActivity : AppCompatActivity() {
 		query.levels = listOf("poi")
 		query.parents = listOf("city:1")
 		query.limit = 128
-		StSDK.getInstance().getPlaces(query, placesCallback)
+		stSdk.getPlaces(query, placesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>?) {
@@ -83,7 +78,7 @@ class SearchActivity : AppCompatActivity() {
 
 	private // Places are sorted by rating, best rated places are at the top of the list
 	val placesCallback: Callback<List<Place>?>
-		get() = object : Callback<List<Place>?>() {
+		get() = object : UiCallback<List<Place>?>(this) {
 			override fun onSuccess(data: List<Place>?) {
 				Collections.sort(data) { p1, p2 ->
 					if (p1.rating == p2.rating) {
@@ -92,12 +87,14 @@ class SearchActivity : AppCompatActivity() {
 						if (p1.rating > p2.rating) -1 else 1
 					}
 				}
-				renderPlacesList(data)
+				runOnUiThread {
+					renderPlacesList(data)
+				}
 			}
 
-			override fun onFailure(t: Throwable) {
-				Toast.makeText(this@SearchActivity, t.message, Toast.LENGTH_LONG).show()
-				t.printStackTrace()
+			override fun onUiFailure(exception: Throwable) {
+				Toast.makeText(this@SearchActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
 			}
 		}
 
@@ -112,7 +109,7 @@ class SearchActivity : AppCompatActivity() {
 
 	// Sets listners for search edit text.
 	private fun setSearchListeners(searchItem: MenuItem) {
-		val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
+		val searchView = searchItem.actionView as SearchView
 		val searchEdit = searchView.findViewById<EditText>(R.id.search_src_text)
 
 		searchEdit.imeOptions = EditorInfo.IME_ACTION_SEARCH
@@ -122,7 +119,7 @@ class SearchActivity : AppCompatActivity() {
 
 
 	private fun getOnKeyboardEnterClickListener(): TextView.OnEditorActionListener {
-		return TextView.OnEditorActionListener { tv, actionId, event ->
+		return TextView.OnEditorActionListener { tv, actionId, _ ->
 			if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 				search(tv.text.toString())
 			}

@@ -11,13 +11,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.api.Callback
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator
 import com.sygic.travel.sdk.geo.spread.CanvasSize
 import com.sygic.travel.sdk.geo.spread.SpreadResult
@@ -26,17 +23,17 @@ import com.sygic.travel.sdk.geo.spread.Spreader
 import com.sygic.travel.sdk.model.geo.Bounds
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
+	private lateinit var stSdk: StSDK
 	private var map: GoogleMap? = null
 	private var spreader: Spreader? = null
 
@@ -53,6 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_maps)
+		stSdk = (application as Application).stSdk
 
 		vMain = findViewById(R.id.ll_main)
 		spreader = Spreader(resources)
@@ -63,13 +61,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		val mapFragment = supportFragmentManager
 			.findFragmentById(R.id.map) as SupportMapFragment
 		mapFragment.getMapAsync(this)
-	}
-
-	override fun onPause() {
-		super.onPause()
-
-		// Observables need to be unsubscribed, when the activity comes to background
-		StSDK.getInstance().unsubscribeObservable()
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -89,8 +80,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	// Google maps specific method called, when the map is initialiazed and ready.
 	override fun onMapReady(googleMap: GoogleMap) {
 		map = googleMap
-
-		placesCallback = getPlacesCallback()
 
 		// Center map to London
 		val londonLatLng = LatLng(51.5116983, -0.1205079)
@@ -149,7 +138,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		query.bounds = mapBounds
 		query.parents = listOf("city:1")
 		query.limit = 32
-		StSDK.getInstance().getPlaces(query, placesCallback)
+		stSdk.getPlaces(query, getPlacesCallback())
 	}
 
 	// On category click listener
@@ -289,20 +278,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		return markerHue
 	}
 
-	private fun getPlacesCallback(): Callback<List<Place>?>? {
+	private fun getPlacesCallback(): Callback<List<Place>?> {
 		if (placesCallback == null) {
-			placesCallback = object : Callback<List<Place>?>() {
-				override fun onSuccess(data: List<Place>?) {
+			placesCallback = object : UiCallback<List<Place>?>(this) {
+				override fun onUiSuccess(data: List<Place>?) {
 					showPlacesOnMap(data)
 				}
 
-				override fun onFailure(t: Throwable) {
-					Toast.makeText(this@MapsActivity, t.message, Toast.LENGTH_LONG).show()
-					t.printStackTrace()
+				override fun onUiFailure(exception: Throwable) {
+					Toast.makeText(this@MapsActivity, exception.message, Toast.LENGTH_LONG).show()
+					exception.printStackTrace()
 				}
 			}
 		}
-		return placesCallback
+		return placesCallback!!
 	}
 
 	companion object {
