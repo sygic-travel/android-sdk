@@ -14,6 +14,7 @@ import com.sygic.travel.sdk.model.place.Tour
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdk.model.query.ToursQuery
 import com.sygic.travel.sdk.provider.DataProvider
+import com.sygic.travel.sdk.utils.runAsync
 import com.sygic.travel.sdk.utils.runWithCallback
 import java.io.File
 
@@ -70,11 +71,29 @@ class StSDK internal constructor(context: Context, cacheDir: File) {
 
 
 	/**
+	 * Creates and sends a request to get places, e.g. for map or list.
+	 * @param placesQuery PlacesQuery encapsulating data for API request.
+	 */
+	suspend fun getPlaces(placesQuery: PlacesQuery): List<Place>? {
+		return runAsync { dataProvider.getPlaces(placesQuery) }
+	}
+
+
+	/**
 	 * Creates and sends a request to get place with detailed information.
 	 * @param id Unique id of a place - detailed information about this place will be requested.
 	 */
 	fun getPlaceDetailed(id: String, callback: Callback<Place?>) {
 		runWithCallback({ dataProvider.getPlaceDetailed(id) }, callback)
+	}
+
+
+	/**
+	 * Creates and sends a request to get place with detailed information.
+	 * @param id Unique id of a place - detailed information about this place will be requested.
+	 */
+	suspend fun getPlaceDetailed(id: String): Place? {
+		return runAsync { dataProvider.getPlaceDetailed(id) }
 	}
 
 
@@ -88,11 +107,29 @@ class StSDK internal constructor(context: Context, cacheDir: File) {
 
 
 	/**
+	 * Creates and sends a request to get places with detailed information.
+	 * @param ids Ids of places - detailed information about these places will be requested.
+	 */
+	suspend fun getPlacesDetailed(ids: List<String>): List<Place>? {
+		return runAsync { dataProvider.getPlacesDetailed(ids) }
+	}
+
+
+	/**
 	 * Creates and sends a request to get the place's media.
 	 * @param id Unique id of a place - media for this place will be requested.
 	 */
 	fun getPlaceMedia(id: String, callback: Callback<List<Medium>?>) {
 		runWithCallback({ dataProvider.getPlaceMedia(id) }, callback)
+	}
+
+
+	/**
+	 * Creates and sends a request to get the place's media.
+	 * @param id Unique id of a place - media for this place will be requested.
+	 */
+	suspend fun getPlaceMedia(id: String): List<Medium>? {
+		return runAsync { dataProvider.getPlaceMedia(id) }
 	}
 
 
@@ -106,11 +143,29 @@ class StSDK internal constructor(context: Context, cacheDir: File) {
 
 
 	/**
+	 * Creates and sends a request to get the Tours.
+	 * @param toursQuery ToursQuery encapsulating data for API request.
+	 */
+	suspend fun getTours(toursQuery: ToursQuery): List<Tour>? {
+		return runAsync { dataProvider.getTours(toursQuery) }
+	}
+
+
+	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
 	 * @param id A place's id, which is stored.
 	 */
 	fun addPlaceToFavorites(id: String, callback: Callback<Unit>) {
 		runWithCallback({ dataProvider.addPlaceToFavorites(id) }, callback)
+	}
+
+
+	/**
+	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
+	 * @param id A place's id, which is stored.
+	 */
+	suspend fun addPlaceToFavorites(id: String) {
+		return runAsync { dataProvider.addPlaceToFavorites(id) }
 	}
 
 
@@ -124,9 +179,26 @@ class StSDK internal constructor(context: Context, cacheDir: File) {
 
 
 	/**
+	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
+	 * @param id A place's id, which is removed.
+	 */
+	suspend fun removePlaceFromFavorites(id: String) {
+		return runAsync { dataProvider.removePlaceFromFavorites(id) }
+	}
+
+
+	/**
 	 * Method returns a list of all favorite places' ids.
 	 */
 	fun getFavoritesIds(callback: Callback<List<String>?>) {
 		runWithCallback({ dataProvider.getFavoritesIds() }, callback)
+	}
+
+
+	/**
+	 * Method returns a list of all favorite places' ids.
+	 */
+	suspend fun getFavoritesIds(): List<String>? {
+		return runAsync { dataProvider.getFavoritesIds() }
 	}
 }

@@ -15,3 +15,9 @@ fun <T> runWithCallback(f: suspend () -> T, callback: Callback<T>?) {
 		}
 	}
 }
+
+suspend fun <T> runAsync(f: suspend () -> T): T {
+	return async(CommonPool) {
+		f()
+	}.await()
+}
