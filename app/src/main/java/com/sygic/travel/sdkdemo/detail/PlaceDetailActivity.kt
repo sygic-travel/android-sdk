@@ -5,18 +5,22 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.place.Reference
 import com.sygic.travel.sdk.model.place.Tag
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class PlaceDetailActivity : AppCompatActivity() {

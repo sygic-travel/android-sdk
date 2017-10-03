@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
@@ -18,8 +17,10 @@ import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.ArrayList
+import java.util.Collections
 
 class PlacesListActivity : AppCompatActivity() {
 	private lateinit var stSdk: StSDK

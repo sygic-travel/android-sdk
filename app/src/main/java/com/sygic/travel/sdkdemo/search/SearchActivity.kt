@@ -15,15 +15,15 @@ import android.widget.TextView
 import android.widget.Toast
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.model.place.Place
 import com.sygic.travel.sdk.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.Collections
 
 class SearchActivity : AppCompatActivity() {
 	private lateinit var stSdk: StSDK

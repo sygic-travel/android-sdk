@@ -11,10 +11,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator
 import com.sygic.travel.sdk.geo.spread.CanvasSize
 import com.sygic.travel.sdk.geo.spread.SpreadResult
@@ -29,8 +32,10 @@ import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	private lateinit var stSdk: StSDK
