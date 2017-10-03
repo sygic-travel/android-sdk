@@ -84,7 +84,7 @@ class ReferenceActivity : AppCompatActivity() {
 		}
 
 	private val onTouchListener: View.OnTouchListener
-		get() = View.OnTouchListener { v, event ->
+		get() = View.OnTouchListener { _, _ ->
 			touch = true
 			false
 		}

@@ -109,7 +109,7 @@ class SearchActivity : AppCompatActivity() {
 
 	// Sets listners for search edit text.
 	private fun setSearchListeners(searchItem: MenuItem) {
-		val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
+		val searchView = searchItem.actionView as SearchView
 		val searchEdit = searchView.findViewById<EditText>(R.id.search_src_text)
 
 		searchEdit.imeOptions = EditorInfo.IME_ACTION_SEARCH
@@ -119,7 +119,7 @@ class SearchActivity : AppCompatActivity() {
 
 
 	private fun getOnKeyboardEnterClickListener(): TextView.OnEditorActionListener {
-		return TextView.OnEditorActionListener { tv, actionId, event ->
+		return TextView.OnEditorActionListener { tv, actionId, _ ->
 			if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 				search(tv.text.toString())
 			}
