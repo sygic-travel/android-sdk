@@ -14,25 +14,10 @@ import java.io.IOException
 /**
  * Implements [okhttp3.Interceptor], adds headers to a requests.
  */
-internal class HeadersInterceptor : Interceptor {
-	private var apiKey: String? = null
-	private var userAgent: String? = null
-
-	/**
-	 * Sets API key
-	 * @param apiKey API key to be sent as a header in every request.
-	 */
-	fun setApiKey(apiKey: String) {
-		this.apiKey = apiKey
-	}
-
-	/**
-	 * Sets UserAgent
-	 * @param userAgent UserAgent to by sent as a header in every request.
-	 */
-	fun setUserAgent(userAgent: String) {
-		this.userAgent = userAgent
-	}
+internal class HeadersInterceptor(
+	private val apiKey: String,
+	private val userAgent: String
+) : Interceptor {
 
 	/**
 	 * Modifies the original request by adding an **API key**.
