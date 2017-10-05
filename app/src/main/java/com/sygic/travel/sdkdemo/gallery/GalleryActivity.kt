@@ -9,7 +9,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.utils.UiCallback
@@ -30,7 +30,7 @@ class GalleryActivity : AppCompatActivity() {
 		val id = intent.getStringExtra(ID)
 
 		// Load photos from API, using id
-		stSdk.getPlaceMedia(id, mediaCallback)
+		stSdk.placesFacade.getPlaceMedia(id, mediaCallback)
 	}
 
 	private fun initRecycler() {

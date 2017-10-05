@@ -15,9 +15,6 @@ class DemoMainActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_demo_main)
-
-		// Sygic Travel SDK initialization. Must be called on the application start. You can initialize the SDK
-		// in your Application class' onCreate() method.
 		initUI()
 	}
 

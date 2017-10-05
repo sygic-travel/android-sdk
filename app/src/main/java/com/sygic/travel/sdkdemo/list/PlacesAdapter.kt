@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import com.sygic.travel.sdk.model.place.Place
+import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdkdemo.R
 
 class PlacesAdapter(

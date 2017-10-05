@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.model.place.Tour
-import com.sygic.travel.sdk.model.query.ToursQuery
+import com.sygic.travel.sdk.places.model.query.ToursQuery
+import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
@@ -53,7 +53,7 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 			sortBy = ToursQuery.SortBy.RATING,
 			sortDirection = ToursQuery.SortDirection.ASC
 		)
-		stSdk.getTours(tourQuery, getToursCallback())
+		stSdk.toursFacade.getTours(tourQuery, getToursCallback())
 	}
 
 	private fun getToursCallback(): Callback<List<Tour>?> {
@@ -89,4 +89,3 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 		toursAdapter?.notifyDataSetChanged()
 	}
 }
-

@@ -14,9 +14,9 @@ import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.place.Reference
-import com.sygic.travel.sdk.model.place.Tag
+import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.Reference
+import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity
@@ -65,22 +65,22 @@ class PlaceDetailActivity : AppCompatActivity() {
 	}
 
 	private fun loadAllFavoritesIds() {
-		stSdk.getFavoritesIds(loadAllFavoritesIdsCallback)
+		stSdk.favoritesFacade.getFavoritesIds(loadAllFavoritesIdsCallback)
 	}
 
 	private fun setOnFavoriteChangeListener() {
 		views?.cbFavorite?.setOnCheckedChangeListener({ _, isChecked ->
 			if (isChecked) {
-				stSdk.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
+				stSdk.favoritesFacade.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
 			} else {
-				stSdk.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
+				stSdk.favoritesFacade.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
 			}
 		})
 	}
 
 	private fun loadPlaceDetail() {
 		// Use the SDK to load detailed information about a place
-		stSdk.getPlaceDetailed(id!!, placeCallback)
+		stSdk.placesFacade.getPlaceDetailed(id!!, placeCallback)
 	}
 
 	private fun renderPlaceDetail(place: Place) {

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import com.sygic.travel.sdk.model.place.Tour
+import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.tours.ToursAdapter.ViewHolder
 

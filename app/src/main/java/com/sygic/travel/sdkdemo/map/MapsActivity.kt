@@ -18,14 +18,14 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator
-import com.sygic.travel.sdk.geo.spread.CanvasSize
-import com.sygic.travel.sdk.geo.spread.SpreadResult
-import com.sygic.travel.sdk.geo.spread.SpreadedPlace
-import com.sygic.travel.sdk.geo.spread.Spreader
-import com.sygic.travel.sdk.model.geo.Bounds
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.places.geo.quadkey.QuadkeysGenerator
+import com.sygic.travel.sdk.places.geo.spread.CanvasSize
+import com.sygic.travel.sdk.places.geo.spread.SpreadResult
+import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
+import com.sygic.travel.sdk.places.geo.spread.Spreader
+import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
@@ -143,7 +143,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		query.bounds = mapBounds
 		query.parents = listOf("city:1")
 		query.limit = 32
-		stSdk.getPlaces(query, getPlacesCallback())
+		stSdk.placesFacade.getPlaces(query, getPlacesCallback())
 	}
 
 	// On category click listener

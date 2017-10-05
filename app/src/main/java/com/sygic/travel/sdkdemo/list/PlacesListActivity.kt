@@ -10,8 +10,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
@@ -83,7 +83,7 @@ class PlacesListActivity : AppCompatActivity() {
 		query.categories = selectedCateoriesKeys
 		query.parents = listOf("city:1")
 		query.limit = 128
-		stSdk.getPlaces(query, placesCallback)
+		stSdk.placesFacade.getPlaces(query, placesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>) {
