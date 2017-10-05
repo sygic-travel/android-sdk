@@ -1,184 +1,31 @@
 package com.sygic.travel.sdk
 
-import android.arch.persistence.room.Room
 import android.content.Context
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
-import com.sygic.travel.sdk.api.StApi
-import com.sygic.travel.sdk.db.StDb
 import com.sygic.travel.sdk.di.KodeinSetup
-import com.sygic.travel.sdk.model.media.Medium
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.place.Tour
-import com.sygic.travel.sdk.model.query.PlacesQuery
-import com.sygic.travel.sdk.model.query.ToursQuery
-import com.sygic.travel.sdk.provider.DataProvider
-import com.sygic.travel.sdk.utils.runAsync
-import com.sygic.travel.sdk.utils.runWithCallback
+import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
+import com.sygic.travel.sdk.places.facade.PlacesFacade
+import com.sygic.travel.sdk.tours.facade.ToursFacade
 
 /**
  * Provides public methods for requesting API.
  */
-class StSDK internal constructor(context: Context) {
-	companion object {
-		private val DATABASE_NAME = "st-sdk-db"
-		private lateinit var kodein: Kodein
+class StSDK(xApiKey: String, context: Context) {
+	private var kodein: Kodein = KodeinSetup.setupKodein(context, xApiKey)
 
-		/**
-		 * Creates the SDK.
-		 * @param xApiKey Api key - must be provided.
-		 * @param context Application's context.
-		 */
-		fun create(xApiKey: String, context: Context): StSDK {
-			kodein = KodeinSetup.setupKodein(context, xApiKey)
-			return StSDK(context)
+	val placesFacade: PlacesFacade
+		get() {
+			return kodein.instance()
 		}
-	}
 
+	val toursFacade: ToursFacade
+		get() {
+			return kodein.instance()
+		}
 
-	private var stApi: StApi = kodein.instance()
-	private var stDb: StDb = Room.databaseBuilder(context, StDb::class.java, DATABASE_NAME).build()
-	private var dataProvider: DataProvider = DataProvider(stApi, stDb)
-
-
-	/**
-	 * Creates and sends a request to get places, e.g. for map or list.
-	 * @param placesQuery PlacesQuery encapsulating data for API request.
-	 */
-	fun getPlaces(placesQuery: PlacesQuery, callback: Callback<List<Place>?>) {
-		runWithCallback({ dataProvider.getPlaces(placesQuery) }, callback)
-	}
-
-
-	/**
-	 * Creates and sends a request to get places, e.g. for map or list.
-	 * @param placesQuery PlacesQuery encapsulating data for API request.
-	 */
-	suspend fun getPlaces(placesQuery: PlacesQuery): List<Place>? {
-		return runAsync { dataProvider.getPlaces(placesQuery) }
-	}
-
-
-	/**
-	 * Creates and sends a request to get place with detailed information.
-	 * @param id Unique id of a place - detailed information about this place will be requested.
-	 */
-	fun getPlaceDetailed(id: String, callback: Callback<Place?>) {
-		runWithCallback({ dataProvider.getPlaceDetailed(id) }, callback)
-	}
-
-
-	/**
-	 * Creates and sends a request to get place with detailed information.
-	 * @param id Unique id of a place - detailed information about this place will be requested.
-	 */
-	suspend fun getPlaceDetailed(id: String): Place? {
-		return runAsync { dataProvider.getPlaceDetailed(id) }
-	}
-
-
-	/**
-	 * Creates and sends a request to get places with detailed information.
-	 * @param ids Ids of places - detailed information about these places will be requested.
-	 */
-	fun getPlacesDetailed(ids: List<String>, callback: Callback<List<Place>?>) {
-		runWithCallback({ dataProvider.getPlacesDetailed(ids) }, callback)
-	}
-
-
-	/**
-	 * Creates and sends a request to get places with detailed information.
-	 * @param ids Ids of places - detailed information about these places will be requested.
-	 */
-	suspend fun getPlacesDetailed(ids: List<String>): List<Place>? {
-		return runAsync { dataProvider.getPlacesDetailed(ids) }
-	}
-
-
-	/**
-	 * Creates and sends a request to get the place's media.
-	 * @param id Unique id of a place - media for this place will be requested.
-	 */
-	fun getPlaceMedia(id: String, callback: Callback<List<Medium>?>) {
-		runWithCallback({ dataProvider.getPlaceMedia(id) }, callback)
-	}
-
-
-	/**
-	 * Creates and sends a request to get the place's media.
-	 * @param id Unique id of a place - media for this place will be requested.
-	 */
-	suspend fun getPlaceMedia(id: String): List<Medium>? {
-		return runAsync { dataProvider.getPlaceMedia(id) }
-	}
-
-
-	/**
-	 * Creates and sends a request to get the Tours.
-	 * @param toursQuery ToursQuery encapsulating data for API request.
-	 */
-	fun getTours(toursQuery: ToursQuery, callback: Callback<List<Tour>?>) {
-		runWithCallback({ dataProvider.getTours(toursQuery) }, callback)
-	}
-
-
-	/**
-	 * Creates and sends a request to get the Tours.
-	 * @param toursQuery ToursQuery encapsulating data for API request.
-	 */
-	suspend fun getTours(toursQuery: ToursQuery): List<Tour>? {
-		return runAsync { dataProvider.getTours(toursQuery) }
-	}
-
-
-	/**
-	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
-	 * @param id A place's id, which is stored.
-	 */
-	fun addPlaceToFavorites(id: String, callback: Callback<Unit>) {
-		runWithCallback({ dataProvider.addPlaceToFavorites(id) }, callback)
-	}
-
-
-	/**
-	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
-	 * @param id A place's id, which is stored.
-	 */
-	suspend fun addPlaceToFavorites(id: String) {
-		return runAsync { dataProvider.addPlaceToFavorites(id) }
-	}
-
-
-	/**
-	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
-	 * @param id A place's id, which is removed.
-	 */
-	fun removePlaceFromFavorites(id: String, callback: Callback<Unit>) {
-		runWithCallback({ dataProvider.removePlaceFromFavorites(id) }, callback)
-	}
-
-
-	/**
-	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
-	 * @param id A place's id, which is removed.
-	 */
-	suspend fun removePlaceFromFavorites(id: String) {
-		return runAsync { dataProvider.removePlaceFromFavorites(id) }
-	}
-
-
-	/**
-	 * Method returns a list of all favorite places' ids.
-	 */
-	fun getFavoritesIds(callback: Callback<List<String>?>) {
-		runWithCallback({ dataProvider.getFavoritesIds() }, callback)
-	}
-
-
-	/**
-	 * Method returns a list of all favorite places' ids.
-	 */
-	suspend fun getFavoritesIds(): List<String>? {
-		return runAsync { dataProvider.getFavoritesIds() }
-	}
+	val favoritesFacade: FavoritesFacade
+		get() {
+			return kodein.instance()
+		}
 }
