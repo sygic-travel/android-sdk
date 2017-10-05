@@ -11,7 +11,7 @@ import com.sygic.travel.sdk.tours.facade.ToursFacade
 /**
  * Provides public methods for requesting API.
  */
-class StSDK(xApiKey: String, context: Context) {
+class Sdk(xApiKey: String, context: Context) {
 	private var kodein: Kodein = KodeinSetup.setupKodein(context, xApiKey)
 
 	val placesFacade: PlacesFacade
