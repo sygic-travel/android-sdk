@@ -9,7 +9,7 @@ For further details see [Full SDK documentation](http://docs.sygictravelapi.com/
 ## Requirements
 
 - Android SDK 8.0.0 platform (O, API level 26)
-- Build tools 26.0.1
+- Build tools 26.0.2
 - _API key_ for your business or project
 
 ## Deployment
@@ -55,11 +55,11 @@ dependencies {
 
 ## Initialization
 
-*API key* must be provided, otherwise every `StSDK` get method call will result in an error.
+*API key* must be provided, otherwise every `Sdk` get method call will result in an error.
 
 **Java/Kotlin:**
 ```java
-StSDK sdk = StSDK.create("YOUR_API_KEY", context);
+Sdk sdk = Sdk("YOUR_API_KEY", context);
 ```
 To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 
@@ -101,7 +101,7 @@ Callback<List<Place>> placesCallback = new UICallback<List<Place>>(this) { // th
 };
 
 // Perform placeQuery
-sdk.getPlaces(placeQuery, placesCallback);
+sdk.getPlacesFacade().getPlaces(placeQuery, placesCallback);
 ```
 
 ## Basic Classes
@@ -109,7 +109,7 @@ For more details check our [documentation](http://docs.sygictravelapi.com/androi
 
 Class               | Description
 :-------------------|:---------------------
-**`StSDK`**         | Singleton instance for fetching data
+**`Sdk`**         | Singleton instance for fetching data
 **`Callback<T>`**   | Callback interface with `onSuccess(T data)` and `onFailure(Throwable t)` methods. `T` is a generic type.
 **`PlaceQuery`**    | Entity used when querying for `Places`
 **`Place`**         | Basic `Place` entity
