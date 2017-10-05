@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
@@ -26,7 +26,7 @@ import com.sygic.travel.sdkdemo.utils.Utils
 import java.util.Collections
 
 class SearchActivity : AppCompatActivity() {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
@@ -35,7 +35,7 @@ class SearchActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_search)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		initRecycler()
 		loadPlaces(null)
@@ -67,7 +67,7 @@ class SearchActivity : AppCompatActivity() {
 		query.levels = listOf("poi")
 		query.parents = listOf("city:1")
 		query.limit = 128
-		stSdk.placesFacade.getPlaces(query, placesCallback)
+		sdk.placesFacade.getPlaces(query, placesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>?) {

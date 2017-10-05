@@ -7,7 +7,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
@@ -17,7 +17,7 @@ import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class FavoritesActivity : AppCompatActivity() {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
@@ -49,7 +49,7 @@ class FavoritesActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_list)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		initRecycler()
 	}
@@ -79,12 +79,12 @@ class FavoritesActivity : AppCompatActivity() {
 
 	// Use the SDK to load favorite places' ids from database
 	private fun loadFavoritesIds() {
-		stSdk.favoritesFacade.getFavoritesIds(favoritesIdsCallback)
+		sdk.favoritesFacade.getFavoritesIds(favoritesIdsCallback)
 	}
 
 	// Use the SDK to load favorite place from api
 	private fun loadFavorites(favoritesIds: List<String>) {
-		stSdk.placesFacade.getPlacesDetailed(favoritesIds, favoritesCallback)
+		sdk.placesFacade.getPlacesDetailed(favoritesIds, favoritesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>) {

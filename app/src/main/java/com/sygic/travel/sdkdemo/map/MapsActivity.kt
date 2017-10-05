@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.geo.quadkey.QuadkeysGenerator
 import com.sygic.travel.sdk.places.geo.spread.CanvasSize
 import com.sygic.travel.sdk.places.geo.spread.SpreadResult
@@ -38,7 +38,7 @@ import java.util.ArrayList
 import java.util.HashMap
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var map: GoogleMap? = null
 	private var spreader: Spreader? = null
 
@@ -55,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_maps)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		vMain = findViewById(R.id.ll_main)
 		spreader = Spreader(resources)
@@ -143,7 +143,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		query.bounds = mapBounds
 		query.parents = listOf("city:1")
 		query.limit = 32
-		stSdk.placesFacade.getPlaces(query, getPlacesCallback())
+		sdk.placesFacade.getPlaces(query, getPlacesCallback())
 	}
 
 	// On category click listener

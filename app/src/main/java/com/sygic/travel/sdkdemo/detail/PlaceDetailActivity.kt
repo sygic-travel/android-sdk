@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
@@ -24,7 +24,7 @@ import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class PlaceDetailActivity : AppCompatActivity() {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var views: Views? = null
 	private var id: String? = null
 	private var ratingPattern: String? = null
@@ -54,7 +54,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_place_detail)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		id = intent.getStringExtra(ID)
 		views = Views()
@@ -65,22 +65,22 @@ class PlaceDetailActivity : AppCompatActivity() {
 	}
 
 	private fun loadAllFavoritesIds() {
-		stSdk.favoritesFacade.getFavoritesIds(loadAllFavoritesIdsCallback)
+		sdk.favoritesFacade.getFavoritesIds(loadAllFavoritesIdsCallback)
 	}
 
 	private fun setOnFavoriteChangeListener() {
 		views?.cbFavorite?.setOnCheckedChangeListener({ _, isChecked ->
 			if (isChecked) {
-				stSdk.favoritesFacade.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
+				sdk.favoritesFacade.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
 			} else {
-				stSdk.favoritesFacade.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
+				sdk.favoritesFacade.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
 			}
 		})
 	}
 
 	private fun loadPlaceDetail() {
 		// Use the SDK to load detailed information about a place
-		stSdk.placesFacade.getPlaceDetailed(id!!, placeCallback)
+		sdk.placesFacade.getPlaceDetailed(id!!, placeCallback)
 	}
 
 	private fun renderPlaceDetail(place: Place) {
