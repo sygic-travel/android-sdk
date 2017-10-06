@@ -35,7 +35,7 @@ captures/
 
 # Intellij
 *.iml
-.idea/
+.idea/*
 
 # Keystore files
 *.jks
@@ -50,3 +50,6 @@ google-services.json
 app/src/main/res/values/strings-non-vcs.xml
 app/libs/
 sdk/libs/
+
+# Exclude ignore for codestyle settings
+!/.idea/codeStyleSettings.xml

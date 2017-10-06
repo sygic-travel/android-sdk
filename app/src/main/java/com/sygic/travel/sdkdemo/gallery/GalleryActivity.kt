@@ -8,15 +8,15 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.ImageView
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
-import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdk.Sdk
+import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
 
 class GalleryActivity : AppCompatActivity() {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var rvGallery: RecyclerView? = null
 	private var galleryAdapter: GalleryAdapter? = null
 	private var gallery: List<Medium>? = null
@@ -24,13 +24,13 @@ class GalleryActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_gallery)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		initRecycler()
 		val id = intent.getStringExtra(ID)
 
 		// Load photos from API, using id
-		stSdk.getPlaceMedia(id, mediaCallback)
+		sdk.placesFacade.getPlaceMedia(id, mediaCallback)
 	}
 
 	private fun initRecycler() {

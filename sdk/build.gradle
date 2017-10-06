@@ -30,17 +30,16 @@ ext {
 
 android {
 	compileSdkVersion 26
-	buildToolsVersion "26.0.1"
+	buildToolsVersion "26.0.2"
 
 	defaultConfig {
 		minSdkVersion 15
 		targetSdkVersion 26
 		versionCode 1
 		versionName stVersion
-
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
 	}
+
 	buildTypes {
 		release {
 			minifyEnabled false
@@ -59,15 +58,17 @@ dependencies {
 	// http request, api calls
 	implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 	implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-	implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-	implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-	implementation 'com.google.code.gson:gson:2.8.0'
-
+	implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+	implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+	implementation 'com.google.code.gson:gson:2.8.2'
 
 	// room persistence
 	implementation "android.arch.persistence.room:runtime:$room_version"
 	kapt "android.arch.persistence.room:compiler:$room_version"
 	testImplementation "android.arch.persistence.room:testing:$room_version"
+
+	implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
+	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
 
 	androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'

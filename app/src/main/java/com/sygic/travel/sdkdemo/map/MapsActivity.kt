@@ -11,29 +11,34 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
-import com.sygic.travel.sdk.geo.quadkey.QuadkeysGenerator
-import com.sygic.travel.sdk.geo.spread.CanvasSize
-import com.sygic.travel.sdk.geo.spread.SpreadResult
-import com.sygic.travel.sdk.geo.spread.SpreadedPlace
-import com.sygic.travel.sdk.geo.spread.Spreader
-import com.sygic.travel.sdk.model.geo.Bounds
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.Sdk
+import com.sygic.travel.sdk.places.geo.quadkey.QuadkeysGenerator
+import com.sygic.travel.sdk.places.geo.spread.CanvasSize
+import com.sygic.travel.sdk.places.geo.spread.SpreadResult
+import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
+import com.sygic.travel.sdk.places.geo.spread.Spreader
+import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var map: GoogleMap? = null
 	private var spreader: Spreader? = null
 
@@ -50,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_maps)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		vMain = findViewById(R.id.ll_main)
 		spreader = Spreader(resources)
@@ -138,7 +143,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		query.bounds = mapBounds
 		query.parents = listOf("city:1")
 		query.limit = 32
-		stSdk.getPlaces(query, getPlacesCallback())
+		sdk.placesFacade.getPlaces(query, getPlacesCallback())
 	}
 
 	// On category click listener

@@ -7,8 +7,8 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import android.support.v4.content.ContextCompat
-import com.sygic.travel.sdk.geo.spread.SpreadedPlace
-import com.sygic.travel.sdk.model.place.Place
+import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
+import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdkdemo.R
 
 object MarkerBitmapGenerator {

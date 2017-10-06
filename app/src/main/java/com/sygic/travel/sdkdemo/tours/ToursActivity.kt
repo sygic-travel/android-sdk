@@ -8,17 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.sygic.travel.sdk.Callback
-import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
-import com.sygic.travel.sdk.model.place.Tour
-import com.sygic.travel.sdk.model.query.ToursQuery
+import com.sygic.travel.sdk.Sdk
+import com.sygic.travel.sdk.places.model.query.ToursQuery
+import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.detail.ReferenceActivity
+import com.sygic.travel.sdkdemo.utils.UiCallback
 
 class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var rvTours: RecyclerView? = null
 	private var toursAdapter: ToursAdapter? = null
 	private var tourCallback: Callback<List<Tour>?>? = null
@@ -40,7 +40,7 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_tours_list)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 
 		initRecycler()
 		loadTours()
@@ -53,7 +53,7 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 			sortBy = ToursQuery.SortBy.RATING,
 			sortDirection = ToursQuery.SortDirection.ASC
 		)
-		stSdk.getTours(tourQuery, getToursCallback())
+		sdk.toursFacade.getTours(tourQuery, getToursCallback())
 	}
 
 	private fun getToursCallback(): Callback<List<Tour>?> {
@@ -89,4 +89,3 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 		toursAdapter?.notifyDataSetChanged()
 	}
 }
-

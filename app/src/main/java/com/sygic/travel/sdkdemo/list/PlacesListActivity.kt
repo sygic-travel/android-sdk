@@ -9,20 +9,21 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.sygic.travel.sdk.StSDK
-import com.sygic.travel.sdkdemo.utils.UiCallback
-import com.sygic.travel.sdk.model.place.Place
-import com.sygic.travel.sdk.model.query.PlacesQuery
+import com.sygic.travel.sdk.Sdk
+import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
+import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
-import java.util.*
+import java.util.ArrayList
+import java.util.Collections
 
 class PlacesListActivity : AppCompatActivity() {
-	private lateinit var stSdk: StSDK
+	private lateinit var sdk: Sdk
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
@@ -33,7 +34,7 @@ class PlacesListActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		stSdk = (application as Application).stSdk
+		sdk = (application as Application).sdk
 		setContentView(R.layout.activity_list)
 
 		categoriesDialog = CategoriesDialog(this, onCategoriesClick)
@@ -82,7 +83,7 @@ class PlacesListActivity : AppCompatActivity() {
 		query.categories = selectedCateoriesKeys
 		query.parents = listOf("city:1")
 		query.limit = 128
-		stSdk.getPlaces(query, placesCallback)
+		sdk.placesFacade.getPlaces(query, placesCallback)
 	}
 
 	private fun renderPlacesList(places: List<Place>) {

@@ -1,12 +1,12 @@
 package com.sygic.travel.sdkdemo
 
-import com.sygic.travel.sdk.StSDK
+import com.sygic.travel.sdk.Sdk
 
 class Application : android.app.Application() {
-	lateinit var stSdk: StSDK
+	lateinit var sdk: Sdk
 
 	override fun onCreate() {
 		super.onCreate()
-		stSdk = StSDK.create(getString(R.string.api_key), this)
+		sdk = Sdk(getString(R.string.api_key), this)
 	}
 }

@@ -24,9 +24,6 @@ jobs:
 
             echo "Set Bintray API Key"
             sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
-
-            echo "Disable OkHttp Logging"
-            sed -i 's/HttpLoggingInterceptor\.Level\.BODY/HttpLoggingInterceptor\.Level\.NONE/g' sdk/src/main/java/com/sygic/travel/sdk/api/StApiGenerator.kt
       - run:
           name: Clean
           command: |

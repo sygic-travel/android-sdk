@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import com.sygic.travel.sdk.model.media.Medium
+import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.utils.Utils
 
