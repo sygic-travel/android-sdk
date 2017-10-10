@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.favorites.service
 
-import com.sygic.travel.sdk.favorites.db.StDb
+import com.sygic.travel.sdk.favorites.db.Database
 import com.sygic.travel.sdk.favorites.model.Favorite
 
-class FavoriteService(private val stDb: StDb) {
+class FavoriteService(private val database: Database) {
 
 	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
@@ -12,7 +12,7 @@ class FavoriteService(private val stDb: StDb) {
 	fun addPlaceToFavorites(id: String) {
 		val favorite = Favorite()
 		favorite.id = id
-		stDb.favoriteDao().insert(favorite)
+		database.favoriteDao().insert(favorite)
 	}
 
 	/**
@@ -22,14 +22,14 @@ class FavoriteService(private val stDb: StDb) {
 	fun removePlaceFromFavorites(id: String) {
 		val favorite = Favorite()
 		favorite.id = id
-		stDb.favoriteDao().delete(favorite)
+		database.favoriteDao().delete(favorite)
 	}
 
 	/**
 	 * Method returns a list of all favorite places' ids.
 	 */
 	fun getFavoritesIds(): List<String> {
-		val favorites = stDb.favoriteDao().loadAll()
+		val favorites = database.favoriteDao().loadAll()
 		return favorites.map { it.id!! }
 	}
 }

@@ -1,10 +1,5 @@
 package com.sygic.travel.sdk.common.interceptors
 
-import com.sygic.travel.sdk.common.StApiConstants.H_NAME_API_KEY
-import com.sygic.travel.sdk.common.StApiConstants.H_NAME_CONTENT_TYPE
-import com.sygic.travel.sdk.common.StApiConstants.H_NAME_USER_AGENT
-import com.sygic.travel.sdk.common.StApiConstants.H_VALUE_CONTENT_TYPE
-
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
@@ -25,9 +20,9 @@ internal class HeadersInterceptor(
 	override fun intercept(chain: Chain): Response {
 		val original = chain.request()
 		val request = original.newBuilder()
-			.addHeader(H_NAME_CONTENT_TYPE, H_VALUE_CONTENT_TYPE)
-			.addHeader(H_NAME_API_KEY, apiKey)
-			.addHeader(H_NAME_USER_AGENT, userAgent)
+			.addHeader("Content-Type", "application/json")
+			.addHeader("x-api-key", apiKey)
+			.addHeader("User-Agent", userAgent)
 			.method(original.method(), original.body())
 			.build()
 		return chain.proceed(request)

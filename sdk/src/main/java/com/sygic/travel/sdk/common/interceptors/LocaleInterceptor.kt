@@ -1,7 +1,5 @@
 package com.sygic.travel.sdk.common.interceptors
 
-import com.sygic.travel.sdk.common.StApiConstants.API_VERSION
-import com.sygic.travel.sdk.common.StApiConstants.VERSION_AND_LOCALE
 import com.sygic.travel.sdk.common.SupportedLanguages
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
@@ -21,6 +19,10 @@ internal class LocaleInterceptor : Interceptor {
 		updateLocale()
 	}
 
+	companion object {
+		const val VERSION_AND_LOCALE = "[api_version_and_locale]"
+	}
+
 	/**
 	 * Updates [LocaleInterceptor.locale] to device's current locale code
 	 */
@@ -36,7 +38,7 @@ internal class LocaleInterceptor : Interceptor {
 		val original = chain.request()
 		var url = original.url().toString()
 
-		url = url.replace(VERSION_AND_LOCALE, API_VERSION + "/" + locale)
+		url = url.replace(VERSION_AND_LOCALE, "1.0" + "/" + locale)
 
 		val request = original.newBuilder()
 			.url(url)
