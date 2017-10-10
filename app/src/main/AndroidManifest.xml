@@ -67,5 +67,17 @@
 			android:name=".favorites.FavoritesActivity"
 			android:label="@string/title_activity_favorites"
 			android:screenOrientation="portrait"></activity>
+		<activity
+			android:name=".auth.AuthActivity"
+			android:label="@string/title_activity_auth"
+			android:screenOrientation="portrait"></activity>
+		<activity
+			android:name=".auth.SignUpActivity"
+			android:label="@string/title_sign_up_activity"
+			android:screenOrientation="portrait"></activity>
+
+		<meta-data
+			android:name="com.facebook.sdk.ApplicationId"
+			android:value="@string/facebook_app_id"/>
 	</application>
 </manifest>
