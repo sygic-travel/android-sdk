@@ -5,7 +5,6 @@ import com.sygic.travel.sdk.favorites.service.FavoriteService
 import com.sygic.travel.sdk.utils.runAsync
 import com.sygic.travel.sdk.utils.runWithCallback
 
-
 class FavoritesFacade(private val favoritesService: FavoriteService) {
 
 	/**
@@ -16,7 +15,6 @@ class FavoritesFacade(private val favoritesService: FavoriteService) {
 		runWithCallback({ favoritesService.addPlaceToFavorites(id) }, callback)
 	}
 
-
 	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
 	 * @param id A place's id, which is stored.
@@ -24,7 +22,6 @@ class FavoritesFacade(private val favoritesService: FavoriteService) {
 	suspend fun addPlaceToFavorites(id: String) {
 		return runAsync { favoritesService.addPlaceToFavorites(id) }
 	}
-
 
 	/**
 	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
@@ -34,7 +31,6 @@ class FavoritesFacade(private val favoritesService: FavoriteService) {
 		runWithCallback({ favoritesService.removePlaceFromFavorites(id) }, callback)
 	}
 
-
 	/**
 	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
 	 * @param id A place's id, which is removed.
@@ -43,14 +39,12 @@ class FavoritesFacade(private val favoritesService: FavoriteService) {
 		return runAsync { favoritesService.removePlaceFromFavorites(id) }
 	}
 
-
 	/**
 	 * Method returns a list of all favorite places' ids.
 	 */
 	fun getFavoritesIds(callback: Callback<List<String>?>) {
 		runWithCallback({ favoritesService.getFavoritesIds() }, callback)
 	}
-
 
 	/**
 	 * Method returns a list of all favorite places' ids.

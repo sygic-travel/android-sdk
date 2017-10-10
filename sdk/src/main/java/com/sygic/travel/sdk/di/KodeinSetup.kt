@@ -7,7 +7,6 @@ import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
 import com.sygic.travel.sdk.BuildConfig
 
-
 object KodeinSetup {
 
 	fun setupKodein(context: Context, xApiKey: String) = Kodein {

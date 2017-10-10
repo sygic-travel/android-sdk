@@ -5,7 +5,6 @@ import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 
-
 class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 	/**
 	 * Creates and sends a request to get places, e.g. for map or list.
@@ -29,7 +28,6 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 		return response.body()?.getPlaces()
 	}
 
-
 	/**
 	 * Creates and sends a request to get place with detailed information.
 	 * @param id Unique id of a place - detailed information about this place will be requested.
@@ -38,7 +36,6 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 		val request = sygicTravelApiClient.getPlaceDetailed(id)
 		return request.execute().body()?.getPlace()
 	}
-
 
 	/**
 	 * Creates and sends a request to get places with detailed information.
@@ -49,7 +46,6 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
 		return request.execute().body()?.getPlaces()
 	}
-
 
 	/**
 	 * Creates and sends a request to get the place's media.

@@ -18,7 +18,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
 internal val sygicTravelApiModule = Kodein.Module {
 	bind<HeadersInterceptor>() with singleton {
 		HeadersInterceptor(

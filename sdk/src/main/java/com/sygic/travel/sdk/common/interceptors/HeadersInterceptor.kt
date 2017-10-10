@@ -10,7 +10,6 @@ import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-
 /**
  * Implements [okhttp3.Interceptor], adds headers to a requests.
  */

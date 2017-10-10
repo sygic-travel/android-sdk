@@ -3,7 +3,6 @@ package com.sygic.travel.sdk.favorites.service
 import com.sygic.travel.sdk.favorites.db.StDb
 import com.sygic.travel.sdk.favorites.model.Favorite
 
-
 class FavoriteService(private val stDb: StDb) {
 
 	/**

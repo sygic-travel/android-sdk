@@ -8,7 +8,6 @@ import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.runAsync
 import com.sygic.travel.sdk.utils.runWithCallback
 
-
 /**
  * Data provider contains methods for fetching data either from API or a database.
  */
@@ -22,7 +21,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 		runWithCallback({ placesService.getPlaces(placesQuery) }, callback)
 	}
 
-
 	/**
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.
@@ -30,7 +28,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 	suspend fun getPlaces(placesQuery: PlacesQuery): List<Place>? {
 		return runAsync { placesService.getPlaces(placesQuery) }
 	}
-
 
 	/**
 	 * Creates and sends a request to get place with detailed information.
@@ -40,7 +37,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 		runWithCallback({ placesService.getPlaceDetailed(id) }, callback)
 	}
 
-
 	/**
 	 * Creates and sends a request to get place with detailed information.
 	 * @param id Unique id of a place - detailed information about this place will be requested.
@@ -48,7 +44,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 	suspend fun getPlaceDetailed(id: String): Place? {
 		return runAsync { placesService.getPlaceDetailed(id) }
 	}
-
 
 	/**
 	 * Creates and sends a request to get places with detailed information.
@@ -58,7 +53,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 		runWithCallback({ placesService.getPlacesDetailed(ids) }, callback)
 	}
 
-
 	/**
 	 * Creates and sends a request to get places with detailed information.
 	 * @param ids Ids of places - detailed information about these places will be requested.
@@ -67,7 +61,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 		return runAsync { placesService.getPlacesDetailed(ids) }
 	}
 
-
 	/**
 	 * Creates and sends a request to get the place's media.
 	 * @param id Unique id of a place - media for this place will be requested.
@@ -75,7 +68,6 @@ class PlacesFacade(private val placesService: PlacesService) {
 	fun getPlaceMedia(id: String, callback: Callback<List<Medium>?>) {
 		runWithCallback({ placesService.getPlaceMedia(id) }, callback)
 	}
-
 
 	/**
 	 * Creates and sends a request to get the place's media.
