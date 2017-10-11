@@ -59,7 +59,7 @@ dependencies {
 
 **Java/Kotlin:**
 ```java
-Sdk sdk = Sdk("YOUR_API_KEY", context);
+Sdk sdk = Sdk("YOUR_CLIENT_ID", "YOUR_API_KEY", context);
 ```
 To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
 
