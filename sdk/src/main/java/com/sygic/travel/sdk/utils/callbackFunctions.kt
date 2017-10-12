@@ -10,7 +10,7 @@ fun <T> runWithCallback(f: suspend () -> T, callback: Callback<T>?) {
 		try {
 			val data = f()
 			callback?.onSuccess(data)
-		} catch (e: Throwable) {
+		} catch (e: Exception) {
 			callback?.onFailure(e)
 		}
 	}
