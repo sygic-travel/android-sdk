@@ -7,6 +7,6 @@ class Application : android.app.Application() {
 
 	override fun onCreate() {
 		super.onCreate()
-		sdk = Sdk(getString(R.string.api_key), this)
+		sdk = Sdk(getString(R.string.client_id), getString(R.string.api_key), this)
 	}
 }

@@ -4,7 +4,6 @@ import com.sygic.travel.sdk.places.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.query.ToursQuery
 import com.sygic.travel.sdk.tours.model.Tour
 
-
 class ToursService(private val apiClient: SygicTravelApiClient) {
 
 	/**

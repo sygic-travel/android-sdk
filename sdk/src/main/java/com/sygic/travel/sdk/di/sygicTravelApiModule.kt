@@ -6,9 +6,9 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import com.google.gson.Gson
-import com.sygic.travel.sdk.common.StApiConstants
 import com.sygic.travel.sdk.common.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.interceptors.LocaleInterceptor
+import com.sygic.travel.sdk.common.interceptors.LocaleInterceptor.Companion.VERSION_AND_LOCALE
 import com.sygic.travel.sdk.places.api.SygicTravelApiClient
 import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
@@ -17,7 +17,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-
 
 internal val sygicTravelApiModule = Kodein.Module {
 	bind<HeadersInterceptor>() with singleton {
@@ -46,7 +45,7 @@ internal val sygicTravelApiModule = Kodein.Module {
 	bind<Retrofit>("sygicTravelApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance<OkHttpClient>("sygicTravelHttpClient"))
-			.baseUrl("https://api.sygictravelapi.com/${StApiConstants.VERSION_AND_LOCALE}/")
+			.baseUrl("https://api.sygictravelapi.com/$VERSION_AND_LOCALE/")
 			.addConverterFactory(GsonConverterFactory.create(instance<Gson>()))
 			.build()
 	}

@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 
-
 internal object UserAgentUtil {
 	fun createUserAgent(context: Context): String {
 		var packageInfo: PackageInfo? = null

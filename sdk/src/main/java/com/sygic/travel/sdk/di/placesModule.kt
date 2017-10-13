@@ -8,7 +8,6 @@ import com.sygic.travel.sdk.places.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.facade.PlacesFacade
 import com.sygic.travel.sdk.places.service.PlacesService
 
-
 internal val placesModule = Kodein.Module {
 	bind<PlacesService>() with singleton {
 		PlacesService(instance<SygicTravelApiClient>())

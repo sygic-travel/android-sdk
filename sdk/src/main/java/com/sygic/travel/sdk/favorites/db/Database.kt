@@ -10,6 +10,6 @@ import com.sygic.travel.sdk.favorites.model.Favorite
 	version = 1
 )
 @TypeConverters(Converters::class)
-abstract class StDb : RoomDatabase() {
+abstract class Database : RoomDatabase() {
 	abstract fun favoriteDao(): FavoriteDao
 }

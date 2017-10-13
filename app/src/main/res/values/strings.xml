@@ -10,8 +10,13 @@
 	<string name="title_activity_search">Search</string>
 	<string name="title_activity_tours">Tours</string>
 	<string name="title_activity_favorites">Favorites</string>
+	<string name="title_activity_auth">Authorization</string>
+	<string name="title_sign_up_activity">Sign Up</string>
 
+	<!--General-->
 	<string name="settings">Settings</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
 
 	<!--Permissions-->
 	<string name="permissions">Permissions</string>
@@ -40,4 +45,8 @@
 	<!-- Favourites -->
 	<string name="favorite_add">Add favorite</string>
 	<string name="favorite">Favorite</string>
+
+	<!--Authorization-->
+	<string name="fb_login_email_required_message">We need your email in order to sign you in. Do you want to grant the permission now?</string>
+	<string name="fb_login_email_required_title">Email required</string>
 </resources>

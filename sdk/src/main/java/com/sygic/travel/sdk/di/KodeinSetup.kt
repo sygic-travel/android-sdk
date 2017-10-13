@@ -7,20 +7,22 @@ import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
 import com.sygic.travel.sdk.BuildConfig
 
-
 object KodeinSetup {
 
-	fun setupKodein(context: Context, xApiKey: String) = Kodein {
+	fun setupKodein(clientId: String, xApiKey: String, context: Context) = Kodein {
+		constant("clientId") with clientId
 		constant("apiKey") with xApiKey
 		constant("isInDebugMode") with BuildConfig.DEBUG
 
 		bind<Context>() with singleton { context }
 
-		import(generalModule)
-		import(sygicTravelApiModule)
-		import(placesModule)
-		import(toursModule)
+		import(authModule)
 		import(dbModule)
 		import(favoritesModule)
+		import(generalModule)
+		import(placesModule)
+		import(sygicAuthApiModule)
+		import(sygicTravelApiModule)
+		import(toursModule)
 	}
 }

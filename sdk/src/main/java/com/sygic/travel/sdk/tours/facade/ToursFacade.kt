@@ -7,7 +7,6 @@ import com.sygic.travel.sdk.tours.service.ToursService
 import com.sygic.travel.sdk.utils.runAsync
 import com.sygic.travel.sdk.utils.runWithCallback
 
-
 class ToursFacade(private val toursService: ToursService) {
 	/**
 	 * Creates and sends a request to get the Tours.
