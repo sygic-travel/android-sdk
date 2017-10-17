@@ -45,7 +45,7 @@ internal val sygicTravelApiModule = Kodein.Module {
 	bind<Retrofit>("sygicTravelApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance<OkHttpClient>("sygicTravelHttpClient"))
-			.baseUrl("https://api.sygictravelapi.com/$VERSION_AND_LOCALE/")
+			.baseUrl(instance<String>("sygicTravelApiUrl") + "/$VERSION_AND_LOCALE/")
 			.addConverterFactory(GsonConverterFactory.create(instance<Gson>()))
 			.build()
 	}

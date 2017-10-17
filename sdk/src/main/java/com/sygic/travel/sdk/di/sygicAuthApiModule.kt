@@ -24,7 +24,7 @@ internal val sygicAuthApiModule = Kodein.Module {
 	bind<Retrofit>("sygicAuthApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance("sygicAuthHttpClient"))
-			.baseUrl("https://auth.sygic.com")
+			.baseUrl(instance<String>("sygicAuthUrl"))
 			.addConverterFactory(GsonConverterFactory.create(instance<Gson>()))
 			.build()
 	}
