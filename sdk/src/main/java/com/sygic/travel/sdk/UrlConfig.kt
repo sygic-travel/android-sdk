@@ -5,5 +5,5 @@ interface UrlConfig {
 		get() = "https://auth.sygic.com"
 
 	val sygicTravelApiUrl: String
-		get() = "https://api.sygictravelapi.com"
+		get() = "https://api.sygictravelapi.com/1.0"
 }

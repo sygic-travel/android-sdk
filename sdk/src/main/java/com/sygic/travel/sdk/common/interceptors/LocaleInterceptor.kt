@@ -20,7 +20,7 @@ internal class LocaleInterceptor : Interceptor {
 	}
 
 	companion object {
-		const val VERSION_AND_LOCALE = "[api_version_and_locale]"
+		const val LOCALE_PLACEHOLDER = "[api_locale]"
 	}
 
 	/**
@@ -31,14 +31,14 @@ internal class LocaleInterceptor : Interceptor {
 	}
 
 	/**
-	 * Modifies the original request by adding an **API version** and a **locale code**.
+	 * Modifies the original request by adding **locale code**.
 	 */
 	@Throws(IOException::class)
 	override fun intercept(chain: Chain): Response {
 		val original = chain.request()
 		var url = original.url().toString()
 
-		url = url.replace(VERSION_AND_LOCALE, "1.0" + "/" + locale)
+		url = url.replace(LOCALE_PLACEHOLDER, locale.toString())
 
 		val request = original.newBuilder()
 			.url(url)
