@@ -19,39 +19,52 @@ class AuthService(
 	private val clientId: String,
 	private val gson: Gson
 ) {
+	companion object {
+		private const val DEVICE_PLATFORM = "android"
+	}
+
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
+		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "password",
 			username = username,
 			password = password,
-			devicePlatform = "android"
+			deviceCode = deviceId,
+			devicePlatform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithGoogleToken(googleToken: String): AuthenticationResponseCode {
+		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "google",
 			authorizationCode = googleToken,
-			devicePlatform = "android"
+			deviceCode = deviceId,
+			devicePlatform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithFacebookToken(token: String): AuthenticationResponseCode {
+		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "facebook",
 			accessToken = token,
-			devicePlatform = "android"
+			deviceCode = deviceId,
+			devicePlatform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithJwtToken(token: String): AuthenticationResponseCode {
+		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "external",
-			token = token
+			token = token,
+			deviceCode = deviceId,
+			devicePlatform = DEVICE_PLATFORM
 		))
 	}
 
@@ -61,7 +74,7 @@ class AuthService(
 			clientId = clientId,
 			grantType = "client_credentials",
 			deviceCode = deviceId,
-			devicePlatform = "android"
+			devicePlatform = DEVICE_PLATFORM
 		))
 	}
 
