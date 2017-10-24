@@ -17,14 +17,12 @@ class AuthService(
 
 	fun authorize(authRequest: AuthorizationRequest): UserSession? {
 		val response = sygicTravelAuthClient.authorize(authRequest).execute()
-		return if (response.isSuccessful) {
+		if (response.isSuccessful) {
 			val userSession = response.body()!!
-			setAuthorizationStorage(
-				userSession.accessToken,
-				userSession.expiresIn,
-				userSession.refreshToken
-			)
-			userSession
+			authStorageService.setUserSession(userSession.accessToken)
+			authStorageService.setTokenRefreshTime(userSession.expiresIn)
+			authStorageService.setRefreshToken(userSession.refreshToken)
+			return userSession
 		} else {
 			throw HttpException(response)
 		}
@@ -62,10 +60,10 @@ class AuthService(
 		)
 	}
 
-	fun setAuthorizationStorage(accessToken: String?, expiresIn: Long, refreshToken: String?) {
-		authStorageService.setUserSession(accessToken)
-		authStorageService.setTokenRefreshTime(expiresIn)
-		authStorageService.setRefreshToken(refreshToken)
+	fun logout() {
+		authStorageService.setUserSession(null)
+		authStorageService.setTokenRefreshTime(0)
+		authStorageService.setRefreshToken(null)
 	}
 
 	internal fun passwordAuthRequest(username: String, password: String): AuthorizationRequest {

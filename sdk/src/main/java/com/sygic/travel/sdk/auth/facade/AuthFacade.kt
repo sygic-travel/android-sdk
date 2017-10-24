@@ -87,7 +87,7 @@ class AuthFacade(
 	}
 
 	fun logoutUser() {
-		authService.setAuthorizationStorage(accessToken = null, expiresIn = 0, refreshToken = null)
+		authService.logout()
 	}
 
 	fun getUserSession(): UserSession? {
