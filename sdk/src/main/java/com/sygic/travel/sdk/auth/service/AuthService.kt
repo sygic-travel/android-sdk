@@ -25,24 +25,25 @@ class AuthService(
 				userSession.refreshToken
 			)
 			userSession
-		} else throw HttpException(response)
+		} else {
+			throw HttpException(response)
+		}
 	}
 
 	fun register(userRegistrationRequest: UserRegistrationRequest): UserRegistrationResponse? {
-		var clientSession = authStorageService.getClientSession()
-		if (clientSession == null) {
-			// First initialization
-			clientSession = initClientSession()
-		}
+		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
 		var response = registerUserRequest(clientSession, userRegistrationRequest)
-
-		// Maybe client session is expired, let's reinitialize it.
-		if (response.code() == 401) {
+		if (response.code() == 401) { // client session is expired, let's reinitialize it
 			clientSession = initClientSession()
 			response = registerUserRequest(clientSession, userRegistrationRequest)
 		}
-		return if (response.isSuccessful) response.body() else throw HttpException(response)
+
+		return if (response.isSuccessful) {
+			response.body()
+		} else {
+			throw HttpException(response)
+		}
 	}
 
 	fun getUserSession(): UserSession? {
