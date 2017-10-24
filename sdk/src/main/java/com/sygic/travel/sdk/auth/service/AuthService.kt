@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.auth.service
 
-import com.sygic.travel.sdk.auth.api.SygicTravelAuthApiClient
+import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
 import com.sygic.travel.sdk.auth.model.AuthorizationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
@@ -10,13 +10,13 @@ import retrofit2.Response
 import java.util.Date
 
 class AuthService(
-	private val sygicTravelAuthClient: SygicTravelAuthApiClient,
+	private val sygicAuthClient: SygicAuthApiClient,
 	private val authStorageService: AuthStorageService,
 	private val clientId: String
 ) {
 
 	fun authorize(authRequest: AuthorizationRequest): UserSession? {
-		val response = sygicTravelAuthClient.authorize(authRequest).execute()
+		val response = sygicAuthClient.authorize(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
 			authStorageService.setUserSession(userSession.accessToken)
@@ -125,7 +125,7 @@ class AuthService(
 		clientSession: String?,
 		userRegistrationRequest: UserRegistrationRequest
 	): Response<UserRegistrationResponse?> {
-		return sygicTravelAuthClient.registerUser(
+		return sygicAuthClient.registerUser(
 			"Bearer $clientSession",
 			userRegistrationRequest
 		).execute()
@@ -145,7 +145,7 @@ class AuthService(
 			clientId = clientId,
 			grantType = "client_credentials"
 		)
-		val response = sygicTravelAuthClient.authorize(authRequest).execute()
+		val response = sygicAuthClient.authorize(authRequest).execute()
 
 		return if (response.isSuccessful) {
 			val accessToken = response.body()!!.accessToken

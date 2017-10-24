@@ -10,7 +10,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface SygicTravelAuthApiClient {
+interface SygicAuthApiClient {
 	@Headers("Content-Type: application/json")
 	@POST("/oauth2/token")
 	fun authorize(
