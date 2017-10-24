@@ -75,10 +75,10 @@ class AuthService(
 		)
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
-		var response = registerUserRequest(clientSession, userRegistrationRequest)
+		var response = sygicAuthClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
 		if (response.code() == 401) { // client session is expired, let's reinitialize it
 			clientSession = initClientSession()
-			response = registerUserRequest(clientSession, userRegistrationRequest)
+			response = sygicAuthClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
 		}
 
 		if (response.isSuccessful) {
@@ -136,15 +136,6 @@ class AuthService(
 		}
 	}
 
-	private fun registerUserRequest(
-		clientSession: String?,
-		userRegistrationRequest: UserRegistrationRequest
-	): Response<UserRegistrationResponse?> {
-		return sygicAuthClient.registerUser(
-			"Bearer $clientSession",
-			userRegistrationRequest
-		).execute()
-	}
 
 	private fun refreshToken(refreshToken: String) {
 		val authRequest = AuthenticationRequest(
