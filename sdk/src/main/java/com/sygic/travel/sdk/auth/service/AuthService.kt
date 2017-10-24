@@ -1,5 +1,9 @@
 package com.sygic.travel.sdk.auth.service
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.sygic.travel.sdk.auth.AuthenticationResponseCode
+import com.sygic.travel.sdk.auth.RegistrationResponseCode
 import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
 import com.sygic.travel.sdk.auth.model.AuthorizationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
@@ -12,23 +16,27 @@ import java.util.Date
 class AuthService(
 	private val sygicAuthClient: SygicAuthApiClient,
 	private val authStorageService: AuthStorageService,
-	private val clientId: String
+	private val clientId: String,
+	private val gson: Gson
 ) {
-
-	fun authorize(authRequest: AuthorizationRequest): UserSession? {
+	fun authorize(authRequest: AuthorizationRequest): AuthenticationResponseCode {
 		val response = sygicAuthClient.authorize(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
 			authStorageService.setUserSession(userSession.accessToken)
 			authStorageService.setTokenRefreshTime(userSession.expiresIn)
 			authStorageService.setRefreshToken(userSession.refreshToken)
-			return userSession
+			return AuthenticationResponseCode.OK
+
+		} else if (response.code() == 401) {
+			return AuthenticationResponseCode.ERROR_INVALID_CREDENTIALS
+
 		} else {
-			throw HttpException(response)
+			return AuthenticationResponseCode.ERROR
 		}
 	}
 
-	fun register(userRegistrationRequest: UserRegistrationRequest): UserRegistrationResponse? {
+	fun register(userRegistrationRequest: UserRegistrationRequest): RegistrationResponseCode {
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
 		var response = registerUserRequest(clientSession, userRegistrationRequest)
@@ -37,10 +45,19 @@ class AuthService(
 			response = registerUserRequest(clientSession, userRegistrationRequest)
 		}
 
-		return if (response.isSuccessful) {
-			response.body()
+		if (response.isSuccessful) {
+			return RegistrationResponseCode.OK
+
+		} else if (response.code() == 409) {
+			return RegistrationResponseCode.ERROR_ALREADY_REGISTERED
+
 		} else {
-			throw HttpException(response)
+			val responseJson = gson.fromJson<JsonObject?>(response.errorBody()?.string(), JsonObject::class.java)
+			return when (responseJson?.get("type")?.asString) {
+				"validation.password.min_length" -> RegistrationResponseCode.ERROR_PASSWORD_MIN_LENGTH
+				"validation.username.min_length", "validation.email.invalid_format" -> RegistrationResponseCode.ERROR_EMAIL_INVALID_FORMAT
+				else -> RegistrationResponseCode.ERROR
+			}
 		}
 	}
 
@@ -131,13 +148,13 @@ class AuthService(
 		).execute()
 	}
 
-	private fun refreshToken(refreshToken: String): UserSession? {
+	private fun refreshToken(refreshToken: String) {
 		val authRequest = AuthorizationRequest(
 			clientId = clientId,
 			grantType = "refresh_token",
 			refreshToken = refreshToken
 		)
-		return authorize(authRequest)
+		authorize(authRequest)
 	}
 
 	private fun initClientSession(): String {
