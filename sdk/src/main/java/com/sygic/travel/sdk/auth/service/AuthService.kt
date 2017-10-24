@@ -136,23 +136,20 @@ class AuthService(
 		}
 	}
 
-
 	private fun refreshToken(refreshToken: String) {
-		val authRequest = AuthenticationRequest(
+		authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "refresh_token",
 			refreshToken = refreshToken
-		)
-		authenticate(authRequest)
+		))
 	}
 
 	private fun initClientSession(): String {
-		val authRequest = AuthenticationRequest(
+		val request = sygicAuthClient.authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "client_credentials"
-		)
-		val response = sygicAuthClient.authenticate(authRequest).execute()
-
+		))
+		val response = request.execute()
 		return if (response.isSuccessful) {
 			val accessToken = response.body()!!.accessToken
 			authStorageService.setClientSession(accessToken)
