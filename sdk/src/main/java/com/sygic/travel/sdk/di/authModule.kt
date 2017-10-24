@@ -27,8 +27,7 @@ internal val authModule = Kodein.Module {
 
 	bind<AuthFacade>() with singleton {
 		AuthFacade(
-			instance<AuthService>(),
-			instance<AuthStorageService>()
+			instance<AuthService>()
 		)
 	}
 }

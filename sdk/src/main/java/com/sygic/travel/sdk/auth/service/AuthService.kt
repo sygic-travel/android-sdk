@@ -19,24 +19,60 @@ class AuthService(
 	private val clientId: String,
 	private val gson: Gson
 ) {
-	fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
-		val response = sygicAuthClient.authenticate(authRequest).execute()
-		if (response.isSuccessful) {
-			val userSession = response.body()!!
-			authStorageService.setUserSession(userSession.accessToken)
-			authStorageService.setTokenRefreshTime(userSession.expiresIn)
-			authStorageService.setRefreshToken(userSession.refreshToken)
-			return AuthenticationResponseCode.OK
-
-		} else if (response.code() == 401) {
-			return AuthenticationResponseCode.ERROR_INVALID_CREDENTIALS
-
-		} else {
-			return AuthenticationResponseCode.ERROR
-		}
+	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
+		return authenticate(AuthenticationRequest(
+			clientId = clientId,
+			grantType = "password",
+			username = username,
+			password = password,
+			devicePlatform = "android"
+		))
 	}
 
-	fun register(userRegistrationRequest: UserRegistrationRequest): RegistrationResponseCode {
+	fun authWithGoogleToken(googleToken: String): AuthenticationResponseCode {
+		return authenticate(AuthenticationRequest(
+			clientId = clientId,
+			grantType = "google",
+			authorizationCode = googleToken,
+			devicePlatform = "android"
+		))
+	}
+
+	fun authWithFacebookToken(token: String): AuthenticationResponseCode {
+		return authenticate(AuthenticationRequest(
+			clientId = clientId,
+			grantType = "facebook",
+			accessToken = token,
+			devicePlatform = "android"
+		))
+	}
+
+	fun authWithJwtToken(token: String): AuthenticationResponseCode {
+		return authenticate(AuthenticationRequest(
+			clientId = clientId,
+			grantType = "external",
+			token = token
+		))
+	}
+
+	fun authWithDeviceId(): AuthenticationResponseCode {
+		val deviceId = authStorageService.getDeviceId()
+		return authenticate(AuthenticationRequest(
+			clientId = clientId,
+			grantType = "client_credentials",
+			deviceCode = deviceId,
+			devicePlatform = "android"
+		))
+	}
+
+	fun register(email: String, password: String, name: String): RegistrationResponseCode {
+		val userRegistrationRequest = UserRegistrationRequest(
+			username = email,
+			email = email,
+			password = password,
+			name = name,
+			emailIsVerified = true
+		)
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
 		var response = registerUserRequest(clientSession, userRegistrationRequest)
@@ -83,59 +119,21 @@ class AuthService(
 		authStorageService.setRefreshToken(null)
 	}
 
-	internal fun passwordAuthRequest(username: String, password: String): AuthenticationRequest {
-		return AuthenticationRequest(
-			clientId = clientId,
-			grantType = "password",
-			username = username,
-			password = password,
-			devicePlatform = "android"
-		)
-	}
+	private fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
+		val response = sygicAuthClient.authenticate(authRequest).execute()
+		if (response.isSuccessful) {
+			val userSession = response.body()!!
+			authStorageService.setUserSession(userSession.accessToken)
+			authStorageService.setTokenRefreshTime(userSession.expiresIn)
+			authStorageService.setRefreshToken(userSession.refreshToken)
+			return AuthenticationResponseCode.OK
 
-	internal fun googleAuthRequest(googleToken: String?): AuthenticationRequest {
-		return AuthenticationRequest(
-			clientId = clientId,
-			grantType = "google",
-			authorizationCode = googleToken,
-			devicePlatform = "android"
-		)
-	}
+		} else if (response.code() == 401) {
+			return AuthenticationResponseCode.ERROR_INVALID_CREDENTIALS
 
-	internal fun facebookAuthRequest(facebookToken: String?): AuthenticationRequest {
-		return AuthenticationRequest(
-			clientId = clientId,
-			grantType = "facebook",
-			accessToken = facebookToken,
-			devicePlatform = "android"
-		)
-	}
-
-	internal fun deviceIdAuthRequest(deviceId: String?): AuthenticationRequest {
-		return AuthenticationRequest(
-			clientId = clientId,
-			grantType = "client_credentials",
-			deviceCode = deviceId,
-			devicePlatform = "android"
-		)
-	}
-
-	internal fun jwtTokenAuthRequest(jwtToken: String): AuthenticationRequest {
-		return AuthenticationRequest(clientId = clientId, grantType = "external", token = jwtToken)
-	}
-
-	internal fun userRegistrationRequest(
-		email: String,
-		password: String,
-		name: String
-	): UserRegistrationRequest {
-		return UserRegistrationRequest(
-			username = email,
-			email = email,
-			password = password,
-			name = name,
-			emailIsVerified = true
-		)
+		} else {
+			return AuthenticationResponseCode.ERROR
+		}
 	}
 
 	private fun registerUserRequest(
