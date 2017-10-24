@@ -20,52 +20,52 @@ class AuthFacade(
 		callback: Callback<AuthenticationResponseCode>
 	) {
 		val request = authService.passwordAuthRequest(username, password)
-		runWithCallback({ authService.authorize(request) }, callback)
+		runWithCallback({ authService.authenticate(request) }, callback)
 	}
 
 	suspend fun loginUserWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val request = authService.passwordAuthRequest(username, password)
-		return runAsync { authService.authorize(request) }
+		return runAsync { authService.authenticate(request) }
 	}
 
 	fun loginUserWithGoogle(googleToken: String?, callback: Callback<AuthenticationResponseCode>) {
 		val request = authService.googleAuthRequest(googleToken)
-		runWithCallback({ authService.authorize(request) }, callback)
+		runWithCallback({ authService.authenticate(request) }, callback)
 	}
 
 	suspend fun loginUserWithGoogle(googleToken: String?): AuthenticationResponseCode {
 		val request = authService.googleAuthRequest(googleToken)
-		return runAsync { authService.authorize(request) }
+		return runAsync { authService.authenticate(request) }
 	}
 
 	fun loginUserWithFacebook(facebookToken: String?, callback: Callback<AuthenticationResponseCode>) {
 		val request = authService.facebookAuthRequest(facebookToken)
-		runWithCallback({ authService.authorize(request) }, callback)
+		runWithCallback({ authService.authenticate(request) }, callback)
 	}
 
 	suspend fun loginUserWithFacebook(facebookToken: String?): AuthenticationResponseCode {
 		val request = authService.facebookAuthRequest(facebookToken)
-		return runAsync { authService.authorize(request) }
+		return runAsync { authService.authenticate(request) }
 	}
 
 	fun loginUserWithDeviceId(callback: Callback<AuthenticationResponseCode>) {
 		val authRequest = authService.deviceIdAuthRequest(authStorageService.getDeviceId())
-		runWithCallback({ authService.authorize(authRequest) }, callback)
+		runWithCallback({ authService.authenticate(authRequest) }, callback)
 	}
 
 	suspend fun loginUserWithDeviceId(): AuthenticationResponseCode {
 		val authRequest = authService.deviceIdAuthRequest(authStorageService.getDeviceId())
-		return runAsync { authService.authorize(authRequest) }
+		return runAsync { authService.authenticate(authRequest) }
 	}
 
 	fun loginUserWithJwtToken(jwtToken: String, callback: Callback<AuthenticationResponseCode>) {
 		val authRequest = authService.jwtTokenAuthRequest(jwtToken)
-		runWithCallback({ authService.authorize(authRequest) }, callback)
+		runWithCallback({ authService.authenticate(authRequest) }, callback)
 	}
 
 	suspend fun loginUserWithJwtToken(jwtToken: String): AuthenticationResponseCode {
 		val authRequest = authService.jwtTokenAuthRequest(jwtToken)
-		return runAsync { authService.authorize(authRequest) }
+		return runAsync { authService.authenticate(authRequest) }
 	}
 
 	fun registerUser(

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import com.sygic.travel.sdk.auth.AuthenticationResponseCode
 import com.sygic.travel.sdk.auth.RegistrationResponseCode
 import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
-import com.sygic.travel.sdk.auth.model.AuthorizationRequest
+import com.sygic.travel.sdk.auth.model.AuthenticationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
 import com.sygic.travel.sdk.auth.model.UserSession
@@ -19,8 +19,8 @@ class AuthService(
 	private val clientId: String,
 	private val gson: Gson
 ) {
-	fun authorize(authRequest: AuthorizationRequest): AuthenticationResponseCode {
-		val response = sygicAuthClient.authorize(authRequest).execute()
+	fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
+		val response = sygicAuthClient.authenticate(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
 			authStorageService.setUserSession(userSession.accessToken)
@@ -83,8 +83,8 @@ class AuthService(
 		authStorageService.setRefreshToken(null)
 	}
 
-	internal fun passwordAuthRequest(username: String, password: String): AuthorizationRequest {
-		return AuthorizationRequest(
+	internal fun passwordAuthRequest(username: String, password: String): AuthenticationRequest {
+		return AuthenticationRequest(
 			clientId = clientId,
 			grantType = "password",
 			username = username,
@@ -93,8 +93,8 @@ class AuthService(
 		)
 	}
 
-	internal fun googleAuthRequest(googleToken: String?): AuthorizationRequest {
-		return AuthorizationRequest(
+	internal fun googleAuthRequest(googleToken: String?): AuthenticationRequest {
+		return AuthenticationRequest(
 			clientId = clientId,
 			grantType = "google",
 			authorizationCode = googleToken,
@@ -102,8 +102,8 @@ class AuthService(
 		)
 	}
 
-	internal fun facebookAuthRequest(facebookToken: String?): AuthorizationRequest {
-		return AuthorizationRequest(
+	internal fun facebookAuthRequest(facebookToken: String?): AuthenticationRequest {
+		return AuthenticationRequest(
 			clientId = clientId,
 			grantType = "facebook",
 			accessToken = facebookToken,
@@ -111,8 +111,8 @@ class AuthService(
 		)
 	}
 
-	internal fun deviceIdAuthRequest(deviceId: String?): AuthorizationRequest {
-		return AuthorizationRequest(
+	internal fun deviceIdAuthRequest(deviceId: String?): AuthenticationRequest {
+		return AuthenticationRequest(
 			clientId = clientId,
 			grantType = "client_credentials",
 			deviceCode = deviceId,
@@ -120,8 +120,8 @@ class AuthService(
 		)
 	}
 
-	internal fun jwtTokenAuthRequest(jwtToken: String): AuthorizationRequest {
-		return AuthorizationRequest(clientId = clientId, grantType = "external", token = jwtToken)
+	internal fun jwtTokenAuthRequest(jwtToken: String): AuthenticationRequest {
+		return AuthenticationRequest(clientId = clientId, grantType = "external", token = jwtToken)
 	}
 
 	internal fun userRegistrationRequest(
@@ -149,20 +149,20 @@ class AuthService(
 	}
 
 	private fun refreshToken(refreshToken: String) {
-		val authRequest = AuthorizationRequest(
+		val authRequest = AuthenticationRequest(
 			clientId = clientId,
 			grantType = "refresh_token",
 			refreshToken = refreshToken
 		)
-		authorize(authRequest)
+		authenticate(authRequest)
 	}
 
 	private fun initClientSession(): String {
-		val authRequest = AuthorizationRequest(
+		val authRequest = AuthenticationRequest(
 			clientId = clientId,
 			grantType = "client_credentials"
 		)
-		val response = sygicAuthClient.authorize(authRequest).execute()
+		val response = sygicAuthClient.authenticate(authRequest).execute()
 
 		return if (response.isSuccessful) {
 			val accessToken = response.body()!!.accessToken
