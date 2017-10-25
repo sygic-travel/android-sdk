@@ -23,6 +23,7 @@ class AuthActivity : AppCompatActivity() {
 	private lateinit var etUsername: EditText
 	private lateinit var etPassword: EditText
 	private lateinit var btnSignIn: Button
+	private lateinit var btnResetPassword: Button
 	private lateinit var btnSignInFacebook: LoginButton
 	private lateinit var btnSignInGoogle: SignInButton
 	private lateinit var btnRegister: Button
@@ -47,6 +48,7 @@ class AuthActivity : AppCompatActivity() {
 		etUsername = findViewById(R.id.et_username)
 		etPassword = findViewById(R.id.et_password)
 		btnSignIn = findViewById(R.id.btn_sign_in)
+		btnResetPassword = findViewById(R.id.btn_reset_password)
 		btnSignInGoogle = findViewById(R.id.btn_sign_in_google)
 		btnSignInFacebook = findViewById(R.id.btn_sign_in_facebook)
 		btnRegister = findViewById(R.id.btn_sign_up)
@@ -56,6 +58,7 @@ class AuthActivity : AppCompatActivity() {
 		btnAnonymous = findViewById(R.id.btn_sign_in_anonymous)
 
 		btnSignIn.setOnClickListener { signInPassword() }
+		btnResetPassword.setOnClickListener { resetPassword() }
 		btnRegister.setOnClickListener { signUp() }
 		btnLogout.setOnClickListener { logout() }
 		btnJwtSignIn.setOnClickListener { jwtSignIn() }
@@ -123,6 +126,11 @@ class AuthActivity : AppCompatActivity() {
 		if (isInputValid(userName, passwd)) {
 			viewModel.signInPassword(activity = this, name = userName, password = passwd)
 		}
+	}
+
+	private fun resetPassword() {
+		val userName = etUsername.text.toString()
+		viewModel.resetPassword(this, userName)
 	}
 
 	private fun isInputValid(userName: String, passwd: String): Boolean {

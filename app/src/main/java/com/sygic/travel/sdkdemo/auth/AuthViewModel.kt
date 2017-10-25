@@ -5,6 +5,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.sygic.travel.sdk.auth.AuthenticationResponseCode
 import com.sygic.travel.sdk.auth.RegistrationResponseCode
+import com.sygic.travel.sdk.auth.ResetPasswordResponseCode
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
 import com.sygic.travel.sdk.auth.model.UserSession
 import com.sygic.travel.sdkdemo.Application
@@ -92,7 +93,56 @@ class AuthViewModel : ViewModel() {
 		)
 	}
 
-	fun signInGoogle(activity: AuthActivity, accessToken: String?) {
+	fun resetPassword(activity: AuthActivity, userName: String) {
+		val sdk = (activity.application as Application).sdk
+		sdk.authFacade.resetPassword(
+			email = userName,
+			callback = object : UiCallback<ResetPasswordResponseCode>(activity) {
+				override fun onUiSuccess(data: ResetPasswordResponseCode) {
+					when (data) {
+						ResetPasswordResponseCode.OK -> {
+							Toast.makeText(
+								activity,
+								"Reset password email was successfully sent.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						ResetPasswordResponseCode.ERROR_USER_NOT_FOUND -> {
+							Toast.makeText(
+								activity,
+								"Account was not found.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						ResetPasswordResponseCode.ERROR_EMAIL_INVALID_FORMAT -> {
+							Toast.makeText(
+								activity,
+								"E-mail has invalid format.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						ResetPasswordResponseCode.ERROR -> {
+							Toast.makeText(
+								activity,
+								"Reset password unknown error.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+					}
+				}
+
+				override fun onUiFailure(exception: Throwable) {
+					Toast.makeText(
+						activity,
+						"Reset password network error.",
+						Toast.LENGTH_LONG
+					).show()
+				}
+			}
+		)
+	}
+
+	fun signInGoogle(activity: AuthActivity, accessToken: String) {
 		val sdk = (activity.application as Application).sdk
 		sdk.authFacade.loginUserWithGoogle(
 			googleToken = accessToken,
@@ -100,7 +150,7 @@ class AuthViewModel : ViewModel() {
 		)
 	}
 
-	fun signInFacebook(activity: AuthActivity, accessToken: String?) {
+	fun signInFacebook(activity: AuthActivity, accessToken: String) {
 		val sdk = (activity.application as Application).sdk
 		sdk.authFacade.loginUserWithFacebook(
 			facebookToken = accessToken,
