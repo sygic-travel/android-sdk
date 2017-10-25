@@ -40,6 +40,13 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="15dp"
 			android:text="Sign In"/>
+
+		<Button
+			android:id="@+id/btn_reset_password"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
+			android:text="Reset password"/>
 	</LinearLayout>
 
 	<ScrollView
