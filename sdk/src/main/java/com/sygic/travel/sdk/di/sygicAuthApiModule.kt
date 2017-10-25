@@ -5,7 +5,7 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import com.google.gson.Gson
-import com.sygic.travel.sdk.auth.api.SygicTravelAuthApiClient
+import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +29,7 @@ internal val sygicAuthApiModule = Kodein.Module {
 			.build()
 	}
 
-	bind<SygicTravelAuthApiClient>() with singleton {
-		instance<Retrofit>("sygicAuthApiRetrofit").create(SygicTravelAuthApiClient::class.java)
+	bind<SygicAuthApiClient>() with singleton {
+		instance<Retrofit>("sygicAuthApiRetrofit").create(SygicAuthApiClient::class.java)
 	}
 }

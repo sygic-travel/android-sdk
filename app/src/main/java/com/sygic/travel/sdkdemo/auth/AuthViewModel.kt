@@ -3,6 +3,8 @@ package com.sygic.travel.sdkdemo.auth
 import android.arch.lifecycle.ViewModel
 import android.content.Intent
 import android.widget.Toast
+import com.sygic.travel.sdk.auth.AuthenticationResponseCode
+import com.sygic.travel.sdk.auth.RegistrationResponseCode
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
 import com.sygic.travel.sdk.auth.model.UserSession
 import com.sygic.travel.sdkdemo.Application
@@ -26,15 +28,47 @@ class AuthViewModel : ViewModel() {
 			name = name,
 			email = email,
 			password = password,
-			callback = (object : UiCallback<UserRegistrationResponse?>(activity) {
-				override fun onUiSuccess(data: UserRegistrationResponse?) {
-					val authActivityIntent = Intent(activity, AuthActivity::class.java)
-					activity.startActivity(authActivityIntent)
-					Toast.makeText(
-						activity,
-						"You have been successfully signed up, please Sign In.",
-						Toast.LENGTH_LONG
-					).show()
+			callback = (object : UiCallback<RegistrationResponseCode>(activity) {
+				override fun onUiSuccess(data: RegistrationResponseCode) {
+					when (data) {
+						RegistrationResponseCode.OK -> {
+							val authActivityIntent = Intent(activity, AuthActivity::class.java)
+							activity.startActivity(authActivityIntent)
+							Toast.makeText(
+								activity,
+								"You have been successfully signed up, please Sign In.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						RegistrationResponseCode.ERROR_ALREADY_REGISTERED -> {
+							Toast.makeText(
+								activity,
+								"Email already registered",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						RegistrationResponseCode.ERROR_EMAIL_INVALID_FORMAT -> {
+							Toast.makeText(
+								activity,
+								"E-mail format is invalid.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						RegistrationResponseCode.ERROR_PASSWORD_MIN_LENGTH -> {
+							Toast.makeText(
+								activity,
+								"Password is too short, minimum length is 6 characters.",
+								Toast.LENGTH_LONG
+							).show()
+						}
+						RegistrationResponseCode.ERROR -> {
+							Toast.makeText(
+								activity,
+								"Sign Up Failed :(",
+								Toast.LENGTH_LONG
+							).show()
+						}
+					}
 				}
 
 				override fun onUiFailure(exception: Throwable) {
@@ -97,15 +131,33 @@ class AuthViewModel : ViewModel() {
 		refreshLoginStatus(activity)
 	}
 
-	private fun signInUiCallback(activity: AuthActivity): UiCallback<UserSession?> {
-		return (object : UiCallback<UserSession?>(activity) {
-			override fun onUiSuccess(data: UserSession?) {
-				refreshLoginStatus(activity)
-				Toast.makeText(
-					activity,
-					"You have been successfully signed in.",
-					Toast.LENGTH_LONG
-				).show()
+	private fun signInUiCallback(activity: AuthActivity): UiCallback<AuthenticationResponseCode> {
+		return (object : UiCallback<AuthenticationResponseCode>(activity) {
+			override fun onUiSuccess(data: AuthenticationResponseCode) {
+				when (data) {
+					AuthenticationResponseCode.OK -> {
+						refreshLoginStatus(activity)
+						Toast.makeText(
+							activity,
+							"You have been successfully signed in.",
+							Toast.LENGTH_LONG
+						).show()
+					}
+					AuthenticationResponseCode.ERROR_INVALID_CREDENTIALS -> {
+						Toast.makeText(
+							activity,
+							"Invalid credentials.",
+							Toast.LENGTH_LONG
+						).show()
+					}
+					AuthenticationResponseCode.ERROR -> {
+						Toast.makeText(
+							activity,
+							"Sign In failed :(",
+							Toast.LENGTH_LONG
+						).show()
+					}
+				}
 			}
 
 			override fun onUiFailure(exception: Throwable) {
