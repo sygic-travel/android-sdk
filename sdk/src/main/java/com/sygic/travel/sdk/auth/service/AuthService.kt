@@ -4,7 +4,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.sygic.travel.sdk.auth.AuthenticationResponseCode
 import com.sygic.travel.sdk.auth.RegistrationResponseCode
+import com.sygic.travel.sdk.auth.ResetPasswordResponseCode
 import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
+import com.sygic.travel.sdk.auth.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.auth.model.AuthenticationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
@@ -107,6 +109,24 @@ class AuthService(
 				"validation.username.min_length", "validation.email.invalid_format" -> RegistrationResponseCode.ERROR_EMAIL_INVALID_FORMAT
 				else -> RegistrationResponseCode.ERROR
 			}
+		}
+	}
+
+	fun resetPassword(email: String): ResetPasswordResponseCode {
+		val resetPasswordRequest = ResetPasswordRequest(email)
+		var clientSession = authStorageService.getClientSession() ?: initClientSession()
+
+		var response = sygicAuthClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
+		if (response.code() == 401) {
+			clientSession = initClientSession()
+			response = sygicAuthClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
+		}
+
+		return when {
+			response.isSuccessful -> ResetPasswordResponseCode.OK
+			response.code() == 404 -> ResetPasswordResponseCode.ERROR_USER_NOT_FOUND
+			response.code() == 422 -> ResetPasswordResponseCode.ERROR_EMAIL_INVALID_FORMAT
+			else -> ResetPasswordResponseCode.ERROR
 		}
 	}
 

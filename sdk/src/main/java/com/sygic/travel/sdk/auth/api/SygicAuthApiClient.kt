@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.auth.api
 
+import com.sygic.travel.sdk.auth.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.auth.model.AuthenticationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
@@ -23,4 +24,11 @@ interface SygicAuthApiClient {
 		@Header("Authorization") accessToken: String,
 		@Body userAuthRequestBody: UserRegistrationRequest
 	): Call<UserRegistrationResponse>
+
+	@Headers("Content-Type: application/json")
+	@POST("/user/reset-password")
+	fun resetPassword(
+		@Header("Authorization") accessToken: String,
+		@Body resetPasswordRequest: ResetPasswordRequest
+	): Call<Void>
 }

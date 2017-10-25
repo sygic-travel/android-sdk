@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.auth.facade
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.auth.AuthenticationResponseCode
 import com.sygic.travel.sdk.auth.RegistrationResponseCode
+import com.sygic.travel.sdk.auth.ResetPasswordResponseCode
 import com.sygic.travel.sdk.auth.model.UserSession
 import com.sygic.travel.sdk.auth.service.AuthService
 import com.sygic.travel.sdk.utils.runAsync
@@ -58,6 +59,14 @@ class AuthFacade(
 
 	suspend fun registerUser(name: String, email: String, password: String): RegistrationResponseCode {
 		return runAsync { authService.register(name, email, password) }
+	}
+
+	fun resetPassword(email: String, callback: Callback<ResetPasswordResponseCode>) {
+		runWithCallback({ authService.resetPassword(email) }, callback)
+	}
+
+	suspend fun resetPassword(email: String): ResetPasswordResponseCode {
+		return runAsync { authService.resetPassword(email) }
 	}
 
 	fun logoutUser() {
