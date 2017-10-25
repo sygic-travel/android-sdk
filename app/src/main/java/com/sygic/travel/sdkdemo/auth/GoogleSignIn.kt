@@ -62,7 +62,7 @@ class GoogleSignIn(
 	private fun signInWithToken(result: GoogleSignInResult) {
 		val account = result.signInAccount
 		if (account != null) {
-			activity.viewModel.signInGoogle(activity, account.serverAuthCode)
+			activity.viewModel.signInGoogle(activity, account.serverAuthCode!!)
 		} else {
 			Log.e(TAG, "Authentication failed")
 		}

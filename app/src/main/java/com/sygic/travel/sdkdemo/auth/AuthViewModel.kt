@@ -92,7 +92,7 @@ class AuthViewModel : ViewModel() {
 		)
 	}
 
-	fun signInGoogle(activity: AuthActivity, accessToken: String?) {
+	fun signInGoogle(activity: AuthActivity, accessToken: String) {
 		val sdk = (activity.application as Application).sdk
 		sdk.authFacade.loginUserWithGoogle(
 			googleToken = accessToken,
@@ -100,7 +100,7 @@ class AuthViewModel : ViewModel() {
 		)
 	}
 
-	fun signInFacebook(activity: AuthActivity, accessToken: String?) {
+	fun signInFacebook(activity: AuthActivity, accessToken: String) {
 		val sdk = (activity.application as Application).sdk
 		sdk.authFacade.loginUserWithFacebook(
 			facebookToken = accessToken,
