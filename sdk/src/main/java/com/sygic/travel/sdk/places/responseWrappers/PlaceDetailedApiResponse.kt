@@ -1,14 +1,14 @@
 package com.sygic.travel.sdk.places.responseWrappers
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.common.responseWrappers.StResponse
+import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.api.place.ApiPlaceDetail
 
 /**
- * Response containing one detailed place data. Suitable for showing a place detail.
+ * ApiResponse containing one detailed place data. Suitable for showing a place detail.
  */
-class PlaceDetailedResponse : StResponse() {
+class PlaceDetailedApiResponse : ApiResponse() {
 	private val data: Data? = null
 
 	fun getPlace(): Place? {

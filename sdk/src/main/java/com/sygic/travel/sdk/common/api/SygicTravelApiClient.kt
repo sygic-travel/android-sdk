@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.common.api
 
-import com.sygic.travel.sdk.places.responseWrappers.MediaResponse
-import com.sygic.travel.sdk.places.responseWrappers.PlaceDetailedResponse
-import com.sygic.travel.sdk.places.responseWrappers.PlacesResponse
-import com.sygic.travel.sdk.tours.responseWrapper.TourResponse
+import com.sygic.travel.sdk.places.responseWrappers.MediaApiResponse
+import com.sygic.travel.sdk.places.responseWrappers.PlaceDetailedApiResponse
+import com.sygic.travel.sdk.places.responseWrappers.PlacesApiResponse
+import com.sygic.travel.sdk.tours.responseWrapper.TourApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -31,22 +31,22 @@ interface SygicTravelApiClient {
 		@Query(encoded = true, value = "tags") tags: String?,
 		@Query(encoded = true, value = "parents") parents: String?,
 		@Query("limit") limit: Int?
-	): Call<PlacesResponse>
+	): Call<PlacesApiResponse>
 
 	@GET("places/{id}")
 	fun getPlaceDetailed(
 		@Path("id") id: String
-	): Call<PlaceDetailedResponse>
+	): Call<PlaceDetailedApiResponse>
 
 	@GET("places")
 	fun getPlacesDetailed(
 		@Query(encoded = true, value = "ids") ids: String
-	): Call<PlacesResponse>
+	): Call<PlacesApiResponse>
 
 	@GET("places/{id}/media")
 	fun getPlaceMedia(
 		@Path("id") id: String
-	): Call<MediaResponse>
+	): Call<MediaApiResponse>
 
 	@GET("tours")
 	fun getTours(
@@ -54,5 +54,5 @@ interface SygicTravelApiClient {
 		@Query("page") page: Int?,
 		@Query("sort_by") sortBy: String?,
 		@Query("sort_direction") sortDirection: String?
-	): Call<TourResponse>
+	): Call<TourApiResponse>
 }

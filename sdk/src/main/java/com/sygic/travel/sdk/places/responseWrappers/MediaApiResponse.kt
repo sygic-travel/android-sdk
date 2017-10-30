@@ -1,14 +1,14 @@
 package com.sygic.travel.sdk.places.responseWrappers
 
 import com.google.gson.annotations.SerializedName
-import com.sygic.travel.sdk.common.responseWrappers.StResponse
+import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.places.model.api.media.ApiMedium
 import com.sygic.travel.sdk.places.model.media.Medium
 
 /**
- * Response containing a list of place media. Suitable for a gallery.
+ * ApiResponse containing a list of place media. Suitable for a gallery.
  */
-class MediaResponse : StResponse() {
+class MediaApiResponse : ApiResponse() {
 	private var data: Data? = null
 
 	fun getMedia(): List<Medium>? {
