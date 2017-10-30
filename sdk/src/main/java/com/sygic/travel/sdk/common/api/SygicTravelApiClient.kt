@@ -12,15 +12,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- *
- * Contains available API requests.
+ * Contains available Sygic Travel API requests.
  * @see [API Documentation](http://docs.sygictravelapi.com/1.0)
  */
 interface SygicTravelApiClient {
 
-	/*-----------------------------------------------------------------------------*/
-	/*                                     GET                                     */
-	/*-----------------------------------------------------------------------------*/
+	// ==== PLACES =================================================================================
 
 	@GET("places/list")
 	fun getPlaces(
@@ -49,6 +46,8 @@ interface SygicTravelApiClient {
 	fun getPlaceMedia(
 		@Path("id") id: String
 	): Call<ApiResponse<ApiPlaceMediaResponse>>
+
+	// ==== TOURS ==================================================================================
 
 	@GET("tours")
 	fun getTours(
