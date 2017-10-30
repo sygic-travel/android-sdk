@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.favorites.service
 
-import com.sygic.travel.sdk.favorites.db.Database
+import com.sygic.travel.sdk.common.database.Database
 import com.sygic.travel.sdk.favorites.model.Favorite
 
 class FavoriteService(private val database: Database) {

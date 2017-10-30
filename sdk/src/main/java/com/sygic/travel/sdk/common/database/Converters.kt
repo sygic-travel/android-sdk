@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.favorites.db
+package com.sygic.travel.sdk.common.database
 
 import android.arch.persistence.room.TypeConverter
 

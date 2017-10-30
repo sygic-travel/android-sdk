@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.favorites.db
+package com.sygic.travel.sdk.favorites.model.daos
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
