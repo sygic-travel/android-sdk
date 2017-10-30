@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.places.service
 
-import com.sygic.travel.sdk.places.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.query.PlacesQuery

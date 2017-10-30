@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.tours.service
 
-import com.sygic.travel.sdk.places.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.query.ToursQuery
 import com.sygic.travel.sdk.tours.model.Tour
 

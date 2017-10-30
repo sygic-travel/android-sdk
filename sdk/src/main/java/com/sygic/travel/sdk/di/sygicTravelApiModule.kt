@@ -9,7 +9,7 @@ import com.google.gson.Gson
 import com.sygic.travel.sdk.common.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.interceptors.LocaleInterceptor.Companion.LOCALE_PLACEHOLDER
-import com.sygic.travel.sdk.places.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
 import okhttp3.OkHttpClient

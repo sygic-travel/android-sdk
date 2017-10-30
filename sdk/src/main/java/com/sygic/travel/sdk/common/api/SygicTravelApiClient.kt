@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.api
+package com.sygic.travel.sdk.common.api
 
 import com.sygic.travel.sdk.places.responseWrappers.MediaResponse
 import com.sygic.travel.sdk.places.responseWrappers.PlaceDetailedResponse
