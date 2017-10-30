@@ -17,6 +17,6 @@ class ToursService(private val apiClient: SygicTravelApiClient) {
 			sortBy = toursQuery.sortBy?.string,
 			sortDirection = toursQuery.sortDirection?.string
 		)
-		return request.execute().body()?.getTours()
+		return request.execute().body()?.data?.getTours()
 	}
 }

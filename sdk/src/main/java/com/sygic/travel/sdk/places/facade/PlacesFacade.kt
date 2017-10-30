@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.places.facade
 
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdk.places.service.PlacesService
@@ -17,7 +18,7 @@ class PlacesFacade(private val placesService: PlacesService) {
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.
 	 */
-	fun getPlaces(placesQuery: PlacesQuery, callback: Callback<List<Place>?>) {
+	fun getPlaces(placesQuery: PlacesQuery, callback: Callback<List<PlaceInfo>?>) {
 		runWithCallback({ placesService.getPlaces(placesQuery) }, callback)
 	}
 
@@ -25,7 +26,7 @@ class PlacesFacade(private val placesService: PlacesService) {
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.
 	 */
-	suspend fun getPlaces(placesQuery: PlacesQuery): List<Place>? {
+	suspend fun getPlaces(placesQuery: PlacesQuery): List<PlaceInfo>? {
 		return runAsync { placesService.getPlaces(placesQuery) }
 	}
 

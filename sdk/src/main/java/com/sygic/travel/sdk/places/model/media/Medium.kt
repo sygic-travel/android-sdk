@@ -5,7 +5,6 @@ import com.sygic.travel.sdk.places.model.geo.Location
 /**
  * Place medium.
  */
-
 class Medium {
 	var id: String? = null
 	var type: String? = null
@@ -16,7 +15,6 @@ class Medium {
 	var createdAt: String? = null
 	var source: Source? = null
 	var createdBy: String? = null
-	var quadkey: String? = null
 	var attribution: Attribution? = null
 	var location: Location? = null
 }

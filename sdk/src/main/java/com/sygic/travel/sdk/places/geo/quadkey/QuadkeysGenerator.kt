@@ -13,7 +13,7 @@ object QuadkeysGenerator {
 	/**
 	 *
 	 * Generates quadkeys.
-	 * @param bounds Map [bounds][Bounds], which the quadkeys are supposed to be generated for.
+	 * @param bounds Map [bounding_box][Bounds], which the quadkeys are supposed to be generated for.
 	 * *
 	 * @param zoom Map zoom level.
 	 * *

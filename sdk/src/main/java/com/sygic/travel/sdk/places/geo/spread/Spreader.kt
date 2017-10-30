@@ -24,7 +24,7 @@ class Spreader
 	 * Generates a list of spread places.
 	 * @param places Places to spread.
 	 * *
-	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param bounds Map bounding_box withing which the places are supposed to be spread.
 	 * *
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * *
@@ -109,7 +109,7 @@ class Spreader
 
 	/**
 	 *
-	 * Converts given location within given bounds to `x, y` coordinates within given canvas.
+	 * Converts given location within given bounding_box to `x, y` coordinates within given canvas.
 	 * @param location Location which is supposed be converted to `x, y` coordinates.
 	 * *
 	 * @param bounds Bounds the location lies within.
