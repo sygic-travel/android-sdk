@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.common.interceptors
+package com.sygic.travel.sdk.common.api.interceptors
 
 import com.sygic.travel.sdk.common.SupportedLanguages
 import okhttp3.Interceptor
