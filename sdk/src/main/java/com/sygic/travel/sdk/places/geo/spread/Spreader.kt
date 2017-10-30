@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.places.geo.spread
 import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
 import java.util.LinkedList
@@ -31,12 +32,12 @@ class Spreader
 	 * @return Spread places as [SpreadResult].
 	 */
 	fun spreadPlacesOnMap(
-		places: List<Place>?,
+		places: List<PlaceInfo>?,
 		bounds: Bounds,
 		canvasSize: CanvasSize
 	): SpreadResult {
 		val visiblePlaces = LinkedList<SpreadedPlace>()
-		val hiddenPlaces = LinkedList<Place>()
+		val hiddenPlaces = LinkedList<PlaceInfo>()
 
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
