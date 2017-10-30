@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
@@ -29,7 +30,7 @@ class SearchActivity : AppCompatActivity() {
 	private lateinit var sdk: Sdk
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
-	private var places: List<Place>? = null
+	private var places: List<PlaceInfo>? = null
 	private var lastQuery: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,16 +71,16 @@ class SearchActivity : AppCompatActivity() {
 		sdk.placesFacade.getPlaces(query, placesCallback)
 	}
 
-	private fun renderPlacesList(places: List<Place>?) {
+	private fun renderPlacesList(places: List<PlaceInfo>?) {
 		this.places = places
 		placesAdapter!!.setPlaces(places!!)
 		placesAdapter!!.notifyDataSetChanged()
 	}
 
 	private // Places are sorted by rating, best rated places are at the top of the list
-	val placesCallback: Callback<List<Place>?>
-		get() = object : UiCallback<List<Place>?>(this) {
-			override fun onSuccess(data: List<Place>?) {
+	val placesCallback: Callback<List<PlaceInfo>?>
+		get() = object : UiCallback<List<PlaceInfo>?>(this) {
+			override fun onSuccess(data: List<PlaceInfo>?) {
 				Collections.sort(data) { p1, p2 ->
 					if (p1.rating == p2.rating) {
 						0

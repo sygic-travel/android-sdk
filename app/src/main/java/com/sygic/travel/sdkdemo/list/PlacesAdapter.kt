@@ -8,13 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdkdemo.R
 
 class PlacesAdapter(
 	private val placeClick: PlacesAdapter.ViewHolder.PlaceClick,
 	private val photoSize: String
 ) : RecyclerView.Adapter<PlacesAdapter.ViewHolder>() {
-	private var places: List<Place>? = null
+	private var places: List<PlaceInfo>? = null
 
 	override fun getItemCount(): Int {
 		if (places != null) {
@@ -47,7 +48,7 @@ class PlacesAdapter(
 		holder.tvPlaceName.text = places!![position].name
 	}
 
-	fun setPlaces(places: List<Place>) {
+	fun setPlaces(places: List<PlaceInfo>) {
 		this.places = places
 	}
 
