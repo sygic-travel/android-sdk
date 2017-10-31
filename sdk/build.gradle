@@ -38,6 +38,14 @@ android {
 		versionCode 1
 		versionName stVersion
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+		javaCompileOptions {
+			annotationProcessorOptions {
+				arguments = [
+					"room.schemaLocation": "$projectDir/db-schemas".toString()
+				]
+			}
+		}
 	}
 
 	buildTypes {
