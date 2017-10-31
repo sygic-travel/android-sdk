@@ -62,6 +62,7 @@ dependencies {
 	implementation "android.arch.persistence.room:runtime:1.0.0-alpha9-1"
 	implementation 'com.android.support:appcompat-v7:26.1.0'
 	implementation 'com.google.code.gson:gson:2.8.2'
+	implementation 'com.jakewharton:disklrucache:2.0.2'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 	implementation 'com.squareup.retrofit2:retrofit:2.3.0'

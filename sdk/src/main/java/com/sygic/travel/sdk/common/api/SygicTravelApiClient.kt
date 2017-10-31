@@ -1,13 +1,17 @@
 package com.sygic.travel.sdk.common.api
 
 import com.sygic.travel.sdk.common.api.model.ApiResponse
+import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
+import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesListResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.tours.api.model.ApiTourResponse
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -16,6 +20,14 @@ import retrofit2.http.Query
  * @see [API Documentation](http://docs.sygictravelapi.com/1.0)
  */
 interface SygicTravelApiClient {
+
+	// ==== DIRECTIONS =============================================================================
+
+	@POST("directions/path")
+	fun getDirections(
+		@Body directionsRequest: List<ApiDirectionRequest>
+	): Call<ApiResponse<ApiDirectionsResponse>>
+
 
 	// ==== PLACES =================================================================================
 

@@ -9,12 +9,12 @@ import com.sygic.travel.sdk.BuildConfig
 import com.sygic.travel.sdk.UrlConfig
 import com.sygic.travel.sdk.auth.di.authModule
 import com.sygic.travel.sdk.common.database.di.dbModule
+import com.sygic.travel.sdk.directions.di.directionsModule
 import com.sygic.travel.sdk.favorites.di.favoritesModule
 import com.sygic.travel.sdk.places.di.placesModule
 import com.sygic.travel.sdk.tours.di.toursModule
 
 object KodeinSetup {
-
 	fun setupKodein(
 		clientId: String,
 		xApiKey: String,
@@ -31,6 +31,7 @@ object KodeinSetup {
 
 		import(authModule)
 		import(dbModule)
+		import(directionsModule)
 		import(favoritesModule)
 		import(generalModule)
 		import(placesModule)
