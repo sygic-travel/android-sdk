@@ -24,6 +24,7 @@ import com.sygic.travel.sdk.places.geo.spread.SpreadResult
 import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
 import com.sygic.travel.sdk.places.geo.spread.Spreader
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
@@ -46,7 +47,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	private val selectedCategoriesKeys = ArrayList<String>()
 	private var titlePattern: String? = null
 
-	private var placesCallback: Callback<List<Place>?>? = null
+	private var placesCallback: Callback<List<PlaceInfo>?>? = null
 	private var vMain: View? = null
 
 	internal var mapMovesCounter = 0
@@ -169,7 +170,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		}
 
 	// Returns map's Bounds
-	private // Map bounds are widened for the purposes of this sample. In a real app bounds without
+	private // Map bounding_box are widened for the purposes of this sample. In a real app bounding_box without
 		// the BOUNDS_OFFSET should be used.
 	val mapBounds: Bounds
 		get() {
@@ -183,7 +184,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 			return bounds
 		}
 
-	private fun showPlacesOnMap(places: List<Place>?) {
+	private fun showPlacesOnMap(places: List<PlaceInfo>?) {
 		// Spread loaded places
 		val spreadResult = spreader!!.spreadPlacesOnMap(
 			places,
@@ -275,7 +276,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	}
 
 	// Return hue for Google maps default pin
-	private fun getMarkerHue(place: Place): Float {
+	private fun getMarkerHue(place: PlaceInfo): Float {
 		var markerHue = BitmapDescriptorFactory.HUE_RED
 		if (place.categories != null && place.categories!!.isNotEmpty()) {
 			markerHue = Utils.getMarkerHue(place.categories!![0])
@@ -283,10 +284,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		return markerHue
 	}
 
-	private fun getPlacesCallback(): Callback<List<Place>?> {
+	private fun getPlacesCallback(): Callback<List<PlaceInfo>?> {
 		if (placesCallback == null) {
-			placesCallback = object : UiCallback<List<Place>?>(this) {
-				override fun onUiSuccess(data: List<Place>?) {
+			placesCallback = object : UiCallback<List<PlaceInfo>?>(this) {
+				override fun onUiSuccess(data: List<PlaceInfo>?) {
 					showPlacesOnMap(data)
 				}
 

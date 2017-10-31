@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.places.geo.spread
 import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
 import java.util.LinkedList
@@ -24,19 +25,19 @@ class Spreader
 	 * Generates a list of spread places.
 	 * @param places Places to spread.
 	 * *
-	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param bounds Map bounding_box withing which the places are supposed to be spread.
 	 * *
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * *
 	 * @return Spread places as [SpreadResult].
 	 */
 	fun spreadPlacesOnMap(
-		places: List<Place>?,
+		places: List<PlaceInfo>?,
 		bounds: Bounds,
 		canvasSize: CanvasSize
 	): SpreadResult {
 		val visiblePlaces = LinkedList<SpreadedPlace>()
-		val hiddenPlaces = LinkedList<Place>()
+		val hiddenPlaces = LinkedList<PlaceInfo>()
 
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
@@ -109,7 +110,7 @@ class Spreader
 
 	/**
 	 *
-	 * Converts given location within given bounds to `x, y` coordinates within given canvas.
+	 * Converts given location within given bounding_box to `x, y` coordinates within given canvas.
 	 * @param location Location which is supposed be converted to `x, y` coordinates.
 	 * *
 	 * @param bounds Bounds the location lies within.

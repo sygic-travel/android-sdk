@@ -12,6 +12,6 @@ class Reference {
 	var supplier: String? = null
 	var priority: Int = 0
 	var currency: String? = null
-	var price: Float = 0.toFloat()
+	var price: Float? = 0.toFloat()
 	var flags: List<String>? = null
 }

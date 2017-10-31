@@ -16,7 +16,7 @@ object SpreadConfigGenerator {
 	 * Creates a list of wanted sizes configurations.
 	 * @param resources Resources needed to get dimensions.
 	 * *
-	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * @param bounds Map bounding_box withing which the places are supposed to be spread.
 	 * *
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * *
@@ -62,12 +62,12 @@ object SpreadConfigGenerator {
 	}
 
 	/**
-	 * Calculates a zoom level for current bounds and canvas size.
-	 * @param bounds Map bounds withing which the places are supposed to be spread.
+	 * Calculates a zoom level for current bounding_box and canvas size.
+	 * @param bounds Map bounding_box withing which the places are supposed to be spread.
 	 * *
 	 * @param canvasSize Map canvas (view) size in pixels.
 	 * *
-	 * @return Zoom level for current bounds and canvas size.
+	 * @return Zoom level for current bounding_box and canvas size.
 	 */
 	private fun getZoom(bounds: Bounds, canvasSize: CanvasSize): Int {
 		var angle = bounds.east - bounds.west

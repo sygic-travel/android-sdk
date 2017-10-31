@@ -9,6 +9,7 @@ import android.graphics.RectF
 import android.support.v4.content.ContextCompat
 import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdkdemo.R
 
 object MarkerBitmapGenerator {
@@ -28,7 +29,7 @@ object MarkerBitmapGenerator {
 			// Marker size equals radius * 2
 			val markerSize = spreadedPlace.sizeConfig?.radius?.shl(1) ?: 0
 
-			val place: Place? = spreadedPlace.place
+			val place: PlaceInfo? = spreadedPlace.place
 			val categories = place?.categories
 
 			if (categories != null && categories.isNotEmpty()) {

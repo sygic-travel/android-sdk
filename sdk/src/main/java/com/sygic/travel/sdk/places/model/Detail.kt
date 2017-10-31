@@ -10,7 +10,7 @@ class Detail {
 	var description: Description? = null
 	var address: String? = null
 	var admission: String? = null
-	var duration: Int = 0
+	var duration: Int? = 0
 	var email: String? = null
 	var openingHours: String? = null
 	var phone: String? = null

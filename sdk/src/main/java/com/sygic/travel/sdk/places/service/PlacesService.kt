@@ -1,7 +1,8 @@
 package com.sygic.travel.sdk.places.service
 
-import com.sygic.travel.sdk.places.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 
@@ -12,7 +13,7 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 	 */
 	fun getPlaces(
 		placesQuery: PlacesQuery
-	): List<Place>? {
+	): List<PlaceInfo>? {
 		val request = sygicTravelApiClient.getPlaces(
 			placesQuery.query,
 			placesQuery.levelsQueryString,
@@ -25,7 +26,7 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 			placesQuery.limit
 		)
 		val response = request.execute()
-		return response.body()?.getPlaces()
+		return response.body()?.data?.getPlaces()
 	}
 
 	/**
@@ -34,7 +35,7 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 	 */
 	fun getPlaceDetailed(id: String): Place? {
 		val request = sygicTravelApiClient.getPlaceDetailed(id)
-		return request.execute().body()?.getPlace()
+		return request.execute().body()?.data?.getPlace()
 	}
 
 	/**
@@ -44,7 +45,7 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 	fun getPlacesDetailed(ids: List<String>): List<Place>? {
 		val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
-		return request.execute().body()?.getPlaces()
+		return request.execute().body()?.data?.getPlaces()
 	}
 
 	/**
@@ -53,6 +54,6 @@ class PlacesService(private val sygicTravelApiClient: SygicTravelApiClient) {
 	 */
 	fun getPlaceMedia(id: String): List<Medium>? {
 		val request = sygicTravelApiClient.getPlaceMedia(id)
-		return request.execute().body()?.getMedia()
+		return request.execute().body()?.data?.getMedia()
 	}
 }

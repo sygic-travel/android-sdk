@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.common.interceptors
+package com.sygic.travel.sdk.common.api.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.tours.service
 
-import com.sygic.travel.sdk.places.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.query.ToursQuery
 import com.sygic.travel.sdk.tours.model.Tour
 
@@ -17,6 +17,6 @@ class ToursService(private val apiClient: SygicTravelApiClient) {
 			sortBy = toursQuery.sortBy?.string,
 			sortDirection = toursQuery.sortDirection?.string
 		)
-		return request.execute().body()?.getTours()
+		return request.execute().body()?.data?.getTours()
 	}
 }
