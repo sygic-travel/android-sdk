@@ -12,6 +12,7 @@ import com.sygic.travel.sdk.common.database.di.dbModule
 import com.sygic.travel.sdk.directions.di.directionsModule
 import com.sygic.travel.sdk.favorites.di.favoritesModule
 import com.sygic.travel.sdk.places.di.placesModule
+import com.sygic.travel.sdk.synchronization.di.synchronizationModule
 import com.sygic.travel.sdk.tours.di.toursModule
 import com.sygic.travel.sdk.trips.di.tripsModule
 
@@ -38,6 +39,7 @@ object KodeinSetup {
 		import(placesModule)
 		import(sygicAuthApiModule)
 		import(sygicTravelApiModule)
+		import(synchronizationModule)
 		import(toursModule)
 		import(tripsModule)
 	}

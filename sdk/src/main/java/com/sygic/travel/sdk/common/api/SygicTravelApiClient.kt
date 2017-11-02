@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesListResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesResponse
+import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.tours.api.model.ApiTourResponse
 import com.sygic.travel.sdk.trips.api.model.ApiCloneTripRequest
 import com.sygic.travel.sdk.trips.api.model.ApiCloneTripResponse
@@ -69,6 +70,15 @@ interface SygicTravelApiClient {
 	fun getPlaceMedia(
 		@Path("id") id: String
 	): Call<ApiResponse<ApiPlaceMediaResponse>>
+
+
+	// ==== SYNCHRONIZATION=========================================================================
+
+	@GET("changes")
+	fun getChanges(
+		@Query("since") since: String?
+	): Call<ApiResponse<ApiChangesResponse>>
+
 
 	// ==== TOURS ==================================================================================
 

@@ -8,6 +8,7 @@ import com.sygic.travel.sdk.di.KodeinSetup
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.places.facade.PlacesFacade
+import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.tours.facade.ToursFacade
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 
@@ -38,6 +39,11 @@ class Sdk(
 		}
 
 	val placesFacade: PlacesFacade
+		get() {
+			return kodein.instance()
+		}
+
+	val synchronizationFacade: SynchronizationFacade
 		get() {
 			return kodein.instance()
 		}
