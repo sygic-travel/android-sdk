@@ -7,6 +7,11 @@ import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
 import com.sygic.travel.sdk.BuildConfig
 import com.sygic.travel.sdk.UrlConfig
+import com.sygic.travel.sdk.auth.di.authModule
+import com.sygic.travel.sdk.common.database.di.dbModule
+import com.sygic.travel.sdk.favorites.di.favoritesModule
+import com.sygic.travel.sdk.places.di.placesModule
+import com.sygic.travel.sdk.tours.di.toursModule
 
 object KodeinSetup {
 

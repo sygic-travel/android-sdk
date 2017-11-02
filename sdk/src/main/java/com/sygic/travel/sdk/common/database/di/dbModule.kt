@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.common.database.di
 
 import android.arch.persistence.room.Room
 import android.content.Context

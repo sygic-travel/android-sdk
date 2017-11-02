@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.favorites.di
 
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind

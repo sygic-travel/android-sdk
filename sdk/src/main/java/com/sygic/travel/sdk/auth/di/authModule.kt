@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.auth.di
 
 import android.content.Context
 import com.github.salomonbrys.kodein.Kodein
