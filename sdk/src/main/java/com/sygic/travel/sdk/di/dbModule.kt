@@ -7,15 +7,13 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import com.sygic.travel.sdk.common.database.Database
-import com.sygic.travel.sdk.favorites.service.FavoriteService
 
 internal val dbModule = Kodein.Module {
-	bind<FavoriteService>() with singleton {
-		FavoriteService(
-			Room.databaseBuilder(
-				instance<Context>(),
-				Database::class.java,
-				"st-sdk-db"
-			).build())
+	bind<Database>() with singleton {
+		Room.databaseBuilder(
+			instance<Context>(),
+			Database::class.java,
+			"st-sdk-db"
+		).build()
 	}
 }
