@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Upload SDK to Bintray
           command: |
-            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
+            if [[ $CIRCLE_BRANCH = "master" ]] || [[ $CIRCLE_BRANCH = "trips" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               gradle :sdk:bintray
             fi
 deployment:
