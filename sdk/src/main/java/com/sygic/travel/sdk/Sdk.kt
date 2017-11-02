@@ -9,6 +9,7 @@ import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.places.facade.PlacesFacade
 import com.sygic.travel.sdk.tours.facade.ToursFacade
+import com.sygic.travel.sdk.trips.facades.TripsFacade
 
 /**
  * Provides public methods for requesting API.
@@ -42,6 +43,11 @@ class Sdk(
 		}
 
 	val toursFacade: ToursFacade
+		get() {
+			return kodein.instance()
+		}
+
+	val tripsFacade: TripsFacade
 		get() {
 			return kodein.instance()
 		}

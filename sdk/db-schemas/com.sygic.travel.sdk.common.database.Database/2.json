@@ -1,0 +1,330 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "49d07bcd3aa97c35d8b7eab13ec03ed3",
+    "entities": [
+      {
+        "tableName": "favorite",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "trips",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `owner_id` TEXT NOT NULL, `name` TEXT, `version` INTEGER NOT NULL, `url` TEXT NOT NULL, `updated_at` INTEGER NOT NULL, `is_deleted` INTEGER NOT NULL, `privacy_level` TEXT NOT NULL, `starts_on` INTEGER, `days_count` INTEGER NOT NULL, `destinations` TEXT NOT NULL, `is_changed` INTEGER NOT NULL, `edit` INTEGER NOT NULL, `manage` INTEGER NOT NULL, `delete` INTEGER NOT NULL, `squareMediaId` TEXT, `squareUrlTemplate` TEXT, `landscapeMediaId` TEXT, `landscapeUrlTemplate` TEXT, `portraitId` TEXT, `portraitUrlTemplate` TEXT, `videoPreviewId` TEXT, `videoPreviewUrlTemplate` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ownerId",
+            "columnName": "owner_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isDeleted",
+            "columnName": "is_deleted",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "privacyLevel",
+            "columnName": "privacy_level",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startsOn",
+            "columnName": "starts_on",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "daysCount",
+            "columnName": "days_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "destinations",
+            "columnName": "destinations",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChanged",
+            "columnName": "is_changed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "privileges.edit",
+            "columnName": "edit",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "privileges.manage",
+            "columnName": "manage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "privileges.delete",
+            "columnName": "delete",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "media.squareMediaId",
+            "columnName": "squareMediaId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.squareUrlTemplate",
+            "columnName": "squareUrlTemplate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.landscapeMediaId",
+            "columnName": "landscapeMediaId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.landscapeUrlTemplate",
+            "columnName": "landscapeUrlTemplate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.portraitId",
+            "columnName": "portraitId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.portraitUrlTemplate",
+            "columnName": "portraitUrlTemplate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.videoPreviewId",
+            "columnName": "videoPreviewId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "media.videoPreviewUrlTemplate",
+            "columnName": "videoPreviewUrlTemplate",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "trip_days",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trip_id` TEXT NOT NULL, `day_index` INTEGER NOT NULL, `note` TEXT, PRIMARY KEY(`trip_id`, `day_index`), FOREIGN KEY(`trip_id`) REFERENCES `trips`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "tripId",
+            "columnName": "trip_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dayIndex",
+            "columnName": "day_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "trip_id",
+            "day_index"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "trips",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "trip_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trip_day_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trip_id` TEXT NOT NULL, `day_index` INTEGER NOT NULL, `item_index` INTEGER NOT NULL, `placeId` TEXT NOT NULL, `startTime` INTEGER, `duration` INTEGER, `note` TEXT, `transport_mode` TEXT, `transport_avoid` TEXT, `transport_start_time` INTEGER, `transport_duration` INTEGER, `transport_note` TEXT, PRIMARY KEY(`trip_id`, `day_index`, `item_index`), FOREIGN KEY(`trip_id`) REFERENCES `trips`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "tripId",
+            "columnName": "trip_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dayIndex",
+            "columnName": "day_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemIndex",
+            "columnName": "item_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "placeId",
+            "columnName": "placeId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.mode",
+            "columnName": "transport_mode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.avoid",
+            "columnName": "transport_avoid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.startTime",
+            "columnName": "transport_start_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.duration",
+            "columnName": "transport_duration",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.note",
+            "columnName": "transport_note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "trip_id",
+            "day_index",
+            "item_index"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "trips",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "trip_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"49d07bcd3aa97c35d8b7eab13ec03ed3\")"
+    ]
+  }
+}

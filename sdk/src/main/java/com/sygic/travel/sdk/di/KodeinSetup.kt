@@ -13,6 +13,7 @@ import com.sygic.travel.sdk.directions.di.directionsModule
 import com.sygic.travel.sdk.favorites.di.favoritesModule
 import com.sygic.travel.sdk.places.di.placesModule
 import com.sygic.travel.sdk.tours.di.toursModule
+import com.sygic.travel.sdk.trips.di.tripsModule
 
 object KodeinSetup {
 	fun setupKodein(
@@ -38,5 +39,6 @@ object KodeinSetup {
 		import(sygicAuthApiModule)
 		import(sygicTravelApiModule)
 		import(toursModule)
+		import(tripsModule)
 	}
 }

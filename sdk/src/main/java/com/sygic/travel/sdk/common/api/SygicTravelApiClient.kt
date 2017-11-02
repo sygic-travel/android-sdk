@@ -3,15 +3,26 @@ package com.sygic.travel.sdk.common.api
 import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
+import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesListResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesResponse
-import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.tours.api.model.ApiTourResponse
+import com.sygic.travel.sdk.trips.api.model.ApiCloneTripRequest
+import com.sygic.travel.sdk.trips.api.model.ApiCloneTripResponse
+import com.sygic.travel.sdk.trips.api.model.ApiCreateTripResponse
+import com.sygic.travel.sdk.trips.api.model.ApiDeleteTripsInTrashResponse
+import com.sygic.travel.sdk.trips.api.model.ApiGetTripResponse
+import com.sygic.travel.sdk.trips.api.model.ApiGetTripsResponse
+import com.sygic.travel.sdk.trips.api.model.ApiTripItemRequest
+import com.sygic.travel.sdk.trips.api.model.ApiTripsListResponse
+import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -68,4 +79,43 @@ interface SygicTravelApiClient {
 		@Query("sort_by") sortBy: String?,
 		@Query("sort_direction") sortDirection: String?
 	): Call<ApiResponse<ApiTourResponse>>
+
+
+	// ==== TRIPS ==================================================================================
+
+	@GET("trips/list")
+	fun getTripList(
+		@Query("from") from: String? = null,
+		@Query("to") to: String? = null
+	): Call<ApiResponse<ApiTripsListResponse>>
+
+	@GET("trips")
+	fun getTrips(
+		@Query("ids") ids: String
+	): Call<ApiResponse<ApiGetTripsResponse>>
+
+	@POST("trips")
+	fun createTrip(
+		@Body trip: ApiTripItemRequest
+	): Call<ApiResponse<ApiCreateTripResponse>>
+
+	@GET("trips/{trip_id}")
+	fun getTrip(
+		@Path("trip_id") tripId: String
+	): Call<ApiResponse<ApiGetTripResponse>>
+
+	@PUT("trips/{trip_id}")
+	fun updateTrip(
+		@Path("trip_id") tripId: String,
+		@Body updateRequest: ApiTripItemRequest
+	): Call<ApiResponse<ApiUpdateTripResponse>>
+
+	@POST("trips/clone")
+	fun cloneTrip(
+		@Body cloneRequest: ApiCloneTripRequest
+	): Call<ApiResponse<ApiCloneTripResponse>>
+
+	@DELETE("trips/trash")
+	fun deleteTripsInTrash(
+	): Call<ApiResponse<ApiDeleteTripsInTrashResponse>>
 }
