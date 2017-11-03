@@ -31,7 +31,7 @@ internal val sygicTravelApiModule = Kodein.Module {
 	bind<OkHttpClient>("sygicTravelHttpClient") with singleton {
 		val builder = OkHttpClient.Builder()
 
-		if (instance("isInDebugMode")) {
+		if (instance("debugMode")) {
 			builder.addNetworkInterceptor(instance<HttpLoggingInterceptor>())
 		}
 

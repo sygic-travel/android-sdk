@@ -25,7 +25,7 @@ object KodeinSetup {
 	) = Kodein {
 		constant("clientId") with clientId
 		constant("apiKey") with xApiKey
-		constant("isInDebugMode") with BuildConfig.DEBUG
+		constant("debugMode") with BuildConfig.DEBUG
 		constant("sygicAuthUrl") with urlConfig.sygicAuthUrl
 		constant("sygicTravelApiUrl") with urlConfig.sygicTravelApiUrl
 
