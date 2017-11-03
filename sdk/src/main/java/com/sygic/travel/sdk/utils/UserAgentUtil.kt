@@ -1,23 +1,18 @@
 package com.sygic.travel.sdk.utils
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
+import com.sygic.travel.sdk.BuildConfig
 
 internal object UserAgentUtil {
 	fun createUserAgent(context: Context): String {
-		var packageInfo: PackageInfo? = null
-		try {
-			packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+		val packageVersion: String = try {
+			context.packageManager.getPackageInfo(context.packageName, 0).versionName
 		} catch (e: PackageManager.NameNotFoundException) {
-			e.printStackTrace()
+			"unknown"
 		}
-
-		return StringBuilder()
-			.append(context.packageName).append("/")
-			.append(if (packageInfo != null) packageInfo.versionName + " " else "")
-			.append("sygic-travel-sdk-android/sdk-version").append(" ")
-			.append("Android/").append(Build.VERSION.RELEASE).toString()
+		val sdkVersion = BuildConfig.VERSION_NAME
+		return "${context.packageName}/$packageVersion SygicTravelAndroidSdk/$sdkVersion Android/${Build.VERSION.RELEASE}"
 	}
 }
