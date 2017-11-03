@@ -9,7 +9,7 @@ class Application : android.app.Application() {
 	override fun onCreate() {
 		super.onCreate()
 		sdk = Sdk(
-			this,
+			applicationContext,
 			object : SdkConfig {
 				override val clientId
 					get() = getString(R.string.client_id)

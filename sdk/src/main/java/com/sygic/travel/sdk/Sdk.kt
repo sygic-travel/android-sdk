@@ -16,10 +16,10 @@ import com.sygic.travel.sdk.trips.facades.TripsFacade
  * Provides public methods for requesting API.
  */
 class Sdk(
-	context: Context,
+	applicationContext: Context,
 	sdkConfig: SdkConfig
 ) {
-	private var kodein: Kodein = KodeinSetup.setupKodein(context, sdkConfig)
+	private var kodein: Kodein = KodeinSetup.setupKodein(applicationContext, sdkConfig)
 
 	val authFacade: AuthFacade
 		get() {

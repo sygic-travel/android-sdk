@@ -17,7 +17,7 @@ import com.sygic.travel.sdk.trips.di.tripsModule
 
 object KodeinSetup {
 	fun setupKodein(
-		context: Context,
+		applicationContext: Context,
 		sdkConfig: SdkConfig
 	) = Kodein {
 		constant("clientId") with sdkConfig.clientId
@@ -26,7 +26,7 @@ object KodeinSetup {
 		constant("sygicAuthUrl") with sdkConfig.sygicAuthUrl
 		constant("sygicTravelApiUrl") with sdkConfig.sygicTravelApiUrl
 
-		bind<Context>() with singleton { context }
+		bind<Context>() with singleton { applicationContext }
 
 		import(authModule)
 		import(dbModule)
