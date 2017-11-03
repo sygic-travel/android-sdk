@@ -16,8 +16,9 @@ internal val sygicAuthApiModule = Kodein.Module {
 		val builder = OkHttpClient.Builder()
 
 		if (instance("isInDebugMode")) {
-			builder.addInterceptor(instance<HttpLoggingInterceptor>())
+			builder.addNetworkInterceptor(instance<HttpLoggingInterceptor>())
 		}
+
 		builder.build()
 	}
 
