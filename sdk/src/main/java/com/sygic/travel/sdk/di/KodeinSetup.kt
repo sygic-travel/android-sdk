@@ -5,7 +5,6 @@ import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
-import com.sygic.travel.sdk.BuildConfig
 import com.sygic.travel.sdk.SdkConfig
 import com.sygic.travel.sdk.auth.di.authModule
 import com.sygic.travel.sdk.common.database.di.dbModule
@@ -23,7 +22,7 @@ object KodeinSetup {
 	) = Kodein {
 		constant("clientId") with sdkConfig.clientId
 		constant("apiKey") with sdkConfig.apiKey
-		constant("debugMode") with BuildConfig.DEBUG
+		constant("debugMode") with sdkConfig.debugMode
 		constant("sygicAuthUrl") with sdkConfig.sygicAuthUrl
 		constant("sygicTravelApiUrl") with sdkConfig.sygicTravelApiUrl
 
