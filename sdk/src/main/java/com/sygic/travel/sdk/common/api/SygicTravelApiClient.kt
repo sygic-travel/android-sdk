@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -75,6 +76,7 @@ interface SygicTravelApiClient {
 	// ==== SYNCHRONIZATION=========================================================================
 
 	@GET("changes")
+	@Headers("Authorization: [toIntercept]")
 	fun getChanges(
 		@Query("since") since: String?
 	): Call<ApiResponse<ApiChangesResponse>>
@@ -94,38 +96,45 @@ interface SygicTravelApiClient {
 	// ==== TRIPS ==================================================================================
 
 	@GET("trips/list")
+	@Headers("Authorization: [toIntercept]")
 	fun getTripList(
 		@Query("from") from: String? = null,
 		@Query("to") to: String? = null
 	): Call<ApiResponse<ApiTripsListResponse>>
 
 	@GET("trips")
+	@Headers("Authorization: [toIntercept]")
 	fun getTrips(
 		@Query("ids") ids: String
 	): Call<ApiResponse<ApiGetTripsResponse>>
 
 	@POST("trips")
+	@Headers("Authorization: [toIntercept]")
 	fun createTrip(
 		@Body trip: ApiTripItemRequest
 	): Call<ApiResponse<ApiCreateTripResponse>>
 
 	@GET("trips/{trip_id}")
+	@Headers("Authorization: [toIntercept]")
 	fun getTrip(
 		@Path("trip_id") tripId: String
 	): Call<ApiResponse<ApiGetTripResponse>>
 
 	@PUT("trips/{trip_id}")
+	@Headers("Authorization: [toIntercept]")
 	fun updateTrip(
 		@Path("trip_id") tripId: String,
 		@Body updateRequest: ApiTripItemRequest
 	): Call<ApiResponse<ApiUpdateTripResponse>>
 
 	@POST("trips/clone")
+	@Headers("Authorization: [toIntercept]")
 	fun cloneTrip(
 		@Body cloneRequest: ApiCloneTripRequest
 	): Call<ApiResponse<ApiCloneTripResponse>>
 
 	@DELETE("trips/trash")
+	@Headers("Authorization: [toIntercept]")
 	fun deleteTripsInTrash(
 	): Call<ApiResponse<ApiDeleteTripsInTrashResponse>>
 }
