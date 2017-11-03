@@ -19,9 +19,9 @@ class Sdk(
 	clientId: String,
 	xApiKey: String,
 	context: Context,
-	urlConfig: UrlConfig = object : UrlConfig {}
+	sdkConfig: SdkConfig = object : SdkConfig {}
 ) {
-	private var kodein: Kodein = KodeinSetup.setupKodein(clientId, xApiKey, context, urlConfig)
+	private var kodein: Kodein = KodeinSetup.setupKodein(clientId, xApiKey, context, sdkConfig)
 
 	val authFacade: AuthFacade
 		get() {

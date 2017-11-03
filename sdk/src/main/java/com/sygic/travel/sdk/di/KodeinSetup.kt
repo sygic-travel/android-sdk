@@ -6,7 +6,7 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
 import com.sygic.travel.sdk.BuildConfig
-import com.sygic.travel.sdk.UrlConfig
+import com.sygic.travel.sdk.SdkConfig
 import com.sygic.travel.sdk.auth.di.authModule
 import com.sygic.travel.sdk.common.database.di.dbModule
 import com.sygic.travel.sdk.directions.di.directionsModule
@@ -21,13 +21,13 @@ object KodeinSetup {
 		clientId: String,
 		xApiKey: String,
 		context: Context,
-		urlConfig: UrlConfig
+		sdkConfig: SdkConfig
 	) = Kodein {
 		constant("clientId") with clientId
 		constant("apiKey") with xApiKey
 		constant("debugMode") with BuildConfig.DEBUG
-		constant("sygicAuthUrl") with urlConfig.sygicAuthUrl
-		constant("sygicTravelApiUrl") with urlConfig.sygicTravelApiUrl
+		constant("sygicAuthUrl") with sdkConfig.sygicAuthUrl
+		constant("sygicTravelApiUrl") with sdkConfig.sygicTravelApiUrl
 
 		bind<Context>() with singleton { context }
 
