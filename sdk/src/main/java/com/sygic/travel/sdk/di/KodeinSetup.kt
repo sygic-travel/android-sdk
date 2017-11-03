@@ -18,13 +18,11 @@ import com.sygic.travel.sdk.trips.di.tripsModule
 
 object KodeinSetup {
 	fun setupKodein(
-		clientId: String,
-		xApiKey: String,
 		context: Context,
 		sdkConfig: SdkConfig
 	) = Kodein {
-		constant("clientId") with clientId
-		constant("apiKey") with xApiKey
+		constant("clientId") with sdkConfig.clientId
+		constant("apiKey") with sdkConfig.apiKey
 		constant("debugMode") with BuildConfig.DEBUG
 		constant("sygicAuthUrl") with sdkConfig.sygicAuthUrl
 		constant("sygicTravelApiUrl") with sdkConfig.sygicTravelApiUrl
