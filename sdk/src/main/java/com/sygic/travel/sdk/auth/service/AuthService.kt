@@ -9,10 +9,8 @@ import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
 import com.sygic.travel.sdk.auth.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.auth.model.AuthenticationRequest
 import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
-import com.sygic.travel.sdk.auth.model.UserRegistrationResponse
 import com.sygic.travel.sdk.auth.model.UserSession
 import retrofit2.HttpException
-import retrofit2.Response
 import java.util.Date
 
 class AuthService(
@@ -37,12 +35,12 @@ class AuthService(
 		))
 	}
 
-	fun authWithGoogleToken(googleToken: String): AuthenticationResponseCode {
+	fun authWithGoogleToken(token: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "google",
-			authorizationCode = googleToken,
+			accessToken = token,
 			deviceCode = deviceId,
 			devicePlatform = DEVICE_PLATFORM
 		))
