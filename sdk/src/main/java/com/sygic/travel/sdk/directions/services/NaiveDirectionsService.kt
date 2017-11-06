@@ -27,13 +27,13 @@ class NaiveDirectionsService {
 		val car = arrayListOf<Direction>()
 		val plane = arrayListOf<Direction>()
 
-		if (airDistance <= 50_000) {
+		if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
 			pedestrian.add(getPedestrianFallbackDirection(airDistance))
 		}
-		if (airDistance <= 2_000_000) {
+		if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
 			car.add(getCarFallbackDirection(airDistance))
 		}
-		if (airDistance > 50_000) {
+		if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
 			plane.add(getPlaneDirection(airDistance))
 		}
 

@@ -26,13 +26,13 @@ class ApiDirectionsService constructor(
 			val car = arrayListOf<Direction>()
 			val plane = arrayListOf<Direction>()
 
-			if (airDistance <= 50_000) {
+			if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
 				it.filterTo(pedestrian, { it2 -> it2.mode == DirectionMode.PEDESTRIAN })
 			}
-			if (airDistance <= 2_000_000) {
+			if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
 				it.filterTo(car, { it2 -> it2.mode == DirectionMode.CAR })
 			}
-			if (airDistance > 50_000) {
+			if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
 				plane.add(naiveDirectionsService.getPlaneDirection(airDistance))
 			}
 

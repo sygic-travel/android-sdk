@@ -8,6 +8,12 @@ class DirectionsService constructor(
 	private val naiveDirectionsService: NaiveDirectionsService,
 	private val cacheService: CacheService
 ) {
+	companion object {
+		const val PEDESTRIAN_MAX_LIMIT = 50_000
+		const val CAR_MAX_LIMIT = 2_000_000
+		const val PLANE_MIN_LIMIT = 50_000
+	}
+
 	fun getSimpleDirections(requests: List<DirectionsRequest>): List<Directions> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		return cachedDirections.mapIndexed { i, directions ->
