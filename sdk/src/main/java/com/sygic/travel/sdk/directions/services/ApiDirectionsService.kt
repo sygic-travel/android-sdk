@@ -11,7 +11,8 @@ import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
 
 class ApiDirectionsService constructor(
-	private val apiClient: SygicTravelApiClient
+	private val apiClient: SygicTravelApiClient,
+	private val naiveDirectionsService: NaiveDirectionsService
 ) {
 	suspend fun getDirections(requests: List<DirectionsRequest>): List<Directions?> {
 		val directions = getCalculatedDirections(requests)
@@ -23,11 +24,16 @@ class ApiDirectionsService constructor(
 			val airDistance = AirDistanceCalculator.getAirDistance(requests[i].from, requests[i].to)
 			val pedestrian = arrayListOf<Direction>()
 			val car = arrayListOf<Direction>()
+			val plane = arrayListOf<Direction>()
+
 			if (airDistance <= 50_000) {
 				it.filterTo(pedestrian, { it2 -> it2.mode == DirectionMode.PEDESTRIAN })
 			}
 			if (airDistance <= 2_000_000) {
 				it.filterTo(car, { it2 -> it2.mode == DirectionMode.CAR })
+			}
+			if (airDistance > 50_000) {
+				plane.add(naiveDirectionsService.getPlaneDirection(airDistance))
 			}
 
 			if (pedestrian.isEmpty() && car.isEmpty()) {
@@ -37,7 +43,7 @@ class ApiDirectionsService constructor(
 					airDistance = airDistance,
 					pedestrian = pedestrian,
 					car = car,
-					plane = emptyList()
+					plane = plane
 				)
 			}
 		}

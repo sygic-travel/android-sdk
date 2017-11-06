@@ -49,7 +49,7 @@ class NaiveDirectionsService {
 		return requests.map { getDirection(it) }
 	}
 
-	private fun getPedestrianFallbackDirection(distance: Int): Direction {
+	fun getPedestrianFallbackDirection(distance: Int): Direction {
 		val fallbackDistance = getPedestrianFallbackDistance(distance)
 		return Direction(
 			mode = DirectionMode.PEDESTRIAN,
@@ -60,7 +60,7 @@ class NaiveDirectionsService {
 		)
 	}
 
-	private fun getCarFallbackDirection(distance: Int): Direction {
+	fun getCarFallbackDirection(distance: Int): Direction {
 		val fallbackDistance = getCarFallbackDistance(distance)
 		return Direction(
 			mode = DirectionMode.CAR,
@@ -71,7 +71,7 @@ class NaiveDirectionsService {
 		)
 	}
 
-	private fun getPlaneDirection(distance: Int): Direction {
+	fun getPlaneDirection(distance: Int): Direction {
 		return Direction(
 			mode = DirectionMode.PLANE,
 			distance = distance,
