@@ -23,11 +23,10 @@ class GoogleSignIn(
 	private var googleApiClient: GoogleApiClient? = null
 
 	init {
-		val sdk = (activity.application as Application).sdk
 		val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+			.requestIdToken(activity.getString(R.string.google_server_client_id))
 			.requestEmail()
 			.requestProfile()
-			.requestServerAuthCode(activity.getString(R.string.google_server_client_id), false)
 			.build()
 		googleApiClient = GoogleApiClient.Builder(activity)
 			.enableAutoManage(activity, this)
@@ -62,7 +61,7 @@ class GoogleSignIn(
 	private fun signInWithToken(result: GoogleSignInResult) {
 		val account = result.signInAccount
 		if (account != null) {
-			activity.viewModel.signInGoogle(activity, account.serverAuthCode!!)
+			activity.viewModel.signInGoogle(activity, account.idToken!!)
 		} else {
 			Log.e(TAG, "Authentication failed")
 		}

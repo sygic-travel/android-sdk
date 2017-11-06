@@ -1,6 +1,13 @@
 package com.sygic.travel.sdk
 
-interface UrlConfig {
+interface SdkConfig {
+	val clientId: String
+
+	val apiKey: String
+
+	val debugMode: Boolean
+		get() = BuildConfig.DEBUG
+
 	val sygicAuthUrl: String
 		get() = "https://auth.sygic.com"
 

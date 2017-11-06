@@ -20,6 +20,7 @@ internal val generalModule = Kodein.Module {
 	bind<Gson>() with singleton {
 		GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+			.serializeNulls()
 			.create()
 	}
 

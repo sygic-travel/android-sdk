@@ -4,8 +4,10 @@ import android.content.Context
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
 import com.google.gson.Gson
+import com.sygic.travel.sdk.auth.service.AuthStorageService
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor.Companion.LOCALE_PLACEHOLDER
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit
 internal val sygicTravelApiModule = Kodein.Module {
 	bind<HeadersInterceptor>() with singleton {
 		HeadersInterceptor(
+			authStorageService = provider<AuthStorageService>(),
 			apiKey = instance("apiKey"),
 			userAgent = UserAgentUtil.createUserAgent(instance<Context>())
 		)
@@ -31,8 +34,8 @@ internal val sygicTravelApiModule = Kodein.Module {
 	bind<OkHttpClient>("sygicTravelHttpClient") with singleton {
 		val builder = OkHttpClient.Builder()
 
-		if (instance("isInDebugMode")) {
-			builder.addInterceptor(instance<HttpLoggingInterceptor>())
+		if (instance("debugMode")) {
+			builder.addNetworkInterceptor(instance<HttpLoggingInterceptor>())
 		}
 
 		builder.addInterceptor(instance<HeadersInterceptor>())

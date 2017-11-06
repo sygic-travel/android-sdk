@@ -1,24 +1,75 @@
 package com.sygic.travel.sdk.common.database
 
 import android.arch.persistence.room.TypeConverter
+import com.sygic.travel.sdk.trips.model.TripInfo
+import com.sygic.travel.sdk.directions.model.DirectionAvoid
+import com.sygic.travel.sdk.directions.model.DirectionMode
 
 /**
  * Contains converter methods for working with database.
  */
 internal class Converters {
-	/**
-	 * Converts a single String, separated by commas (','), to a list of Strings.
-	 */
 	@TypeConverter
-	fun stringToList(value: String): List<String> {
-		return value.split((",").toRegex(), 0)
+	fun stringListToString(list: ArrayList<String>?): String? {
+		return when (list) {
+			null -> null
+			else -> list.joinToString(",")
+		}
 	}
 
-	/**
-	 * Converts a list of String, a single String. Original string are separated by commas (',').
-	 */
 	@TypeConverter
-	fun listToString(values: List<String>): String {
-		return values.joinToString(",")
+	fun stringToStringList(string: String?): ArrayList<String>? {
+		return when (string) {
+			null -> null
+			else -> ArrayList(string.split(","))
+		}
+	}
+
+	@TypeConverter
+	fun privacyLevelToString(level: TripInfo.PrivacyLevel?): String? {
+		return when (level) {
+			null -> null
+			else -> level.name
+		}
+	}
+
+	@TypeConverter
+	fun stringToPrivacyLevel(level: String?): TripInfo.PrivacyLevel? {
+		return when (level) {
+			null -> null
+			else -> TripInfo.PrivacyLevel.valueOf(level)
+		}
+	}
+
+	@TypeConverter
+	fun modeToString(mode: DirectionMode?): String? {
+		return when (mode) {
+			null -> null
+			else -> mode.name
+		}
+	}
+
+	@TypeConverter
+	fun stringToMode(mode: String?): DirectionMode? {
+		return when (mode) {
+			null -> null
+			else -> DirectionMode.valueOf(mode)
+		}
+	}
+
+	@TypeConverter
+	fun avoidListToString(avoidList: ArrayList<DirectionAvoid>?): String? {
+		return when (avoidList) {
+			null -> ""
+			else -> avoidList.joinToString(",") { it.name }
+		}
+	}
+
+	@TypeConverter
+	fun stringToAvoidList(avoidString: String?): ArrayList<DirectionAvoid>? {
+		return when (avoidString) {
+			null, "" -> arrayListOf()
+			else -> ArrayList(avoidString.split(",").map { DirectionAvoid.valueOf(it) })
+		}
 	}
 }

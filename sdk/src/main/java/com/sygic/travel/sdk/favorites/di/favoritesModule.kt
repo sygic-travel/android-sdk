@@ -12,4 +12,5 @@ import com.sygic.travel.sdk.favorites.service.FavoriteService
 internal val favoritesModule = Kodein.Module {
 	bind<FavoritesFacade>() with singleton { FavoritesFacade(instance<FavoriteService>()) }
 	bind<FavoriteService>() with singleton { FavoriteService(instance<FavoriteDao>()) }
+	bind<FavoriteDao>() with singleton { instance<Database>().favoriteDao() }
 }

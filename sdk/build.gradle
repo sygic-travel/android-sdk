@@ -59,9 +59,10 @@ android {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	implementation "android.arch.persistence.room:runtime:$room_version"
+	implementation "android.arch.persistence.room:runtime:1.0.0-alpha9-1"
 	implementation 'com.android.support:appcompat-v7:26.1.0'
 	implementation 'com.google.code.gson:gson:2.8.2'
+	implementation 'com.jakewharton:disklrucache:2.0.2'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 	implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -73,9 +74,9 @@ dependencies {
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.1'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.1'
 
-	kapt "android.arch.persistence.room:compiler:$room_version"
+	kapt "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
 
-	testImplementation "android.arch.persistence.room:testing:$room_version"
+	testImplementation "android.arch.persistence.room:testing:1.0.0-alpha9-1"
 	testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
 	testImplementation "junit:junit:4.12"
 

@@ -21,3 +21,9 @@ suspend fun <T> runAsync(f: suspend () -> T): T {
 		f()
 	}.await()
 }
+
+fun <T> runBlocking(f: suspend () -> T): T {
+	return runBlocking {
+		async(CommonPool) { f() }.await()
+	}
+}
