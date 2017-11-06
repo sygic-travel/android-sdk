@@ -27,14 +27,14 @@ class NaiveDirectionsService {
 		val car = arrayListOf<Direction>()
 		val plane = arrayListOf<Direction>()
 
-		if (airDistance > 50_000) {
-			plane.add(getPlaneDirection(airDistance))
-		}
 		if (airDistance <= 50_000) {
 			pedestrian.add(getPedestrianFallbackDirection(airDistance))
 		}
 		if (airDistance <= 2_000_000) {
 			car.add(getCarFallbackDirection(airDistance))
+		}
+		if (airDistance > 50_000) {
+			plane.add(getPlaneDirection(airDistance))
 		}
 
 		return Directions(
@@ -43,10 +43,6 @@ class NaiveDirectionsService {
 			car = car,
 			plane = plane
 		)
-	}
-
-	fun getDirections(requests: List<DirectionsRequest>): List<Directions> {
-		return requests.map { getDirection(it) }
 	}
 
 	fun getPedestrianFallbackDirection(distance: Int): Direction {
