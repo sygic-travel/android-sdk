@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
@@ -26,5 +27,9 @@ internal val generalModule = Kodein.Module {
 
 	bind<HttpLoggingInterceptor>() with singleton {
 		HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+	}
+
+	bind<SharedPreferences>() with singleton {
+		instance<Context>().getSharedPreferences("SygicTravelSdk", 0)
 	}
 }

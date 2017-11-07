@@ -5,13 +5,12 @@ import java.util.Date
 import java.util.UUID
 
 class AuthStorageService(private val sharedPreferences: SharedPreferences) {
-
-	private val CLIENT_SESSION_KEY = "client_session_key"
-	private val USER_SESSION_KEY = "user_session_key"
-	private val REFRESH_TOKEN_KEY = "refresh_token_key"
-	private val EXPIRES_IN_TIMESTAMP = "expires_in_timestamp"
-	private val SUGGESTED_REFRESH_TIMESTAMP = "suggested_refresh_timestamp"
-	private val DEVICE_ID = "device_id"
+	private val CLIENT_SESSION_KEY = "auth.client_session_key"
+	private val USER_SESSION_KEY = "auth.user_session_key"
+	private val REFRESH_TOKEN_KEY = "auth.refresh_token_key"
+	private val EXPIRES_IN_TIMESTAMP = "auth.expires_in_timestamp"
+	private val SUGGESTED_REFRESH_TIMESTAMP = "auth.suggested_refresh_timestamp"
+	private val DEVICE_ID = "auth.device_id"
 
 	fun setUserSession(accessToken: String?) {
 		val editor = sharedPreferences.edit()

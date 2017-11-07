@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.auth.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
@@ -13,7 +14,7 @@ import com.sygic.travel.sdk.auth.service.AuthStorageService
 
 internal val authModule = Kodein.Module {
 	bind<AuthStorageService>() with singleton {
-		AuthStorageService(instance<Context>().getSharedPreferences("AuthPreferences", 0))
+		AuthStorageService(instance<SharedPreferences>())
 	}
 
 	bind<AuthService>() with singleton {
