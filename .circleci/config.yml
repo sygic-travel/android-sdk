@@ -15,6 +15,9 @@ jobs:
 
               echo "Set Bintray Override flag"
               sed -i "s/\(override \= \)true/\1false/g" sdk/bintray.gradle
+            else
+              echo "Set Version"
+              sed -i 's/\(.*dev\-\)master\(.\)/\1'"$CIRCLE_BRANCH"'\2/g' sdk/build.gradle
             fi
 
             echo "Set Android Gradle plugin version"
@@ -63,9 +66,7 @@ jobs:
       - run:
           name: Upload SDK to Bintray
           command: |
-            if [[ $CIRCLE_BRANCH = "master" ]] || [[ $CIRCLE_BRANCH = "trips" ]] || [[ ! -z $CIRCLE_TAG ]]; then
-              gradle :sdk:bintray
-            fi
+            gradle :sdk:bintray
 deployment:
   fake_deploy_for_cci2:
     tag: /.*/
