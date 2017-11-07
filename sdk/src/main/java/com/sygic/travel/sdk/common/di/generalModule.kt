@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.common.di
 
 import android.content.Context
 import android.content.SharedPreferences
