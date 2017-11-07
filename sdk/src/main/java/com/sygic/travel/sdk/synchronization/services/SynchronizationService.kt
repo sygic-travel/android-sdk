@@ -3,6 +3,9 @@ package com.sygic.travel.sdk.synchronization.services
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
+import com.sygic.travel.sdk.favorites.model.Favorite
+import com.sygic.travel.sdk.favorites.service.FavoriteService
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
@@ -15,7 +18,8 @@ class SynchronizationService constructor(
 	private val sharedPreferences: SharedPreferences,
 	private val apiClient: SygicTravelApiClient,
 	private val tripConverter: TripConverter,
-	private val tripsService: TripsService
+	private val tripsService: TripsService,
+	private val favoriteService: FavoriteService
 ) {
 	companion object {
 		private const val SINCE_KEY = "sync.since"
@@ -30,6 +34,8 @@ class SynchronizationService constructor(
 
 		val changedTripIds = arrayListOf<String>()
 		val deletedTripIds = arrayListOf<String>()
+		val addedFavoriteIds = arrayListOf<String>()
+		val deletedFavoriteIds = arrayListOf<String>()
 
 		for (change in changesResponse.data?.changes ?: arrayListOf()) {
 			when (change.type) {
@@ -41,12 +47,30 @@ class SynchronizationService constructor(
 					}
 				}
 				ApiChangesResponse.ChangeEntry.TYPE_FAVORITE -> {
-				} // ignore
+					if (change.change == ApiChangesResponse.ChangeEntry.CHANGE_UPDATED) {
+						addedFavoriteIds.add(change.id!!)
+					} else if (change.change == ApiChangesResponse.ChangeEntry.CHANGE_DELETED) {
+						deletedFavoriteIds.add(change.id!!)
+					}
+				}
 				ApiChangesResponse.ChangeEntry.TYPE_SETTINGS -> {
 				} // ignore
 			}
 		}
 
+		syncTrips(changedTripIds, deletedTripIds)
+		syncFavorites(addedFavoriteIds, deletedFavoriteIds)
+
+		sharedPreferences.edit()
+			.putLong(SINCE_KEY, DateTimeHelper.now())
+			.commit()
+	}
+
+	fun clearUserData() {
+		sharedPreferences.edit().remove(SINCE_KEY).apply()
+	}
+
+	private suspend fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>) {
 		val changedTripsResponse = apiClient.getTrips(
 			changedTripIds.joinToString("|")
 		).execute().body()!!
@@ -59,14 +83,28 @@ class SynchronizationService constructor(
 		}
 
 		syncLocalChangedTrips(changedTripIds, deletedTripIds)
-
-		sharedPreferences.edit()
-			.putLong(SINCE_KEY, DateTimeHelper.now())
-			.commit()
 	}
 
-	fun clearUserData() {
-		sharedPreferences.edit().remove(SINCE_KEY).apply()
+	private fun syncFavorites(addedFavoriteIds: ArrayList<String>, deletedFavoriteIds: ArrayList<String>) {
+		for (favoriteId in addedFavoriteIds) {
+			favoriteService.addPlaceToFavorites(favoriteId)
+		}
+		for (favoriteId in deletedFavoriteIds) {
+			favoriteService.removePlaceFromFavorites(favoriteId)
+		}
+		for (favorite in favoriteService.getFavoritesForSynchronization()) {
+			if (favorite.state == Favorite.STATE_TO_ADD) {
+				val response = apiClient.createFavorite(FavoriteRequest(favorite.id!!)).execute()
+				if (response.isSuccessful) {
+					favoriteService.markAsSynchronized(favorite)
+				}
+			} else if (favorite.state == Favorite.STATE_TO_REMOVE) {
+				val response = apiClient.deleteFavorite(FavoriteRequest(favorite.id!!)).execute()
+				if (response.isSuccessful) {
+					favoriteService.markAsSynchronized(favorite)
+				}
+			}
+		}
 	}
 
 	private suspend fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
