@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.synchronization.di
 
+import android.content.SharedPreferences
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
@@ -14,6 +15,7 @@ internal val synchronizationModule = Kodein.Module {
 	bind<SynchronizationFacade>() with singleton { SynchronizationFacade(instance<SynchronizationService>()) }
 	bind<SynchronizationService>() with singleton {
 		SynchronizationService(
+			instance<SharedPreferences>(),
 			instance<SygicTravelApiClient>(),
 			instance<TripConverter>(),
 			instance<TripsService>()

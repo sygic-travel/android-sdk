@@ -1,5 +1,7 @@
 package com.sygic.travel.sdk.synchronization.services
 
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.trips.api.TripConverter
@@ -8,18 +10,27 @@ import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import java.util.Date
 
 class SynchronizationService constructor(
+	private val sharedPreferences: SharedPreferences,
 	private val apiClient: SygicTravelApiClient,
 	private val tripConverter: TripConverter,
 	private val tripsService: TripsService
 ) {
+	companion object {
+		private const val SINCE_KEY = "sync.since"
+	}
+
+	@SuppressLint("ApplySharedPref")
 	suspend fun synchronize() {
-		val changesResponse = apiClient.getChanges(null).execute().body()!!
+		val since = sharedPreferences.getLong(SINCE_KEY, 0)
+		val changesResponse = apiClient.getChanges(
+			DateTimeHelper.timestampToDatetime(since)
+		).execute().body()!!
 
 		val changedTripIds = arrayListOf<String>()
 		val deletedTripIds = arrayListOf<String>()
+
 		for (change in changesResponse.data?.changes ?: arrayListOf()) {
 			when (change.type) {
 				ApiChangesResponse.ChangeEntry.TYPE_TRIP -> {
@@ -48,6 +59,10 @@ class SynchronizationService constructor(
 		}
 
 		syncLocalChangedTrips(changedTripIds, deletedTripIds)
+
+		sharedPreferences.edit()
+			.putLong(SINCE_KEY, DateTimeHelper.now())
+			.commit()
 	}
 
 	private suspend fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
