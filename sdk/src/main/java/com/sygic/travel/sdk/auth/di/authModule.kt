@@ -24,7 +24,7 @@ internal val authModule = Kodein.Module {
 			instance<SygicAuthApiClient>(),
 			instance<AuthStorageService>(),
 			instance<String>("clientId"),
-			instance<Gson>()
+			instance<Gson>("sygicAuthGson")
 		)
 	}
 
