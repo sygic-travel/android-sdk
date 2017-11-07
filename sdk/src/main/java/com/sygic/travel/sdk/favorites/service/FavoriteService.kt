@@ -34,4 +34,8 @@ class FavoriteService(
 		val favorites = favoriteDao.loadAll()
 		return favorites.map { it.id!! }
 	}
+
+	fun clearUserData() {
+		favoriteDao.deleteAll()
+	}
 }

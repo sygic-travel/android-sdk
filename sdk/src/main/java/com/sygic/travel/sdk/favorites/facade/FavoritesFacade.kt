@@ -52,4 +52,8 @@ class FavoritesFacade(private val favoritesService: FavoriteService) {
 	suspend fun getFavoritesIds(): List<String>? {
 		return runAsync { favoritesService.getFavoritesIds() }
 	}
+
+	internal fun clearUserData() {
+		favoritesService.clearUserData()
+	}
 }

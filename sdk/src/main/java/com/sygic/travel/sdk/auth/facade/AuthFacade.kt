@@ -12,6 +12,7 @@ import com.sygic.travel.sdk.utils.runWithCallback
 class AuthFacade(
 	private val authService: AuthService
 ) {
+	internal val onSignOut = arrayListOf<() -> Unit>()
 
 	fun loginUserWithPassword(username: String, password: String, callback: Callback<AuthenticationResponseCode>) {
 		runWithCallback({ authService.authWithPassword(username, password) }, callback)
@@ -71,6 +72,7 @@ class AuthFacade(
 
 	fun logoutUser() {
 		authService.logout()
+		onSignOut.forEach { it.invoke() }
 	}
 
 	fun getUserSession(): UserSession? {

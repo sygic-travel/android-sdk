@@ -19,4 +19,8 @@ class SynchronizationFacade(
 	suspend fun synchronize(): Unit {
 		return runAsync { synchronizationService.synchronize() }
 	}
+
+	internal fun clearUserData() {
+		synchronizationService.clearUserData()
+	}
 }

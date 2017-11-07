@@ -52,4 +52,8 @@ class TripsFacade(
 	suspend fun emptyTripTrash() {
 		return runAsync { tripsService.emptyTrash() }
 	}
+
+	internal fun clearUserData() {
+		tripsService.clearUserData()
+	}
 }

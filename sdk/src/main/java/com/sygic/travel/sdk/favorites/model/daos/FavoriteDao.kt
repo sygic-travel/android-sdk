@@ -34,4 +34,7 @@ interface FavoriteDao {
 	 */
 	@Delete
 	fun delete(placeId: Favorite): Int
+
+	@Query("DELETE FROM favorite")
+	fun deleteAll()
 }

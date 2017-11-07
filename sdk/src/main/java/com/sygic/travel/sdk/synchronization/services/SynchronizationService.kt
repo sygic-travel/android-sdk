@@ -65,6 +65,10 @@ class SynchronizationService constructor(
 			.commit()
 	}
 
+	fun clearUserData() {
+		sharedPreferences.edit().remove(SINCE_KEY).apply()
+	}
+
 	private suspend fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
 		var apiTripData: ApiTripItemResponse? = apiTrip
 		var localTrip = tripsService.getTrip(apiTrip.id)
