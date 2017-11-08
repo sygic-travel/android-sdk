@@ -2,17 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "49d07bcd3aa97c35d8b7eab13ec03ed3",
+    "identityHash": "68c4818dff7d15ecdc12983d59c3a0e3",
     "entities": [
       {
         "tableName": "favorite",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `state` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -324,7 +330,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"49d07bcd3aa97c35d8b7eab13ec03ed3\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"68c4818dff7d15ecdc12983d59c3a0e3\")"
     ]
   }
 }

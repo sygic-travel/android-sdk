@@ -22,4 +22,7 @@ interface TripDaysDao {
 
 	@Query("DELETE FROM trip_days WHERE trip_id = :tripId")
 	fun deleteByTrip(tripId: String)
+
+	@Query("DELETE FROM trip_days")
+	fun deleteAll()
 }

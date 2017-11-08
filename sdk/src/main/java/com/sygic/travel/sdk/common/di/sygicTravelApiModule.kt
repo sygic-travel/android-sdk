@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.common.di
 
 import android.content.Context
 import com.github.salomonbrys.kodein.Kodein
@@ -6,7 +6,9 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.sygic.travel.sdk.auth.service.AuthStorageService
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
@@ -45,11 +47,18 @@ internal val sygicTravelApiModule = Kodein.Module {
 			.build()
 	}
 
+	bind<Gson>("sygicTravelGson") with singleton {
+		GsonBuilder()
+			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+			.serializeNulls()
+			.create()
+	}
+
 	bind<Retrofit>("sygicTravelApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance<OkHttpClient>("sygicTravelHttpClient"))
 			.baseUrl(instance<String>("sygicTravelApiUrl") + "/$LOCALE_PLACEHOLDER/")
-			.addConverterFactory(GsonConverterFactory.create(instance<Gson>()))
+			.addConverterFactory(GsonConverterFactory.create(instance<Gson>("sygicTravelGson")))
 			.build()
 	}
 

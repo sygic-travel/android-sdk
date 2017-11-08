@@ -23,9 +23,9 @@ class TripDayConverter constructor(
 			tripDayItemConverter.fromApi(tripItem, item)
 		}
 
-//		for (index in apiDay.itinerary.size..(itemMaxIndex + 1)) {
-//			localDay.itinerary.removeAt(index)
-//		}
+		for (index in itemMaxIndex downTo apiDay.itinerary.size) {
+			localDay.itinerary.removeAt(index)
+		}
 	}
 
 	fun toApi(localDay: TripDay): ApiTripItemResponse.Day {

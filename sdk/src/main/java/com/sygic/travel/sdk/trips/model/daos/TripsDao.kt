@@ -40,21 +40,6 @@ interface TripsDao {
 	@Query("SELECT * FROM trips WHERE id = :id")
 	fun get(id: String): Trip?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun replace(trip: TripInfo)
 
@@ -66,4 +51,7 @@ interface TripsDao {
 
 	@Query("UPDATE trips SET id = :newId WHERE id = :oldId")
 	fun replaceTripId(oldId: String, newId: String)
+
+	@Query("DELETE FROM trips")
+	fun deleteAll()
 }

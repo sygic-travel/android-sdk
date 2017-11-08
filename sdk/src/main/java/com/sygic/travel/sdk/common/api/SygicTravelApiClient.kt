@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.common.api
 import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
+import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
 import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesListResponse
@@ -40,6 +41,21 @@ interface SygicTravelApiClient {
 	fun getDirections(
 		@Body directionsRequest: List<ApiDirectionRequest>
 	): Call<ApiResponse<ApiDirectionsResponse>>
+
+
+	// ==== FAVORITES ==============================================================================
+
+	@POST("favorites")
+	@Headers("Authorization: [toIntercept]")
+	fun createFavorite(
+		@Body request: FavoriteRequest
+	): Call<Void>
+
+	@DELETE("favorites")
+	@Headers("Authorization: [toIntercept]")
+	fun deleteFavorite(
+		@Body request: FavoriteRequest
+	): Call<Void>
 
 
 	// ==== PLACES =================================================================================

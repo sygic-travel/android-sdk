@@ -97,6 +97,12 @@ class TripsService constructor(
 		trip.reindexDays()
 	}
 
+	fun clearUserData() {
+		tripDayItemsDao.deleteAll()
+		tripDaysDao.deleteAll()
+		tripsDao.deleteAll()
+	}
+
 	/**
 	 * Connects the loaded date together.
 	 * Days has to be sorted ASC by their day index.

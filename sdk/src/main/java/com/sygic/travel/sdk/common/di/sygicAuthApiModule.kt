@@ -1,10 +1,12 @@
-package com.sygic.travel.sdk.di
+package com.sygic.travel.sdk.common.di
 
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,11 +24,17 @@ internal val sygicAuthApiModule = Kodein.Module {
 		builder.build()
 	}
 
+	bind<Gson>("sygicAuthGson") with singleton {
+		GsonBuilder()
+			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+			.create()
+	}
+
 	bind<Retrofit>("sygicAuthApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance("sygicAuthHttpClient"))
 			.baseUrl(instance<String>("sygicAuthUrl"))
-			.addConverterFactory(GsonConverterFactory.create(instance<Gson>()))
+			.addConverterFactory(GsonConverterFactory.create(instance<Gson>("sygicAuthGson")))
 			.build()
 	}
 
