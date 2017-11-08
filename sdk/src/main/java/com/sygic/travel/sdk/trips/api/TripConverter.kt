@@ -61,9 +61,9 @@ class TripConverter constructor(
 			tripDayConverter.fromApi(tripDay, day)
 		}
 
-//		for (index in apiTrip.days.size..(daysMaxIndex + 1)) {
-//			localTrip.days!!.removeAt(index)
-//		}
+		for (index in daysMaxIndex downTo apiTrip.days.size) {
+			localTrip.days.removeAt(index)
+		}
 
 		localTrip.reindexDays()
 		localTrip.isChanged = false
