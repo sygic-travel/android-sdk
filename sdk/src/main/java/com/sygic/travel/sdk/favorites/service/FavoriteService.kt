@@ -32,7 +32,7 @@ class FavoriteService(
 	 */
 	fun getFavoritesIds(): List<String> {
 		val favorites = favoriteDao.findAll()
-		return favorites.map { it.id!! }
+		return favorites.map { it.id }
 	}
 
 	fun getFavoritesForSynchronization(): List<Favorite> {
