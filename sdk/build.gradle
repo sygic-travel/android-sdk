@@ -54,6 +54,10 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+
+	sourceSets {
+		androidTest.assets.srcDirs += files("$projectDir/db-schemas".toString())
+	}
 }
 
 dependencies {
@@ -80,6 +84,8 @@ dependencies {
 	testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
 	testImplementation "junit:junit:4.12"
 
+	androidTestImplementation "android.arch.persistence.room:testing:1.0.0"
+	androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 	androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})

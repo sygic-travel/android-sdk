@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 /**
  * Database entity, representing a table with one column referencing to a place marked as favorite.
  */
-@Entity(tableName = "favorite")
+@Entity(tableName = "favorites")
 class Favorite {
 	companion object {
 		const val STATE_SYNCED = 0
@@ -16,7 +16,7 @@ class Favorite {
 	}
 
 	@PrimaryKey
-	var id: String? = null
+	lateinit var id: String
 
 	@ColumnInfo
 	var state: Int = 0

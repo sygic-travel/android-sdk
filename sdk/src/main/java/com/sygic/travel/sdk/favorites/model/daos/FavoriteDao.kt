@@ -16,13 +16,13 @@ interface FavoriteDao {
 	/**
 	 * @return All favorite places' ids.
 	 */
-	@Query("SELECT * FROM favorite WHERE state < 2")
+	@Query("SELECT * FROM favorites WHERE state < 2")
 	fun findAll(): List<Favorite>
 
-	@Query("SELECT * FROM favorite WHERE state > 0")
+	@Query("SELECT * FROM favorites WHERE state > 0")
 	fun findForSynchronization(): List<Favorite>
 
-	@Query("SELECT * FROM favorite WHERE id = :id")
+	@Query("SELECT * FROM favorites WHERE id = :id")
 	fun get(id: String): Favorite?
 
 	/**
@@ -45,6 +45,6 @@ interface FavoriteDao {
 	@Delete
 	fun delete(placeId: Favorite): Int
 
-	@Query("DELETE FROM favorite")
+	@Query("DELETE FROM favorites")
 	fun deleteAll()
 }

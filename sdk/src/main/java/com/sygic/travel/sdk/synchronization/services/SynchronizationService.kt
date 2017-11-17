@@ -94,12 +94,12 @@ class SynchronizationService constructor(
 		}
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
 			if (favorite.state == Favorite.STATE_TO_ADD) {
-				val response = apiClient.createFavorite(FavoriteRequest(favorite.id!!)).execute()
+				val response = apiClient.createFavorite(FavoriteRequest(favorite.id)).execute()
 				if (response.isSuccessful) {
 					favoriteService.markAsSynchronized(favorite)
 				}
 			} else if (favorite.state == Favorite.STATE_TO_REMOVE) {
-				val response = apiClient.deleteFavorite(FavoriteRequest(favorite.id!!)).execute()
+				val response = apiClient.deleteFavorite(FavoriteRequest(favorite.id)).execute()
 				if (response.isSuccessful) {
 					favoriteService.markAsSynchronized(favorite)
 				}
