@@ -47,8 +47,8 @@ dependencies {
 	implementation 'com.facebook.android:facebook-android-sdk:4.27.0'
 
 	// View Models
-	implementation 'android.arch.lifecycle:runtime:1.0.0'
-	implementation 'android.arch.lifecycle:extensions:1.0.0-alpha9-1'
+	implementation 'android.arch.lifecycle:runtime:1.0.3'
+	implementation 'android.arch.lifecycle:extensions:1.0.0'
 
 	// photos
 	implementation 'com.squareup.picasso:picasso:2.5.2'
