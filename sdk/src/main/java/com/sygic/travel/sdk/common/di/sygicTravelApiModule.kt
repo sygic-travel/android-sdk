@@ -10,10 +10,10 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sygic.travel.sdk.auth.service.AuthStorageService
+import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor.Companion.LOCALE_PLACEHOLDER
-import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -35,13 +35,14 @@ internal val sygicTravelApiModule = Kodein.Module {
 
 	bind<OkHttpClient>("sygicTravelHttpClient") with singleton {
 		val builder = OkHttpClient.Builder()
+			.addInterceptor(instance<HeadersInterceptor>())
+			.addInterceptor(instance<LocaleInterceptor>())
 
 		if (instance("debugMode")) {
-			builder.addNetworkInterceptor(instance<HttpLoggingInterceptor>())
+			builder.addInterceptor(instance<HttpLoggingInterceptor>())
 		}
 
-		builder.addInterceptor(instance<HeadersInterceptor>())
-			.addInterceptor(instance<LocaleInterceptor>())
+		builder
 			.cache(instance<Cache>())
 			.readTimeout(60, TimeUnit.SECONDS)
 			.build()
