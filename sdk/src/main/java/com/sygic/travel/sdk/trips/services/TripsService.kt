@@ -9,7 +9,6 @@ import com.sygic.travel.sdk.trips.model.daos.TripDayItemsDao
 import com.sygic.travel.sdk.trips.model.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.model.daos.TripsDao
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import java.util.Date
 
 class TripsService constructor(
 	private val apiClient: SygicTravelApiClient,
@@ -17,12 +16,21 @@ class TripsService constructor(
 	private val tripDaysDao: TripDaysDao,
 	private val tripDayItemsDao: TripDayItemsDao
 ) {
-	fun getTrips(from: Long?, to: Long?): List<TripInfo> {
-		return when {
-			from != null && to != null -> tripsDao.findByDates(from, to)
-			from != null -> tripsDao.findByDateAfter(from)
-			to != null -> tripsDao.findByDateBefore(to)
-			else -> tripsDao.findAll()
+	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
+		return if (includeOverlapping) {
+			when {
+				from != null && to != null -> tripsDao.findByDatesWithOverlapping(from, to)
+				from != null -> tripsDao.findByDateAfterWithOverlapping(from)
+				to != null -> tripsDao.findByDateBeforeWithOverlapping(to)
+				else -> tripsDao.findAll()
+			}
+		} else {
+			when {
+				from != null && to != null -> tripsDao.findByDates(from, to)
+				from != null -> tripsDao.findByDateAfter(from)
+				to != null -> tripsDao.findByDateBefore(to)
+				else -> tripsDao.findAll()
+			}
 		}
 	}
 
@@ -31,11 +39,12 @@ class TripsService constructor(
 	}
 
 	fun getPastTrips(): List<TripInfo> {
-		return tripsDao.findByDateBefore(DateTimeHelper.today())
+		val today = DateTimeHelper.today()
+		return tripsDao.findByDateBefore(today)
 	}
 
 	fun getCurrentTrips(): List<TripInfo> {
-		return tripsDao.findByDates(DateTimeHelper.today(), DateTimeHelper.tomorrow())
+		return tripsDao.findByDatesWithOverlapping(DateTimeHelper.today(), DateTimeHelper.tomorrow())
 	}
 
 	fun getUnscheduledTrips(): List<TripInfo> {
