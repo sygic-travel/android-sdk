@@ -8,7 +8,7 @@ import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
 
-class ApiPlaceItemResponse(
+internal class ApiPlaceItemResponse(
 	id: String,
 	level: String,
 	categories: List<String>,

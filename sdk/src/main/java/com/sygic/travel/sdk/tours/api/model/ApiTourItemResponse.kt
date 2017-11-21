@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.tours.api.model
 
 import com.sygic.travel.sdk.tours.model.Tour
 
-class ApiTourItemResponse(
+internal class ApiTourItemResponse(
 	val id: String,
 	val supplier: String,
 	val title: String,

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.synchronization.api.model
 
-class ApiChangesResponse(
+internal class ApiChangesResponse(
 	val changes: List<ChangeEntry>
 ) {
 	data class ChangeEntry(

@@ -7,13 +7,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.ImageView
-import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class GalleryActivity : AppCompatActivity() {
 	private lateinit var sdk: Sdk
@@ -30,7 +31,17 @@ class GalleryActivity : AppCompatActivity() {
 		val id = intent.getStringExtra(ID)
 
 		// Load photos from API, using id
-		sdk.placesFacade.getPlaceMedia(id, mediaCallback)
+		Single.fromCallable { sdk.placesFacade.getPlaceMedia(id) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				this@GalleryActivity.gallery = data
+				galleryAdapter!!.setGallery(data!!)
+				galleryAdapter!!.notifyDataSetChanged()
+			}, { exception ->
+				Log.d(TAG, "Media: onFailure")
+				exception.printStackTrace()
+			})
 	}
 
 	private fun initRecycler() {
@@ -48,21 +59,6 @@ class GalleryActivity : AppCompatActivity() {
 				val photoIntent = Intent(this@GalleryActivity, PhotoActivity::class.java)
 				photoIntent.putExtra(THUMBNAIL_URL, gallery!![position].urlTemplate)
 				startActivity(photoIntent)
-			}
-		}
-
-	private // Update the adapter's data.
-	val mediaCallback: Callback<List<Medium>?>
-		get() = object : UiCallback<List<Medium>?>(this) {
-			override fun onUiSuccess(data: List<Medium>?) {
-				this@GalleryActivity.gallery = data
-				galleryAdapter!!.setGallery(data!!)
-				galleryAdapter!!.notifyDataSetChanged()
-			}
-
-			override fun onUiFailure(exception: Throwable) {
-				Log.d(TAG, "Media: onFailure")
-				exception.printStackTrace()
 			}
 		}
 

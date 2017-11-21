@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import java.util.Date
 import java.util.UUID
 
-class AuthStorageService(private val sharedPreferences: SharedPreferences) {
+internal class AuthStorageService(private val sharedPreferences: SharedPreferences) {
 	companion object {
 		private const val CLIENT_SESSION_KEY = "auth.client_session_key"
 		private const val USER_SESSION_KEY = "auth.user_session_key"

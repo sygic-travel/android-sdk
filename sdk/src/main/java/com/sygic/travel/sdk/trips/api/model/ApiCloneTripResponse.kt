@@ -1,5 +1,5 @@
 package com.sygic.travel.sdk.trips.api.model
 
-class ApiCloneTripResponse(
+internal class ApiCloneTripResponse(
 	val trip_id: String
 )

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.api.model
 
-class ApiTripItemRequest(
+internal class ApiTripItemRequest(
 	val name: String?,
 	val base_version: Int,
 	val updated_at: String,

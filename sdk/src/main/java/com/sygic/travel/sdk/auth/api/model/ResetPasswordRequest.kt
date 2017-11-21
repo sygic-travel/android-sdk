@@ -1,5 +1,5 @@
 package com.sygic.travel.sdk.auth.api.model
 
-class ResetPasswordRequest(
+internal class ResetPasswordRequest(
 	val email: String
 )

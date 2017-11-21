@@ -12,7 +12,7 @@ import com.sygic.travel.sdk.favorites.model.Favorite
  * Interface containing methods for working with favorite table in database.
  */
 @Dao
-interface FavoriteDao {
+internal interface FavoriteDao {
 	/**
 	 * @return All favorite places' ids.
 	 */

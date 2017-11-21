@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.directions.api.model
 
 import com.sygic.travel.sdk.directions.model.DirectionMode
 
-class ApiDirectionsResponse(
+internal class ApiDirectionsResponse(
 	val path: List<Directions>
 ) {
 	class Directions(

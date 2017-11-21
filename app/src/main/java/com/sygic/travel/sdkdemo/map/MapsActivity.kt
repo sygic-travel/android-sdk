@@ -16,14 +16,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.geo.quadkey.QuadkeysGenerator
 import com.sygic.travel.sdk.places.geo.spread.CanvasSize
 import com.sygic.travel.sdk.places.geo.spread.SpreadResult
 import com.sygic.travel.sdk.places.geo.spread.SpreadedPlace
 import com.sygic.travel.sdk.places.geo.spread.Spreader
-import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
@@ -33,8 +31,10 @@ import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
 import com.sygic.travel.sdkdemo.utils.MarkerBitmapGenerator
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -47,7 +47,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 	private val selectedCategoriesKeys = ArrayList<String>()
 	private var titlePattern: String? = null
 
-	private var placesCallback: Callback<List<PlaceInfo>?>? = null
 	private var vMain: View? = null
 
 	internal var mapMovesCounter = 0
@@ -144,7 +143,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		query.bounds = mapBounds
 		query.parents = listOf("city:1")
 		query.limit = 32
-		sdk.placesFacade.getPlaces(query, getPlacesCallback())
+
+		Single.fromCallable { sdk.placesFacade.getPlaces(query) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				showPlacesOnMap(data)
+			}, { exception ->
+				Toast.makeText(this@MapsActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
+			})
 	}
 
 	// On category click listener
@@ -284,24 +292,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 		return markerHue
 	}
 
-	private fun getPlacesCallback(): Callback<List<PlaceInfo>?> {
-		if (placesCallback == null) {
-			placesCallback = object : UiCallback<List<PlaceInfo>?>(this) {
-				override fun onUiSuccess(data: List<PlaceInfo>?) {
-					showPlacesOnMap(data)
-				}
-
-				override fun onUiFailure(exception: Throwable) {
-					Toast.makeText(this@MapsActivity, exception.message, Toast.LENGTH_LONG).show()
-					exception.printStackTrace()
-				}
-			}
-		}
-		return placesCallback!!
-	}
-
 	companion object {
-		private val TAG = "SdkDemoApp-MapActivity"
 		val ID = "id"
 	}
 }

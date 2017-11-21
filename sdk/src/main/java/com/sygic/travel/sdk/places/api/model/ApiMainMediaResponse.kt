@@ -1,17 +1,9 @@
 package com.sygic.travel.sdk.places.api.model
 
-import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
-import com.sygic.travel.sdk.places.model.media.Attribution
 import com.sygic.travel.sdk.places.model.media.MainMedia
-import com.sygic.travel.sdk.places.model.media.Medium
-import com.sygic.travel.sdk.places.model.media.Original
-import com.sygic.travel.sdk.places.model.media.Source
 import com.sygic.travel.sdk.places.model.media.Usage
 
-/**
- * Place main media.
- */
-class ApiMainMediaResponse(
+internal class ApiMainMediaResponse(
 	val usage: ApiUsage,
 	val media: List<ApiMediumResponse>
 ) {

@@ -7,7 +7,6 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.query.ToursQuery
 import com.sygic.travel.sdk.tours.model.Tour
@@ -15,13 +14,14 @@ import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.detail.ReferenceActivity
-import com.sygic.travel.sdkdemo.utils.UiCallback
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 	private lateinit var sdk: Sdk
 	private var rvTours: RecyclerView? = null
 	private var toursAdapter: ToursAdapter? = null
-	private var tourCallback: Callback<List<Tour>?>? = null
 	private var tours: List<Tour>? = null
 
 
@@ -53,26 +53,19 @@ class ToursActivity : AppCompatActivity(), ToursAdapter.ListItemClickListener {
 			sortBy = ToursQuery.SortBy.RATING,
 			sortDirection = ToursQuery.SortDirection.ASC
 		)
-		sdk.toursFacade.getTours(tourQuery, getToursCallback())
-	}
 
-	private fun getToursCallback(): Callback<List<Tour>?> {
-		if (tourCallback == null) {
-			tourCallback = object : UiCallback<List<Tour>?>(this) {
-				override fun onUiSuccess(data: List<Tour>?) {
-					if (data != null) {
-						tours = data
-						bindTours()
-					}
+		Single.fromCallable { sdk.toursFacade.getTours(tourQuery) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				if (data != null) {
+					tours = data
+					bindTours()
 				}
-
-				override fun onUiFailure(exception: Throwable) {
-					Toast.makeText(this@ToursActivity, exception.message, Toast.LENGTH_LONG).show()
-					exception.printStackTrace()
-				}
-			}
-		}
-		return tourCallback!!
+			}, { exception ->
+				Toast.makeText(this@ToursActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
+			})
 	}
 
 	// Recycler view initialization - list with dividers

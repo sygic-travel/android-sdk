@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 
-open class ApiPlaceListItemResponse(
+open internal class ApiPlaceListItemResponse(
 	val id: String,
 	val level: String,
 	val categories: List<String>,

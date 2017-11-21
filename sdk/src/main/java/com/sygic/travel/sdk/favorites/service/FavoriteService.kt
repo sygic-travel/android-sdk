@@ -3,34 +3,23 @@ package com.sygic.travel.sdk.favorites.service
 import com.sygic.travel.sdk.favorites.model.Favorite
 import com.sygic.travel.sdk.favorites.model.daos.FavoriteDao
 
-class FavoriteService(
+internal class FavoriteService(
 	private val favoriteDao: FavoriteDao
 ) {
-	/**
-	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
-	 * @param id A place's id, which is stored.
-	 */
-	fun addPlaceToFavorites(id: String) {
+	fun addPlace(id: String) {
 		val favorite = Favorite()
 		favorite.id = id
 		favorite.state = Favorite.STATE_TO_ADD
 		favoriteDao.insert(favorite)
 	}
 
-	/**
-	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
-	 * @param id A place's id, which is removed.
-	 */
-	fun removePlaceFromFavorites(id: String) {
+	fun removePlace(id: String) {
 		val favorite = favoriteDao.get(id) ?: return
 		favorite.state = Favorite.STATE_TO_REMOVE
 		favoriteDao.insert(favorite)
 	}
 
-	/**
-	 * Method returns a list of all favorite places' ids.
-	 */
-	fun getFavoritesIds(): List<String> {
+	fun getPlaces(): List<String> {
 		val favorites = favoriteDao.findAll()
 		return favorites.map { it.id }
 	}

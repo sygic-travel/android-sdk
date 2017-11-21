@@ -8,8 +8,8 @@ import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripInfo
 
 @Dao
-interface TripsDao {
-	@Query("SELECT * FROM trips")
+internal interface TripsDao {
+	@Query("SELECT * FROM trips WHERE is_deleted = 0")
 	fun findAll(): List<TripInfo>
 
 	@Query(

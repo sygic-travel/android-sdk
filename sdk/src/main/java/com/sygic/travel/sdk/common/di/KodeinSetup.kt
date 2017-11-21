@@ -15,7 +15,7 @@ import com.sygic.travel.sdk.synchronization.di.synchronizationModule
 import com.sygic.travel.sdk.tours.di.toursModule
 import com.sygic.travel.sdk.trips.di.tripsModule
 
-object KodeinSetup {
+internal object KodeinSetup {
 	fun setupKodein(
 		applicationContext: Context,
 		sdkConfig: SdkConfig

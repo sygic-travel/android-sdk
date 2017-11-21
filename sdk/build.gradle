@@ -75,8 +75,6 @@ dependencies {
 	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.1'
-	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.1'
 
 	kapt "android.arch.persistence.room:compiler:1.0.0"
 
@@ -89,12 +87,6 @@ dependencies {
 	androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-}
-
-kotlin {
-	experimental {
-		coroutines "enable"
-	}
 }
 
 apply from: 'maven.gradle'

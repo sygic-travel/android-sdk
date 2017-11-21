@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.directions.services
 import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
 
-class DirectionsService constructor(
+internal class DirectionsService constructor(
 	private val apiDirectionsService: ApiDirectionsService,
 	private val naiveDirectionsService: NaiveDirectionsService,
 	private val cacheService: CacheService
@@ -21,7 +21,7 @@ class DirectionsService constructor(
 		}
 	}
 
-	suspend fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		val missingRequests = requests.filterIndexed { i, _ ->
 			return@filterIndexed cachedDirections[i] == null

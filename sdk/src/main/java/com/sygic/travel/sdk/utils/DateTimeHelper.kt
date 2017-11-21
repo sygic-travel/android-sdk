@@ -67,27 +67,4 @@ internal object DateTimeHelper {
 	fun now(): Long {
 		return Date().time / 1000
 	}
-
-	/**
-	 * Returns unix timestamp of today (at 00:00) (in seconds).
-	 */
-	fun today(): Long {
-		val today = GregorianCalendar()
-		today.set(Calendar.HOUR_OF_DAY, 0)
-		today.set(Calendar.MINUTE, 0)
-		today.set(Calendar.SECOND, 0)
-		return today.timeInMillis / 1000
-	}
-
-	/**
-	 * Returns unix timestamp of tomorrow (at 00:00) (in seconds).
-	 */
-	fun tomorrow(): Long {
-		val tomorrow = GregorianCalendar()
-		tomorrow.add(Calendar.DATE, 1)
-		tomorrow.set(Calendar.HOUR_OF_DAY, 0)
-		tomorrow.set(Calendar.MINUTE, 0)
-		tomorrow.set(Calendar.SECOND, 0)
-		return tomorrow.timeInMillis / 1000
-	}
 }

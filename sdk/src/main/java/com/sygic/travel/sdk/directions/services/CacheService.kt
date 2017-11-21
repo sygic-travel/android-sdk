@@ -7,7 +7,7 @@ import com.sygic.travel.sdk.directions.model.DirectionsRequest
 import java.io.File
 import java.util.Locale
 
-class CacheService constructor(
+internal class CacheService constructor(
 	context: Context
 ) {
 	private val cache = CachingHelper<Directions>(File(context.cacheDir.path + File.separator + "sygic-travel-directions"))

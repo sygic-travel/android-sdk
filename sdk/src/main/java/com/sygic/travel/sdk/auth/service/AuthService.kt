@@ -13,7 +13,7 @@ import com.sygic.travel.sdk.auth.model.UserSession
 import retrofit2.HttpException
 import java.util.Date
 
-class AuthService(
+internal class AuthService(
 	private val sygicAuthClient: SygicAuthApiClient,
 	private val authStorageService: AuthStorageService,
 	private val clientId: String,

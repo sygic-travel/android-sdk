@@ -13,17 +13,16 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
-import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import java.util.Collections
 
 class SearchActivity : AppCompatActivity() {
@@ -68,19 +67,14 @@ class SearchActivity : AppCompatActivity() {
 		query.levels = listOf("poi")
 		query.parents = listOf("city:1")
 		query.limit = 128
-		sdk.placesFacade.getPlaces(query, placesCallback)
-	}
 
-	private fun renderPlacesList(places: List<PlaceInfo>?) {
-		this.places = places
-		placesAdapter!!.setPlaces(places!!)
-		placesAdapter!!.notifyDataSetChanged()
-	}
-
-	private // Places are sorted by rating, best rated places are at the top of the list
-	val placesCallback: Callback<List<PlaceInfo>?>
-		get() = object : UiCallback<List<PlaceInfo>?>(this) {
-			override fun onSuccess(data: List<PlaceInfo>?) {
+		Single.fromCallable {
+			// Places are sorted by rating, best rated places are at the top of the list
+			sdk.placesFacade.getPlaces(query)
+		}
+			.subscribeOn(Schedulers.io())
+			.observeOn(Schedulers.io())
+			.subscribe({ data ->
 				Collections.sort(data) { p1, p2 ->
 					if (p1.rating == p2.rating) {
 						0
@@ -91,13 +85,17 @@ class SearchActivity : AppCompatActivity() {
 				runOnUiThread {
 					renderPlacesList(data)
 				}
-			}
-
-			override fun onUiFailure(exception: Throwable) {
+			}, { exception ->
 				Toast.makeText(this@SearchActivity, exception.message, Toast.LENGTH_LONG).show()
 				exception.printStackTrace()
-			}
-		}
+			})
+	}
+
+	private fun renderPlacesList(places: List<PlaceInfo>?) {
+		this.places = places
+		placesAdapter!!.setPlaces(places!!)
+		placesAdapter!!.notifyDataSetChanged()
+	}
 
 	// SEARCH
 
@@ -149,7 +147,6 @@ class SearchActivity : AppCompatActivity() {
 	}
 
 	companion object {
-		private val TAG = SearchActivity::class.java.simpleName
 		private val ID = "id"
 	}
 }

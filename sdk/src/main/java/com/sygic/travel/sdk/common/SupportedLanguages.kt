@@ -3,9 +3,6 @@ package com.sygic.travel.sdk.common
 import java.util.ArrayList
 import java.util.Locale
 
-/**
- * Determines the appropriate locale.
- */
 internal object SupportedLanguages {
 	private val supportedLanguages: MutableList<String>
 	var EN = "en"

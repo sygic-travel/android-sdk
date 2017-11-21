@@ -10,7 +10,7 @@ import com.sygic.travel.sdk.trips.model.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.model.daos.TripsDao
 import com.sygic.travel.sdk.utils.DateTimeHelper
 
-class TripsService constructor(
+internal class TripsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val tripsDao: TripsDao,
 	private val tripDaysDao: TripDaysDao,
@@ -32,23 +32,6 @@ class TripsService constructor(
 				else -> tripsDao.findAll()
 			}
 		}
-	}
-
-	fun getFutureTrips(): List<TripInfo> {
-		return tripsDao.findByDateAfter(DateTimeHelper.tomorrow() - 1)
-	}
-
-	fun getPastTrips(): List<TripInfo> {
-		val today = DateTimeHelper.today()
-		return tripsDao.findByDateBefore(today)
-	}
-
-	fun getCurrentTrips(): List<TripInfo> {
-		return tripsDao.findByDatesWithOverlapping(DateTimeHelper.today(), DateTimeHelper.tomorrow())
-	}
-
-	fun getUnscheduledTrips(): List<TripInfo> {
-		return tripsDao.findUnscheduled()
 	}
 
 	fun getDeletedTrips(): List<TripInfo> {
