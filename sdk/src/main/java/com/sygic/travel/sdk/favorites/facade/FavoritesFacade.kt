@@ -6,30 +6,19 @@ import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 class FavoritesFacade internal constructor(
 	private val favoritesService: FavoriteService
 ) {
-	/**
-	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
-	 * @param id A place's id, which is stored.
-	 */
-	fun addPlaceToFavorites(id: String) {
+	fun addPlace(placeId: String) {
 		checkNotRunningOnMainThread()
-		return favoritesService.addPlaceToFavorites(id)
+		return favoritesService.addPlace(placeId)
 	}
 
-	/**
-	 * Removes a place's id from a local persistent storage. The place is removed from the favorites.
-	 * @param id A place's id, which is removed.
-	 */
-	fun removePlaceFromFavorites(id: String) {
+	fun removePlace(placeId: String) {
 		checkNotRunningOnMainThread()
-		return favoritesService.removePlaceFromFavorites(id)
+		return favoritesService.removePlace(placeId)
 	}
 
-	/**
-	 * Method returns a list of all favorite places' ids.
-	 */
-	fun getFavoritesIds(): List<String>? {
+	fun getPlaceIds(): List<String> {
 		checkNotRunningOnMainThread()
-		return favoritesService.getFavoritesIds()
+		return favoritesService.getPlaces()
 	}
 
 	internal fun clearUserData() {

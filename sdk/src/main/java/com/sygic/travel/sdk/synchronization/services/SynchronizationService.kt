@@ -87,10 +87,10 @@ internal class SynchronizationService constructor(
 
 	private fun syncFavorites(addedFavoriteIds: ArrayList<String>, deletedFavoriteIds: ArrayList<String>) {
 		for (favoriteId in addedFavoriteIds) {
-			favoriteService.addPlaceToFavorites(favoriteId)
+			favoriteService.addPlace(favoriteId)
 		}
 		for (favoriteId in deletedFavoriteIds) {
-			favoriteService.removePlaceFromFavorites(favoriteId)
+			favoriteService.removePlace(favoriteId)
 		}
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
 			if (favorite.state == Favorite.STATE_TO_ADD) {
