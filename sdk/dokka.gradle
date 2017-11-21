@@ -12,7 +12,7 @@ dokka {
 	skipDeprecated = false
 
 	// Emit warnings about not documented members. Applies globally, also can be overridden by packageOptions
-	reportNotDocumented = true
+	reportNotDocumented = false
 	skipEmptyPackages = true // Do not create index pages for empty packages
 	impliedPlatforms = ["Android"] // See platforms section of documentation
 
