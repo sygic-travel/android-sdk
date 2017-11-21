@@ -21,7 +21,7 @@ class DirectionsService constructor(
 		}
 	}
 
-	suspend fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		val missingRequests = requests.filterIndexed { i, _ ->
 			return@filterIndexed cachedDirections[i] == null

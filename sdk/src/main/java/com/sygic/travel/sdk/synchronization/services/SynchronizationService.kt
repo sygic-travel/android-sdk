@@ -26,7 +26,7 @@ class SynchronizationService constructor(
 	}
 
 	@SuppressLint("ApplySharedPref")
-	suspend fun synchronize() {
+	fun synchronize() {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
@@ -70,7 +70,7 @@ class SynchronizationService constructor(
 		sharedPreferences.edit().remove(SINCE_KEY).apply()
 	}
 
-	private suspend fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>) {
+	private fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>) {
 		val changedTripsResponse = apiClient.getTrips(
 			changedTripIds.joinToString("|")
 		).execute().body()!!
@@ -107,7 +107,7 @@ class SynchronizationService constructor(
 		}
 	}
 
-	private suspend fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
+	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
 		var apiTripData: ApiTripItemResponse? = apiTrip
 		var localTrip = tripsService.getTrip(apiTrip.id)
 
@@ -128,22 +128,22 @@ class SynchronizationService constructor(
 		tripsService.saveTrip(localTrip)
 	}
 
-	private suspend fun showDialogAndGetResponse(conflictInfo: ApiUpdateTripResponse.ConflictInfo): Boolean? {
+	private fun showDialogAndGetResponse(conflictInfo: ApiUpdateTripResponse.ConflictInfo): Boolean? {
 		return false // todo
 	}
 
-	private suspend fun syncApiDeletedTrip(deletedTripId: String) {
+	private fun syncApiDeletedTrip(deletedTripId: String) {
 		tripsService.deleteTrip(deletedTripId)
 	}
 
-	private suspend fun syncLocalChangedTrips(apiChangedTripIds: List<String>, apiDeletedTripIds: List<String>) {
+	private fun syncLocalChangedTrips(apiChangedTripIds: List<String>, apiDeletedTripIds: List<String>) {
 		val changedTrips = tripsService.findAllChangedExceptApiChanged(apiChangedTripIds)
 		for (changedTrip in changedTrips) {
 			syncLocalChangedTrip(changedTrip, apiDeletedTripIds.contains(changedTrip.id))
 		}
 	}
 
-	private suspend fun syncLocalChangedTrip(trip: Trip, deletedOnApi: Boolean) {
+	private fun syncLocalChangedTrip(trip: Trip, deletedOnApi: Boolean) {
 		if (trip.isLocal) {
 			val createResponse = apiClient.createTrip(
 				tripConverter.toApi(trip)
@@ -162,7 +162,7 @@ class SynchronizationService constructor(
 		}
 	}
 
-	private suspend fun updateTrip(localTrip: Trip): ApiTripItemResponse? {
+	private fun updateTrip(localTrip: Trip): ApiTripItemResponse? {
 		val updateResponse = apiClient.updateTrip(
 			localTrip.id,
 			tripConverter.toApi(localTrip)

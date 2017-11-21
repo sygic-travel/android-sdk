@@ -3,57 +3,69 @@ package com.sygic.travel.sdk.trips.facades
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.services.TripsService
-import com.sygic.travel.sdk.utils.runAsync
+import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
 @Suppress("unused")
 class TripsFacade(
 	private val tripsService: TripsService
 ) {
-	suspend fun getTrips(from: Long?, to: Long?): List<TripInfo> {
-		return runAsync { tripsService.getTrips(from, to) }
+	fun getTrips(from: Long?, to: Long?): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getTrips(from, to)
 	}
 
-	suspend fun getFutureTrips(): List<TripInfo> {
-		return runAsync { tripsService.getFutureTrips() }
+	fun getFutureTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getFutureTrips()
 	}
 
-	suspend fun getPastTrips(): List<TripInfo> {
-		return runAsync { tripsService.getPastTrips() }
+	fun getPastTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getPastTrips()
 	}
 
-	suspend fun getCurrentTrips(): List<TripInfo> {
-		return runAsync { tripsService.getCurrentTrips() }
+	fun getCurrentTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getCurrentTrips()
 	}
 
-	suspend fun getUnscheduledTrips(): List<TripInfo> {
-		return runAsync { tripsService.getUnscheduledTrips() }
+	fun getUnscheduledTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getUnscheduledTrips()
 	}
 
-	suspend fun getDeletedTrips(): List<TripInfo> {
-		return runAsync { tripsService.getDeletedTrips() }
+	fun getDeletedTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getDeletedTrips()
 	}
 
-	suspend fun getTrip(id: String): Trip? {
-		return runAsync { tripsService.getTrip(id) }
+	fun getTrip(id: String): Trip? {
+		checkNotRunningOnMainThread()
+		return tripsService.getTrip(id)
 	}
 
-	suspend fun saveTrip(trip: Trip) {
-		return runAsync { tripsService.saveTrip(trip) }
+	fun saveTrip(trip: Trip) {
+		checkNotRunningOnMainThread()
+		return tripsService.saveTrip(trip)
 	}
 
-	suspend fun saveTrip(trip: TripInfo) {
-		return runAsync { tripsService.saveTrip(trip) }
+	fun saveTrip(trip: TripInfo) {
+		checkNotRunningOnMainThread()
+		return tripsService.saveTrip(trip)
 	}
 
-	suspend fun deleteTrip(trip: TripInfo) {
-		return runAsync { tripsService.deleteTrip(trip.id) }
+	fun deleteTrip(trip: TripInfo) {
+		checkNotRunningOnMainThread()
+		return tripsService.deleteTrip(trip.id)
 	}
 
-	suspend fun emptyTripTrash() {
-		return runAsync { tripsService.emptyTrash() }
+	fun emptyTripTrash() {
+		checkNotRunningOnMainThread()
+		return tripsService.emptyTrash()
 	}
 
 	internal fun clearUserData() {
+		checkNotRunningOnMainThread()
 		tripsService.clearUserData()
 	}
 }
