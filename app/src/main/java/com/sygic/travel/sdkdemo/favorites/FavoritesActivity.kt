@@ -57,11 +57,11 @@ class FavoritesActivity : AppCompatActivity() {
 
 	// Use the SDK to load favorite places' ids from database
 	private fun loadFavoritesIds() {
-		Single.fromCallable { sdk.favoritesFacade.getFavoritesIds() }
+		Single.fromCallable { sdk.favoritesFacade.getPlaceIds() }
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe({ data ->
-				loadFavorites(data!!)
+				loadFavorites(data)
 			}, { exception ->
 				Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
 				exception.printStackTrace()

@@ -45,11 +45,11 @@ class PlaceDetailActivity : AppCompatActivity() {
 	}
 
 	private fun loadAllFavoritesIds() {
-		Single.fromCallable { sdk.favoritesFacade.getFavoritesIds() }
+		Single.fromCallable { sdk.favoritesFacade.getPlaceIds() }
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe { data ->
-				val isFavorite = data?.contains(id)!!
+				val isFavorite = data.contains(id)
 				views?.cbFavorite?.isChecked = isFavorite
 				setOnFavoriteChangeListener()
 			}
@@ -58,7 +58,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 	private fun setOnFavoriteChangeListener() {
 		views?.cbFavorite?.setOnCheckedChangeListener({ _, isChecked ->
 			if (isChecked) {
-				Single.fromCallable { sdk.favoritesFacade.addPlaceToFavorites(id!!) }
+				Single.fromCallable { sdk.favoritesFacade.addPlace(id!!) }
 					.subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({}, { exception ->
@@ -66,7 +66,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 						exception.printStackTrace()
 					})
 			} else {
-				Single.fromCallable { sdk.favoritesFacade.removePlaceFromFavorites(id!!) }
+				Single.fromCallable { sdk.favoritesFacade.removePlace(id!!) }
 					.subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({}, { exception ->
