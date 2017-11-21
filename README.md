@@ -1,29 +1,18 @@
 # Sygic Travel Android SDK
 
+![Minamal API version level 15](https://img.shields.io/badge/min_API_level-15_--_Android_4.0.3-green.svg)
 
 Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
 application. It gives you an access to millions of places covering the whole world.
 
-For further details see [Full SDK documentation](http://docs.sygictravelapi.com/android-sdk/1.0.1).
-
-## Requirements
-
-- Android SDK 8.0.0 platform (O, API level 26)
-- Build tools 26.0.2
-- _API key_ for your business or project
-
-## Deployment
-
-- Target Android SDK version is *O 8.0.0 (API level 26)*
-- Minimal supported Android SDK version is *Ice Cream Sandwich 4.0.3 (API level 15)*
 
 ## Installation
+
 Add the internet permission to your `AndroidManifest.xml` file:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-### Gradle
 Add repository to your project `build.gradle` file:
 ```gradle
 repositories {
@@ -43,81 +32,83 @@ dependencies {
 ```
 Note that `transitive` is set to `true` - this is necessary since the library has it's own dependencies.
 
-### Download from Github
-Download zipped project from our [Github](https://github.com/sygic-travel/android-sdk). The project's
-`sdk` directory can be added to your own project as a new module. Then add dependency to your 
-application module `build.gradle` file:
-```gradle
-dependencies {
-	compile project(":sdk")
-}
-```
-
 ## Initialization
 
-*API key* must be provided, otherwise every `Sdk` get method call will result in an error.
+You have to obtain an *Client Id* and *API key*, contact us at https://travel.sygic.com/b2b/api-key.
 
-**Java/Kotlin:**
 ```java
-Sdk sdk = Sdk("YOUR_CLIENT_ID", "YOUR_API_KEY", context);
+import com.sygic.travel.sdk.Sdk;
+import com.sygic.travel.sdk.SdkConfig;
+
+Sdk sdk = new Sdk(applicationContext, new SdkConfig() {
+    @NotNull @Override public String getClientId() {
+        return "your-client-id";
+    }
+
+    @NotNull @Override public String getApiKey() {
+        return "your-api-key";
+    }
+});
 ```
-To obtain your *API key* contact us at https://travel.sygic.com/b2b/api-key.
+
+## Available Modules
+
+SDK provide few modules:
+
+- PlacesFacade - places retrieval & searching
+- ToursFacade - tours retrieval & searching
+- DirectionsFacade - calculating directions between places
+- AuthFacade - managing an user session
+- FavoritesFacade - user's favorite management
+- TripsFacade - user's trips management
+- SynchronizationFacade - user's data synchronization
+
+Each module is directly available on the `Sdk` instance.
 
 ## Usage Introduction
 
 This example shows how to use the SDK to fetch a representative set of data. To define a set of places
-you need to create a [placeQuery](http://docs.sygictravelapi.com/android-sdk/1.0.1/com/sygic/travel/sdk/model/placeQuery/Query.html)
-which describes the places which will be fetched - see [API documentation](http://docs.sygictravelapi.com/1.0/#section-places).
+you need to create a PlaceQuery object, which describes fetching conditions.
+See [API documentation](http://docs.sygictravelapi.com/1.0/#section-places).
 
-Let's define a set of places we want:
+Let's define a set of places:
 
 - placed in _London_
 - marked as _Points of interest_
 - marked with category _Sightseeing_
 - only the _Top 10_ of them
 
-The callback has to implement Callback interface. The demo app contains custom UICallback helper class that will run the callback's methods on UI thread.
+**All SDK calls are synchronous and must be called from a background thread.**
 
-**Java:**
-```java	
+To ease the implementation, you may use RX Java library as follows:
+
+```java
 // Create placeQuery to get top 10 sightseeings in London
-PlaceQuery placeQuery = new PlaceQuery();
-placeQuery.setLevels(Collections.singletonList("poi"));
-placeQuery.setCategories(Collections.singletonList("sightseeing"));
-placeQuery.setParents(Collections.singletonList("city:1"));
-placeQuery.setLimit(10);
+Single.fromCallable(new Callable<List<PlaceInfo>>() {
+    @Override
+    public List<PlaceInfo> call() throws Exception {
+        PlacesQuery placeQuery = new PlacesQuery();
+        placeQuery.setLevels(Collections.singletonList("poi"));
+        placeQuery.setCategories(Collections.singletonList("sightseeing"));
+        placeQuery.setParents(Collections.singletonList("city:1"));
+        placeQuery.setLimit(10);
 
-// Create Callback
-Callback<List<Place>> placesCallback = new UICallback<List<Place>>(this) { // this is activity
-	@Override
-	public void onUiSuccess(List<Place> places) {
-		// success
-	}
-
-	@Override
-	public void onUiFailure(Throwable exception) {
-		// something went wrong
-	}
-};
-
-// Perform placeQuery
-sdk.getPlacesFacade().getPlaces(placeQuery, placesCallback);
+        return sdk.getPlacesFacade().getPlaces(placeQuery);
+    }
+})
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(new Consumer<List<PlaceInfo>>() {
+        @Override
+        public void accept(List<PlaceInfo> placeInfos) throws Exception {
+            // do something with fetched places
+        }
+    });
 ```
 
-## Basic Classes
-For more details check our [documentation](http://docs.sygictravelapi.com/android-sdk/1.0.1).
+For further details see [SDK API documentation](http://docs.sygictravelapi.com/android-sdk/1.0.1), [JSON API documentation](http://docs.sygictravelapi.com/).
 
-Class               | Description
-:-------------------|:---------------------
-**`Sdk`**         | Singleton instance for fetching data
-**`Callback<T>`**   | Callback interface with `onSuccess(T data)` and `onFailure(Throwable t)` methods. `T` is a generic type.
-**`PlaceQuery`**    | Entity used when querying for `Places`
-**`Place`**         | Basic `Place` entity
-**`Detail`**        | Detailed object including additional `Place` properties, extends `Place`
-**`Medium`**        | Basic `Medium` entity
-**`Reference`**     | External `Reference` link
-**`TourQuery`**     | Entity used when querying for `Tours`
-**`Tour`**     		| Basic `Tour` entity
 
 ## License
+
 This SDK is available under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
