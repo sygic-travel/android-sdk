@@ -6,7 +6,7 @@ import java.io.IOException
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
-class CachingHelper<T> constructor(directory: File) {
+internal class CachingHelper<T> constructor(directory: File) {
 	private val diskLruCache = DiskLruCache.open(directory, 1, 1, 1024 * 1024 * 10)!! // 10 MB
 
 	fun put(key: String, objectToStore: T) {

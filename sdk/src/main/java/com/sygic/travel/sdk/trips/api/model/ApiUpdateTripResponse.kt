@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.api.model
 
-class ApiUpdateTripResponse(
+internal class ApiUpdateTripResponse(
 	val trip: ApiTripItemResponse,
 	val conflictResolution: String?,
 	val conflictInfo: ConflictInfo?

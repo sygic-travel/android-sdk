@@ -6,18 +6,11 @@ import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-/**
- * Implements [okhttp3.Interceptor], adds headers to a requests.
- */
 internal class HeadersInterceptor(
 	private val authStorageService: () -> AuthStorageService,
 	private val apiKey: String,
 	private val userAgent: String
 ) : Interceptor {
-
-	/**
-	 * Modifies the original request by adding an **API key**.
-	 */
 	@Throws(IOException::class)
 	override fun intercept(chain: Chain): Response {
 		val original = chain.request()

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.api.model
 
-class ApiTripItemResponse(
+internal class ApiTripItemResponse(
 	id: String,
 	owner_id: String,
 	name: String?,

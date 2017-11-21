@@ -1,13 +1,10 @@
 package com.sygic.travel.sdk.common.database
 
 import android.arch.persistence.room.TypeConverter
-import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
+import com.sygic.travel.sdk.trips.model.TripInfo
 
-/**
- * Contains converter methods for working with database.
- */
 internal class Converters {
 	@TypeConverter
 	fun stringListToString(list: ArrayList<String>?): String? {

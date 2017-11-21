@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query
 import com.sygic.travel.sdk.trips.model.TripDayItem
 
 @Dao
-interface TripDayItemsDao {
+internal interface TripDayItemsDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun replaceAll(vararg tripDayItem: TripDayItem)
 

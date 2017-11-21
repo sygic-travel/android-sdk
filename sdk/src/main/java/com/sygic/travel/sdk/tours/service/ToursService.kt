@@ -4,12 +4,9 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.query.ToursQuery
 import com.sygic.travel.sdk.tours.model.Tour
 
-class ToursService(private val apiClient: SygicTravelApiClient) {
-
-	/**
-	 * Creates and sends a request to get the Tours.
-	 * @param toursQuery ToursQuery encapsulating data for API request.
-	 */
+internal class ToursService(
+	private val apiClient: SygicTravelApiClient
+) {
 	fun getTours(toursQuery: ToursQuery): List<Tour>? {
 		val request = apiClient.getTours(
 			destinationId = toursQuery.destinationId,

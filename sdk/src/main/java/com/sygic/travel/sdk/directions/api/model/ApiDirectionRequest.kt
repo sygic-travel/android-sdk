@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.directions.api.model
 
-class ApiDirectionRequest(
+internal class ApiDirectionRequest(
 	val origin: Location,
 	val destination: Location,
 	val avoid: List<String>,

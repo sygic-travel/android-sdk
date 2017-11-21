@@ -1,5 +1,5 @@
 package com.sygic.travel.sdk.trips.api.model
 
-class ApiTripsListResponse(
+internal class ApiTripsListResponse(
 	val trips: List<ApiTripListItemResponse>
 )

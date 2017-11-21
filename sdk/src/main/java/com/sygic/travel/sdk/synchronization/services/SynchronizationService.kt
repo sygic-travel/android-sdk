@@ -14,7 +14,7 @@ import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.DateTimeHelper
 
-class SynchronizationService constructor(
+internal class SynchronizationService constructor(
 	private val sharedPreferences: SharedPreferences,
 	private val apiClient: SygicTravelApiClient,
 	private val tripConverter: TripConverter,

@@ -3,7 +3,9 @@ package com.sygic.travel.sdk.favorites.facade
 import com.sygic.travel.sdk.favorites.service.FavoriteService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-class FavoritesFacade(private val favoritesService: FavoriteService) {
+class FavoritesFacade internal constructor(
+	private val favoritesService: FavoriteService
+) {
 	/**
 	 * Stores a place's id in a local persistent storage. The place is added to the favorites.
 	 * @param id A place's id, which is stored.

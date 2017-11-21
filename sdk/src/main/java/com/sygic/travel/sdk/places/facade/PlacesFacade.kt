@@ -10,7 +10,9 @@ import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 /**
  * Data provider contains methods for fetching data either from API or a database.
  */
-class PlacesFacade(private val placesService: PlacesService) {
+class PlacesFacade internal constructor(
+	private val placesService: PlacesService
+) {
 	/**
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.

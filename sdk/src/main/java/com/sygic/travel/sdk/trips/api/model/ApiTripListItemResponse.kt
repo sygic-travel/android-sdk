@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.api.model
 
-open class ApiTripListItemResponse(
+open internal class ApiTripListItemResponse(
 	val id: String,
 	val owner_id: String,
 	val name: String?,

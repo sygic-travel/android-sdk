@@ -7,7 +7,7 @@ import com.sygic.travel.sdk.auth.model.UserSession
 import com.sygic.travel.sdk.auth.service.AuthService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-class AuthFacade(
+class AuthFacade internal constructor(
 	private val authService: AuthService
 ) {
 	internal val onSignOut = arrayListOf<() -> Unit>()

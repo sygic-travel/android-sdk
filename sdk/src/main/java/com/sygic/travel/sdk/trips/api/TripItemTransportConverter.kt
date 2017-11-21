@@ -5,7 +5,7 @@ import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripItemTransport
 
-class TripItemTransportConverter {
+internal class TripItemTransportConverter {
 	fun fromApi(apiTransport: ApiTripItemResponse.Day.DayItem.Transport?): TripItemTransport? {
 		if (apiTransport == null) {
 			return null

@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.media.Original
 import com.sygic.travel.sdk.places.model.media.Source
 
-class ApiMediumResponse(
+internal class ApiMediumResponse(
 	val id: String,
 	val type: String,
 	val url_template: String,

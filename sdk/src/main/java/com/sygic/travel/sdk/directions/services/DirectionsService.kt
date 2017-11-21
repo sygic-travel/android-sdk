@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.directions.services
 import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
 
-class DirectionsService constructor(
+internal class DirectionsService constructor(
 	private val apiDirectionsService: ApiDirectionsService,
 	private val naiveDirectionsService: NaiveDirectionsService,
 	private val cacheService: CacheService

@@ -22,7 +22,7 @@ import com.sygic.travel.sdk.trips.model.daos.TripsDao
 	version = 2
 )
 @TypeConverters(Converters::class)
-abstract class Database : RoomDatabase() {
+abstract internal class Database : RoomDatabase() {
 	abstract fun favoriteDao(): FavoriteDao
 	abstract fun tripsDao(): TripsDao
 	abstract fun tripDaysDao(): TripDaysDao

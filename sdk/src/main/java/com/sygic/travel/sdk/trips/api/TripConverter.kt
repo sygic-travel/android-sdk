@@ -9,7 +9,7 @@ import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.model.TripMedia
 import com.sygic.travel.sdk.utils.DateTimeHelper
 
-class TripConverter constructor(
+internal class TripConverter constructor(
 	private val tripDayConverter: TripDayConverter
 ) {
 	fun fromApi(localTrip: TripInfo, apiTrip: ApiTripListItemResponse) {

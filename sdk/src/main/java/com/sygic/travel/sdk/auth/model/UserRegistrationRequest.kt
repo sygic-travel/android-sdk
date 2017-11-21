@@ -2,8 +2,7 @@ package com.sygic.travel.sdk.auth.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserRegistrationRequest(
-
+internal data class UserRegistrationRequest(
 	@SerializedName("username")
 	val username: String,
 

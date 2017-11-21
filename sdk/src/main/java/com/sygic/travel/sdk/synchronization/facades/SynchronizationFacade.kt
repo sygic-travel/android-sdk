@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.synchronization.facades
 import com.sygic.travel.sdk.synchronization.services.SynchronizationService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-class SynchronizationFacade(
+class SynchronizationFacade internal constructor(
 	private val synchronizationService: SynchronizationService
 ) {
 	fun setTripUpdateConflictCallback() {

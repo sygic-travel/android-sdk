@@ -2,11 +2,7 @@ package com.sygic.travel.sdk.common.api.model
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Base of an API response. It's extended by specific respond classes containing the specific data.
- * It's abstract, because of the abstract [.getData] method.
- */
-class ApiResponse<out T> {
+internal class ApiResponse<out T> {
 	@SerializedName("status_code")
 	val statusCode: Int = 0
 

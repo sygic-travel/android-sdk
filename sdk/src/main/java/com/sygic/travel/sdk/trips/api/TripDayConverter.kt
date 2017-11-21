@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.model.TripDayItem
 
-class TripDayConverter constructor(
+internal class TripDayConverter constructor(
 	private val tripDayItemConverter: TripDayItemConverter
 ) {
 	fun fromApi(localDay: TripDay, apiDay: ApiTripItemResponse.Day) {

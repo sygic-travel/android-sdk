@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
 @Suppress("unused")
-class TripsFacade(
+class TripsFacade internal constructor(
 	private val tripsService: TripsService
 ) {
 	fun getTrips(from: Long?, to: Long?): List<TripInfo> {

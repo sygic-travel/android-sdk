@@ -2,8 +2,7 @@ package com.sygic.travel.sdk.auth.model
 
 import com.google.gson.annotations.SerializedName
 
-data class AuthenticationRequest(
-
+internal data class AuthenticationRequest(
 	@SerializedName("client_id")
 	val clientId: String? = null,
 

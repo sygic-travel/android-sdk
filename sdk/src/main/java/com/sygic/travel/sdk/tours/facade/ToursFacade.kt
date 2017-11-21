@@ -5,7 +5,9 @@ import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdk.tours.service.ToursService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-class ToursFacade(private val toursService: ToursService) {
+class ToursFacade internal constructor(
+	private val toursService: ToursService
+) {
 	/**
 	 * Creates and sends a request to get the Tours.
 	 * @param toursQuery ToursQuery encapsulating data for API request.

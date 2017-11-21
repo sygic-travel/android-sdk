@@ -30,10 +30,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * Contains available Sygic Travel API requests.
  * @see [API Documentation](http://docs.sygictravelapi.com/1.0)
  */
-interface SygicTravelApiClient {
+internal interface SygicTravelApiClient {
 
 	// ==== DIRECTIONS =============================================================================
 

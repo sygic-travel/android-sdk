@@ -10,7 +10,7 @@ import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
 
-class ApiDirectionsService constructor(
+internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val naiveDirectionsService: NaiveDirectionsService
 ) {

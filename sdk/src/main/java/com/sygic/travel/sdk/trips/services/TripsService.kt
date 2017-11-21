@@ -10,7 +10,7 @@ import com.sygic.travel.sdk.trips.model.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.model.daos.TripsDao
 import com.sygic.travel.sdk.utils.DateTimeHelper
 
-class TripsService constructor(
+internal class TripsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val tripsDao: TripsDao,
 	private val tripDaysDao: TripDaysDao,
