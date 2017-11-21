@@ -9,7 +9,7 @@ import com.sygic.travel.sdk.trips.model.TripInfo
 
 @Dao
 internal interface TripsDao {
-	@Query("SELECT * FROM trips")
+	@Query("SELECT * FROM trips WHERE is_deleted = 0")
 	fun findAll(): List<TripInfo>
 
 	@Query(
