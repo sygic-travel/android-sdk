@@ -9,29 +9,14 @@ import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 class TripsFacade internal constructor(
 	private val tripsService: TripsService
 ) {
+	fun getAllTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getTrips(null, null)
+	}
+
 	fun getTrips(from: Long?, to: Long?): List<TripInfo> {
 		checkNotRunningOnMainThread()
 		return tripsService.getTrips(from, to)
-	}
-
-	fun getFutureTrips(): List<TripInfo> {
-		checkNotRunningOnMainThread()
-		return tripsService.getFutureTrips()
-	}
-
-	fun getPastTrips(): List<TripInfo> {
-		checkNotRunningOnMainThread()
-		return tripsService.getPastTrips()
-	}
-
-	fun getCurrentTrips(): List<TripInfo> {
-		checkNotRunningOnMainThread()
-		return tripsService.getCurrentTrips()
-	}
-
-	fun getUnscheduledTrips(): List<TripInfo> {
-		checkNotRunningOnMainThread()
-		return tripsService.getUnscheduledTrips()
 	}
 
 	fun getDeletedTrips(): List<TripInfo> {

@@ -34,23 +34,6 @@ internal class TripsService constructor(
 		}
 	}
 
-	fun getFutureTrips(): List<TripInfo> {
-		return tripsDao.findByDateAfter(DateTimeHelper.tomorrow() - 1)
-	}
-
-	fun getPastTrips(): List<TripInfo> {
-		val today = DateTimeHelper.today()
-		return tripsDao.findByDateBefore(today)
-	}
-
-	fun getCurrentTrips(): List<TripInfo> {
-		return tripsDao.findByDatesWithOverlapping(DateTimeHelper.today(), DateTimeHelper.tomorrow())
-	}
-
-	fun getUnscheduledTrips(): List<TripInfo> {
-		return tripsDao.findUnscheduled()
-	}
-
 	fun getDeletedTrips(): List<TripInfo> {
 		return tripsDao.findDeleted()
 	}
