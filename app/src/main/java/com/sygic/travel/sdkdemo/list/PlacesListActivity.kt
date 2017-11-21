@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.sygic.travel.sdk.Sdk
-import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdkdemo.Application
@@ -18,8 +17,9 @@ import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.filters.CategoriesAdapter
 import com.sygic.travel.sdkdemo.filters.CategoriesDialog
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import java.util.ArrayList
 import java.util.Collections
 
@@ -84,7 +84,26 @@ class PlacesListActivity : AppCompatActivity() {
 		query.categories = selectedCateoriesKeys
 		query.parents = listOf("city:1")
 		query.limit = 128
-		sdk.placesFacade.getPlaces(query, placesCallback)
+
+		Single.fromCallable { sdk.placesFacade.getPlaces(query) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(Schedulers.io())
+			.subscribe({ data ->
+				// Places are sorted by rating, best rated places are at the top of the list
+				Collections.sort(data) { p1, p2 ->
+					if (p1.rating == p2.rating) {
+						0
+					} else {
+						if (p1.rating > p2.rating) -1 else 1
+					}
+				}
+				runOnUiThread {
+					renderPlacesList(data!!)
+				}
+			}, { exception ->
+				Toast.makeText(this@PlacesListActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
+			})
 	}
 
 	private fun renderPlacesList(places: List<PlaceInfo>) {
@@ -112,30 +131,7 @@ class PlacesListActivity : AppCompatActivity() {
 		}
 	}
 
-	private val placesCallback = object : UiCallback<List<PlaceInfo>?>(this) {
-		override fun onSuccess(data: List<PlaceInfo>?) {
-			// Places are sorted by rating, best rated places are at the top of the list
-			Collections.sort(data) { p1, p2 ->
-				if (p1.rating == p2.rating) {
-					0
-				} else {
-					if (p1.rating > p2.rating) -1 else 1
-				}
-			}
-			runOnUiThread {
-				renderPlacesList(data!!)
-			}
-		}
-
-		override fun onUiFailure(exception: Throwable) {
-			Toast.makeText(this@PlacesListActivity, exception.message, Toast.LENGTH_LONG).show()
-			exception.printStackTrace()
-		}
-	}
-
 	companion object {
-		private val TAG = PlacesListActivity::class.java.simpleName
-
 		val ID = "id"
 	}
 }

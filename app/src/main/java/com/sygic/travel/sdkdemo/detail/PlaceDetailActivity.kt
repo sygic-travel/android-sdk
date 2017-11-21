@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.flexbox.FlexboxLayout
 import com.squareup.picasso.Picasso
-import com.sygic.travel.sdk.Callback
 import com.sygic.travel.sdk.Sdk
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.Reference
@@ -20,8 +19,10 @@ import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.gallery.GalleryActivity
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class PlaceDetailActivity : AppCompatActivity() {
 	private lateinit var sdk: Sdk
@@ -29,27 +30,6 @@ class PlaceDetailActivity : AppCompatActivity() {
 	private var id: String? = null
 	private var ratingPattern: String? = null
 	private var tagPadding: Int = 0
-
-	private val favoriteAddRemoveCallback = object : UiCallback<Unit>(this) {
-		override fun onUiSuccess(data: Unit) {}
-
-		override fun onUiFailure(exception: Throwable) {
-			Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
-			exception.printStackTrace()
-		}
-	}
-
-	private val loadAllFavoritesIdsCallback = object : UiCallback<List<String>?>(this) {
-		override fun onSuccess(data: List<String>?) {
-			val isFavorite = data?.contains(id)!!
-			views?.cbFavorite?.isChecked = isFavorite
-			setOnFavoriteChangeListener()
-		}
-
-		override fun onFailure(exception: Throwable) {
-			setOnFavoriteChangeListener()
-		}
-	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -65,22 +45,47 @@ class PlaceDetailActivity : AppCompatActivity() {
 	}
 
 	private fun loadAllFavoritesIds() {
-		sdk.favoritesFacade.getFavoritesIds(loadAllFavoritesIdsCallback)
+		Single.fromCallable { sdk.favoritesFacade.getFavoritesIds() }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe { data ->
+				val isFavorite = data?.contains(id)!!
+				views?.cbFavorite?.isChecked = isFavorite
+				setOnFavoriteChangeListener()
+			}
 	}
 
 	private fun setOnFavoriteChangeListener() {
 		views?.cbFavorite?.setOnCheckedChangeListener({ _, isChecked ->
 			if (isChecked) {
-				sdk.favoritesFacade.addPlaceToFavorites(id!!, favoriteAddRemoveCallback)
+				Single.fromCallable { sdk.favoritesFacade.addPlaceToFavorites(id!!) }
+					.subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({}, { exception ->
+						Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
+						exception.printStackTrace()
+					})
 			} else {
-				sdk.favoritesFacade.removePlaceFromFavorites(id!!, favoriteAddRemoveCallback)
+				Single.fromCallable { sdk.favoritesFacade.removePlaceFromFavorites(id!!) }
+					.subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({}, { exception ->
+						Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
+						exception.printStackTrace()
+					})
 			}
 		})
 	}
 
 	private fun loadPlaceDetail() {
-		// Use the SDK to load detailed information about a place
-		sdk.placesFacade.getPlaceDetailed(id!!, placeCallback)
+		Single.fromCallable { sdk.placesFacade.getPlaceDetailed(id!!) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				renderPlaceDetail(data!!)
+			}, { exception ->
+				Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
+			})
 	}
 
 	private fun renderPlaceDetail(place: Place) {
@@ -198,19 +203,6 @@ class PlaceDetailActivity : AppCompatActivity() {
 		textView.setPadding(tagPadding, tagPadding, tagPadding, tagPadding)
 		return textView
 	}
-
-	// This callback is passed to SDK's method for loading detailed information
-	private // if successful, the SDK return specific data, so it can be displayed
-	val placeCallback: Callback<Place?>
-		get() = object : UiCallback<Place?>(this) {
-			override fun onUiSuccess(data: Place?) {
-				renderPlaceDetail(data!!)
-			}
-
-			override fun onUiFailure(exception: Throwable) {
-				Toast.makeText(this@PlaceDetailActivity, exception.message, Toast.LENGTH_LONG).show()
-			}
-		}
 
 	private inner class Views internal constructor() {
 		internal var ivPhoto: ImageView = findViewById(R.id.iv_detail_photo)

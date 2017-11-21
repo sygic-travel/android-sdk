@@ -13,38 +13,16 @@ import com.sygic.travel.sdkdemo.Application
 import com.sygic.travel.sdkdemo.R
 import com.sygic.travel.sdkdemo.detail.PlaceDetailActivity
 import com.sygic.travel.sdkdemo.list.PlacesAdapter
-import com.sygic.travel.sdkdemo.utils.UiCallback
 import com.sygic.travel.sdkdemo.utils.Utils
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class FavoritesActivity : AppCompatActivity() {
 	private lateinit var sdk: Sdk
 	private var rvPlaces: RecyclerView? = null
 	private var placesAdapter: PlacesAdapter? = null
 	private var places: List<Place>? = null
-
-	private val favoritesIdsCallback = object : UiCallback<List<String>?>(this) {
-		override fun onSuccess(data: List<String>?) {
-			// Places are sorted by rating, best rated places are at the top of the list
-			loadFavorites(data!!)
-		}
-
-		override fun onUiFailure(exception: Throwable) {
-			Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
-			exception.printStackTrace()
-		}
-	}
-
-	private val favoritesCallback = object : UiCallback<List<Place>?>(this) {
-		override fun onUiSuccess(data: List<Place>?) {
-			// Places are sorted by rating, best rated places are at the top of the list
-			renderPlacesList(data!!)
-		}
-
-		override fun onUiFailure(exception: Throwable) {
-			Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
-			exception.printStackTrace()
-		}
-	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -79,12 +57,28 @@ class FavoritesActivity : AppCompatActivity() {
 
 	// Use the SDK to load favorite places' ids from database
 	private fun loadFavoritesIds() {
-		sdk.favoritesFacade.getFavoritesIds(favoritesIdsCallback)
+		Single.fromCallable { sdk.favoritesFacade.getFavoritesIds() }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				loadFavorites(data!!)
+			}, { exception ->
+				Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
+			})
 	}
 
 	// Use the SDK to load favorite place from api
 	private fun loadFavorites(favoritesIds: List<String>) {
-		sdk.placesFacade.getPlacesDetailed(favoritesIds, favoritesCallback)
+		Single.fromCallable { sdk.placesFacade.getPlacesDetailed(favoritesIds) }
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe({ data ->
+				renderPlacesList(data!!)
+			}, { exception ->
+				Toast.makeText(this@FavoritesActivity, exception.message, Toast.LENGTH_LONG).show()
+				exception.printStackTrace()
+			})
 	}
 
 	private fun renderPlacesList(places: List<Place>) {
@@ -94,8 +88,6 @@ class FavoritesActivity : AppCompatActivity() {
 	}
 
 	companion object {
-		private val TAG = FavoritesActivity::class.java.simpleName
-
 		val ID = "id"
 	}
 }
