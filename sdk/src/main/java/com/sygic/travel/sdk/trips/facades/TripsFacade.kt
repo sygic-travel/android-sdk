@@ -19,6 +19,11 @@ class TripsFacade internal constructor(
 		return tripsService.getTrips(from, to)
 	}
 
+	fun getUnscheduledTrips(): List<TripInfo> {
+		checkNotRunningOnMainThread()
+		return tripsService.getUnscheduledTrips()
+	}
+
 	fun getDeletedTrips(): List<TripInfo> {
 		checkNotRunningOnMainThread()
 		return tripsService.getDeletedTrips()

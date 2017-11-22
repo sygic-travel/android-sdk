@@ -34,6 +34,10 @@ internal class TripsService constructor(
 		}
 	}
 
+	fun getUnscheduledTrips(): List<TripInfo> {
+		return tripsDao.findUnscheduled()
+	}
+
 	fun getDeletedTrips(): List<TripInfo> {
 		return tripsDao.findDeleted()
 	}
