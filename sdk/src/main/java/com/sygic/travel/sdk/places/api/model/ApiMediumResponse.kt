@@ -11,7 +11,7 @@ internal class ApiMediumResponse(
 	val type: String,
 	val url_template: String,
 	val url: String,
-	val original: ApiOriginal,
+	val original: ApiOriginal?,
 	val suitability: List<String>,
 	val created_at: String,
 	val source: ApiSource,
@@ -75,7 +75,7 @@ internal class ApiMediumResponse(
 		medium.type = type
 		medium.urlTemplate = url_template
 		medium.url = url
-		medium.original = original.fromApi()
+		medium.original = original?.fromApi()
 		medium.suitability = suitability
 		medium.createdAt = created_at
 		medium.source = source.fromApi()
