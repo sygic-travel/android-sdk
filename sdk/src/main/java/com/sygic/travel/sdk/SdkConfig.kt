@@ -5,12 +5,12 @@ abstract class SdkConfig {
 
 	abstract val apiKey: String
 
-	val debugMode: Boolean
+	open val debugMode: Boolean
 		get() = BuildConfig.DEBUG
 
-	val sygicAuthUrl: String
+	open val sygicAuthUrl: String
 		get() = "https://auth.sygic.com"
 
-	val sygicTravelApiUrl: String
+	open val sygicTravelApiUrl: String
 		get() = "https://api.sygictravelapi.com/1.0"
 }
