@@ -11,7 +11,7 @@ open class TripInfo {
 	lateinit var id: String
 
 	@ColumnInfo(name = "owner_id")
-	lateinit var ownerId: String
+	var ownerId: String? = null
 
 	@ColumnInfo(name = "name")
 	var name: String? = ""

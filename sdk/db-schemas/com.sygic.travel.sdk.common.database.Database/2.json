@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "bed49c5ee1a7b46492b21181923b1877",
+    "identityHash": "0e2da2dc99930555cb59d2bf94e1e893",
     "entities": [
       {
         "tableName": "favorites",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "trips",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `owner_id` TEXT NOT NULL, `name` TEXT, `version` INTEGER NOT NULL, `url` TEXT NOT NULL, `updated_at` INTEGER NOT NULL, `is_deleted` INTEGER NOT NULL, `privacy_level` TEXT NOT NULL, `starts_on` INTEGER, `days_count` INTEGER NOT NULL, `destinations` TEXT NOT NULL, `is_changed` INTEGER NOT NULL, `edit` INTEGER NOT NULL, `manage` INTEGER NOT NULL, `delete` INTEGER NOT NULL, `squareMediaId` TEXT, `squareUrlTemplate` TEXT, `landscapeMediaId` TEXT, `landscapeUrlTemplate` TEXT, `portraitId` TEXT, `portraitUrlTemplate` TEXT, `videoPreviewId` TEXT, `videoPreviewUrlTemplate` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `owner_id` TEXT, `name` TEXT, `version` INTEGER NOT NULL, `url` TEXT NOT NULL, `updated_at` INTEGER NOT NULL, `is_deleted` INTEGER NOT NULL, `privacy_level` TEXT NOT NULL, `starts_on` INTEGER, `days_count` INTEGER NOT NULL, `destinations` TEXT NOT NULL, `is_changed` INTEGER NOT NULL, `edit` INTEGER NOT NULL, `manage` INTEGER NOT NULL, `delete` INTEGER NOT NULL, `squareMediaId` TEXT, `squareUrlTemplate` TEXT, `landscapeMediaId` TEXT, `landscapeUrlTemplate` TEXT, `portraitId` TEXT, `portraitUrlTemplate` TEXT, `videoPreviewId` TEXT, `videoPreviewUrlTemplate` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -44,7 +44,7 @@
             "fieldPath": "ownerId",
             "columnName": "owner_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -330,7 +330,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bed49c5ee1a7b46492b21181923b1877\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0e2da2dc99930555cb59d2bf94e1e893\")"
     ]
   }
 }
