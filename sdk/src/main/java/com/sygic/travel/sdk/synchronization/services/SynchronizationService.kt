@@ -61,8 +61,9 @@ internal class SynchronizationService constructor(
 		syncTrips(changedTripIds, deletedTripIds)
 		syncFavorites(addedFavoriteIds, deletedFavoriteIds)
 
+		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp)!!
 		sharedPreferences.edit()
-			.putLong(SINCE_KEY, DateTimeHelper.now())
+			.putLong(SINCE_KEY, changesFetchedAt)
 			.commit()
 	}
 
