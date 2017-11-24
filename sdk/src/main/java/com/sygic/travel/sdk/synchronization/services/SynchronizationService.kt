@@ -71,11 +71,15 @@ internal class SynchronizationService constructor(
 	}
 
 	private fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>) {
-		val changedTripsResponse = apiClient.getTrips(
-			changedTripIds.joinToString("|")
-		).execute().body()!!
+		val changedTrips = if (changedTripIds.isNotEmpty()) {
+			apiClient.getTrips(
+				changedTripIds.joinToString("|")
+			).execute().body()!!.data?.trips ?: arrayListOf()
+		} else {
+			arrayListOf()
+		}
 
-		for (trip in changedTripsResponse.data?.trips ?: arrayListOf()) {
+		for (trip in changedTrips) {
 			syncApiChangedTrip(trip)
 		}
 		for (deletedTripId in deletedTripIds) {
