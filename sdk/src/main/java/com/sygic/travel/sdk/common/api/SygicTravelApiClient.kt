@@ -23,6 +23,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -50,7 +51,7 @@ internal interface SygicTravelApiClient {
 		@Body request: FavoriteRequest
 	): Call<Void>
 
-	@DELETE("favorites")
+	@HTTP(method = "DELETE", path = "favorites", hasBody = true)
 	@Headers("Authorization: [toIntercept]")
 	fun deleteFavorite(
 		@Body request: FavoriteRequest
