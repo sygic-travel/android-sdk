@@ -14,9 +14,9 @@ class TripsFacade internal constructor(
 		return tripsService.getTrips(null, null)
 	}
 
-	fun getTrips(from: Long?, to: Long?): List<TripInfo> {
+	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
 		checkNotRunningOnMainThread()
-		return tripsService.getTrips(from, to)
+		return tripsService.getTrips(from, to, includeOverlapping)
 	}
 
 	fun getUnscheduledTrips(): List<TripInfo> {
