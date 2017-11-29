@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.synchronization.facades
 
+import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.synchronization.services.SynchronizationService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
@@ -10,7 +11,7 @@ class SynchronizationFacade internal constructor(
 		TODO()
 	}
 
-	fun synchronize() {
+	fun synchronize(): SynchronizationResult {
 		checkNotRunningOnMainThread()
 		return synchronizationService.synchronize()
 	}

@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
 import com.sygic.travel.sdk.favorites.model.Favorite
 import com.sygic.travel.sdk.favorites.service.FavoriteService
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
+import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
@@ -26,7 +27,7 @@ internal class SynchronizationService constructor(
 	}
 
 	@SuppressLint("ApplySharedPref")
-	fun synchronize() {
+	fun synchronize(): SynchronizationResult {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
@@ -58,20 +59,25 @@ internal class SynchronizationService constructor(
 			}
 		}
 
-		syncTrips(changedTripIds, deletedTripIds)
-		syncFavorites(addedFavoriteIds, deletedFavoriteIds)
+		val tripsResult = syncTrips(changedTripIds, deletedTripIds)
+		val favoritesResult = syncFavorites(addedFavoriteIds, deletedFavoriteIds)
 
 		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp)!!
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.commit()
+
+		return SynchronizationResult(
+			trips = tripsResult,
+			favorites = favoritesResult
+		)
 	}
 
 	fun clearUserData() {
 		sharedPreferences.edit().remove(SINCE_KEY).apply()
 	}
 
-	private fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>) {
+	private fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>): SynchronizationResult.TripsResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
 				changedTripIds.joinToString("|")
@@ -80,17 +86,31 @@ internal class SynchronizationService constructor(
 			arrayListOf()
 		}
 
+		val added = arrayListOf<String>()
+		val updated = arrayListOf<String>()
 		for (trip in changedTrips) {
-			syncApiChangedTrip(trip)
+			val isAdded = syncApiChangedTrip(trip)
+			when (isAdded) {
+				true -> added.add(trip.id)
+				false -> updated.add(trip.id)
+			}
 		}
+
 		for (deletedTripId in deletedTripIds) {
 			syncApiDeletedTrip(deletedTripId)
 		}
 
-		syncLocalChangedTrips(changedTripIds, deletedTripIds)
+		val created = syncLocalChangedTrips(changedTripIds, deletedTripIds)
+
+		return SynchronizationResult.TripsResult(
+			added = added,
+			updated = updated,
+			removed = deletedTripIds,
+			createdOnServerIdMap = created
+		)
 	}
 
-	private fun syncFavorites(addedFavoriteIds: ArrayList<String>, deletedFavoriteIds: ArrayList<String>) {
+	private fun syncFavorites(addedFavoriteIds: ArrayList<String>, deletedFavoriteIds: ArrayList<String>): SynchronizationResult.FavoritesResult {
 		for (favoriteId in addedFavoriteIds) {
 			favoriteService.addPlace(favoriteId)
 		}
@@ -110,11 +130,17 @@ internal class SynchronizationService constructor(
 				}
 			}
 		}
+
+		return SynchronizationResult.FavoritesResult(
+			added = addedFavoriteIds,
+			removed = deletedFavoriteIds
+		)
 	}
 
-	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse) {
+	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse): Boolean {
 		var apiTripData: ApiTripItemResponse? = apiTrip
 		var localTrip = tripsService.getTrip(apiTrip.id)
+		val isAdded = localTrip == null
 
 		if (localTrip == null) {
 			localTrip = Trip()
@@ -125,12 +151,13 @@ internal class SynchronizationService constructor(
 			apiTripData = updateTrip(localTrip)
 			if (apiTripData == null) {
 				// do nothing and let user choose when he will use the app
-				return
+				return isAdded
 			}
 		}
 
 		tripConverter.fromApi(localTrip, apiTripData!!)
 		tripsService.saveTrip(localTrip)
+		return isAdded
 	}
 
 	private fun showDialogAndGetResponse(conflictInfo: ApiUpdateTripResponse.ConflictInfo): Boolean? {
@@ -141,19 +168,22 @@ internal class SynchronizationService constructor(
 		tripsService.deleteTrip(deletedTripId)
 	}
 
-	private fun syncLocalChangedTrips(apiChangedTripIds: List<String>, apiDeletedTripIds: List<String>) {
+	private fun syncLocalChangedTrips(apiChangedTripIds: List<String>, apiDeletedTripIds: List<String>): Map<String, String> {
+		val createdTripIdsMap = mutableMapOf<String, String>()
 		val changedTrips = tripsService.findAllChangedExceptApiChanged(apiChangedTripIds)
 		for (changedTrip in changedTrips) {
-			syncLocalChangedTrip(changedTrip, apiDeletedTripIds.contains(changedTrip.id))
+			syncLocalChangedTrip(changedTrip, apiDeletedTripIds.contains(changedTrip.id), createdTripIdsMap)
 		}
+		return createdTripIdsMap
 	}
 
-	private fun syncLocalChangedTrip(trip: Trip, deletedOnApi: Boolean) {
+	private fun syncLocalChangedTrip(trip: Trip, deletedOnApi: Boolean, createdTripIdsMap: MutableMap<String, String>) {
 		if (trip.isLocal) {
 			val createResponse = apiClient.createTrip(
 				tripConverter.toApi(trip)
 			).execute().body()!!
-			tripsService.replaceTripId(trip, createResponse.data!!.trip.id)
+			createdTripIdsMap[trip.id] = createResponse.data!!.trip.id
+			tripsService.replaceTripId(trip, createResponse.data.trip.id)
 			tripConverter.fromApi(trip, createResponse.data.trip)
 			tripsService.saveTrip(trip)
 
