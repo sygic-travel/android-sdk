@@ -40,7 +40,7 @@ internal class AuthService(
 		return authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "google",
-			accessToken = token,
+			idToken = token,
 			deviceCode = deviceId,
 			devicePlatform = DEVICE_PLATFORM
 		))

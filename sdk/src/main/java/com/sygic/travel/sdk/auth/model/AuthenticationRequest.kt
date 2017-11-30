@@ -18,6 +18,9 @@ internal data class AuthenticationRequest(
 	@SerializedName("access_token")
 	val accessToken: String? = null,
 
+	@SerializedName("id_token")
+	val idToken: String? = null,
+
 	@SerializedName("authorization_code")
 	val authorizationCode: String? = null,
 
