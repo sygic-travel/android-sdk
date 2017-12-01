@@ -81,10 +81,6 @@ internal class TripConverter constructor(
 				TripInfo.PrivacyLevel.SHAREABLE -> ApiTripListItemResponse.PRIVACY_SHAREABLE
 			},
 			starts_on = DateTimeHelper.timestampToDate(localTrip.startsOn),
-			ends_on = when (localTrip.startsOn) { // deprecated parameter, let's send +1 to starts_on
-				null -> null
-				else -> DateTimeHelper.timestampToDate(localTrip.startsOn!! + 25 * 60 * 60)
-			},
 			destinations = localTrip.destinations,
 			days = localTrip.days.map { tripDayConverter.toApi(it) }
 		)
