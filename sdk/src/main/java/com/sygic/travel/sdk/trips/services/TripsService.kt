@@ -87,6 +87,10 @@ internal class TripsService constructor(
 		return trips
 	}
 
+	fun hasChangesToSynchronization(): Boolean {
+		return tripsDao.getAllChangedCount() > 0
+	}
+
 	fun replaceTripId(trip: Trip, newTripId: String) {
 		tripsDao.replaceTripId(trip.id, newTripId)
 		trip.id = newTripId

@@ -13,7 +13,13 @@ import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.services.TripsService
 
 internal val synchronizationModule = Kodein.Module {
-	bind<SynchronizationFacade>() with singleton { SynchronizationFacade(instance<SynchronizationService>()) }
+	bind<SynchronizationFacade>() with singleton {
+		SynchronizationFacade(
+			instance<SynchronizationService>(),
+			instance<TripsService>(),
+			instance<FavoriteService>()
+		)
+	}
 	bind<SynchronizationService>() with singleton {
 		SynchronizationService(
 			instance<SharedPreferences>(),

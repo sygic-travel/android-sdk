@@ -65,6 +65,9 @@ internal interface TripsDao {
 	@Query("SELECT * FROM trips WHERE is_changed = 1 AND id NOT IN (:ids)")
 	fun findAllChangedExceptApiChanged(ids: List<String>): List<Trip>
 
+	@Query("SELECT COUNT(*) FROM trips WHERE is_changed = 1")
+	fun getAllChangedCount(): Int
+
 	@Query("DELETE FROM trips WHERE id = :id")
 	fun delete(id: String)
 

@@ -22,6 +22,9 @@ internal interface FavoriteDao {
 	@Query("SELECT * FROM favorites WHERE state > 0")
 	fun findForSynchronization(): List<Favorite>
 
+	@Query("SELECT COUNT(*) FROM favorites WHERE state > 0")
+	fun getAllChangedCount(): Int
+
 	@Query("SELECT * FROM favorites WHERE id = :id")
 	fun get(id: String): Favorite?
 

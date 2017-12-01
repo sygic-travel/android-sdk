@@ -28,6 +28,10 @@ internal class FavoriteService(
 		return favoriteDao.findForSynchronization()
 	}
 
+	fun hasChangesToSynchronization(): Boolean {
+		return favoriteDao.getAllChangedCount() > 0
+	}
+
 	fun markAsSynchronized(favorite: Favorite) {
 		favorite.state = Favorite.STATE_SYNCED
 		favoriteDao.update(favorite)
