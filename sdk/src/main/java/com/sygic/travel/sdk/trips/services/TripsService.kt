@@ -87,7 +87,7 @@ internal class TripsService constructor(
 		return trips
 	}
 
-	fun hasChangesToSynchronization(): Boolean {
+	fun hasChangesToSynchronize(): Boolean {
 		return tripsDao.getAllChangedCount() > 0
 	}
 

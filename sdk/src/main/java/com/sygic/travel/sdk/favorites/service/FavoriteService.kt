@@ -28,7 +28,7 @@ internal class FavoriteService(
 		return favoriteDao.findForSynchronization()
 	}
 
-	fun hasChangesToSynchronization(): Boolean {
+	fun hasChangesToSynchronize(): Boolean {
 		return favoriteDao.getAllChangedCount() > 0
 	}
 

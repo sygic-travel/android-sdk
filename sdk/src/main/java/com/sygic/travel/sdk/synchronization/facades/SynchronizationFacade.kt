@@ -20,10 +20,10 @@ class SynchronizationFacade internal constructor(
 		return synchronizationService.synchronize()
 	}
 
-	fun hasChangesToSynchronization(): Boolean {
+	fun hasChangesToSynchronize(): Boolean {
 		checkNotRunningOnMainThread()
-		return tripsService.hasChangesToSynchronization()
-			|| favoritesService.hasChangesToSynchronization()
+		return tripsService.hasChangesToSynchronize()
+			|| favoritesService.hasChangesToSynchronize()
 	}
 
 	internal fun clearUserData() {
