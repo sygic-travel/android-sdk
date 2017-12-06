@@ -14,26 +14,31 @@ class AuthFacade internal constructor(
 
 	fun loginUserWithPassword(username: String, password: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
+		checkEmptySession()
 		return authService.authWithPassword(username, password)
 	}
 
 	fun loginUserWithGoogle(googleToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
+		checkEmptySession()
 		return authService.authWithGoogleToken(googleToken)
 	}
 
 	fun loginUserWithFacebook(facebookToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
+		checkEmptySession()
 		return authService.authWithFacebookToken(facebookToken)
 	}
 
 	fun loginUserWithDeviceId(): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
+		checkEmptySession()
 		return authService.authWithDeviceId()
 	}
 
 	fun loginUserWithJwtToken(jwtToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
+		checkEmptySession()
 		return authService.authWithJwtToken(jwtToken)
 	}
 
@@ -55,5 +60,11 @@ class AuthFacade internal constructor(
 
 	fun getUserSession(): UserSession? {
 		return authService.getUserSession()
+	}
+
+	private fun checkEmptySession() {
+		if (getUserSession() != null) {
+			throw IllegalStateException("Sygic Travel SDK has already an initialized user session. Logout the user first.")
+		}
 	}
 }
