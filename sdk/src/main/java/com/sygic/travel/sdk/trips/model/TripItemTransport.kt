@@ -19,4 +19,7 @@ class TripItemTransport {
 
 	@ColumnInfo
 	var note: String? = null
+
+	@ColumnInfo
+	var waypoints: ArrayList<TripItemTransportWaypoint> = arrayListOf()
 }

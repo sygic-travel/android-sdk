@@ -66,11 +66,12 @@ internal class ApiTripItemResponse(
 				}
 
 				class Waypoint(
+					val placeId: String?,
 					val location: Location
 				) {
 					class Location(
 						val lat: Float,
-						val lnt: Float
+						val lng: Float
 					)
 				}
 			}
