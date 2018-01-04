@@ -5,7 +5,6 @@ import com.sygic.travel.sdk.directions.helpers.CachingHelper
 import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
 import java.io.File
-import java.util.Locale
 
 internal class CacheService constructor(
 	context: Context
@@ -30,12 +29,6 @@ internal class CacheService constructor(
 	}
 
 	private fun getCacheKey(request: DirectionsRequest): String {
-		return "%.6f-%.6f-%.6f-%.6f".format(
-			Locale.ENGLISH,
-			request.from.lat,
-			request.from.lng,
-			request.to.lat,
-			request.to.lng
-		).replace('.', '_')
+		return request.hashCode().toString()
 	}
 }

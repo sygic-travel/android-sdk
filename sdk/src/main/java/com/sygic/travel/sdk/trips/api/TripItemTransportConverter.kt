@@ -2,8 +2,10 @@ package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
+import com.sygic.travel.sdk.places.model.geo.Location
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripItemTransport
+import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 
 internal class TripItemTransportConverter {
 	fun fromApi(apiTransport: ApiTripItemResponse.Day.DayItem.Transport?): TripItemTransport? {
@@ -34,6 +36,15 @@ internal class TripItemTransportConverter {
 		transport.startTime = apiTransport.start_time
 		transport.duration = apiTransport.duration
 		transport.note = apiTransport.note
+		transport.waypoints = ArrayList(apiTransport.waypoints.map {
+			TripItemTransportWaypoint(
+				placeId = it.placeId,
+				location = Location(
+					lat = it.location.lat,
+					lng = it.location.lng
+				)
+			)
+		})
 		return transport
 	}
 
@@ -64,7 +75,15 @@ internal class TripItemTransportConverter {
 			start_time = transport.startTime,
 			duration = transport.duration,
 			note = transport.note,
-			waypoints = arrayListOf()
+			waypoints = transport.waypoints.map {
+				ApiTripItemResponse.Day.DayItem.Transport.Waypoint(
+					placeId = it.placeId,
+					location = ApiTripItemResponse.Day.DayItem.Transport.Waypoint.Location(
+						lat = it.location.lat,
+						lng = it.location.lng
+					)
+				)
+			}
 		)
 	}
 }

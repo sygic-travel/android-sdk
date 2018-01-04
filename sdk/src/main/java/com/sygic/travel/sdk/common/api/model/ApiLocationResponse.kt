@@ -7,9 +7,6 @@ internal class ApiLocationResponse(
 	val lng: Float
 ) {
 	fun fromApi(): Location {
-		val location = Location()
-		location.lat = lat
-		location.lng = lng
-		return location
+		return Location(lat, lng)
 	}
 }

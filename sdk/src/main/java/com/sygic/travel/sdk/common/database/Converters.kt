@@ -3,7 +3,9 @@ package com.sygic.travel.sdk.common.database
 import android.arch.persistence.room.TypeConverter
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
+import com.sygic.travel.sdk.places.model.geo.Location
 import com.sygic.travel.sdk.trips.model.TripInfo
+import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 
 internal class Converters {
 	@TypeConverter
@@ -67,6 +69,34 @@ internal class Converters {
 		return when (avoidString) {
 			null, "" -> arrayListOf()
 			else -> ArrayList(avoidString.split(",").map { DirectionAvoid.valueOf(it) })
+		}
+	}
+
+	@TypeConverter
+	fun tripItemTransportWaypointToString(avoidList: ArrayList<TripItemTransportWaypoint>?): String? {
+		return when (avoidList) {
+			null -> ""
+			else -> avoidList.joinToString(",") { it.placeId + ';' + it.location.lat + ';' + it.location.lng }
+		}
+	}
+
+	@TypeConverter
+	fun stringToTripItemTransportWaypoint(avoidString: String?): ArrayList<TripItemTransportWaypoint>? {
+		return when (avoidString) {
+			null, "" -> arrayListOf()
+			else -> ArrayList(avoidString.split(",").map {
+				val parts = it.split(";")
+				TripItemTransportWaypoint(
+					placeId = when (parts[0].isEmpty()) {
+						true -> null
+						false -> parts[0]
+					},
+					location = Location(
+						lat = parts[1].toFloat(),
+						lng = parts[2].toFloat()
+					)
+				)
+			})
 		}
 	}
 }

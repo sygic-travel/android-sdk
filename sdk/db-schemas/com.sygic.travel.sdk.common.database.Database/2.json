@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0e2da2dc99930555cb59d2bf94e1e893",
+    "identityHash": "81b783b208ffe0dd37f09965c4f3c410",
     "entities": [
       {
         "tableName": "favorites",
@@ -229,7 +229,7 @@
       },
       {
         "tableName": "trip_day_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trip_id` TEXT NOT NULL, `day_index` INTEGER NOT NULL, `item_index` INTEGER NOT NULL, `placeId` TEXT NOT NULL, `startTime` INTEGER, `duration` INTEGER, `note` TEXT, `transport_mode` TEXT, `transport_avoid` TEXT, `transport_start_time` INTEGER, `transport_duration` INTEGER, `transport_note` TEXT, PRIMARY KEY(`trip_id`, `day_index`, `item_index`), FOREIGN KEY(`trip_id`) REFERENCES `trips`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trip_id` TEXT NOT NULL, `day_index` INTEGER NOT NULL, `item_index` INTEGER NOT NULL, `placeId` TEXT NOT NULL, `startTime` INTEGER, `duration` INTEGER, `note` TEXT, `transport_mode` TEXT, `transport_avoid` TEXT, `transport_start_time` INTEGER, `transport_duration` INTEGER, `transport_note` TEXT, `transport_waypoints` TEXT, PRIMARY KEY(`trip_id`, `day_index`, `item_index`), FOREIGN KEY(`trip_id`) REFERENCES `trips`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "tripId",
@@ -302,6 +302,12 @@
             "columnName": "transport_note",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "transportFromPrevious.waypoints",
+            "columnName": "transport_waypoints",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -330,7 +336,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0e2da2dc99930555cb59d2bf94e1e893\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"81b783b208ffe0dd37f09965c4f3c410\")"
     ]
   }
 }

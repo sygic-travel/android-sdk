@@ -17,25 +17,19 @@ class SpreaderTest {
 
 		// this place will be evaluated as hidden because location has (0,0) coordinates
 		val place1 = Place()
-		val location1 = Location()
-		location1.lat = 0.toFloat()
-		location1.lng = 0.toFloat()
+		val location1 = Location(0f, 0f)
 		place1.location = location1
 		places.add(place1)
 
 		// visible place
 		val place2 = Place()
-		val location2 = Location()
-		location2.lat = 48.3333.toFloat()
-		location2.lng = 17.3333.toFloat()
+		val location2 = Location(48.3333f, 17.3333f)
 		place2.location = location2
 		places.add(place2)
 
 		// this place will intersects, so that it won't be neither visible nor hidden
 		val place3 = Place()
-		val location3 = Location()
-		location3.lat = 48.4444.toFloat()
-		location3.lng = 17.4444.toFloat()
+		val location3 = Location(48.4444f, 17.4444f)
 		place3.location = location3
 		places.add(place3)
 

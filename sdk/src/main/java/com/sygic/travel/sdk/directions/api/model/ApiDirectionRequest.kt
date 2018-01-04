@@ -5,7 +5,7 @@ internal class ApiDirectionRequest(
 	val destination: Location,
 	val avoid: List<String>,
 	val waypoints: List<Location>
-) : Any() {
+) {
 	companion object {
 		const val AVOID_FERRIES = "ferries"
 		const val AVOID_HIGHWAYS = "highways"

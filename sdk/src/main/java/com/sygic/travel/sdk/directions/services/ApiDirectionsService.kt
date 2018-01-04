@@ -6,6 +6,7 @@ import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
 import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
+import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.Directions
 import com.sygic.travel.sdk.directions.model.DirectionsRequest
@@ -56,10 +57,19 @@ internal class ApiDirectionsService constructor(
 			val secondLocation = directionRequest.to
 
 			routes.add(ApiDirectionRequest(
-				ApiDirectionRequest.Location(firstLocation.lat, firstLocation.lng),
-				ApiDirectionRequest.Location(secondLocation.lat, secondLocation.lng),
-				emptyList(), // todo: convert from DirectionsRequest
-				emptyList() // todo: convert form DirectionsRequest
+				origin = ApiDirectionRequest.Location(firstLocation.lat, firstLocation.lng),
+				destination = ApiDirectionRequest.Location(secondLocation.lat, secondLocation.lng),
+				avoid = directionRequest.avoid.map {
+					when (it) {
+						DirectionAvoid.TOLLS -> ApiDirectionRequest.AVOID_TOLLS
+						DirectionAvoid.HIGHWAYS -> ApiDirectionRequest.AVOID_HIGHWAYS
+						DirectionAvoid.FERRIES -> ApiDirectionRequest.AVOID_FERRIES
+						DirectionAvoid.UNPAVED -> ApiDirectionRequest.AVOID_UNPAVED
+					}
+				},
+				waypoints = directionRequest.waypoints.map {
+					ApiDirectionRequest.Location(it.lat, it.lng)
+				}
 			))
 		}
 
