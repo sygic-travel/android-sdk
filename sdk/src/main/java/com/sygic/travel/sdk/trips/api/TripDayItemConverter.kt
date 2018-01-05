@@ -1,13 +1,14 @@
 package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
+import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.model.TripDayItem
 
 internal class TripDayItemConverter constructor(
 	private val tripItemTransportConverter: TripItemTransportConverter
 ) {
-	fun fromApi(apiItem: ApiTripItemResponse.Day.DayItem): TripDayItem {
-		val localItem = TripDayItem(apiItem.place_id)
+	fun fromApi(apiItem: ApiTripItemResponse.Day.DayItem, tripDay: TripDay): TripDayItem {
+		val localItem = TripDayItem(apiItem.place_id, tripDay)
 		localItem.startTime = apiItem.start_time
 		localItem.duration = apiItem.duration
 		localItem.note = apiItem.note
