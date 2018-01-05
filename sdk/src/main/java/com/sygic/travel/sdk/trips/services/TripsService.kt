@@ -1,23 +1,30 @@
 package com.sygic.travel.sdk.trips.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.trips.database.converters.TripDayDbConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDayItemDbConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDbConverter
+import com.sygic.travel.sdk.trips.database.daos.TripDayItemsDao
+import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
+import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.model.Trip
-import com.sygic.travel.sdk.trips.model.TripDay
-import com.sygic.travel.sdk.trips.model.TripDayItem
 import com.sygic.travel.sdk.trips.model.TripInfo
-import com.sygic.travel.sdk.trips.model.daos.TripDayItemsDao
-import com.sygic.travel.sdk.trips.model.daos.TripDaysDao
-import com.sygic.travel.sdk.trips.model.daos.TripsDao
 import com.sygic.travel.sdk.utils.DateTimeHelper
+import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
+import com.sygic.travel.sdk.trips.database.entities.TripDay as DbTripDay
+import com.sygic.travel.sdk.trips.database.entities.TripDayItem as DbTripDayItem
 
 internal class TripsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val tripsDao: TripsDao,
 	private val tripDaysDao: TripDaysDao,
-	private val tripDayItemsDao: TripDayItemsDao
+	private val tripDayItemsDao: TripDayItemsDao,
+	private val tripDbConverter: TripDbConverter,
+	private val tripDayDbConverter: TripDayDbConverter,
+	private val tripDayItemDbConverter: TripDayItemDbConverter
 ) {
 	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
-		return if (includeOverlapping) {
+		val trips = if (includeOverlapping) {
 			when {
 				from != null && to != null -> tripsDao.findByDatesWithOverlapping(from, to)
 				from != null -> tripsDao.findByDateAfterWithOverlapping(from)
@@ -32,39 +39,73 @@ internal class TripsService constructor(
 				else -> tripsDao.findAll()
 			}
 		}
+
+		return trips.map { tripDbConverter.from(it) }
 	}
 
 	fun getUnscheduledTrips(): List<TripInfo> {
-		return tripsDao.findUnscheduled()
+		return tripsDao.findUnscheduled().map { tripDbConverter.from(it) }
 	}
 
 	fun getDeletedTrips(): List<TripInfo> {
-		return tripsDao.findDeleted()
+		return tripsDao.findDeleted().map { tripDbConverter.from(it) }
 	}
 
 	fun getTrip(id: String): Trip? {
 		val trip = tripsDao.get(id) ?: return null
-		val tripDays = tripDaysDao.findById(id)
-		val tripItems = tripDayItemsDao.findById(id)
-		classify(arrayListOf(trip), tripDays, tripItems)
-		return trip
+		val tripDays = tripDaysDao.findByTripId(id)
+		val tripItems = tripDayItemsDao.findByTripId(id)
+		return classify(listOf(trip), tripDays, tripItems).firstOrNull()
+	}
+
+	fun checkEditPrivilege(trip: TripInfo) {
+		if (trip.isLocal()) {
+			return
+		}
+
+		val dbTrip = tripsDao.get(trip.id)!!
+		if (!dbTrip.privileges.edit) {
+			throw IllegalStateException("You cannot save the trip without the edit privilege.")
+		}
+		if (trip.privacyLevel != dbTrip.privacyLevel && dbTrip.privileges.manage) {
+			throw IllegalStateException("You cannot change the trip's privacyLevel without the manage privilege.")
+		}
+	}
+
+	fun checkDeletePrivilege(trip: TripInfo) {
+		val dbTrip = tripsDao.get(trip.id)!!
+		if (!dbTrip.privileges.delete) {
+			throw IllegalStateException("You cannot delete trip without the delete privilege.")
+		}
 	}
 
 	fun saveTrip(trip: Trip) {
 		synchronized(trip) {
-			trip.reindexDays()
-			tripsDao.replace(trip)
-			tripDaysDao.replaceAll(*trip.days.toTypedArray())
-			for (day in trip.days.iterator()) {
-				tripDayItemsDao.replaceAll(*day.itinerary.toTypedArray())
-				tripDayItemsDao.removeOverItemIndex(trip.id, day.dayIndex, day.itinerary.lastOrNull()?.itemIndex ?: -1)
+			trip.isChanged = true
+			trip.updatedAt = DateTimeHelper.now()
+
+			val dbTrip = tripDbConverter.to(trip)
+			tripsDao.replace(dbTrip)
+
+			val dbDays = trip.days.mapIndexed { dayIndex, it ->
+				tripDayDbConverter.to(it, trip.id, dayIndex)
 			}
-			tripDaysDao.removeOverDayIndex(trip.id, trip.days.lastOrNull()?.dayIndex ?: -1)
+			tripDaysDao.replaceAll(*dbDays.toTypedArray())
+			tripDaysDao.removeOverDayIndex(trip.id, dbDays.lastOrNull()?.dayIndex ?: -1)
+
+			for ((dayIndex, day) in trip.days.withIndex()) {
+				val dbItems = day.itinerary.mapIndexed { itemIndex, it ->
+					tripDayItemDbConverter.to(it, trip.id, dayIndex, itemIndex)
+				}
+				tripDayItemsDao.replaceAll(*dbItems.toTypedArray())
+				tripDayItemsDao.removeOverItemIndex(trip.id, dayIndex, dbItems.lastOrNull()?.itemIndex ?: -1)
+			}
 		}
 	}
 
 	fun saveTrip(trip: TripInfo) {
-		tripsDao.replace(trip)
+		val dbTrip = tripDbConverter.to(trip)
+		tripsDao.replace(dbTrip)
 	}
 
 	fun deleteTrip(tripId: String) {
@@ -81,10 +122,9 @@ internal class TripsService constructor(
 	fun findAllChangedExceptApiChanged(apiChangedTripIds: List<String>): List<Trip> {
 		val trips = tripsDao.findAllChangedExceptApiChanged(apiChangedTripIds)
 		val ids = trips.map { it.id }
-		val tripDays = tripDaysDao.findById(ids)
-		val tripItems = tripDayItemsDao.findById(ids)
-		classify(trips, tripDays, tripItems)
-		return trips
+		val tripDays = tripDaysDao.findByTripId(ids)
+		val tripItems = tripDayItemsDao.findByTripId(ids)
+		return classify(trips, tripDays, tripItems)
 	}
 
 	fun hasChangesToSynchronize(): Boolean {
@@ -94,7 +134,6 @@ internal class TripsService constructor(
 	fun replaceTripId(trip: Trip, newTripId: String) {
 		tripsDao.replaceTripId(trip.id, newTripId)
 		trip.id = newTripId
-		trip.reindexDays()
 	}
 
 	fun clearUserData() {
@@ -108,17 +147,20 @@ internal class TripsService constructor(
 	 * Days has to be sorted ASC by their day index.
 	 * Items has to be sorted ASC by their day index.
 	 */
-	private fun classify(trips: List<Trip>, days: List<TripDay>, items: List<TripDayItem>) {
+	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
+		val trips = dbTrips.map { tripDbConverter.from(it) }
 		val map = trips.associateBy { it.id }
-		trips.forEach {
-			it.days = arrayListOf()
+
+		for (dbDay in dbDays) {
+			val day = tripDayDbConverter.from(dbDay)
+			map[dbDay.tripId]!!.days.add(day)
 		}
-		for (day in days) {
-			map[day.tripId]!!.days.add(day)
-			day.trip = map[day.tripId]!!
+
+		for (dbItem in dbItems) {
+			val item = tripDayItemDbConverter.from(dbItem)
+			map[dbItem.tripId]!!.days[dbItem.dayIndex].itinerary.add(item)
 		}
-		for (item in items) {
-			map[item.tripId]!!.days[item.dayIndex].itinerary.add(item)
-		}
+
+		return trips
 	}
 }

@@ -4,15 +4,18 @@ import com.sygic.travel.sdk.trips.api.model.ApiTripItemRequest
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiTripListItemResponse
 import com.sygic.travel.sdk.trips.model.Trip
-import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.model.TripMedia
+import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
+import com.sygic.travel.sdk.trips.model.TripPrivileges
 import com.sygic.travel.sdk.utils.DateTimeHelper
 
+@Suppress("DEPRECATION")
 internal class TripConverter constructor(
 	private val tripDayConverter: TripDayConverter
 ) {
-	fun fromApi(localTrip: TripInfo, apiTrip: ApiTripListItemResponse) {
+	fun fromApi(apiTrip: ApiTripListItemResponse): TripInfo {
+		val localTrip = Trip(apiTrip.id)
 		localTrip.ownerId = apiTrip.owner_id
 		localTrip.name = apiTrip.name
 		localTrip.version = apiTrip.version
@@ -20,12 +23,12 @@ internal class TripConverter constructor(
 		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = when (apiTrip.privacy_level) {
-			ApiTripListItemResponse.PRIVACY_PUBLIC -> TripInfo.PrivacyLevel.PUBLIC
-			ApiTripListItemResponse.PRIVACY_PRIVATE -> TripInfo.PrivacyLevel.PRIVATE
-			ApiTripListItemResponse.PRIVACY_SHAREABLE -> TripInfo.PrivacyLevel.SHAREABLE
-			else -> TripInfo.PrivacyLevel.PRIVATE
+			ApiTripListItemResponse.PRIVACY_PUBLIC -> TripPrivacyLevel.PUBLIC
+			ApiTripListItemResponse.PRIVACY_PRIVATE -> TripPrivacyLevel.PRIVATE
+			ApiTripListItemResponse.PRIVACY_SHAREABLE -> TripPrivacyLevel.SHAREABLE
+			else -> TripPrivacyLevel.PRIVATE
 		}
-		localTrip.privileges = TripInfo.Privileges(
+		localTrip.privileges = TripPrivileges(
 			edit = apiTrip.privileges.edit,
 			manage = apiTrip.privileges.manage,
 			delete = apiTrip.privileges.delete
@@ -42,31 +45,16 @@ internal class TripConverter constructor(
 			videoPreviewId = apiTrip.media.video_preview?.id,
 			videoPreviewUrlTemplate = apiTrip.media.video_preview?.url_template
 		) else null
+		return localTrip
 	}
 
-	fun fromApi(localTrip: Trip, apiTrip: ApiTripItemResponse) {
-		fromApi(localTrip, apiTrip as ApiTripListItemResponse)
+	fun fromApi(apiTrip: ApiTripItemResponse): Trip {
+		val localTrip = fromApi(apiTrip as ApiTripListItemResponse) as Trip
 		localTrip.destinations = ArrayList(apiTrip.destinations)
-		val daysMaxIndex = localTrip.days.size - 1
-		for ((i, day) in apiTrip.days.iterator().withIndex()) {
-			val tripDay: TripDay
-			if (daysMaxIndex < i) {
-				tripDay = TripDay()
-				tripDay.dayIndex = i
-				tripDay.tripId = localTrip.id
-				localTrip.days.add(tripDay)
-			} else {
-				tripDay = localTrip.days[i]
-			}
-			tripDayConverter.fromApi(tripDay, day)
-		}
-
-		for (index in daysMaxIndex downTo apiTrip.days.size) {
-			localTrip.days.removeAt(index)
-		}
-
-		localTrip.reindexDays()
-		localTrip.isChanged = false
+		localTrip.days = apiTrip.days
+			.map { tripDayConverter.fromApi(it) }
+			.toMutableList()
+		return localTrip
 	}
 
 	fun toApi(localTrip: Trip): ApiTripItemRequest {
@@ -76,9 +64,9 @@ internal class TripConverter constructor(
 			updated_at = DateTimeHelper.timestampToDatetime(localTrip.updatedAt)!!,
 			is_deleted = localTrip.isDeleted,
 			privacy_level = when (localTrip.privacyLevel) {
-				TripInfo.PrivacyLevel.PUBLIC -> ApiTripListItemResponse.PRIVACY_PUBLIC
-				TripInfo.PrivacyLevel.PRIVATE -> ApiTripListItemResponse.PRIVACY_PRIVATE
-				TripInfo.PrivacyLevel.SHAREABLE -> ApiTripListItemResponse.PRIVACY_SHAREABLE
+				TripPrivacyLevel.PUBLIC -> ApiTripListItemResponse.PRIVACY_PUBLIC
+				TripPrivacyLevel.PRIVATE -> ApiTripListItemResponse.PRIVACY_PRIVATE
+				TripPrivacyLevel.SHAREABLE -> ApiTripListItemResponse.PRIVACY_SHAREABLE
 			},
 			starts_on = DateTimeHelper.timestampToDate(localTrip.startsOn),
 			destinations = localTrip.destinations,

@@ -1,30 +1,24 @@
 package com.sygic.travel.sdk.trips.model
 
-import android.arch.persistence.room.Ignore
+import java.util.UUID
 
-class Trip : TripInfo() {
-	@Ignore
-	var days: MutableList<TripDay> = arrayListOf()
-
-	override var daysCount: Int
+/**
+ * Trip entity representation.
+ * It contains all metadata and days' definitions.
+ */
+@Suppress("ConvertSecondaryConstructorToPrimary")
+class Trip : TripInfo {
+	var days = mutableListOf<TripDay>()
+	override var daysCount: Int = 0
 		get() = days.size
-		set(value) {
-			super.daysCount = value
-		}
+		internal set
 
-	fun reindexDays() {
-		days.forEachIndexed { i, day ->
-			day.itinerary.forEach {
-				it.dayIndex = i
-				it.tripId = id
-			}
-			day.dayIndex = i
-			day.tripId = id
-			day.trip = this
-			day.reindexItinerary()
-		}
-		daysCount = days.size
-	}
+	/**
+	 * Creates a new trip instance with a local ID.
+	 */
+	constructor() : super(UUID.randomUUID().toString())
+
+	internal constructor(id: String) : super(id)
 
 	fun getPlaceIds(): Set<String> {
 		return days.map { it.getPlaceIds() }.flatten().toSet()
