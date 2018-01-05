@@ -59,23 +59,8 @@ internal class TripsService constructor(
 	}
 
 	fun checkEditPrivilege(trip: TripInfo) {
-		if (trip.isLocal()) {
-			return
-		}
-
-		val dbTrip = tripsDao.get(trip.id)!!
-		if (!dbTrip.privileges.edit) {
+		if (!trip.privileges.edit) {
 			throw IllegalStateException("You cannot save the trip without the edit privilege.")
-		}
-		if (trip.privacyLevel != dbTrip.privacyLevel && dbTrip.privileges.manage) {
-			throw IllegalStateException("You cannot change the trip's privacyLevel without the manage privilege.")
-		}
-	}
-
-	fun checkDeletePrivilege(trip: TripInfo) {
-		val dbTrip = tripsDao.get(trip.id)!!
-		if (!dbTrip.privileges.delete) {
-			throw IllegalStateException("You cannot delete trip without the delete privilege.")
 		}
 	}
 
