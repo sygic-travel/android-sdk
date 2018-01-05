@@ -36,16 +36,19 @@ class TripsFacade internal constructor(
 
 	fun saveTrip(trip: Trip) {
 		checkNotRunningOnMainThread()
+		tripsService.checkEditPrivilege(trip)
 		return tripsService.saveTrip(trip)
 	}
 
 	fun saveTrip(trip: TripInfo) {
 		checkNotRunningOnMainThread()
+		tripsService.checkEditPrivilege(trip)
 		return tripsService.saveTrip(trip)
 	}
 
 	fun deleteTrip(trip: TripInfo) {
 		checkNotRunningOnMainThread()
+		tripsService.checkDeletePrivilege(trip)
 		return tripsService.deleteTrip(trip.id)
 	}
 
