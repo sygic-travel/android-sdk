@@ -4,8 +4,8 @@ import android.arch.persistence.room.TypeConverter
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.places.model.geo.Location
-import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
+import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 
 internal class Converters {
 	@TypeConverter
@@ -25,7 +25,7 @@ internal class Converters {
 	}
 
 	@TypeConverter
-	fun privacyLevelToString(level: TripInfo.PrivacyLevel?): String? {
+	fun privacyLevelToString(level: TripPrivacyLevel?): String? {
 		return when (level) {
 			null -> null
 			else -> level.name
@@ -33,10 +33,10 @@ internal class Converters {
 	}
 
 	@TypeConverter
-	fun stringToPrivacyLevel(level: String?): TripInfo.PrivacyLevel? {
+	fun stringToPrivacyLevel(level: String?): TripPrivacyLevel? {
 		return when (level) {
 			null -> null
-			else -> TripInfo.PrivacyLevel.valueOf(level)
+			else -> TripPrivacyLevel.valueOf(level)
 		}
 	}
 

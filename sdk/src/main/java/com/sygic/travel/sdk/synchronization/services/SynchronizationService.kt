@@ -142,12 +142,7 @@ internal class SynchronizationService constructor(
 		var localTrip = tripsService.getTrip(apiTrip.id)
 		val isAdded = localTrip == null
 
-		if (localTrip == null) {
-			localTrip = Trip()
-			localTrip.id = apiTrip.id
-		}
-
-		if (localTrip.isChanged) {
+		if (localTrip?.isChanged == true) {
 			apiTripData = updateTrip(localTrip)
 			if (apiTripData == null) {
 				// do nothing and let user choose when he will use the app
@@ -155,7 +150,7 @@ internal class SynchronizationService constructor(
 			}
 		}
 
-		tripConverter.fromApi(localTrip, apiTripData!!)
+		localTrip = tripConverter.fromApi(apiTripData!!)
 		tripsService.saveTrip(localTrip)
 		return isAdded
 	}
@@ -178,19 +173,19 @@ internal class SynchronizationService constructor(
 	}
 
 	private fun syncLocalChangedTrip(trip: Trip, deletedOnApi: Boolean, createdTripIdsMap: MutableMap<String, String>) {
-		if (trip.isLocal) {
+		if (trip.isLocal()) {
 			val createResponse = apiClient.createTrip(
 				tripConverter.toApi(trip)
 			).execute().body()!!
 			createdTripIdsMap[trip.id] = createResponse.data!!.trip.id
 			tripsService.replaceTripId(trip, createResponse.data.trip.id)
-			tripConverter.fromApi(trip, createResponse.data.trip)
-			tripsService.saveTrip(trip)
+			val updatedTrip = tripConverter.fromApi(createResponse.data.trip)
+			tripsService.saveTrip(updatedTrip)
 
 		} else if (!deletedOnApi) {
 			val apiTripData = updateTrip(trip)
-			tripConverter.fromApi(trip, apiTripData!!)
-			tripsService.saveTrip(trip)
+			val updatedTrip = tripConverter.fromApi(apiTripData!!)
+			tripsService.saveTrip(updatedTrip)
 
 		} else {
 			tripsService.deleteTrip(trip.id)

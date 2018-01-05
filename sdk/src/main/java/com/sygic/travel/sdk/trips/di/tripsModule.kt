@@ -10,10 +10,14 @@ import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.api.TripDayConverter
 import com.sygic.travel.sdk.trips.api.TripDayItemConverter
 import com.sygic.travel.sdk.trips.api.TripItemTransportConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDayDbConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDayItemDbConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDayItemTransportDbConverter
+import com.sygic.travel.sdk.trips.database.converters.TripDbConverter
+import com.sygic.travel.sdk.trips.database.daos.TripDayItemsDao
+import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
+import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.facades.TripsFacade
-import com.sygic.travel.sdk.trips.model.daos.TripDayItemsDao
-import com.sygic.travel.sdk.trips.model.daos.TripDaysDao
-import com.sygic.travel.sdk.trips.model.daos.TripsDao
 import com.sygic.travel.sdk.trips.services.TripsService
 
 internal val tripsModule = Kodein.Module {
@@ -23,7 +27,10 @@ internal val tripsModule = Kodein.Module {
 			instance<SygicTravelApiClient>(),
 			instance<TripsDao>(),
 			instance<TripDaysDao>(),
-			instance<TripDayItemsDao>()
+			instance<TripDayItemsDao>(),
+			instance<TripDbConverter>(),
+			instance<TripDayDbConverter>(),
+			instance<TripDayItemDbConverter>()
 		)
 	}
 	bind<TripsDao>() with singleton { instance<Database>().tripsDao() }
@@ -33,4 +40,8 @@ internal val tripsModule = Kodein.Module {
 	bind<TripDayConverter>() with singleton { TripDayConverter(instance<TripDayItemConverter>()) }
 	bind<TripDayItemConverter>() with singleton { TripDayItemConverter(instance<TripItemTransportConverter>()) }
 	bind<TripItemTransportConverter>() with singleton { TripItemTransportConverter() }
+	bind<TripDbConverter>() with singleton { TripDbConverter() }
+	bind<TripDayDbConverter>() with singleton { TripDayDbConverter() }
+	bind<TripDayItemDbConverter>() with singleton { TripDayItemDbConverter(instance<TripDayItemTransportDbConverter>()) }
+	bind<TripDayItemTransportDbConverter>() with singleton { TripDayItemTransportDbConverter() }
 }

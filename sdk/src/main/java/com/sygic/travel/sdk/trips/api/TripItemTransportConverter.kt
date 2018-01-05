@@ -13,17 +13,18 @@ internal class TripItemTransportConverter {
 			return null
 		}
 
-		val transport = TripItemTransport()
-		transport.mode = when (apiTransport.mode) {
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE -> DirectionMode.BIKE
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT -> DirectionMode.BOAT
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS -> DirectionMode.BUS
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR -> DirectionMode.CAR
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN -> DirectionMode.PEDESTRIAN
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE -> DirectionMode.PLANE
-			ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
-			else -> DirectionMode.PEDESTRIAN
-		}
+		val transport = TripItemTransport(
+			mode = when (apiTransport.mode) {
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE -> DirectionMode.BIKE
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT -> DirectionMode.BOAT
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS -> DirectionMode.BUS
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR -> DirectionMode.CAR
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN -> DirectionMode.PEDESTRIAN
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE -> DirectionMode.PLANE
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
+				else -> DirectionMode.PEDESTRIAN
+			}
+		)
 		transport.avoid = ArrayList(apiTransport.avoid.map {
 			when (it) {
 				ApiTripItemResponse.Day.DayItem.Transport.AVOID_FERRIES -> DirectionAvoid.FERRIES

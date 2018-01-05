@@ -1,10 +1,10 @@
-package com.sygic.travel.sdk.trips.model.daos
+package com.sygic.travel.sdk.trips.database.daos
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.sygic.travel.sdk.trips.model.TripDay
+import com.sygic.travel.sdk.trips.database.entities.TripDay
 
 @Dao
 internal interface TripDaysDao {
@@ -15,10 +15,10 @@ internal interface TripDaysDao {
 	fun removeOverDayIndex(tripId: String, dayIndex: Int)
 
 	@Query("SELECT * FROM trip_days WHERE trip_id = :tripId ORDER BY day_index")
-	fun findById(tripId: String): List<TripDay>
+	fun findByTripId(tripId: String): List<TripDay>
 
 	@Query("SELECT * FROM trip_days WHERE trip_id IN (:tripIds) ORDER BY day_index")
-	fun findById(tripIds: List<String>): List<TripDay>
+	fun findByTripId(tripIds: List<String>): List<TripDay>
 
 	@Query("DELETE FROM trip_days WHERE trip_id = :tripId")
 	fun deleteByTrip(tripId: String)
