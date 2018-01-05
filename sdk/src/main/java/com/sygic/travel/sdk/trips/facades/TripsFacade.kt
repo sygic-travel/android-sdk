@@ -46,12 +46,6 @@ class TripsFacade internal constructor(
 		return tripsService.saveTrip(trip)
 	}
 
-	fun deleteTrip(trip: TripInfo) {
-		checkNotRunningOnMainThread()
-		tripsService.checkDeletePrivilege(trip)
-		return tripsService.deleteTrip(trip.id)
-	}
-
 	fun emptyTripTrash() {
 		checkNotRunningOnMainThread()
 		return tripsService.emptyTrash()

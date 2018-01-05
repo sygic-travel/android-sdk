@@ -14,12 +14,25 @@ open class TripInfo internal constructor(id: String) {
 	var name: String? = ""
 	var startsOn: Long? = null
 	var privacyLevel: TripPrivacyLevel = TripPrivacyLevel.PRIVATE
+		set(value) {
+			if (privileges.manage) {
+				field = value
+			} else {
+				throw IllegalStateException("You cannot change the trip's privacyLevel property without the manage privilege.")
+			}
+		}
 	var url: String = ""
 		internal set
 	var privileges: TripPrivileges = TripPrivileges(edit = true, delete = true, manage = true)
 		internal set
 	var isDeleted: Boolean = false
-		internal set
+		set(value) {
+			if (privileges.delete) {
+				field = value
+			} else {
+				throw IllegalStateException("You cannot change the trip's isDeleted property without the delete privilege.")
+			}
+		}
 	var media: TripMedia? = null
 		internal set
 	var updatedAt: Long = 0

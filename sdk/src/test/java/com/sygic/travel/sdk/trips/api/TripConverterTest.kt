@@ -12,14 +12,6 @@ class TripConverterTest {
 	fun fromApi() {
 		val converter = TripConverter(TripDayConverter(TripDayItemConverter(TripItemTransportConverter())))
 
-		val day1 = TripDay()
-		val day2 = TripDay()
-		val day3 = TripDay()
-
-		val localTrip = Trip()
-		localTrip.id = "ab123"
-		localTrip.days.addAll(arrayListOf(day1, day2, day3))
-
 		val apiTrip = ApiTripItemResponse(
 			id = "ab123",
 			owner_id = "yxcv",
@@ -34,14 +26,14 @@ class TripConverterTest {
 			ends_on = null,
 			days_count = 3,
 			media = null,
-			days = arrayListOf(
+			days = listOf(
 				ApiTripItemResponse.Day(arrayListOf(), "note1"),
 				ApiTripItemResponse.Day(arrayListOf(), "note2")
 			),
-			destinations = arrayListOf()
+			destinations = listOf()
 		)
 
-		converter.fromApi(localTrip, apiTrip)
+		val localTrip = converter.fromApi(apiTrip)
 
 		assertSame(2, localTrip.days.size)
 	}

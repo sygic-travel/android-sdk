@@ -7,8 +7,7 @@ import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
 @Suppress("DEPRECATION")
 internal class TripDbConverter {
 	fun from(dbTrip: DbTrip): Trip {
-		val trip = Trip()
-		trip.id = dbTrip.id
+		val trip = Trip(dbTrip.id)
 		trip.name = dbTrip.name
 		trip.startsOn = dbTrip.startsOn
 		trip.privacyLevel = dbTrip.privacyLevel

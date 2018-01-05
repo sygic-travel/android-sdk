@@ -59,23 +59,8 @@ internal class TripsService constructor(
 	}
 
 	fun checkEditPrivilege(trip: TripInfo) {
-		if (trip.isLocal()) {
-			return
-		}
-
-		val dbTrip = tripsDao.get(trip.id)!!
-		if (!dbTrip.privileges.edit) {
+		if (!trip.privileges.edit) {
 			throw IllegalStateException("You cannot save the trip without the edit privilege.")
-		}
-		if (trip.privacyLevel != dbTrip.privacyLevel && dbTrip.privileges.manage) {
-			throw IllegalStateException("You cannot change the trip's privacyLevel without the manage privilege.")
-		}
-	}
-
-	fun checkDeletePrivilege(trip: TripInfo) {
-		val dbTrip = tripsDao.get(trip.id)!!
-		if (!dbTrip.privileges.delete) {
-			throw IllegalStateException("You cannot delete trip without the delete privilege.")
 		}
 	}
 
@@ -87,15 +72,15 @@ internal class TripsService constructor(
 			val dbTrip = tripDbConverter.to(trip)
 			tripsDao.replace(dbTrip)
 
-			val dbDays = trip.days.mapIndexed { dayIndex, it ->
-				tripDayDbConverter.to(it, trip.id, dayIndex)
+			val dbDays = trip.days.map {
+				tripDayDbConverter.to(it)
 			}
 			tripDaysDao.replaceAll(*dbDays.toTypedArray())
 			tripDaysDao.removeOverDayIndex(trip.id, dbDays.lastOrNull()?.dayIndex ?: -1)
 
 			for ((dayIndex, day) in trip.days.withIndex()) {
-				val dbItems = day.itinerary.mapIndexed { itemIndex, it ->
-					tripDayItemDbConverter.to(it, trip.id, dayIndex, itemIndex)
+				val dbItems = day.itinerary.map {
+					tripDayItemDbConverter.to(it)
 				}
 				tripDayItemsDao.replaceAll(*dbItems.toTypedArray())
 				tripDayItemsDao.removeOverItemIndex(trip.id, dayIndex, dbItems.lastOrNull()?.itemIndex ?: -1)
@@ -152,13 +137,15 @@ internal class TripsService constructor(
 		val map = trips.associateBy { it.id }
 
 		for (dbDay in dbDays) {
-			val day = tripDayDbConverter.from(dbDay)
-			map[dbDay.tripId]!!.days.add(day)
+			val trip = map[dbDay.tripId]!!
+			val day = tripDayDbConverter.from(dbDay, trip)
+			trip.days.add(day)
 		}
 
 		for (dbItem in dbItems) {
-			val item = tripDayItemDbConverter.from(dbItem)
-			map[dbItem.tripId]!!.days[dbItem.dayIndex].itinerary.add(item)
+			val tripDay = map[dbItem.tripId]!!.days[dbItem.dayIndex]
+			val item = tripDayItemDbConverter.from(dbItem, tripDay)
+			tripDay.itinerary.add(item)
 		}
 
 		return trips

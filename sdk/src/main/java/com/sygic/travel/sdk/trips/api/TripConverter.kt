@@ -52,7 +52,7 @@ internal class TripConverter constructor(
 		val localTrip = fromApi(apiTrip as ApiTripListItemResponse) as Trip
 		localTrip.destinations = ArrayList(apiTrip.destinations)
 		localTrip.days = apiTrip.days
-			.map { tripDayConverter.fromApi(it) }
+			.map { tripDayConverter.fromApi(it, localTrip) }
 			.toMutableList()
 		return localTrip
 	}
