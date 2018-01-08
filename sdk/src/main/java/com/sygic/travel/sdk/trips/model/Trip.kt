@@ -17,11 +17,14 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		}
 
 		/**
-		 * Creates a new trip with preloaded internal properties.
-		 * This method is internal but open.
+		 * INTERNAL
+		 * Creates a trip with passed properties.
 		 */
-		fun createWithInternalProperties(
-			tripId: String,
+		fun createFrom(
+			id: String,
+			name: String?,
+			startsOn: Long?,
+			privacyLevel: TripPrivacyLevel,
 			url: String,
 			privileges: TripPrivileges,
 			isDeleted: Boolean,
@@ -32,7 +35,10 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 			ownerId: String?,
 			version: Int
 		): Trip {
-			val trip = Trip(tripId)
+			val trip = Trip(id)
+			trip.name = name
+			trip.startsOn = startsOn
+			trip.privacyLevel = privacyLevel
 			trip.url = url
 			trip.isDeleted = isDeleted
 			trip.media = media
