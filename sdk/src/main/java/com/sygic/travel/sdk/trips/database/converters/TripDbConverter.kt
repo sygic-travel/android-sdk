@@ -12,7 +12,6 @@ internal class TripDbConverter {
 		trip.startsOn = dbTrip.startsOn
 		trip.privacyLevel = dbTrip.privacyLevel
 		trip.url = dbTrip.url
-		trip.privileges = dbTrip.privileges
 		trip.isDeleted = dbTrip.isDeleted
 		trip.media = dbTrip.media
 		trip.updatedAt = dbTrip.updatedAt
@@ -21,6 +20,8 @@ internal class TripDbConverter {
 		trip.destinations = dbTrip.destinations
 		trip.ownerId = dbTrip.ownerId
 		trip.version = dbTrip.version
+
+		trip.privileges = dbTrip.privileges
 		return trip
 	}
 

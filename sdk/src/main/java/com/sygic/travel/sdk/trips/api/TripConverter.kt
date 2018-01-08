@@ -28,11 +28,6 @@ internal class TripConverter constructor(
 			ApiTripListItemResponse.PRIVACY_SHAREABLE -> TripPrivacyLevel.SHAREABLE
 			else -> TripPrivacyLevel.PRIVATE
 		}
-		localTrip.privileges = TripPrivileges(
-			edit = apiTrip.privileges.edit,
-			manage = apiTrip.privileges.manage,
-			delete = apiTrip.privileges.delete
-		)
 		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)
 		localTrip.daysCount = apiTrip.days_count
 		localTrip.media = if (apiTrip.media != null) TripMedia(
@@ -45,6 +40,12 @@ internal class TripConverter constructor(
 			videoPreviewId = apiTrip.media.video_preview?.id,
 			videoPreviewUrlTemplate = apiTrip.media.video_preview?.url_template
 		) else null
+
+		localTrip.privileges = TripPrivileges(
+			edit = apiTrip.privileges.edit,
+			manage = apiTrip.privileges.manage,
+			delete = apiTrip.privileges.delete
+		)
 		return localTrip
 	}
 

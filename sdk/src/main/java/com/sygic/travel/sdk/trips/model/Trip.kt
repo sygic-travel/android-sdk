@@ -34,7 +34,6 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		): Trip {
 			val trip = Trip(tripId)
 			trip.url = url
-			trip.privileges = privileges
 			trip.isDeleted = isDeleted
 			trip.media = media
 			trip.updatedAt = updatedAt
@@ -42,6 +41,8 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 			trip.daysCount = daysCount
 			trip.ownerId = ownerId
 			trip.version = version
+
+			trip.privileges = privileges
 			return trip
 		}
 	}
