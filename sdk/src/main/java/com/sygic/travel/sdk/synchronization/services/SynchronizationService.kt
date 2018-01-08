@@ -33,10 +33,10 @@ internal class SynchronizationService constructor(
 			DateTimeHelper.timestampToDatetime(since)
 		).execute().body()!!
 
-		val changedTripIds = arrayListOf<String>()
-		val deletedTripIds = arrayListOf<String>()
-		val addedFavoriteIds = arrayListOf<String>()
-		val deletedFavoriteIds = arrayListOf<String>()
+		val changedTripIds = mutableListOf<String>()
+		val deletedTripIds = mutableListOf<String>()
+		val addedFavoriteIds = mutableListOf<String>()
+		val deletedFavoriteIds = mutableListOf<String>()
 
 		for (change in changesResponse.data?.changes ?: arrayListOf()) {
 			when (change.type) {
@@ -77,17 +77,18 @@ internal class SynchronizationService constructor(
 		sharedPreferences.edit().remove(SINCE_KEY).apply()
 	}
 
-	private fun syncTrips(changedTripIds: ArrayList<String>, deletedTripIds: ArrayList<String>): SynchronizationResult.TripsResult {
+	private fun syncTrips(changedTripIds: MutableList<String>, deletedTripIds: MutableList<String>): SynchronizationResult.TripsResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
 				changedTripIds.joinToString("|")
 			).execute().body()!!.data?.trips ?: arrayListOf()
 		} else {
-			arrayListOf()
+			mutableListOf()
 		}
 
-		val added = arrayListOf<String>()
-		val updated = arrayListOf<String>()
+		val added = mutableListOf<String>()
+		val updated = mutableListOf<String>()
+
 		for (trip in changedTrips) {
 			val isAdded = syncApiChangedTrip(trip)
 			when (isAdded) {
@@ -110,7 +111,7 @@ internal class SynchronizationService constructor(
 		)
 	}
 
-	private fun syncFavorites(addedFavoriteIds: ArrayList<String>, deletedFavoriteIds: ArrayList<String>): SynchronizationResult.FavoritesResult {
+	private fun syncFavorites(addedFavoriteIds: MutableList<String>, deletedFavoriteIds: MutableList<String>): SynchronizationResult.FavoritesResult {
 		for (favoriteId in addedFavoriteIds) {
 			favoriteService.addPlace(favoriteId)
 		}
