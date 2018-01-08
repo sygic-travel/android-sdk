@@ -64,11 +64,20 @@ internal class TripsService constructor(
 		}
 	}
 
+	fun saveTripAsChanged(trip: Trip) {
+		trip.isChanged = true
+		trip.updatedAt = DateTimeHelper.now()
+		saveTrip(trip)
+	}
+
+	fun saveTripAsChanged(trip: TripInfo) {
+		trip.isChanged = true
+		trip.updatedAt = DateTimeHelper.now()
+		saveTrip(trip)
+	}
+
 	fun saveTrip(trip: Trip) {
 		synchronized(trip) {
-			trip.isChanged = true
-			trip.updatedAt = DateTimeHelper.now()
-
 			val dbTrip = tripDbConverter.to(trip)
 			tripsDao.replace(dbTrip)
 
