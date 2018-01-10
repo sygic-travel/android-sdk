@@ -13,7 +13,7 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		 * Creates a new trip instance with a local ID.
 		 */
 		fun create(): Trip {
-			return Trip(UUID.randomUUID().toString())
+			return Trip(TripInfo.LOCAL_ID_PREFIX + UUID.randomUUID().toString())
 		}
 
 		/**

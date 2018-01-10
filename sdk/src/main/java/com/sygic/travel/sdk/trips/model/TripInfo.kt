@@ -6,7 +6,7 @@ package com.sygic.travel.sdk.trips.model
  */
 open class TripInfo internal constructor(id: String) {
 	companion object {
-		private const val LOCAL_ID_PREFIX = '*'
+		internal const val LOCAL_ID_PREFIX = '*'
 	}
 
 	var id: String = id
