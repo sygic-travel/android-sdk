@@ -46,6 +46,15 @@ class TripsFacade internal constructor(
 		return tripsService.saveTripAsChanged(trip)
 	}
 
+	/**
+	 * Imports trip into the storage.
+	 * This method is internal and should not be used.
+	 */
+	fun importTrip(trip: Trip) {
+		checkNotRunningOnMainThread()
+		tripsService.saveTrip(trip)
+	}
+
 	fun emptyTripTrash() {
 		checkNotRunningOnMainThread()
 		return tripsService.emptyTrash()
