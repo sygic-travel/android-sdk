@@ -6,8 +6,19 @@ import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
 
 @Suppress("DEPRECATION")
 internal class TripDbConverter {
-	fun from(dbTrip: DbTrip): Trip {
+	fun fromAsTrip(dbTrip: DbTrip): Trip {
 		val trip = Trip(dbTrip.id)
+		from(dbTrip, trip)
+		return trip
+	}
+
+	fun fromAsTripInfo(dbTrip: DbTrip): TripInfo {
+		val trip = TripInfo(dbTrip.id)
+		from(dbTrip, trip)
+		return trip
+	}
+
+	private fun from(dbTrip: DbTrip, trip: TripInfo) {
 		trip.name = dbTrip.name
 		trip.startsOn = dbTrip.startsOn
 		trip.privacyLevel = dbTrip.privacyLevel
@@ -22,7 +33,6 @@ internal class TripDbConverter {
 		trip.version = dbTrip.version
 
 		trip.privileges = dbTrip.privileges
-		return trip
 	}
 
 	fun to(trip: TripInfo): DbTrip {
