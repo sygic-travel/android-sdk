@@ -40,15 +40,15 @@ internal class TripsService constructor(
 			}
 		}
 
-		return trips.map { tripDbConverter.from(it) }
+		return trips.map { tripDbConverter.fromAsTripInfo(it) }
 	}
 
 	fun getUnscheduledTrips(): List<TripInfo> {
-		return tripsDao.findUnscheduled().map { tripDbConverter.from(it) }
+		return tripsDao.findUnscheduled().map { tripDbConverter.fromAsTripInfo(it) }
 	}
 
 	fun getDeletedTrips(): List<TripInfo> {
-		return tripsDao.findDeleted().map { tripDbConverter.from(it) }
+		return tripsDao.findDeleted().map { tripDbConverter.fromAsTripInfo(it) }
 	}
 
 	fun getTrip(id: String): Trip? {
@@ -142,7 +142,7 @@ internal class TripsService constructor(
 	 * Items has to be sorted ASC by their day index.
 	 */
 	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
-		val trips = dbTrips.map { tripDbConverter.from(it) }
+		val trips = dbTrips.map { tripDbConverter.fromAsTrip(it) }
 		val map = trips.associateBy { it.id }
 
 		for (dbDay in dbDays) {
