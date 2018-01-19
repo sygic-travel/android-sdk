@@ -3,51 +3,38 @@ jobs:
   build:
     working_directory: ~/android-sdk
     docker:
-      - image: sygictravel/android-docker-build
+      - image: circleci/android:api-26-alpha
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-gradle-{{ checksum "build.gradle" }}
+            - v1-gradle-
       - run:
-          name: Modify files
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - run:
+          name: Prepare Cache
+          command: |
+            rm -f  ~/.gradle/caches/modules-2/modules-2.lock
+            rm -fr ~/.gradle/caches/*/plugin-resolution/
+      - save_cache:
+          key: v1-gradle-{{ checksum "build.gradle" }}
+          paths:
+            - ~/.gradle
+      - run:
+          name: Setting Deploy Metadata
           command: |
             if [[ ! -z $CIRCLE_TAG ]]; then
-              echo "Set Version"
-              sed -i 's/\(.*\)dev\-master\(.\)/\1'"$CIRCLE_TAG"'\2/g' sdk/build.gradle
-
-              echo "Set Bintray Override flag"
-              sed -i "s/\(override \= \)true/\1false/g" sdk/bintray.gradle
-            else
-              echo "Set Version"
-              sed -i 's/\(.*dev\-\)master\(.\)/\1'"$CIRCLE_BRANCH"'\2/g' sdk/build.gradle
+              export SDK_VERSION=${CIRCLE_TAG:1}
+              export BINTRAY_USER=$BINTRAY_USER
+              export BINTRAY_APIKEY=$ANDROID_SDK_BINTRAY_API_KEY
             fi
-
-            echo "Set Android Gradle plugin version"
-            sed -i 's/.*local\.properties.*//g' build.gradle
-            sed -i 's/.*gradle\.plugin\.version.*//g' build.gradle
-            sed -i 's/\${gradle_plugin_version}/'"$ANDROID_SDK_GRADLE_PLUGIN_VERSION"'/g' build.gradle
-
-            echo "Set Bintray API Key"
-            sed -i 's/\(.\)bintray\-api\-key\(.\)/\1'"$ANDROID_SDK_BINTRAY_API_KEY"'\2/g' sdk/build.gradle
-      - run:
-          name: Clean
-          command: |
-            gradle :sdk:clean
       - run:
           name: Generate Documentation
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
-              PATTERN="\(.*\)\(-- ========= END OF TOP NAVBAR ========= --\)\(.*\)"
-              DIV_START="<div class=\"contentContainer\">"
-              GITHUB='<p>For quick \"Getting started\" see our <a href=\"https:\/\/github\.com\/sygic-travel\/android-sdk\/\" target=\"\_blank\">Github<\/a>\.<\/p>'
-              WARNING="<p>This is a documentation of the <b>dev\-master<\/b> version which contains the newest features, but please note that this version is under development and we do not guarantee it\'s stability\.<\/p>"
-              DIV_END="<\/div>"
-
-              gradle :sdk:dokka
-
-              if [[ ! -z $CIRCLE_TAG ]]; then
-                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$DIV_END"'/' ./sdk/build/dokkaDoc/overview-summary.html
-              else
-                sed -i 's/'"$PATTERN"'/\1\2\3\n'"$DIV_START\n$GITHUB\n$WARNING\n$DIV_END"'/' ./sdk/build/dokkaDoc/overview-summary.html
-              fi
+              ./gradlew :sdk:dokka
             fi
       - run:
           name: Upload Documentation
@@ -60,13 +47,11 @@ jobs:
               aws s3 sync ./sdk/build/dokkaDoc $DOC_PATH --delete --acl public-read
             fi
       - run:
-          name: Install SDK to Maven Repository
-          command: |
-            gradle :sdk:install
-      - run:
           name: Upload SDK to Bintray
           command: |
-            gradle :sdk:bintray
+            if [[ ! -z $CIRCLE_TAG ]]; then
+              ./gradlew install bintray
+            fi
 deployment:
   fake_deploy_for_cci2:
     tag: /.*/
