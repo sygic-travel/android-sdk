@@ -1,6 +1,6 @@
 # Sygic Travel Android SDK
 
-![Minamal API version level 15](https://img.shields.io/badge/min_API_level-15_--_Android_4.0.3-green.svg)
+![Minamal API version level 15](https://img.shields.io/badge/minimal_API_level-15-green.svg)
 
 Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
 application. It gives you an access to millions of places covering the whole world.
@@ -8,31 +8,28 @@ application. It gives you an access to millions of places covering the whole wor
 
 ## Installation
 
+Add repository to your project's `build.gradle` file:
+```gradle
+repositories {
+	maven { url "http://dl.bintray.com/sygic-travel/maven" }
+}
+```
+
+Add dependency to your application module's `build.gradle` file:
+```gradle
+dependencies {
+	implementation ('com.sygic.travel:sdk:1.0.1')
+}
+```
+
+Development builds may be obtained from [JitPack](https://jitpack.io/#sygic-travel/android-sdk).
+
+## Initialization
+
 Add the internet permission to your `AndroidManifest.xml` file:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
-
-Add repository to your project `build.gradle` file:
-```gradle
-repositories {
-	maven {
-		url  "http://dl.bintray.com/sygic-travel/maven"
-	}
-}
-```
-
-Add dependency to your application module `build.gradle` file:
-```gradle
-dependencies {
-	compile ('com.sygic.travel:sdk:1.0.1@aar'){
-		transitive=true;
-	}
-}
-```
-Note that `transitive` is set to `true` - this is necessary since the library has it's own dependencies.
-
-## Initialization
 
 You have to obtain an *Client Id* and *API key*, contact us at https://travel.sygic.com/b2b/api-key.
 

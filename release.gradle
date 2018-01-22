@@ -1,0 +1,60 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: 'dokka.gradle'
+
+ext {
+	sdkGroupId = "com.sygic.travel"
+	sdkArtifactId = "sdk"
+	sdkVersion = System.getenv("SDK_VERSION")
+}
+
+version = sdkVersion
+group = sdkGroupId
+
+bintray {
+	user = System.getenv("BINTRAY_USER")
+	key = System.getenv("BINTRAY_APIKEY")
+
+	configurations = ['archives']
+	publish = true
+	override = true
+
+	pkg {
+		repo = 'maven'
+		name = 'sdk'
+		userOrg = 'sygic-travel'
+		version {
+			name = sdkVersion
+		}
+	}
+}
+
+install {
+	repositories.mavenInstaller {
+		pom.project {
+			packaging 'aar'
+			groupId sdkGroupId
+			artifactId sdkArtifactId
+			version sdkVersion
+			name sdkArtifactId
+		}
+	}
+}
+
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc, dependsOn: dokka) {
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.getDestinationDir()
+}
+
+artifacts {
+	archives javadocJar
+	archives sourcesJar
+}
