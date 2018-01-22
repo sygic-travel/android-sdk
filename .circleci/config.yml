@@ -23,6 +23,10 @@ jobs:
           paths:
             - ~/.gradle
       - run:
+          name: Unit Tests
+          command: |
+            ./gradlew assembleDebug assembleDebugUnitTest
+      - run:
           name: Setting Deploy Metadata
           command: |
             if [[ ! -z $CIRCLE_TAG ]]; then
