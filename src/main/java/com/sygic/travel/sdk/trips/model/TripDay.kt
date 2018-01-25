@@ -4,7 +4,7 @@ class TripDay(
 	val trip: Trip
 ) {
 	var note: String? = null
-	var itinerary = mutableListOf<TripDayItem>()
+	var itinerary = listOf<TripDayItem>()
 
 	fun getDayIndex(): Int {
 		return trip.days.indexOf(this)

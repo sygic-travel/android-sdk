@@ -17,7 +17,7 @@ internal interface TripDaysDao {
 	@Query("SELECT * FROM trip_days WHERE trip_id = :tripId ORDER BY day_index")
 	fun findByTripId(tripId: String): List<TripDay>
 
-	@Query("SELECT * FROM trip_days WHERE trip_id IN (:tripIds) ORDER BY day_index")
+	@Query("SELECT * FROM trip_days WHERE trip_id IN (:tripIds) ORDER BY trip_id, day_index")
 	fun findByTripId(tripIds: List<String>): List<TripDay>
 
 	@Query("DELETE FROM trip_days WHERE trip_id = :tripId")

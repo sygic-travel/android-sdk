@@ -10,9 +10,7 @@ internal class TripDayConverter constructor(
 	fun fromApi(apiDay: ApiTripItemResponse.Day, trip: Trip): TripDay {
 		val localDay = TripDay(trip)
 		localDay.note = apiDay.note
-		localDay.itinerary = apiDay.itinerary
-			.map { tripDayItemConverter.fromApi(it, localDay) }
-			.toMutableList()
+		localDay.itinerary = apiDay.itinerary.map { tripDayItemConverter.fromApi(it, localDay) }
 		return localDay
 	}
 
