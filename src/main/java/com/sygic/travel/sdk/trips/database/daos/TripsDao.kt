@@ -14,14 +14,14 @@ internal interface TripsDao {
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on > :from) AND " +
-			"(starts_on + days_count * 86400 < :to)"
+			"(starts_on + (days_count - 1) * 86400 < :to)"
 	)
 	fun findByDates(from: Long, to: Long): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
-			"(starts_on > :from OR starts_on + days_count * 86400 > :from) AND " +
-			"(starts_on < :to OR starts_on + days_count * 86400 < :to)"
+			"(starts_on > :from OR starts_on + (days_count - 1) * 86400 > :from) AND " +
+			"(starts_on < :to OR starts_on + (days_count - 1) * 86400 < :to)"
 	)
 	fun findByDatesWithOverlapping(from: Long, to: Long): List<Trip>
 
@@ -33,19 +33,19 @@ internal interface TripsDao {
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
-			"(starts_on > :from OR starts_on + days_count * 86400 > :from)"
+			"(starts_on > :from OR starts_on + (days_count - 1) * 86400 > :from)"
 	)
 	fun findByDateAfterWithOverlapping(from: Long): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
-			"(starts_on + days_count * 86400 < :to)"
+			"(starts_on + (days_count - 1) * 86400 < :to)"
 	)
 	fun findByDateBefore(to: Long): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
-			"(starts_on < :to OR starts_on + days_count * 86400 < :to)"
+			"(starts_on < :to OR starts_on + (days_count - 1) * 86400 < :to)"
 	)
 	fun findByDateBeforeWithOverlapping(to: Long): List<Trip>
 
