@@ -54,20 +54,16 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse): Boolean {
-		var apiTripData: ApiTripItemResponse? = apiTrip
 		var localTrip = tripsService.getTrip(apiTrip.id)
 		val isAdded = localTrip == null
 
 		if (localTrip?.isChanged == true) {
-			apiTripData = updateTrip(localTrip)
-			if (apiTripData == null) {
-				// do nothing and let user choose when he will use the app
-				return isAdded
-			}
+			updateTrip(localTrip)
+		} else {
+			localTrip = tripConverter.fromApi(apiTrip)
+			tripsService.saveTrip(localTrip)
 		}
 
-		localTrip = tripConverter.fromApi(apiTripData!!)
-		tripsService.saveTrip(localTrip)
 		return isAdded
 	}
 
@@ -91,24 +87,23 @@ internal class TripsSynchronizationService constructor(
 			tripsService.saveTrip(updatedTrip)
 
 		} else {
-			val apiTripData = updateTrip(trip)
-			val updatedTrip = tripConverter.fromApi(apiTripData!!)
-			tripsService.saveTrip(updatedTrip)
+			updateTrip(trip)
 		}
 	}
 
-	private fun updateTrip(localTrip: Trip): ApiTripItemResponse? {
+	private fun updateTrip(localTrip: Trip) {
 		val updateResponse = apiClient.updateTrip(
 			localTrip.id,
 			tripConverter.toApi(localTrip)
 		).execute().body()!!
 
-		when (updateResponse.data?.conflictResolution) {
+		var apiTripData = updateResponse.data!!.trip
+		when (updateResponse.data.conflictResolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
 				val override = showDialogAndGetResponse(updateResponse.data.conflictInfo!!)
 				if (override == null) {
 					// do nothing and let user choose when he will use the app
-					return null
+					return
 				} else if (override) {
 					localTrip.updatedAt = DateTimeHelper.now()
 					// if request fails, user will not have to do the decision again
@@ -117,11 +112,12 @@ internal class TripsSynchronizationService constructor(
 						localTrip.id,
 						tripConverter.toApi(localTrip)
 					).execute().body()!!
-					return repeatedUpdateResponse.data!!.trip
+					apiTripData = repeatedUpdateResponse.data!!.trip
 				}
 			}
 		}
 
-		return updateResponse.data!!.trip
+		val updatedTrip = tripConverter.fromApi(apiTripData)
+		tripsService.saveTrip(updatedTrip)
 	}
 }
