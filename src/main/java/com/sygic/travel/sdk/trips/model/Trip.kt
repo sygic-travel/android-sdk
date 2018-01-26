@@ -53,7 +53,7 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		}
 	}
 
-	var days = mutableListOf<TripDay>()
+	var days = listOf<TripDay>()
 	override var daysCount: Int = 0
 		get() = days.size
 		internal set

@@ -77,13 +77,13 @@ internal class SynchronizationService constructor(
 		sharedPreferences.edit().remove(SINCE_KEY).apply()
 	}
 
-	private fun syncTrips(changedTripIds: MutableList<String>, deletedTripIds: MutableList<String>): SynchronizationResult.TripsResult {
+	private fun syncTrips(changedTripIds: List<String>, deletedTripIds: List<String>): SynchronizationResult.TripsResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
 				changedTripIds.joinToString("|")
 			).execute().body()!!.data?.trips ?: arrayListOf()
 		} else {
-			mutableListOf()
+			listOf()
 		}
 
 		val added = mutableListOf<String>()
@@ -111,7 +111,7 @@ internal class SynchronizationService constructor(
 		)
 	}
 
-	private fun syncFavorites(addedFavoriteIds: MutableList<String>, deletedFavoriteIds: MutableList<String>): SynchronizationResult.FavoritesResult {
+	private fun syncFavorites(addedFavoriteIds: List<String>, deletedFavoriteIds: List<String>): SynchronizationResult.FavoritesResult {
 		for (favoriteId in addedFavoriteIds) {
 			favoriteService.addPlace(favoriteId)
 		}

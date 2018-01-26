@@ -143,19 +143,29 @@ internal class TripsService constructor(
 	 */
 	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
 		val trips = dbTrips.map { tripDbConverter.fromAsTrip(it) }
-		val map = trips.associateBy { it.id }
+		val tripsMap = trips.associateBy { it.id }
 
-		for (dbDay in dbDays) {
-			val trip = map[dbDay.tripId]!!
-			val day = tripDayDbConverter.from(dbDay, trip)
-			trip.days.add(day)
-		}
+		dbDays
+			.groupBy { it.tripId }
+			.forEach {
+				val trip = tripsMap[it.key]!!
+				trip.days = it.value.map {
+					tripDayDbConverter.from(it, trip)
+				}
+			}
 
-		for (dbItem in dbItems) {
-			val tripDay = map[dbItem.tripId]!!.days[dbItem.dayIndex]
-			val item = tripDayItemDbConverter.from(dbItem, tripDay)
-			tripDay.itinerary.add(item)
-		}
+		dbItems
+			.groupBy { it.tripId }
+			.mapValues { it.value.groupBy { it.dayIndex } }
+			.forEach {
+				val trip = tripsMap[it.key]!!
+				it.value.forEach {
+					val day = trip.days[it.key]
+					day.itinerary = it.value.map {
+						tripDayItemDbConverter.from(it, day)
+					}
+				}
+			}
 
 		return trips
 	}
