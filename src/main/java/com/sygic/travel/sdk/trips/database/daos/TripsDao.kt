@@ -61,8 +61,8 @@ internal interface TripsDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun replace(trip: Trip)
 
-	@Query("SELECT * FROM trips WHERE is_changed = 1 AND id NOT IN (:ids)")
-	fun findAllChangedExceptApiChanged(ids: List<String>): List<Trip>
+	@Query("SELECT * FROM trips WHERE is_changed = 1")
+	fun findAllChanged(): List<Trip>
 
 	@Query("SELECT COUNT(*) FROM trips WHERE is_changed = 1")
 	fun getAllChangedCount(): Int
