@@ -13,7 +13,10 @@ internal class ApiTourItemResponse(
 	val photoUrl: String,
 	val price: Float,
 	val originalPrice: Float,
-	val duration: String
+	val duration: String,
+	val durationMin: Int,
+	val durationMax: Int,
+	val flags: List<String>
 ) {
 	fun fromApi(): Tour {
 		val tour = Tour()
@@ -28,6 +31,9 @@ internal class ApiTourItemResponse(
 		tour.price = price
 		tour.originalPrice = originalPrice
 		tour.duration = duration
+		tour.durationMin = durationMin
+		tour.durationMax = durationMax
+		tour.flags = flags
 		return tour
 	}
 }
