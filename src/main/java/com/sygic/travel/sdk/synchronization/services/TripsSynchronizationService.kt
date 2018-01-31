@@ -2,12 +2,15 @@ package com.sygic.travel.sdk.synchronization.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
+import com.sygic.travel.sdk.synchronization.model.TripConflictInfo
+import com.sygic.travel.sdk.synchronization.model.TripConflictResolution
 import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.DateTimeHelper
+import java.util.Date
 
 internal class TripsSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
@@ -15,6 +18,8 @@ internal class TripsSynchronizationService constructor(
 	private val tripsService: TripsService
 ) {
 	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)? = null
+	var tripUpdateConflictHandler: ((conflictInfo: TripConflictInfo) -> TripConflictResolution)? = null
+
 	fun sync(changedTripIds: List<String>, deletedTripIds: List<String>): SynchronizationResult.TripsResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
@@ -39,10 +44,6 @@ internal class TripsSynchronizationService constructor(
 		syncLocalChangedTrips(syncResult)
 
 		return syncResult.asTripsResult()
-	}
-
-	private fun showDialogAndGetResponse(conflictInfo: ApiUpdateTripResponse.ConflictInfo): Boolean? {
-		return false // todo
 	}
 
 	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse, syncResult: TripSynchronizationResult) {
@@ -105,20 +106,38 @@ internal class TripsSynchronizationService constructor(
 		var apiTripData = data.trip
 		when (data.conflictResolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
-				val override = showDialogAndGetResponse(data.conflictInfo!!)
-				if (override == null) {
-					// do nothing and let user choose when he will use the app
-					return
-				} else if (override) {
-					localTrip.updatedAt = DateTimeHelper.now()
-					// if request fails, user will not have to do the decision again
-					tripsService.saveTrip(localTrip)
-					val repeatedUpdateResponse = apiClient.updateTrip(
-						localTrip.id,
-						tripConverter.toApi(localTrip)
-					).execute().body()!!
-					apiTripData = repeatedUpdateResponse.data!!.trip
-					updateLocalTrip(apiTripData, syncResult)
+				val conflictHandler = tripUpdateConflictHandler
+				val conflictResolution = when (conflictHandler) {
+					null -> TripConflictResolution.USE_SERVER_VERSION
+					else -> {
+						val conflictInfo = TripConflictInfo(
+							localTrip = localTrip,
+							remoteTrip = tripConverter.fromApi(apiTripData),
+							remoteTripUserName = data.conflictInfo!!.last_user_name,
+							remoteTripUpdatedAt = Date(DateTimeHelper.datetimeToTimestamp(data.conflictInfo.last_updated_at)!! * 1000)
+						)
+						conflictHandler.invoke(conflictInfo)
+					}
+				}
+				when (conflictResolution) {
+					TripConflictResolution.NO_ACTION -> {
+						// do nothing and let user choose when he will use the app
+						return
+					}
+					TripConflictResolution.USE_LOCAL_VERSION -> {
+						localTrip.updatedAt = DateTimeHelper.now()
+						// if request fails, user will not have to do the decision again
+						tripsService.saveTrip(localTrip)
+						val repeatedUpdateResponse = apiClient.updateTrip(
+							localTrip.id,
+							tripConverter.toApi(localTrip)
+						).execute().body()!!
+						apiTripData = repeatedUpdateResponse.data!!.trip
+						updateLocalTrip(apiTripData, syncResult)
+					}
+					TripConflictResolution.USE_SERVER_VERSION -> {
+						updateLocalTrip(apiTripData, syncResult)
+					}
 				}
 			}
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED -> {
