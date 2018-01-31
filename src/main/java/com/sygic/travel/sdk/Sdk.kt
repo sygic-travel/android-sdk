@@ -6,6 +6,7 @@ import com.github.salomonbrys.kodein.instance
 import com.sygic.travel.sdk.auth.facade.AuthFacade
 import com.sygic.travel.sdk.common.di.KodeinSetup
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
+import com.sygic.travel.sdk.events.facades.EventsFacade
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.places.facade.PlacesFacade
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
@@ -32,6 +33,11 @@ class Sdk(
 		}
 
 	val favoritesFacade: FavoritesFacade
+		get() {
+			return kodein.instance()
+		}
+
+	val eventsFacade: EventsFacade
 		get() {
 			return kodein.instance()
 		}

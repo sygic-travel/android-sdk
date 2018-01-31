@@ -14,6 +14,7 @@ internal class TripsSynchronizationService constructor(
 	private val tripConverter: TripConverter,
 	private val tripsService: TripsService
 ) {
+	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)? = null
 	fun sync(changedTripIds: List<String>, deletedTripIds: List<String>): SynchronizationResult.TripsResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
@@ -88,6 +89,7 @@ internal class TripsSynchronizationService constructor(
 		syncResult.createdOnServerIdMap[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
 		tripsService.saveTrip(tripConverter.fromApi(trip))
+		tripIdUpdateHandler?.invoke(localTrip.id, trip.id)
 	}
 
 	private fun updateServerTrip(localTrip: Trip, syncResult: TripSynchronizationResult) {

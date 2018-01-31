@@ -17,6 +17,8 @@ internal class SynchronizationService constructor(
 		private const val SINCE_KEY = "sync.since"
 	}
 
+	var synchronizationCompletionHandler: ((result: SynchronizationResult) -> Unit)? = null
+
 	@SuppressLint("ApplySharedPref")
 	fun synchronize(): SynchronizationResult {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
@@ -58,10 +60,12 @@ internal class SynchronizationService constructor(
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.commit()
 
-		return SynchronizationResult(
+		val result = SynchronizationResult(
 			trips = tripsResult,
 			favorites = favoritesResult
 		)
+		synchronizationCompletionHandler?.invoke(result)
+		return result
 	}
 
 	fun clearUserData() {
