@@ -11,8 +11,7 @@ class SynchronizationFacade internal constructor(
 	private val tripsService: TripsService,
 	private val favoritesService: FavoriteService
 ) {
-	fun synchronize(): SynchronizationResult {
-		checkNotRunningOnMainThread()
+	fun synchronize() {
 		return synchronizationService.synchronize()
 	}
 

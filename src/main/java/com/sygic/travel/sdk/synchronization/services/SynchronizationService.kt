@@ -6,6 +6,8 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.utils.DateTimeHelper
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.thread
 
 internal class SynchronizationService constructor(
 	private val sharedPreferences: SharedPreferences,
@@ -18,9 +20,28 @@ internal class SynchronizationService constructor(
 	}
 
 	var synchronizationCompletionHandler: ((result: SynchronizationResult) -> Unit)? = null
+	private val lock = ReentrantLock()
+
+	fun synchronize() {
+		if (lock.isLocked) {
+			return
+		}
+
+		thread(name = "stsdksync") {
+			if (!lock.tryLock()) {
+				return@thread
+			}
+
+			try {
+				runSynchronization()
+			} finally {
+				lock.unlock()
+			}
+		}
+	}
 
 	@SuppressLint("ApplySharedPref")
-	fun synchronize(): SynchronizationResult {
+	private fun runSynchronization() {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
@@ -65,7 +86,6 @@ internal class SynchronizationService constructor(
 			favorites = favoritesResult
 		)
 		synchronizationCompletionHandler?.invoke(result)
-		return result
 	}
 
 	fun clearUserData() {
