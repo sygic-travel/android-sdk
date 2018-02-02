@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/android-sdk
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: sygictravel/android-docker-build
     steps:
       - checkout
       - restore_cache:
@@ -39,6 +39,9 @@ jobs:
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               ./gradlew dokka
+              cp /sdk-build/markdown-it.js ./.circleci/markdown-it.js
+              cp /sdk-build/apidoc-style.css ./build/dokkaDoc/sdk/style.css
+              node ./.circleci/build-apidoc.js ./build/dokkaDoc/sdk
             fi
       - run:
           name: Upload Documentation
@@ -46,9 +49,9 @@ jobs:
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/master"
               if [[ ! -z $CIRCLE_TAG ]]; then
-                DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/$CIRCLE_TAG"
+                DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/${CIRCLE_TAG:1}"
               fi
-              aws s3 sync ./sdk/build/dokkaDoc $DOC_PATH --delete --acl public-read
+              aws s3 sync ./build/dokkaDoc/sdk $DOC_PATH --delete --acl public-read
             fi
       - run:
           name: Upload SDK to Bintray
