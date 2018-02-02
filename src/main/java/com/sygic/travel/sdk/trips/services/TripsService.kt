@@ -113,8 +113,8 @@ internal class TripsService constructor(
 		}
 	}
 
-	fun findAllChangedExceptApiChanged(apiChangedTripIds: List<String>): List<Trip> {
-		val trips = tripsDao.findAllChangedExceptApiChanged(apiChangedTripIds)
+	fun findAllChanged(): List<Trip> {
+		val trips = tripsDao.findAllChanged()
 		val ids = trips.map { it.id }
 		val tripDays = tripDaysDao.findByTripId(ids)
 		val tripItems = tripDayItemsDao.findByTripId(ids)

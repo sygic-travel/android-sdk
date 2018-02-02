@@ -9,6 +9,7 @@ import com.sygic.travel.sdk.SdkConfig
 import com.sygic.travel.sdk.auth.di.authModule
 import com.sygic.travel.sdk.common.database.di.dbModule
 import com.sygic.travel.sdk.directions.di.directionsModule
+import com.sygic.travel.sdk.events.di.eventsModule
 import com.sygic.travel.sdk.favorites.di.favoritesModule
 import com.sygic.travel.sdk.places.di.placesModule
 import com.sygic.travel.sdk.synchronization.di.synchronizationModule
@@ -31,6 +32,7 @@ internal object KodeinSetup {
 		import(authModule)
 		import(dbModule)
 		import(directionsModule)
+		import(eventsModule)
 		import(favoritesModule)
 		import(generalModule)
 		import(placesModule)

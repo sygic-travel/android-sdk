@@ -11,12 +11,7 @@ class SynchronizationFacade internal constructor(
 	private val tripsService: TripsService,
 	private val favoritesService: FavoriteService
 ) {
-	fun setTripUpdateConflictCallback() {
-		TODO()
-	}
-
-	fun synchronize(): SynchronizationResult {
-		checkNotRunningOnMainThread()
+	fun synchronize() {
 		return synchronizationService.synchronize()
 	}
 

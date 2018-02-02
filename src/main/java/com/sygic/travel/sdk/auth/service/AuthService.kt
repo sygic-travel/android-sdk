@@ -23,6 +23,8 @@ internal class AuthService(
 		private const val DEVICE_PLATFORM = "android"
 	}
 
+	var sessionUpdateHandler: ((session: UserSession?) -> Unit)? = null
+
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(

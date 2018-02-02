@@ -7,6 +7,9 @@ internal class ApiUpdateTripResponse(
 ) {
 	companion object {
 		const val CONFLICT_RESOLUTION_IGNORED = "ignored"
+		const val CONFLICT_RESOLUTION_MERGED = "merged"
+		const val CONFLICT_RESOLUTION_OVERRODE = "overrode"
+		val NO_CONFLICT = null
 	}
 
 	class ConflictInfo(

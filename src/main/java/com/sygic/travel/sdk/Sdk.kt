@@ -1,11 +1,11 @@
 package com.sygic.travel.sdk
 
 import android.content.Context
-import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.sygic.travel.sdk.auth.facade.AuthFacade
 import com.sygic.travel.sdk.common.di.KodeinSetup
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
+import com.sygic.travel.sdk.events.facades.EventsFacade
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.places.facade.PlacesFacade
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
@@ -19,40 +19,13 @@ class Sdk(
 	applicationContext: Context,
 	sdkConfig: SdkConfig
 ) {
-	private var kodein: Kodein = KodeinSetup.setupKodein(applicationContext, sdkConfig)
-
-	val authFacade: AuthFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val directionsFacade: DirectionsFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val favoritesFacade: FavoritesFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val placesFacade: PlacesFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val synchronizationFacade: SynchronizationFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val toursFacade: ToursFacade
-		get() {
-			return kodein.instance()
-		}
-
-	val tripsFacade: TripsFacade
-		get() {
-			return kodein.instance()
-		}
+	val authFacade: AuthFacade by lazy { kodein.instance<AuthFacade>() }
+	val directionsFacade: DirectionsFacade by lazy { kodein.instance<DirectionsFacade>() }
+	val eventsFacade: EventsFacade by lazy { kodein.instance<EventsFacade>() }
+	val favoritesFacade: FavoritesFacade by lazy { kodein.instance<FavoritesFacade>() }
+	val placesFacade: PlacesFacade by lazy { kodein.instance<PlacesFacade>() }
+	val synchronizationFacade: SynchronizationFacade by lazy { kodein.instance<SynchronizationFacade>() }
+	val toursFacade: ToursFacade by lazy { kodein.instance<ToursFacade>() }
+	val tripsFacade: TripsFacade by lazy { kodein.instance<TripsFacade>() }
+	private val kodein = KodeinSetup.setupKodein(applicationContext, sdkConfig)
 }
