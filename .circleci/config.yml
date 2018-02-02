@@ -38,7 +38,7 @@ jobs:
           name: Generate Documentation
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
-              ./gradlew :sdk:dokka
+              ./gradlew dokka
             fi
       - run:
           name: Upload Documentation
