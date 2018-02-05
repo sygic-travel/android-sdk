@@ -9,6 +9,8 @@ import com.sygic.travel.sdk.trips.model.TripMedia
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 import com.sygic.travel.sdk.trips.model.TripPrivileges
 import com.sygic.travel.sdk.utils.DateTimeHelper
+import com.sygic.travel.sdk.utils.asDate
+import com.sygic.travel.sdk.utils.timeSeconds
 
 @Suppress("DEPRECATION")
 internal class TripConverter constructor(
@@ -20,7 +22,7 @@ internal class TripConverter constructor(
 		localTrip.name = apiTrip.name
 		localTrip.version = apiTrip.version
 		localTrip.url = apiTrip.url
-		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!
+		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!.asDate()
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = when (apiTrip.privacy_level) {
 			ApiTripListItemResponse.PRIVACY_PUBLIC -> TripPrivacyLevel.PUBLIC
@@ -28,7 +30,7 @@ internal class TripConverter constructor(
 			ApiTripListItemResponse.PRIVACY_SHAREABLE -> TripPrivacyLevel.SHAREABLE
 			else -> TripPrivacyLevel.PRIVATE
 		}
-		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)
+		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)?.asDate()
 		localTrip.daysCount = apiTrip.days_count
 		localTrip.media = if (apiTrip.media != null) TripMedia(
 			squareMediaId = apiTrip.media.square.id,
@@ -60,14 +62,14 @@ internal class TripConverter constructor(
 		return ApiTripItemRequest(
 			name = localTrip.name,
 			base_version = localTrip.version,
-			updated_at = DateTimeHelper.timestampToDatetime(localTrip.updatedAt)!!,
+			updated_at = DateTimeHelper.timestampToDatetime(localTrip.updatedAt!!.timeSeconds)!!,
 			is_deleted = localTrip.isDeleted,
 			privacy_level = when (localTrip.privacyLevel) {
 				TripPrivacyLevel.PUBLIC -> ApiTripListItemResponse.PRIVACY_PUBLIC
 				TripPrivacyLevel.PRIVATE -> ApiTripListItemResponse.PRIVACY_PRIVATE
 				TripPrivacyLevel.SHAREABLE -> ApiTripListItemResponse.PRIVACY_SHAREABLE
 			},
-			starts_on = DateTimeHelper.timestampToDate(localTrip.startsOn),
+			starts_on = DateTimeHelper.timestampToDate(localTrip.startsOn?.timeSeconds),
 			destinations = localTrip.destinations,
 			days = localTrip.days.map { tripDayConverter.toApi(it) }
 		)

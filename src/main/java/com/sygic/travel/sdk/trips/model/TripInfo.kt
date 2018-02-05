@@ -1,5 +1,9 @@
 package com.sygic.travel.sdk.trips.model
 
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
+
 /**
  * Basic trip entity representation.
  * It contains all trip metadata, does not contain days' definitions.
@@ -12,7 +16,22 @@ open class TripInfo internal constructor(id: String) {
 	var id: String = id
 		internal set
 	var name: String? = ""
-	var startsOn: Long? = null
+	var startsOn: Date? = null
+		set(value) {
+			if (value != null) {
+				val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+				calendar.time = value
+				if (
+					calendar.get(Calendar.HOUR_OF_DAY) != 0
+					|| calendar.get(Calendar.MINUTE) != 0
+					|| calendar.get(Calendar.SECOND) != 0
+					|| calendar.get(Calendar.MILLISECOND) != 0
+				) {
+					throw IllegalArgumentException("Trip's startsOn date has to be defined at the midnight, without a time.")
+				}
+			}
+			field = value
+		}
 	var privacyLevel: TripPrivacyLevel = TripPrivacyLevel.PRIVATE
 		set(value) {
 			if (privileges.manage) {
@@ -35,7 +54,7 @@ open class TripInfo internal constructor(id: String) {
 		}
 	var media: TripMedia? = null
 		internal set
-	var updatedAt: Long = 0
+	var updatedAt: Date? = null
 		internal set
 	var isChanged: Boolean = false
 		internal set

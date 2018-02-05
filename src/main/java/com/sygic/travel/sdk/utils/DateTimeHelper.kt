@@ -1,9 +1,7 @@
 package com.sygic.travel.sdk.utils
 
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
-import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.TimeZone
 
@@ -61,10 +59,7 @@ internal object DateTimeHelper {
 		}
 	}
 
-	/**
-	 * Returns unix timestamp (in seconds).
-	 */
-	fun now(): Long {
-		return Date().time / 1000
+	fun now(): Date {
+		return Date()
 	}
 }

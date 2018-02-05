@@ -2,6 +2,8 @@ package com.sygic.travel.sdk.trips.database.converters
 
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripInfo
+import com.sygic.travel.sdk.utils.asDate
+import com.sygic.travel.sdk.utils.timeSeconds
 import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
 
 @Suppress("DEPRECATION")
@@ -20,12 +22,12 @@ internal class TripDbConverter {
 
 	private fun from(dbTrip: DbTrip, trip: TripInfo) {
 		trip.name = dbTrip.name
-		trip.startsOn = dbTrip.startsOn
+		trip.startsOn = dbTrip.startsOn?.asDate()
 		trip.privacyLevel = dbTrip.privacyLevel
 		trip.url = dbTrip.url
 		trip.isDeleted = dbTrip.isDeleted
 		trip.media = dbTrip.media
-		trip.updatedAt = dbTrip.updatedAt
+		trip.updatedAt = dbTrip.updatedAt.asDate()
 		trip.isChanged = dbTrip.isChanged
 		trip.daysCount = dbTrip.daysCount
 		trip.destinations = dbTrip.destinations
@@ -39,13 +41,13 @@ internal class TripDbConverter {
 		val dbTrip = DbTrip()
 		dbTrip.id = trip.id
 		dbTrip.name = trip.name
-		dbTrip.startsOn = trip.startsOn
+		dbTrip.startsOn = trip.startsOn?.timeSeconds
 		dbTrip.privacyLevel = trip.privacyLevel
 		dbTrip.url = trip.url
 		dbTrip.privileges = trip.privileges
 		dbTrip.isDeleted = trip.isDeleted
 		dbTrip.media = trip.media
-		dbTrip.updatedAt = trip.updatedAt
+		dbTrip.updatedAt = trip.updatedAt!!.timeSeconds!!
 		dbTrip.isChanged = trip.isChanged
 		dbTrip.daysCount = trip.daysCount
 		dbTrip.destinations = trip.destinations
