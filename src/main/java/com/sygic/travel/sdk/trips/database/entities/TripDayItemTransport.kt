@@ -5,7 +5,7 @@ import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 
-class TripDayItemTransport {
+internal class TripDayItemTransport {
 	@ColumnInfo
 	lateinit var mode: DirectionMode
 
