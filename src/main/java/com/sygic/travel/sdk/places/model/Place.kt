@@ -17,5 +17,9 @@ open class Place(
 	val url: String?,
 	val thumbnailUrl: String?,
 	val marker: String,
-	val parentIds: Set<String>
+	val parentIds: Set<String>,
+	val starRating: Float?,
+	val starRatingUnofficial: Float?,
+	val customerRating: Float?,
+	val ownerId: String?
 )

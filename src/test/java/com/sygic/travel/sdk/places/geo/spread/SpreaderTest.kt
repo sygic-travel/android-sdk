@@ -64,7 +64,11 @@ class SpreaderTest {
 			perex = null,
 			quadkey = "1",
 			rating = 0f,
-			thumbnailUrl = null
+			thumbnailUrl = null,
+			starRating = null,
+			starRatingUnofficial = null,
+			customerRating = null,
+			ownerId = null
 		)
 	}
 }
