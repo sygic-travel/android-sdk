@@ -1,7 +1,7 @@
 apply plugin: 'org.jetbrains.dokka-android'
 
 dokka {
-	outputFormat = 'html'
+	outputFormat = 'gfm'
 	outputDirectory = "$buildDir/dokkaDoc"
 //	includes = ['../README.md']
 	skipDeprecated = true
