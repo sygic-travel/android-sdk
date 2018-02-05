@@ -100,14 +100,28 @@ internal interface SygicTravelApiClient {
 
 	// ==== TOURS ==================================================================================
 
-	@GET("tours")
-	fun getTours(
-		@Query("destination_id") destinationId: String?,
+	@GET("tours/get-your-guide")
+	fun getToursGetYourGuide(
+		@Query("query") query: String?,
+		@Query("bounds") bounds: String?,
+		@Query("parent_place_id") parentPlaceId: String?,
+		@Query("tags") tags: String?,
+		@Query("from") from: String?,
+		@Query("to") to: String?,
+		@Query("duration") duration: String?,
 		@Query("page") page: Int?,
+		@Query("count") count: Int?,
 		@Query("sort_by") sortBy: String?,
 		@Query("sort_direction") sortDirection: String?
 	): Call<ApiResponse<ApiTourResponse>>
 
+	@GET("tours/viator")
+	fun getToursViator(
+		@Query("parent_place_id") parentPlaceId: String,
+		@Query("page") page: Int?,
+		@Query("sort_by") sortBy: String?,
+		@Query("sort_direction") sortDirection: String?
+	): Call<ApiResponse<ApiTourResponse>>
 
 	// ==== TRIPS ==================================================================================
 

@@ -15,4 +15,7 @@ class Tour {
 	var price: Float? = null
 	var originalPrice: Float? = null
 	var duration: String? = null
+	var durationMin: Int? = null
+	var durationMax: Int? = null
+	var flags: List<String>? = null
 }
