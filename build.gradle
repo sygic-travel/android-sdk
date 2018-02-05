@@ -21,8 +21,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-	compileSdkVersion 26
-	buildToolsVersion "26.0.2"
+	compileSdkVersion 27
+	buildToolsVersion "27.0.3"
 
 	defaultConfig {
 		minSdkVersion 15
@@ -50,7 +50,7 @@ repositories {
 
 dependencies {
 	implementation "android.arch.persistence.room:runtime:1.0.0"
-	implementation 'com.android.support:appcompat-v7:26.1.0'
+	implementation 'com.android.support:appcompat-v7:27.0.2'
 	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'com.jakewharton:disklrucache:2.0.2'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.1'
