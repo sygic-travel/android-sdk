@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.trips.model
 
+import com.sygic.travel.sdk.utils.asDate
 import java.util.UUID
 
 /**
@@ -37,12 +38,12 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		): Trip {
 			val trip = Trip(id)
 			trip.name = name
-			trip.startsOn = startsOn
+			trip.startsOn = startsOn?.asDate()
 			trip.privacyLevel = privacyLevel
 			trip.url = url
 			trip.isDeleted = isDeleted
 			trip.media = media
-			trip.updatedAt = updatedAt
+			trip.updatedAt = updatedAt.asDate()
 			trip.isChanged = isChanged
 			trip.daysCount = daysCount
 			trip.ownerId = ownerId
