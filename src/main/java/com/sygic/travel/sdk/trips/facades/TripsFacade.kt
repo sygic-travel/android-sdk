@@ -5,7 +5,10 @@ import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-@Suppress("unused")
+/**
+ * Trips facade provides interface for managing & processing user trips.
+ */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class TripsFacade internal constructor(
 	private val tripsService: TripsService
 ) {

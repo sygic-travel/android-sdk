@@ -8,8 +8,9 @@ import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
 /**
- * Data provider contains methods for fetching data either from API or a database.
+ * Places facade provides interface for fetching places data from the API.
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class PlacesFacade internal constructor(
 	private val placesService: PlacesService
 ) {

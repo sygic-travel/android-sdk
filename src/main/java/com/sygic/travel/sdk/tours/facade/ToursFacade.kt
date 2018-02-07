@@ -6,6 +6,10 @@ import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdk.tours.service.ToursService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
+/**
+ * Tours facade provides interface for accessing tours from Viator and GetYourGuide providers through Sygic Travel API.
+ */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class ToursFacade internal constructor(
 	private val toursService: ToursService
 ) {

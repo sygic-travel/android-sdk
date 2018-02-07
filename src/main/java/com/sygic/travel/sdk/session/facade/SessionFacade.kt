@@ -4,6 +4,10 @@ import com.sygic.travel.sdk.session.model.Session
 import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
+/**
+ * Session facade handles user (or anonymous) session. Session is needed for user data synchronization.
+ */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class SessionFacade internal constructor(
 	private val sessionService: SessionService
 ) {

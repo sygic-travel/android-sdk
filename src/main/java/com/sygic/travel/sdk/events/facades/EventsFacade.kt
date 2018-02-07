@@ -8,6 +8,10 @@ import com.sygic.travel.sdk.synchronization.model.TripConflictResolution
 import com.sygic.travel.sdk.synchronization.services.SynchronizationService
 import com.sygic.travel.sdk.synchronization.services.TripsSynchronizationService
 
+/**
+ * Events facade provides an centralized access point for subscribing to SDK's events.
+ */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class EventsFacade internal constructor(
 	private val sessionService: () -> SessionService,
 	private val tripsSynchronizationService: () -> TripsSynchronizationService,
