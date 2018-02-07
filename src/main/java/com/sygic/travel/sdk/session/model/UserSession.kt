@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.auth.model
+package com.sygic.travel.sdk.session.model
 
 import com.google.gson.annotations.SerializedName
 

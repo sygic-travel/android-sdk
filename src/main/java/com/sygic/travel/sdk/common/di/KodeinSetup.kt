@@ -6,7 +6,7 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton
 import com.github.salomonbrys.kodein.with
 import com.sygic.travel.sdk.SdkConfig
-import com.sygic.travel.sdk.auth.di.authModule
+import com.sygic.travel.sdk.session.di.sessionModule
 import com.sygic.travel.sdk.common.database.di.dbModule
 import com.sygic.travel.sdk.directions.di.directionsModule
 import com.sygic.travel.sdk.events.di.eventsModule
@@ -29,7 +29,7 @@ internal object KodeinSetup {
 
 		bind<Context>() with singleton { applicationContext }
 
-		import(authModule)
+		import(sessionModule)
 		import(dbModule)
 		import(directionsModule)
 		import(eventsModule)

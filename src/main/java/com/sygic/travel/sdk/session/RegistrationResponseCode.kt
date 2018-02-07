@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.auth
+package com.sygic.travel.sdk.session
 
 enum class RegistrationResponseCode {
 	OK,

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.common.api.interceptors
 
-import com.sygic.travel.sdk.auth.service.AuthStorageService
+import com.sygic.travel.sdk.session.service.AuthStorageService
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response

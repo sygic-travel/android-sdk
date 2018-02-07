@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.auth.service
+package com.sygic.travel.sdk.session.service
 
 import android.content.SharedPreferences
 import java.util.Date

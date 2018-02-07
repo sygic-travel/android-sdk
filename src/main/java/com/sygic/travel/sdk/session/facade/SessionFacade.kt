@@ -1,65 +1,65 @@
-package com.sygic.travel.sdk.auth.facade
+package com.sygic.travel.sdk.session.facade
 
-import com.sygic.travel.sdk.auth.AuthenticationResponseCode
-import com.sygic.travel.sdk.auth.RegistrationResponseCode
-import com.sygic.travel.sdk.auth.ResetPasswordResponseCode
-import com.sygic.travel.sdk.auth.model.UserSession
-import com.sygic.travel.sdk.auth.service.AuthService
+import com.sygic.travel.sdk.session.AuthenticationResponseCode
+import com.sygic.travel.sdk.session.RegistrationResponseCode
+import com.sygic.travel.sdk.session.ResetPasswordResponseCode
+import com.sygic.travel.sdk.session.model.UserSession
+import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
-class AuthFacade internal constructor(
-	private val authService: AuthService
+class SessionFacade internal constructor(
+	private val sessionService: SessionService
 ) {
 	internal val onSignOut = arrayListOf<() -> Unit>()
 
 	fun loginUserWithPassword(username: String, password: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return authService.authWithPassword(username, password)
+		return sessionService.authWithPassword(username, password)
 	}
 
 	fun loginUserWithGoogle(googleToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return authService.authWithGoogleToken(googleToken)
+		return sessionService.authWithGoogleToken(googleToken)
 	}
 
 	fun loginUserWithFacebook(facebookToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return authService.authWithFacebookToken(facebookToken)
+		return sessionService.authWithFacebookToken(facebookToken)
 	}
 
 	fun loginUserWithDeviceId(): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return authService.authWithDeviceId()
+		return sessionService.authWithDeviceId()
 	}
 
 	fun loginUserWithJwtToken(jwtToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return authService.authWithJwtToken(jwtToken)
+		return sessionService.authWithJwtToken(jwtToken)
 	}
 
 	fun registerUser(name: String, email: String, password: String): RegistrationResponseCode {
 		checkNotRunningOnMainThread()
-		return authService.register(name, email, password)
+		return sessionService.register(name, email, password)
 	}
 
 	fun resetPassword(email: String): ResetPasswordResponseCode {
 		checkNotRunningOnMainThread()
-		return authService.resetPassword(email)
+		return sessionService.resetPassword(email)
 	}
 
 	fun logoutUser() {
 		checkNotRunningOnMainThread()
-		authService.logout()
+		sessionService.logout()
 		onSignOut.forEach { it.invoke() }
 	}
 
 	fun getUserSession(): UserSession? {
-		return authService.getUserSession()
+		return sessionService.getUserSession()
 	}
 
 	private fun checkEmptySession() {
