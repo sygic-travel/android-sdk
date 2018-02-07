@@ -10,17 +10,17 @@ import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 class FavoritesFacade internal constructor(
 	private val favoritesService: FavoriteService
 ) {
-	fun addPlace(placeId: String) {
+	fun addToFavorites(placeId: String) {
 		checkNotRunningOnMainThread()
 		return favoritesService.addPlace(placeId)
 	}
 
-	fun removePlace(placeId: String) {
+	fun removeFromFavorites(placeId: String) {
 		checkNotRunningOnMainThread()
 		return favoritesService.removePlace(placeId)
 	}
 
-	fun getPlaceIds(): List<String> {
+	fun getFavoritePlaceIds(): List<String> {
 		checkNotRunningOnMainThread()
 		return favoritesService.getPlaces()
 	}
