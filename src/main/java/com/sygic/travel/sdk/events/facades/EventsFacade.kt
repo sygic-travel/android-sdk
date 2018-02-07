@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.events.facades
 
-import com.sygic.travel.sdk.session.model.UserSession
+import com.sygic.travel.sdk.session.model.Session
 import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.synchronization.model.TripConflictInfo
@@ -13,7 +13,7 @@ class EventsFacade internal constructor(
 	private val tripsSynchronizationService: () -> TripsSynchronizationService,
 	private val synchronizationService: () -> SynchronizationService
 ) {
-	var sessionUpdateHandler: ((session: UserSession?) -> Unit)?
+	var sessionUpdateHandler: ((session: Session?) -> Unit)?
 		get() {
 			return sessionService().sessionUpdateHandler
 		}

@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.session.facade
 import com.sygic.travel.sdk.session.AuthenticationResponseCode
 import com.sygic.travel.sdk.session.RegistrationResponseCode
 import com.sygic.travel.sdk.session.ResetPasswordResponseCode
-import com.sygic.travel.sdk.session.model.UserSession
+import com.sygic.travel.sdk.session.model.Session
 import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
@@ -58,13 +58,13 @@ class SessionFacade internal constructor(
 		onSignOut.forEach { it.invoke() }
 	}
 
-	fun getUserSession(): UserSession? {
+	fun getSession(): Session? {
 		return sessionService.getUserSession()
 	}
 
 	private fun checkEmptySession() {
-		if (getUserSession() != null) {
-			throw IllegalStateException("Sygic Travel SDK has already an initialized user session. Logout the user first.")
+		if (getSession() != null) {
+			throw IllegalStateException("Sygic Travel SDK has already an initialized session. Sign out the session first.")
 		}
 	}
 }

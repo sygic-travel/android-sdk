@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.session.model.AuthenticationRequest
 import com.sygic.travel.sdk.session.model.UserRegistrationRequest
 import com.sygic.travel.sdk.session.model.UserRegistrationResponse
-import com.sygic.travel.sdk.session.model.UserSession
+import com.sygic.travel.sdk.session.model.Session
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -16,7 +16,7 @@ internal interface SygicSsoApiClient {
 	@POST("/oauth2/token")
 	fun authenticate(
 		@Body authenticationRequest: AuthenticationRequest
-	): Call<UserSession>
+	): Call<Session>
 
 	@Headers("Content-Type: application/json")
 	@POST("/user/register")

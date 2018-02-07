@@ -9,7 +9,7 @@ import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.session.model.AuthenticationRequest
 import com.sygic.travel.sdk.session.model.UserRegistrationRequest
-import com.sygic.travel.sdk.session.model.UserSession
+import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
 
@@ -23,7 +23,7 @@ internal class SessionService(
 		private const val DEVICE_PLATFORM = "android"
 	}
 
-	var sessionUpdateHandler: ((session: UserSession?) -> Unit)? = null
+	var sessionUpdateHandler: ((session: Session?) -> Unit)? = null
 
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
@@ -130,7 +130,7 @@ internal class SessionService(
 		}
 	}
 
-	fun getUserSession(): UserSession? {
+	fun getUserSession(): Session? {
 		val accessToken = authStorageService.getUserSession() ?: return null
 		val refreshToken = authStorageService.getRefreshToken() ?: return null
 		val refreshTimeExpiration = authStorageService.getSuggestedRefreshTime()
@@ -139,7 +139,7 @@ internal class SessionService(
 			refreshToken(refreshToken)
 		}
 
-		return UserSession(
+		return Session(
 			accessToken = accessToken,
 			refreshToken = refreshToken,
 			expiresIn = refreshTimeExpiration
