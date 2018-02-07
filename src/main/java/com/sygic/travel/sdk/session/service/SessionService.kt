@@ -80,7 +80,7 @@ internal class SessionService(
 		))
 	}
 
-	fun register(name: String, email: String, password: String): RegistrationResponseCode {
+	fun register(email: String, password: String, name: String): RegistrationResponseCode {
 		val userRegistrationRequest = UserRegistrationRequest(
 			username = email,
 			email = email,

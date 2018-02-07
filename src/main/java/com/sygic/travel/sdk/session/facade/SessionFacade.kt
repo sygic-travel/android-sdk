@@ -9,50 +9,50 @@ class SessionFacade internal constructor(
 ) {
 	internal val onSignOut = arrayListOf<() -> Unit>()
 
-	fun loginUserWithPassword(username: String, password: String): AuthenticationResponseCode {
+	fun signInWithCredentials(email: String, password: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return sessionService.authWithPassword(username, password)
+		return sessionService.authWithPassword(email, password)
 	}
 
-	fun loginUserWithGoogle(googleToken: String): AuthenticationResponseCode {
+	fun signInWithGoogleIdToken(idToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return sessionService.authWithGoogleToken(googleToken)
+		return sessionService.authWithGoogleToken(idToken)
 	}
 
-	fun loginUserWithFacebook(facebookToken: String): AuthenticationResponseCode {
+	fun signInWithFacebookAccessToken(accessToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
-		return sessionService.authWithFacebookToken(facebookToken)
+		return sessionService.authWithFacebookToken(accessToken)
 	}
 
-	fun loginUserWithDeviceId(): AuthenticationResponseCode {
-		checkNotRunningOnMainThread()
-		checkEmptySession()
-		return sessionService.authWithDeviceId()
-	}
-
-	fun loginUserWithJwtToken(jwtToken: String): AuthenticationResponseCode {
+	fun signInWithJwtToken(jwtToken: String): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
 		checkEmptySession()
 		return sessionService.authWithJwtToken(jwtToken)
 	}
 
-	fun registerUser(name: String, email: String, password: String): RegistrationResponseCode {
+	fun signInWithDeviceId(): AuthenticationResponseCode {
 		checkNotRunningOnMainThread()
-		return sessionService.register(name, email, password)
+		checkEmptySession()
+		return sessionService.authWithDeviceId()
+	}
+
+	fun signOutUser() {
+		checkNotRunningOnMainThread()
+		sessionService.logout()
+		onSignOut.forEach { it.invoke() }
+	}
+
+	fun register(email: String, password: String, name: String): RegistrationResponseCode {
+		checkNotRunningOnMainThread()
+		return sessionService.register(email, password, name)
 	}
 
 	fun resetPassword(email: String): ResetPasswordResponseCode {
 		checkNotRunningOnMainThread()
 		return sessionService.resetPassword(email)
-	}
-
-	fun logoutUser() {
-		checkNotRunningOnMainThread()
-		sessionService.logout()
-		onSignOut.forEach { it.invoke() }
 	}
 
 	fun getSession(): Session? {
