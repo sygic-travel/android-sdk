@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.session.api
 
 import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
-import com.sygic.travel.sdk.session.model.AuthenticationRequest
-import com.sygic.travel.sdk.session.model.UserRegistrationRequest
-import com.sygic.travel.sdk.session.model.UserRegistrationResponse
+import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
+import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
+import com.sygic.travel.sdk.session.api.model.UserRegistrationResponse
 import com.sygic.travel.sdk.session.model.Session
 import retrofit2.Call
 import retrofit2.http.Body

@@ -7,8 +7,8 @@ import com.sygic.travel.sdk.session.RegistrationResponseCode
 import com.sygic.travel.sdk.session.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
-import com.sygic.travel.sdk.session.model.AuthenticationRequest
-import com.sygic.travel.sdk.session.model.UserRegistrationRequest
+import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
+import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
 import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
