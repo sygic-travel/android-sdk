@@ -2,9 +2,9 @@ package com.sygic.travel.sdk.session.service
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.sygic.travel.sdk.session.AuthenticationResponseCode
-import com.sygic.travel.sdk.session.RegistrationResponseCode
-import com.sygic.travel.sdk.session.ResetPasswordResponseCode
+import com.sygic.travel.sdk.session.facade.AuthenticationResponseCode
+import com.sygic.travel.sdk.session.facade.RegistrationResponseCode
+import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.session.api.model.AuthenticationRequest

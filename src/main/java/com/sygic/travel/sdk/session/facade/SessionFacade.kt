@@ -1,8 +1,5 @@
 package com.sygic.travel.sdk.session.facade
 
-import com.sygic.travel.sdk.session.AuthenticationResponseCode
-import com.sygic.travel.sdk.session.RegistrationResponseCode
-import com.sygic.travel.sdk.session.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.model.Session
 import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
