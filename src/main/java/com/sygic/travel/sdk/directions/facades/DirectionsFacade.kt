@@ -12,11 +12,17 @@ import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 class DirectionsFacade internal constructor(
 	private val directionsService: DirectionsService
 ) {
-	fun getSimpleDirections(requests: List<DirectionsRequest>): List<Directions> {
+	/**
+	 * Calculates directions fast & locally. Uses cached or air-distance estimated directions.
+	 */
+	fun getEstimatedDirections(requests: List<DirectionsRequest>): List<Directions> {
 		checkNotRunningOnMainThread()
 		return directionsService.getSimpleDirections(requests)
 	}
 
+	/**
+	 * Queries the API for full directions. Reuses already cached directions.
+	 */
 	fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
 		checkNotRunningOnMainThread()
 		return directionsService.getComplexDirections(requests)
