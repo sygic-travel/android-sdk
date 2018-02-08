@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.model.query
+package com.sygic.travel.sdk.tours.facade
 
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import java.util.Date

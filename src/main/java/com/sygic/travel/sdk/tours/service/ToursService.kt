@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.tours.service
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
-import com.sygic.travel.sdk.places.model.query.ToursGetYourGuideQuery
-import com.sygic.travel.sdk.places.model.query.ToursViatorQuery
+import com.sygic.travel.sdk.tours.facade.ToursGetYourGuideQuery
+import com.sygic.travel.sdk.tours.facade.ToursViatorQuery
 import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdk.utils.DateTimeHelper
 import com.sygic.travel.sdk.utils.timeSeconds

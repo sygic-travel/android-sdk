@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.model.query
+package com.sygic.travel.sdk.tours.facade
 
 /**
  * ToursViatorQuery contains values which define the Viator tours to be fetched.
