@@ -1,7 +1,6 @@
 package com.sygic.travel.sdk.synchronization.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
-import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.synchronization.model.TripConflictInfo
 import com.sygic.travel.sdk.synchronization.model.TripConflictResolution
 import com.sygic.travel.sdk.trips.api.TripConverter
@@ -20,7 +19,7 @@ internal class TripsSynchronizationService constructor(
 	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)? = null
 	var tripUpdateConflictHandler: ((conflictInfo: TripConflictInfo) -> TripConflictResolution)? = null
 
-	fun sync(changedTripIds: List<String>, deletedTripIds: List<String>): SynchronizationResult.TripsResult {
+	fun sync(changedTripIds: List<String>, deletedTripIds: List<String>): TripSynchronizationResult {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
 			apiClient.getTrips(
 				changedTripIds.joinToString("|")
@@ -33,9 +32,8 @@ internal class TripsSynchronizationService constructor(
 			tripsService.deleteTrip(deletedTripId)
 		}
 
-		val syncResult = TripSynchronizationResult(
-			removed = deletedTripIds.toMutableList()
-		)
+		val syncResult = TripSynchronizationResult()
+		syncResult.changedTripIds.addAll(deletedTripIds)
 
 		for (trip in changedTrips) {
 			syncApiChangedTrip(trip, syncResult)
@@ -43,7 +41,7 @@ internal class TripsSynchronizationService constructor(
 
 		syncLocalChangedTrips(syncResult)
 
-		return syncResult.asTripsResult()
+		return syncResult
 	}
 
 	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse, syncResult: TripSynchronizationResult) {
@@ -75,19 +73,19 @@ internal class TripsSynchronizationService constructor(
 	private fun createLocalTrip(apiTrip: ApiTripItemResponse, syncResult: TripSynchronizationResult) {
 		val localTrip = tripConverter.fromApi(apiTrip)
 		tripsService.saveTrip(localTrip)
-		syncResult.added.add(localTrip.id)
+		syncResult.changedTripIds.add(localTrip.id)
 	}
 
 	private fun updateLocalTrip(apiTrip: ApiTripItemResponse, syncResult: TripSynchronizationResult) {
 		val localTrip = tripConverter.fromApi(apiTrip)
 		tripsService.saveTrip(localTrip)
-		syncResult.changed.add(localTrip.id)
+		syncResult.changedTripIds.add(localTrip.id)
 	}
 
 	private fun createServerTrip(localTrip: Trip, syncResult: TripSynchronizationResult) {
 		val response = apiClient.createTrip(tripConverter.toApi(localTrip)).execute().body()!!
 		val trip = response.data!!.trip
-		syncResult.createdOnServerIdMap[localTrip.id] = trip.id
+		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
 		tripsService.saveTrip(tripConverter.fromApi(trip))
 		tripIdUpdateHandler?.invoke(localTrip.id, trip.id)
@@ -98,7 +96,7 @@ internal class TripsSynchronizationService constructor(
 
 		if (updateResponse.code() == 404) {
 			tripsService.deleteTrip(localTrip.id)
-			syncResult.removed.add(localTrip.id)
+			syncResult.changedTripIds.add(localTrip.id)
 			return
 		}
 
@@ -150,19 +148,8 @@ internal class TripsSynchronizationService constructor(
 		}
 	}
 
-	private class TripSynchronizationResult(
-		val added: MutableList<String> = mutableListOf(),
-		val changed: MutableList<String> = mutableListOf(),
-		val removed: MutableList<String> = mutableListOf(),
-		val createdOnServerIdMap: MutableMap<String, String> = mutableMapOf()
-	) {
-		fun asTripsResult(): SynchronizationResult.TripsResult {
-			return SynchronizationResult.TripsResult(
-				added = added,
-				updated = changed,
-				removed = removed,
-				createdOnServerIdMap = createdOnServerIdMap
-			)
-		}
-	}
+	class TripSynchronizationResult(
+		val changedTripIds: MutableSet<String> = mutableSetOf(),
+		val createdTripIdsMapping: MutableMap<String, String> = mutableMapOf()
+	)
 }

@@ -4,13 +4,12 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
 import com.sygic.travel.sdk.favorites.model.Favorite
 import com.sygic.travel.sdk.favorites.service.FavoriteService
-import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 
 internal class FavoritesSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val favoriteService: FavoriteService
 ) {
-	fun sync(addedFavoriteIds: List<String>, deletedFavoriteIds: List<String>): SynchronizationResult.FavoritesResult {
+	fun sync(addedFavoriteIds: List<String>, deletedFavoriteIds: List<String>): FavoritesSynchronizationResult {
 		for (favoriteId in addedFavoriteIds) {
 			favoriteService.addPlace(favoriteId)
 		}
@@ -33,9 +32,12 @@ internal class FavoritesSynchronizationService constructor(
 			}
 		}
 
-		return SynchronizationResult.FavoritesResult(
-			added = addedFavoriteIds,
-			removed = deletedFavoriteIds
+		return FavoritesSynchronizationResult(
+			changedFavoriteIds = addedFavoriteIds.union(deletedFavoriteIds)
 		)
 	}
+
+	class FavoritesSynchronizationResult(
+		val changedFavoriteIds: Set<String>
+	)
 }
