@@ -27,12 +27,12 @@ open internal class ApiPlaceListItemResponse(
 		val west: Float
 	) {
 		fun fromApi(): Bounds {
-			val bounds = Bounds()
-			bounds.north = north
-			bounds.east = east
-			bounds.south = south
-			bounds.west = west
-			return bounds
+			return Bounds(
+				north = north,
+				east = east,
+				south = south,
+				west = west
+			)
 		}
 	}
 

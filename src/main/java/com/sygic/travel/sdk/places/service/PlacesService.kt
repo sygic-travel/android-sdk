@@ -18,7 +18,7 @@ internal class PlacesService(
 			categories = placesQuery.getCategoriesApiQuery(),
 			mapTiles = placesQuery.getMapTilesApiQuery(),
 			mapSpread = placesQuery.mapSpread,
-			bounds = placesQuery.bounds?.toApiQueryString(),
+			bounds = placesQuery.bounds?.toApiQuery(),
 			tags = placesQuery.getTagsApiQuery(),
 			parents = placesQuery.getParentsApiQuery(),
 			limit = placesQuery.limit

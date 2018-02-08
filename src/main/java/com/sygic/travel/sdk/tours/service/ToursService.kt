@@ -23,7 +23,7 @@ internal class ToursService(
 	fun getToursGetYourGuide(query: ToursGetYourGuideQuery): List<Tour> {
 		val request = apiClient.getToursGetYourGuide(
 			query = query.query,
-			bounds = query.bounds?.toApiQueryString(),
+			bounds = query.bounds?.toApiQuery(),
 			parentPlaceId = query.parentPlaceId,
 			tags = query.tags,
 			from = DateTimeHelper.timestampToDatetime(query.startDate?.timeSeconds),

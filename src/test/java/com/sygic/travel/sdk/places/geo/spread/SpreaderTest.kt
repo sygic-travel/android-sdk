@@ -39,11 +39,12 @@ class SpreaderTest {
 
 		val canvasSize = CanvasSize(740, 320)
 
-		val bounds = Bounds()
-		bounds.east = 48.toFloat()
-		bounds.west = 49.toFloat()
-		bounds.north = 17.toFloat()
-		bounds.south = 16.toFloat()
+		val bounds = Bounds(
+			east = 48f,
+			west = 49f,
+			north = 17f,
+			south = 16f
+		)
 
 		// calling tested method
 		val spreadPlacesOnMap = testedObject.spreadPlacesOnMap(places, bounds, canvasSize)
