@@ -1,10 +1,10 @@
 package com.sygic.travel.sdk.places.service
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.places.facade.PlacesQuery
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
-import com.sygic.travel.sdk.places.facade.PlacesQuery
 
 internal class PlacesService(
 	private val sygicTravelApiClient: SygicTravelApiClient
@@ -13,15 +13,15 @@ internal class PlacesService(
 		placesQuery: PlacesQuery
 	): List<PlaceInfo>? {
 		val request = sygicTravelApiClient.getPlaces(
-			placesQuery.query,
-			placesQuery.levelsQueryString,
-			placesQuery.categoriesQueryString,
-			placesQuery.mapTilesQueryString,
-			placesQuery.mapSpread,
-			placesQuery.boundsQueryString,
-			placesQuery.tagsQueryString,
-			placesQuery.parentsQueryString,
-			placesQuery.limit
+			query = placesQuery.query,
+			levels = placesQuery.getLevelsApiQuery(),
+			categories = placesQuery.getCategoriesApiQuery(),
+			mapTiles = placesQuery.getMapTilesApiQuery(),
+			mapSpread = placesQuery.mapSpread,
+			bounds = placesQuery.bounds?.toApiQueryString(),
+			tags = placesQuery.getTagsApiQuery(),
+			parents = placesQuery.getParentsApiQuery(),
+			limit = placesQuery.limit
 		)
 		val response = request.execute()
 		return response.body()?.data?.getPlaces()
@@ -33,7 +33,7 @@ internal class PlacesService(
 	}
 
 	fun getPlacesDetailed(ids: List<String>): List<Place>? {
-		val queryIds = ids.joinToString(PlacesQuery.Operator.OR.operator)
+		val queryIds = ids.joinToString(PlacesQuery.LogicOperator.OR.apiOperator)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
 		return request.execute().body()?.data?.getPlaces()
 	}
