@@ -2,13 +2,13 @@ package com.sygic.travel.sdk.session.service
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.sygic.travel.sdk.session.api.SygicSsoApiClient
+import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
+import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
+import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
 import com.sygic.travel.sdk.session.facade.AuthenticationResponseCode
 import com.sygic.travel.sdk.session.facade.RegistrationResponseCode
 import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
-import com.sygic.travel.sdk.session.api.SygicSsoApiClient
-import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
-import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
-import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
 import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
@@ -141,14 +141,13 @@ internal class SessionService(
 
 		return Session(
 			accessToken = accessToken,
-			refreshToken = refreshToken,
-			expiresIn = refreshTimeExpiration
+			expiresAt = Date(authStorageService.getExpirationTime())
 		)
 	}
 
 	fun logout() {
 		authStorageService.setUserSession(null)
-		authStorageService.setTokenRefreshTime(0)
+		authStorageService.setExpirationTime(0)
 		authStorageService.setRefreshToken(null)
 	}
 
@@ -157,7 +156,7 @@ internal class SessionService(
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
 			authStorageService.setUserSession(userSession.accessToken)
-			authStorageService.setTokenRefreshTime(userSession.expiresIn)
+			authStorageService.setExpirationTime(userSession.expiresIn)
 			authStorageService.setRefreshToken(userSession.refreshToken)
 			return AuthenticationResponseCode.OK
 
