@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
-import com.sygic.travel.sdk.places.model.query.PlacesQuery
+import com.sygic.travel.sdk.places.facade.PlacesQuery
 
 internal class PlacesService(
 	private val sygicTravelApiClient: SygicTravelApiClient

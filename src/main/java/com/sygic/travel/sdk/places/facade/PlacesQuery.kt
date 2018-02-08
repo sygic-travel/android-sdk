@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.model.query
+package com.sygic.travel.sdk.places.facade
 
 import android.text.TextUtils
 

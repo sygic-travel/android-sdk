@@ -3,7 +3,6 @@ package com.sygic.travel.sdk.places.facade
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
-import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
