@@ -8,20 +8,20 @@ import java.util.Date
  * To see what the parameters mean check the
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
-class ToursGetYourGuideQuery(
-	val query: String?,
-	val bounds: Bounds?,
-	val parentPlaceId: String?,
-	val tags: String?,
-	val startDate: Date?,
-	val endDate: Date?,
-	val durationMin: Int?,
-	val durationMax: Int?,
-	val page: Int?,
-	val count: Int?,
-	val sortBy: SortBy?,
-	val sortDirection: SortDirection?
-) {
+class ToursGetYourGuideQuery {
+	var query: String? = null
+	var bounds: Bounds? = null
+	var parentPlaceId: String? = null
+	var tags: String? = null
+	var startDate: Date? = null
+	var endDate: Date? = null
+	var durationMin: Int? = null
+	var durationMax: Int? = null
+	var page: Int? = null
+	var count: Int? = null
+	var sortBy: SortBy? = null
+	var sortDirection: SortDirection? = null
+
 	internal fun getApiDurationQuery(): String? {
 		return when {
 			durationMin == null && durationMax == null -> null
