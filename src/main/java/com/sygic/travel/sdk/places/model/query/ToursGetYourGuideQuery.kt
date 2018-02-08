@@ -1,5 +1,8 @@
 package com.sygic.travel.sdk.places.model.query
 
+import com.sygic.travel.sdk.places.model.geo.Bounds
+import java.util.Date
+
 /**
  * ToursGetYourGuideQuery contains values which define the Get Your Guide tours to be fetched.
  * To see what the parameters mean check the
@@ -7,17 +10,24 @@ package com.sygic.travel.sdk.places.model.query
  */
 class ToursGetYourGuideQuery(
 	val query: String?,
-	val bounds: String?,
+	val bounds: Bounds?,
 	val parentPlaceId: String?,
 	val tags: String?,
-	val from: String?,
-	val to: String?,
-	val duration: String?,
+	val startDate: Date?,
+	val endDate: Date?,
+	val durationMin: Int?,
+	val durationMax: Int?,
 	val page: Int?,
 	val count: Int?,
 	val sortBy: SortBy?,
 	val sortDirection: SortDirection?
 ) {
+	internal fun getApiDurationQuery(): String? {
+		return when {
+			durationMin == null && durationMax == null -> null
+			else -> (durationMin?.toString() ?: "") + ":" + (durationMax?.toString() ?: "")
+		}
+	}
 
 	enum class SortBy constructor(internal val apiSortBy: String) {
 		PRICE("price"),

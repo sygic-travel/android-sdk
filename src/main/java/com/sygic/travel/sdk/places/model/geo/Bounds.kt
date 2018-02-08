@@ -9,7 +9,7 @@ class Bounds {
 	var south: Float = 0.toFloat()
 	var west: Float = 0.toFloat()
 
-	fun toQueryString(): String {
+	internal fun toApiQueryString(): String {
 		return south.toString() + "," + west + "," + north + "," + east
 	}
 }

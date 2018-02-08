@@ -115,5 +115,5 @@ class PlacesQuery {
 		}
 
 	val boundsQueryString: String?
-		get() = bounds?.toQueryString()
+		get() = bounds?.toApiQueryString()
 }

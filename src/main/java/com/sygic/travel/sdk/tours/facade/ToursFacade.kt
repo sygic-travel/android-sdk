@@ -16,16 +16,16 @@ class ToursFacade internal constructor(
 	/**
 	 * Creates and sends a request to get the Viator Tours.
 	 */
-	fun getToursViator(toursViatorQuery: ToursViatorQuery): List<Tour> {
+	fun getToursViator(query: ToursViatorQuery): List<Tour> {
 		checkNotRunningOnMainThread()
-		return toursService.getToursViator(toursViatorQuery)
+		return toursService.getToursViator(query)
 	}
 
 	/**
 	 * Creates and sends a request to get the Get Your Guide Tours.
 	 */
-	fun getToursGetYourGuide(toursGetYourGuideQuery: ToursGetYourGuideQuery): List<Tour> {
+	fun getToursGetYourGuide(query: ToursGetYourGuideQuery): List<Tour> {
 		checkNotRunningOnMainThread()
-		return toursService.getToursGetYourGuide(toursGetYourGuideQuery)
+		return toursService.getToursGetYourGuide(query)
 	}
 }
