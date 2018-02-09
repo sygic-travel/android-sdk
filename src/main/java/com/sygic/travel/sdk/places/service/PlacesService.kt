@@ -11,7 +11,7 @@ internal class PlacesService(
 ) {
 	fun getPlaces(
 		placesQuery: PlacesQuery
-	): List<Place>? {
+	): List<Place> {
 		val request = sygicTravelApiClient.getPlaces(
 			query = placesQuery.query,
 			levels = placesQuery.getLevelsApiQuery(),
@@ -24,22 +24,22 @@ internal class PlacesService(
 			limit = placesQuery.limit
 		)
 		val response = request.execute()
-		return response.body()?.data?.getPlaces()
+		return response.body()!!.data!!.getPlaces()
 	}
 
-	fun getPlaceDetailed(id: String): DetailedPlace? {
+	fun getPlaceDetailed(id: String): DetailedPlace {
 		val request = sygicTravelApiClient.getPlaceDetailed(id)
-		return request.execute().body()?.data?.getPlace()
+		return request.execute().body()!!.data!!.getPlace()
 	}
 
-	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace>? {
+	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace> {
 		val queryIds = ids.joinToString(PlacesQuery.LogicOperator.OR.apiOperator)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
-		return request.execute().body()?.data?.getPlaces()
+		return request.execute().body()!!.data!!.getPlaces()
 	}
 
-	fun getPlaceMedia(id: String): List<Medium>? {
+	fun getPlaceMedia(id: String): List<Medium> {
 		val request = sygicTravelApiClient.getPlaceMedia(id)
-		return request.execute().body()?.data?.getMedia()
+		return request.execute().body()!!.data!!.getMedia()
 	}
 }
