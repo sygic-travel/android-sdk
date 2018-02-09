@@ -4,7 +4,8 @@ import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.model.media.Attribution
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.media.Original
-import com.sygic.travel.sdk.places.model.media.Source
+import com.sygic.travel.sdk.places.model.media.Suitability
+import com.sygic.travel.sdk.places.model.media.Type
 
 internal class ApiMediumResponse(
 	val id: String,
@@ -13,23 +14,31 @@ internal class ApiMediumResponse(
 	val url: String,
 	val original: ApiOriginal?,
 	val suitability: List<String>,
-	val created_at: String,
-	val source: ApiSource,
-	val created_by: String?,
 	val attribution: ApiAttribution,
 	val location: ApiLocationResponse?
 ) {
+	companion object {
+		private const val TYPE_PHOTO = "photo"
+		private const val TYPE_PHOTO_360 = "photo360"
+		private const val TYPE_VIDEO = "video"
+		private const val TYPE_VIDEO_360 = "video360"
+		private const val SUITABILITY_PORTRAIT = "portrait"
+		private const val SUITABILITY_LANDSCAPE = "landscape"
+		private const val SUITABILITY_SQUARE = "square"
+		private const val SUITABILITY_VIDEO_PREVIEW = "video_preview"
+	}
+
 	class ApiOriginal(
 		val size: Int?,
 		val width: Int?,
 		val height: Int?
 	) {
 		fun fromApi(): Original {
-			val original = Original()
-			original.size = size
-			original.width = width
-			original.height = height
-			return original
+			return Original(
+				size = size,
+				width = width,
+				height = height
+			)
 		}
 	}
 
@@ -43,45 +52,42 @@ internal class ApiMediumResponse(
 		val title_url: String?
 	) {
 		fun fromApi(): Attribution {
-			val attribution = Attribution()
-			attribution.author = author
-			attribution.authorUrl = author_url
-			attribution.license = license
-			attribution.licenseUrl = license_url
-			attribution.other = other
-			attribution.title = title
-			attribution.titleUrl = title_url
-			return attribution
-		}
-	}
-
-	class ApiSource(
-		val provider: String,
-		val name: String?,
-		val external_id: String?
-	) {
-		fun fromApi(): Source {
-			val source = Source()
-			source.name = name
-			source.externalId = external_id
-			source.provider = provider
-			return source
+			return Attribution(
+				author = author,
+				authorUrl = author_url,
+				license = license,
+				licenseUrl = license_url,
+				other = other,
+				title = title,
+				titleUrl = title_url
+			)
 		}
 	}
 
 	fun fromApi(): Medium {
-		val medium = Medium()
-		medium.id = id
-		medium.type = type
-		medium.urlTemplate = url_template
-		medium.url = url
-		medium.original = original?.fromApi()
-		medium.suitability = suitability
-		medium.createdAt = created_at
-		medium.source = source.fromApi()
-		medium.createdBy = created_by
-		medium.attribution = attribution.fromApi()
-		medium.location = location?.fromApi()
-		return medium
+		return Medium(
+			id = id,
+			type = when (type) {
+				TYPE_PHOTO -> Type.PHOTO
+				TYPE_PHOTO_360 -> Type.VIDEO_360
+				TYPE_VIDEO -> Type.VIDEO_360
+				TYPE_VIDEO_360 -> Type.VIDEO_360
+				else -> Type.PHOTO
+			},
+			urlTemplate = url_template,
+			url = url,
+			original = original?.fromApi(),
+			suitability = suitability.mapNotNull {
+				when (it) {
+					SUITABILITY_LANDSCAPE -> Suitability.LANDSCAPE
+					SUITABILITY_PORTRAIT -> Suitability.PORTRAIT
+					SUITABILITY_SQUARE -> Suitability.SQUARE
+					SUITABILITY_VIDEO_PREVIEW -> Suitability.VIDEO_PREVIEW
+					else -> null
+				}
+			}.toSet(),
+			attribution = attribution.fromApi(),
+			location = location?.fromApi()
+		)
 	}
 }

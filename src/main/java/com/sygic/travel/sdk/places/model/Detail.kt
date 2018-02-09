@@ -1,19 +1,19 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.media.MainMedia
+import com.sygic.travel.sdk.places.model.media.Medium
 
 /**
- * Place detailed information.
+ * DetailedPlace detailed information.
  */
-class Detail {
-	var tags: List<Tag>? = null
-	var description: Description? = null
-	var address: String? = null
-	var admission: String? = null
-	var duration: Int? = 0
-	var email: String? = null
-	var openingHours: String? = null
-	var phone: String? = null
-	var mainMedia: MainMedia? = null
-	var references: List<Reference>? = null
-}
+class Detail(
+	val tags: List<Tag>,
+	val description: Description?,
+	val address: String?,
+	val admission: String?,
+	val duration: Int? = 0,
+	val email: String?,
+	val openingHours: String?,
+	val phone: String?,
+	val mainMedia: List<Medium>,
+	val references: List<Reference>
+)

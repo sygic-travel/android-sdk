@@ -1,7 +1,6 @@
 package com.sygic.travel.sdk.places.geo.spread
 
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.PlaceInfo
 import java.util.LinkedList
 
 /**
@@ -16,4 +15,4 @@ class SpreadResult
  * *
  * @param hiddenPlaces Places, which are not visible.
  */
-(var visiblePlaces: LinkedList<SpreadedPlace>?, var hiddenPlaces: LinkedList<PlaceInfo>?)
+(var visiblePlaces: LinkedList<SpreadedPlace>?, var hiddenPlaces: LinkedList<Place>?)

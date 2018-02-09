@@ -3,7 +3,6 @@ package com.sygic.travel.sdk.places.geo.spread
 import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
 import java.util.LinkedList
@@ -32,23 +31,17 @@ class Spreader
 	 * @return Spread places as [SpreadResult].
 	 */
 	fun spreadPlacesOnMap(
-		places: List<PlaceInfo>?,
+		places: List<Place>?,
 		bounds: Bounds,
 		canvasSize: CanvasSize
 	): SpreadResult {
 		val visiblePlaces = LinkedList<SpreadedPlace>()
-		val hiddenPlaces = LinkedList<PlaceInfo>()
+		val hiddenPlaces = LinkedList<Place>()
 
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
 		for (place in places!!) {
-			if (!place.hasLocation()) {
-				hiddenPlaces.add(0, place)
-				continue
-			}
-
-			assert(place.location != null)
-			val canvasCoords = locationToCanvasCoords(place.location as Location, bounds, canvasSize)
+			val canvasCoords = locationToCanvasCoords(place.location, bounds, canvasSize)
 			if (canvasCoords.x < 0 ||
 				canvasCoords.y < 0 ||
 				canvasCoords.x > canvasSize.width ||
@@ -58,7 +51,7 @@ class Spreader
 			}
 
 			for (sizeConfig in sizeConfigs) {
-				if (sizeConfig.isPhotoRequired && !place.hasThumbnailUrl()) {
+				if (sizeConfig.isPhotoRequired && place.thumbnailUrl != null) {
 					continue
 				}
 				if (sizeConfig.minimalRating > 0f && place.rating >= sizeConfig.minimalRating) {

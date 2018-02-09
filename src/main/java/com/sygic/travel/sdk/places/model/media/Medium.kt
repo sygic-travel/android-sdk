@@ -3,18 +3,15 @@ package com.sygic.travel.sdk.places.model.media
 import com.sygic.travel.sdk.places.model.geo.Location
 
 /**
- * Place medium.
+ * DetailedPlace medium.
  */
-class Medium {
-	var id: String? = null
-	var type: String? = null
-	var urlTemplate: String? = null
-	var url: String? = null
-	var original: Original? = null
-	var suitability: List<String>? = null
-	var createdAt: String? = null
-	var source: Source? = null
-	var createdBy: String? = null
-	var attribution: Attribution? = null
-	var location: Location? = null
-}
+class Medium(
+	val id: String,
+	val type: Type,
+	val urlTemplate: String,
+	val url: String,
+	val original: Original?,
+	val suitability: Set<Suitability>,
+	val attribution: Attribution,
+	val location: Location?
+)

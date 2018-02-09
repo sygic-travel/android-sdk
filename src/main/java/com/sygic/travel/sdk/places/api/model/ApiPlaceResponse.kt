@@ -1,11 +1,11 @@
 package com.sygic.travel.sdk.places.api.model
 
-import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.DetailedPlace
 
 internal class ApiPlaceResponse(
 	private val place: ApiPlaceItemResponse
 ) {
-	fun getPlace(): Place {
+	fun getPlace(): DetailedPlace {
 		return place.fromApi()
 	}
 }
