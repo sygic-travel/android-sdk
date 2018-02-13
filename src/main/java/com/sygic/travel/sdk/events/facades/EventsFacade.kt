@@ -1,24 +1,28 @@
 package com.sygic.travel.sdk.events.facades
 
-import com.sygic.travel.sdk.auth.model.UserSession
-import com.sygic.travel.sdk.auth.service.AuthService
+import com.sygic.travel.sdk.session.model.Session
+import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.synchronization.model.TripConflictInfo
 import com.sygic.travel.sdk.synchronization.model.TripConflictResolution
 import com.sygic.travel.sdk.synchronization.services.SynchronizationService
 import com.sygic.travel.sdk.synchronization.services.TripsSynchronizationService
 
+/**
+ * Events facade provides an centralized access point for subscribing to SDK's events.
+ */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class EventsFacade internal constructor(
-	private val authService: () -> AuthService,
+	private val sessionService: () -> SessionService,
 	private val tripsSynchronizationService: () -> TripsSynchronizationService,
 	private val synchronizationService: () -> SynchronizationService
 ) {
-	var sessionUpdateHandler: ((session: UserSession?) -> Unit)?
+	var sessionUpdateHandler: ((session: Session?) -> Unit)?
 		get() {
-			return authService().sessionUpdateHandler
+			return sessionService().sessionUpdateHandler
 		}
 		set(value) {
-			authService().sessionUpdateHandler = value
+			sessionService().sessionUpdateHandler = value
 		}
 
 	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)?

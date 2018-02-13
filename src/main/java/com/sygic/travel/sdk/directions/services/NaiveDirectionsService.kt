@@ -22,7 +22,7 @@ internal class NaiveDirectionsService {
 	}
 
 	fun getDirection(request: DirectionsRequest): Directions {
-		val airDistance = AirDistanceCalculator.getAirDistance(request.from, request.to)
+		val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
 		val pedestrian = arrayListOf<Direction>()
 		val car = arrayListOf<Direction>()
 		val plane = arrayListOf<Direction>()
@@ -38,6 +38,10 @@ internal class NaiveDirectionsService {
 		}
 
 		return Directions(
+			startLocation = request.startLocation,
+			endLocation = request.endLocation,
+			waypoints = request.waypoints,
+			avoid = request.avoid,
 			airDistance = airDistance,
 			pedestrian = pedestrian,
 			car = car,

@@ -3,10 +3,12 @@ package com.sygic.travel.sdk.places.api.model
 import com.google.gson.annotations.SerializedName
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.model.Description
+import com.sygic.travel.sdk.places.model.DescriptionProvider
 import com.sygic.travel.sdk.places.model.Detail
-import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
+import com.sygic.travel.sdk.places.model.TranslationProvider
 
 internal class ApiPlaceItemResponse(
 	id: String,
@@ -21,7 +23,7 @@ internal class ApiPlaceItemResponse(
 	perex: String?,
 	url: String?,
 	thumbnailUrl: String?,
-	marker: String?,
+	marker: String,
 	parentIds: List<String>,
 	val tags: List<ApiTag>,
 	val description: ApiDescription?,
@@ -59,13 +61,26 @@ internal class ApiPlaceItemResponse(
 		val translationProvider: String?,
 		val link: String?
 	) {
+		companion object {
+			private const val PROVIDER_WIKIPEDIA = "wikipedia"
+			private const val PROVIDER_WIKIVOYAGE = "wikivoyage"
+			private const val TRANSLATION_PROVIDER_GOOGLE = "google"
+		}
+
 		fun fromApi(): Description {
-			val description = Description()
-			description.text = text
-			description.provider = provider
-			description.translationProvider = translationProvider
-			description.link = link
-			return description
+			return Description(
+				text = text,
+				provider = when (provider) {
+					PROVIDER_WIKIPEDIA -> DescriptionProvider.WIKIPEDIA
+					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
+					else -> DescriptionProvider.NONE
+				},
+				translationProvider = when (translationProvider) {
+					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
+					else -> TranslationProvider.NONE
+				},
+				link = link
+			)
 		}
 	}
 
@@ -74,10 +89,10 @@ internal class ApiPlaceItemResponse(
 		val name: String
 	) {
 		fun fromApi(): Tag {
-			val tag = Tag()
-			tag.key = key
-			tag.name = name
-			return tag
+			return Tag(
+				key = key,
+				name = name
+			)
 		}
 	}
 
@@ -110,23 +125,38 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
-	override fun fromApi(): Place {
-		val place = Place()
-		fromApi(place)
+	override fun fromApi(): DetailedPlace {
+		val detail = Detail(
+			tags = tags.map { it.fromApi() },
+			description = description?.fromApi(),
+			address = address,
+			admission = admission,
+			duration = duration,
+			email = email,
+			openingHours = openingHours,
+			phone = phone,
+			mainMedia = mainMedia?.media?.map {
+				it.fromApi()
+			} ?: emptyList(),
+			references = references.map { it.fromApi() }
+		)
 
-		val detail = Detail()
-		detail.tags = tags.map { it.fromApi() }
-		detail.description = description?.fromApi()
-		detail.address = address
-		detail.admission = admission
-		detail.duration = duration
-		detail.email = email
-		detail.openingHours = openingHours
-		detail.phone = phone
-		detail.mainMedia = mainMedia?.fromApi()
-		detail.references = references.map { it.fromApi() }
-
-		place.detail = detail
-		return place
+		return DetailedPlace(
+			id = id,
+			level = fromApiLevel(level),
+			categories = fromApiCategories(categories),
+			rating = rating,
+			quadkey = quadkey,
+			location = location.fromApi(),
+			boundingBox = bounding_box?.fromApi(),
+			name = name,
+			nameSuffix = name_suffix,
+			perex = perex,
+			url = url,
+			thumbnailUrl = thumbnail_url,
+			marker = marker,
+			parentIds = parent_ids.toSet(),
+			detail = detail
+		)
 	}
 }

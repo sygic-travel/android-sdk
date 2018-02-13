@@ -82,9 +82,11 @@ internal class SynchronizationService constructor(
 			.commit()
 
 		val result = SynchronizationResult(
-			trips = tripsResult,
-			favorites = favoritesResult
+			changedTripIds = tripsResult.changedTripIds,
+			changedFavoriteIds = favoritesResult.changedFavoriteIds,
+			cratedTripIdsMapping = tripsResult.createdTripIdsMapping
 		)
+
 		synchronizationCompletionHandler?.invoke(result)
 	}
 

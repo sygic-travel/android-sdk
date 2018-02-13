@@ -22,7 +22,8 @@ internal class ApiDirectionsService constructor(
 				return@mapIndexed null
 			}
 
-			val airDistance = AirDistanceCalculator.getAirDistance(requests[i].from, requests[i].to)
+			val request = requests[i]
+			val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
 			val pedestrian = arrayListOf<Direction>()
 			val car = arrayListOf<Direction>()
 			val plane = arrayListOf<Direction>()
@@ -41,6 +42,10 @@ internal class ApiDirectionsService constructor(
 				return@mapIndexed null
 			} else {
 				return@mapIndexed Directions(
+					startLocation = request.startLocation,
+					endLocation = request.endLocation,
+					waypoints = request.waypoints,
+					avoid = request.avoid,
 					airDistance = airDistance,
 					pedestrian = pedestrian,
 					car = car,
@@ -53,8 +58,8 @@ internal class ApiDirectionsService constructor(
 	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>> {
 		val routes = arrayListOf<ApiDirectionRequest>()
 		for (directionRequest in requests) {
-			val firstLocation = directionRequest.from
-			val secondLocation = directionRequest.to
+			val firstLocation = directionRequest.startLocation
+			val secondLocation = directionRequest.endLocation
 
 			routes.add(ApiDirectionRequest(
 				origin = ApiDirectionRequest.Location(firstLocation.lat, firstLocation.lng),

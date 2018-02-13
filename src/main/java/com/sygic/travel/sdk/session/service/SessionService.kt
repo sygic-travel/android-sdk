@@ -1,20 +1,20 @@
-package com.sygic.travel.sdk.auth.service
+package com.sygic.travel.sdk.session.service
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.sygic.travel.sdk.auth.AuthenticationResponseCode
-import com.sygic.travel.sdk.auth.RegistrationResponseCode
-import com.sygic.travel.sdk.auth.ResetPasswordResponseCode
-import com.sygic.travel.sdk.auth.api.SygicAuthApiClient
-import com.sygic.travel.sdk.auth.api.model.ResetPasswordRequest
-import com.sygic.travel.sdk.auth.model.AuthenticationRequest
-import com.sygic.travel.sdk.auth.model.UserRegistrationRequest
-import com.sygic.travel.sdk.auth.model.UserSession
+import com.sygic.travel.sdk.session.api.SygicSsoApiClient
+import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
+import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
+import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
+import com.sygic.travel.sdk.session.facade.AuthenticationResponseCode
+import com.sygic.travel.sdk.session.facade.RegistrationResponseCode
+import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
+import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
 
-internal class AuthService(
-	private val sygicAuthClient: SygicAuthApiClient,
+internal class SessionService(
+	private val sygicSsoClient: SygicSsoApiClient,
 	private val authStorageService: AuthStorageService,
 	private val clientId: String,
 	private val gson: Gson
@@ -23,7 +23,7 @@ internal class AuthService(
 		private const val DEVICE_PLATFORM = "android"
 	}
 
-	var sessionUpdateHandler: ((session: UserSession?) -> Unit)? = null
+	var sessionUpdateHandler: ((session: Session?) -> Unit)? = null
 
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
@@ -80,7 +80,7 @@ internal class AuthService(
 		))
 	}
 
-	fun register(name: String, email: String, password: String): RegistrationResponseCode {
+	fun register(email: String, password: String, name: String): RegistrationResponseCode {
 		val userRegistrationRequest = UserRegistrationRequest(
 			username = email,
 			email = email,
@@ -90,10 +90,10 @@ internal class AuthService(
 		)
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
-		var response = sygicAuthClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
+		var response = sygicSsoClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
 		if (response.code() == 401) { // client session is expired, let's reinitialize it
 			clientSession = initClientSession()
-			response = sygicAuthClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
+			response = sygicSsoClient.registerUser("Bearer $clientSession", userRegistrationRequest).execute()
 		}
 
 		if (response.isSuccessful) {
@@ -116,10 +116,10 @@ internal class AuthService(
 		val resetPasswordRequest = ResetPasswordRequest(email)
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
-		var response = sygicAuthClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
+		var response = sygicSsoClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
 		if (response.code() == 401) {
 			clientSession = initClientSession()
-			response = sygicAuthClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
+			response = sygicSsoClient.resetPassword("Bearer $clientSession", resetPasswordRequest).execute()
 		}
 
 		return when {
@@ -130,7 +130,7 @@ internal class AuthService(
 		}
 	}
 
-	fun getUserSession(): UserSession? {
+	fun getUserSession(): Session? {
 		val accessToken = authStorageService.getUserSession() ?: return null
 		val refreshToken = authStorageService.getRefreshToken() ?: return null
 		val refreshTimeExpiration = authStorageService.getSuggestedRefreshTime()
@@ -139,25 +139,24 @@ internal class AuthService(
 			refreshToken(refreshToken)
 		}
 
-		return UserSession(
+		return Session(
 			accessToken = accessToken,
-			refreshToken = refreshToken,
-			expiresIn = refreshTimeExpiration
+			expiresAt = Date(authStorageService.getExpirationTime())
 		)
 	}
 
 	fun logout() {
 		authStorageService.setUserSession(null)
-		authStorageService.setTokenRefreshTime(0)
+		authStorageService.setExpirationTime(0)
 		authStorageService.setRefreshToken(null)
 	}
 
 	private fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
-		val response = sygicAuthClient.authenticate(authRequest).execute()
+		val response = sygicSsoClient.authenticate(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
 			authStorageService.setUserSession(userSession.accessToken)
-			authStorageService.setTokenRefreshTime(userSession.expiresIn)
+			authStorageService.setExpirationTime(userSession.expiresIn)
 			authStorageService.setRefreshToken(userSession.refreshToken)
 			return AuthenticationResponseCode.OK
 
@@ -178,7 +177,7 @@ internal class AuthService(
 	}
 
 	private fun initClientSession(): String {
-		val request = sygicAuthClient.authenticate(AuthenticationRequest(
+		val request = sygicSsoClient.authenticate(AuthenticationRequest(
 			clientId = clientId,
 			grantType = "client_credentials"
 		))

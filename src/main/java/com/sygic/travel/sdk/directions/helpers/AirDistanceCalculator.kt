@@ -17,6 +17,6 @@ internal object AirDistanceCalculator {
 	}
 
 	fun getAirDistances(path: List<DirectionsRequest>): List<Int> {
-		return path.map { getAirDistance(it.from, it.to) }
+		return path.map { getAirDistance(it.startLocation, it.endLocation) }
 	}
 }

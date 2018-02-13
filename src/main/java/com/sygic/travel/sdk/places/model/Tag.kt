@@ -1,18 +1,18 @@
 package com.sygic.travel.sdk.places.model
 
-class Tag {
-	var key: String? = null
-	var name: String? = null
-
+data class Tag(
+	val key: String,
+	val name: String
+) {
 	override fun equals(other: Any?): Boolean {
-		if (other != null && other is Tag) {
-			return key == other.key
+		return if (other != null && other is Tag) {
+			key == other.key
 		} else {
-			return false
+			false
 		}
 	}
 
 	override fun hashCode(): Int {
-		return key!!.hashCode()
+		return key.hashCode()
 	}
 }

@@ -1,8 +1,13 @@
 package com.sygic.travel.sdk.directions.model
 
+import com.sygic.travel.sdk.places.model.geo.Location
 import java.io.Serializable
 
-class Directions(
+class Directions constructor(
+	val startLocation: Location,
+	val endLocation: Location,
+	val waypoints: List<Location>,
+	val avoid: List<DirectionAvoid>,
 	val airDistance: Int,
 	val car: List<Direction>,
 	val pedestrian: List<Direction>,

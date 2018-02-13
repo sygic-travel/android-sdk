@@ -1,8 +1,8 @@
-package com.sygic.travel.sdk.auth.model
+package com.sygic.travel.sdk.session.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserSession(
+internal data class SessionResponse(
 	@SerializedName("access_token")
 	val accessToken: String,
 

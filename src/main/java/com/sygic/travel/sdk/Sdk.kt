@@ -2,7 +2,7 @@ package com.sygic.travel.sdk
 
 import android.content.Context
 import com.github.salomonbrys.kodein.instance
-import com.sygic.travel.sdk.auth.facade.AuthFacade
+import com.sygic.travel.sdk.session.facade.SessionFacade
 import com.sygic.travel.sdk.common.di.KodeinSetup
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.events.facades.EventsFacade
@@ -19,11 +19,11 @@ class Sdk(
 	applicationContext: Context,
 	sdkConfig: SdkConfig
 ) {
-	val authFacade: AuthFacade by lazy { kodein.instance<AuthFacade>() }
 	val directionsFacade: DirectionsFacade by lazy { kodein.instance<DirectionsFacade>() }
 	val eventsFacade: EventsFacade by lazy { kodein.instance<EventsFacade>() }
 	val favoritesFacade: FavoritesFacade by lazy { kodein.instance<FavoritesFacade>() }
 	val placesFacade: PlacesFacade by lazy { kodein.instance<PlacesFacade>() }
+	val sessionFacade: SessionFacade by lazy { kodein.instance<SessionFacade>() }
 	val synchronizationFacade: SynchronizationFacade by lazy { kodein.instance<SynchronizationFacade>() }
 	val toursFacade: ToursFacade by lazy { kodein.instance<ToursFacade>() }
 	val tripsFacade: TripsFacade by lazy { kodein.instance<TripsFacade>() }

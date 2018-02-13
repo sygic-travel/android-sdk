@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.model.query
+package com.sygic.travel.sdk.tours.facade
 
 /**
  * ToursViatorQuery contains values which define the Viator tours to be fetched.
@@ -6,11 +6,11 @@ package com.sygic.travel.sdk.places.model.query
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
 class ToursViatorQuery(
-	val parentPlaceId: String,
-	val page: Int?,
-	val sortBy: SortBy?,
-	val sortDirection: SortDirection?
+	var parentPlaceId: String
 ) {
+	var page: Int? = null
+	var sortBy: SortBy? = null
+	var sortDirection: SortDirection? = null
 
 	enum class SortBy constructor(internal val apiSortBy: String) {
 		PRICE("price"),

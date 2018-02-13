@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.auth.service
+package com.sygic.travel.sdk.session.service
 
 import android.content.SharedPreferences
 import java.util.Date
@@ -46,24 +46,23 @@ internal class AuthStorageService(private val sharedPreferences: SharedPreferenc
 		return deviceId
 	}
 
-	fun setTokenRefreshTime(secondsToExpiration: Long) {
-		val editor = sharedPreferences.edit()
+	fun setExpirationTime(secondsToExpiration: Long) {
 		// Add (1000 * secondsToExpiration) to current time will and we'll have exact token
 		// expiration time.
 		// We suggest to set refresh interval in 1/4th of total token expiration time,
 		// so that we add (1000/4 * secondsToExpiration) to current time in millis.
-		val instant = Date().time
-
-		editor.putLong(EXPIRES_IN_TIMESTAMP, instant + 1000 * secondsToExpiration)
-		editor.putLong(SUGGESTED_REFRESH_TIMESTAMP, instant + 250 * secondsToExpiration)
-		editor.apply()
+		val now = Date().time
+		sharedPreferences.edit()
+			.putLong(EXPIRES_IN_TIMESTAMP, now + 1000 * secondsToExpiration)
+			.putLong(SUGGESTED_REFRESH_TIMESTAMP, now + 250 * secondsToExpiration)
+			.apply()
 	}
 
 	fun getSuggestedRefreshTime(): Long {
 		return sharedPreferences.getLong(SUGGESTED_REFRESH_TIMESTAMP, 0)
 	}
 
-	fun getRefresTokenExpirationTime(): Long {
+	fun getExpirationTime(): Long {
 		return sharedPreferences.getLong(EXPIRES_IN_TIMESTAMP, 0)
 	}
 

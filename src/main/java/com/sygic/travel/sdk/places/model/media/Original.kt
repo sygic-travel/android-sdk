@@ -3,8 +3,8 @@ package com.sygic.travel.sdk.places.model.media
 /**
  * Medium's original parameters.
  */
-class Original {
-	var size: Int? = null
-	var width: Int? = null
-	var height: Int? = null
-}
+class Original(
+	val size: Int?,
+	val width: Int?,
+	val height: Int?
+)

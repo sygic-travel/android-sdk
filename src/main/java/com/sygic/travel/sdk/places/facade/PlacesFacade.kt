@@ -1,15 +1,15 @@
 package com.sygic.travel.sdk.places.facade
 
+import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.PlaceInfo
 import com.sygic.travel.sdk.places.model.media.Medium
-import com.sygic.travel.sdk.places.model.query.PlacesQuery
 import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
 /**
- * Data provider contains methods for fetching data either from API or a database.
+ * Places facade provides interface for fetching places data from the API.
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class PlacesFacade internal constructor(
 	private val placesService: PlacesService
 ) {
@@ -17,7 +17,7 @@ class PlacesFacade internal constructor(
 	 * Creates and sends a request to get places, e.g. for map or list.
 	 * @param placesQuery PlacesQuery encapsulating data for API request.
 	 */
-	fun getPlaces(placesQuery: PlacesQuery): List<PlaceInfo>? {
+	fun getPlaces(placesQuery: PlacesQuery): List<Place> {
 		checkNotRunningOnMainThread()
 		return placesService.getPlaces(placesQuery)
 	}
@@ -26,7 +26,7 @@ class PlacesFacade internal constructor(
 	 * Creates and sends a request to get place with detailed information.
 	 * @param id Unique id of a place - detailed information about this place will be requested.
 	 */
-	fun getPlaceDetailed(id: String): Place? {
+	fun getPlaceDetailed(id: String): DetailedPlace {
 		checkNotRunningOnMainThread()
 		return placesService.getPlaceDetailed(id)
 	}
@@ -35,7 +35,7 @@ class PlacesFacade internal constructor(
 	 * Creates and sends a request to get places with detailed information.
 	 * @param ids Ids of places - detailed information about these places will be requested.
 	 */
-	fun getPlacesDetailed(ids: List<String>): List<Place>? {
+	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace> {
 		checkNotRunningOnMainThread()
 		return placesService.getPlacesDetailed(ids)
 	}
@@ -44,7 +44,7 @@ class PlacesFacade internal constructor(
 	 * Creates and sends a request to get the place's media.
 	 * @param id Unique id of a place - media for this place will be requested.
 	 */
-	fun getPlaceMedia(id: String): List<Medium>? {
+	fun getPlaceMedia(id: String): List<Medium> {
 		checkNotRunningOnMainThread()
 		return placesService.getPlaceMedia(id)
 	}
