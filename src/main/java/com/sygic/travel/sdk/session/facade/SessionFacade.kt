@@ -43,7 +43,7 @@ class SessionFacade internal constructor(
 		return sessionService.authWithDeviceId()
 	}
 
-	fun signOutUser() {
+	fun signOut() {
 		checkNotRunningOnMainThread()
 		sessionService.logout()
 		onSignOut.forEach { it.invoke() }
