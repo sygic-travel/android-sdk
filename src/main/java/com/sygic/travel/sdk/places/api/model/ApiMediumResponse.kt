@@ -69,8 +69,8 @@ internal class ApiMediumResponse(
 			id = id,
 			type = when (type) {
 				TYPE_PHOTO -> Type.PHOTO
-				TYPE_PHOTO_360 -> Type.VIDEO_360
-				TYPE_VIDEO -> Type.VIDEO_360
+				TYPE_PHOTO_360 -> Type.PHOTO_360
+				TYPE_VIDEO -> Type.VIDEO
 				TYPE_VIDEO_360 -> Type.VIDEO_360
 				else -> Type.PHOTO
 			},
