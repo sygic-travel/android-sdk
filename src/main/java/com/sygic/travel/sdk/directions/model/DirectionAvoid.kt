@@ -1,6 +1,8 @@
 package com.sygic.travel.sdk.directions.model
 
-enum class DirectionAvoid {
+import java.io.Serializable
+
+enum class DirectionAvoid : Serializable {
 	TOLLS,
 	HIGHWAYS,
 	FERRIES,
