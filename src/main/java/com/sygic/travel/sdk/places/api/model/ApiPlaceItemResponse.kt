@@ -25,6 +25,10 @@ internal class ApiPlaceItemResponse(
 	thumbnailUrl: String?,
 	marker: String,
 	parentIds: List<String>,
+	starRating: Float?,
+	starRatingUnofficial: Float?,
+	customerRating: Float?,
+	ownerId: String?,
 	val tags: List<ApiTag>,
 	val description: ApiDescription?,
 	val address: String?,
@@ -51,7 +55,11 @@ internal class ApiPlaceItemResponse(
 	url,
 	thumbnailUrl,
 	marker,
-	parentIds
+	parentIds,
+	starRating,
+	starRatingUnofficial,
+	customerRating,
+	ownerId
 ) {
 
 	class ApiDescription(
@@ -156,7 +164,11 @@ internal class ApiPlaceItemResponse(
 			thumbnailUrl = thumbnail_url,
 			marker = marker,
 			parentIds = parent_ids.toSet(),
-			detail = detail
+			detail = detail,
+			starRating = star_rating,
+			starRatingUnofficial = star_rating_unofficial,
+			customerRating = customer_rating,
+			ownerId = owner_id
 		)
 	}
 }

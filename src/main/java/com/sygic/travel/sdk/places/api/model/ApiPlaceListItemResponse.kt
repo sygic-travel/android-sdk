@@ -20,7 +20,11 @@ open internal class ApiPlaceListItemResponse(
 	val url: String?,
 	val thumbnail_url: String?,
 	val marker: String,
-	val parent_ids: List<String>
+	val parent_ids: List<String>,
+	val star_rating: Float?,
+	val star_rating_unofficial: Float?,
+	val customer_rating: Float?,
+	val owner_id: String?
 ) {
 	companion object {
 		private const val LEVEL_CONTINENT = "continent"
@@ -81,7 +85,11 @@ open internal class ApiPlaceListItemResponse(
 			url = url,
 			thumbnailUrl = thumbnail_url,
 			marker = marker,
-			parentIds = parent_ids.toSet()
+			parentIds = parent_ids.toSet(),
+			starRating = star_rating ,
+			starRatingUnofficial = star_rating_unofficial,
+			customerRating = customer_rating,
+			ownerId = owner_id
 		)
 	}
 

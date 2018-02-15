@@ -18,6 +18,10 @@ class DetailedPlace(
 	thumbnailUrl: String?,
 	marker: String,
 	parentIds: Set<String>,
+	starRating: Float?,
+	starRatingUnofficial: Float?,
+	customerRating: Float?,
+	ownerId: String?,
 	val detail: Detail
 ) : Place(
 	id,
@@ -33,5 +37,9 @@ class DetailedPlace(
 	url,
 	thumbnailUrl,
 	marker,
-	parentIds
+	parentIds,
+	starRating,
+	starRatingUnofficial,
+	customerRating,
+	ownerId
 )
