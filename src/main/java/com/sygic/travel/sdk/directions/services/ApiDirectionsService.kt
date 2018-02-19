@@ -56,15 +56,11 @@ internal class ApiDirectionsService constructor(
 	}
 
 	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>> {
-		val routes = arrayListOf<ApiDirectionRequest>()
-		for (directionRequest in requests) {
-			val firstLocation = directionRequest.startLocation
-			val secondLocation = directionRequest.endLocation
-
-			routes.add(ApiDirectionRequest(
-				origin = ApiDirectionRequest.Location(firstLocation.lat, firstLocation.lng),
-				destination = ApiDirectionRequest.Location(secondLocation.lat, secondLocation.lng),
-				avoid = directionRequest.avoid.map {
+		val apiRequests = requests.map {
+			ApiDirectionRequest(
+				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
+				destination = ApiDirectionRequest.Location(it.endLocation.lat, it.endLocation.lng),
+				avoid = it.avoid.map {
 					when (it) {
 						DirectionAvoid.TOLLS -> ApiDirectionRequest.AVOID_TOLLS
 						DirectionAvoid.HIGHWAYS -> ApiDirectionRequest.AVOID_HIGHWAYS
@@ -72,15 +68,15 @@ internal class ApiDirectionsService constructor(
 						DirectionAvoid.UNPAVED -> ApiDirectionRequest.AVOID_UNPAVED
 					}
 				},
-				waypoints = directionRequest.waypoints.map {
+				waypoints = it.waypoints.map {
 					ApiDirectionRequest.Location(it.lat, it.lng)
 				}
-			))
+			)
 		}
 
 		val response: ApiResponse<ApiDirectionsResponse>
 		try {
-			response = apiClient.getDirections(routes).execute().body()!!
+			response = apiClient.getDirections(apiRequests).execute().body()!!
 		} catch (_: Exception) {
 			return emptyList()
 		}
