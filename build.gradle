@@ -51,18 +51,20 @@ repositories {
 dependencies {
 	implementation "android.arch.persistence.room:runtime:1.0.0"
 	implementation 'com.android.support:appcompat-v7:27.0.2'
-	implementation 'com.google.code.gson:gson:2.8.2'
 	implementation 'com.jakewharton:disklrucache:2.0.2'
+	implementation 'com.squareup.moshi:moshi:1.5.0'
 	implementation 'com.squareup.okhttp3:okhttp:3.9.1'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 	implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-	implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+	implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
 	implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
 	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+	implementation 'se.ansman.kotshi:api:1.0.0'
 
-	kapt "android.arch.persistence.room:compiler:1.0.0"
+	kapt 'android.arch.persistence.room:compiler:1.0.0'
+	kapt 'se.ansman.kotshi:compiler:1.0.0'
 
 	testImplementation "android.arch.persistence.room:testing:1.0.0"
 	testImplementation "com.nhaarman:mockito-kotlin:1.4.0"

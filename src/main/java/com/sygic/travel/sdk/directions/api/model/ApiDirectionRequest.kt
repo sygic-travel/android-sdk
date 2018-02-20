@@ -1,5 +1,8 @@
 package com.sygic.travel.sdk.directions.api.model
 
+import se.ansman.kotshi.JsonSerializable
+
+@JsonSerializable
 internal class ApiDirectionRequest(
 	val origin: Location,
 	val destination: Location,

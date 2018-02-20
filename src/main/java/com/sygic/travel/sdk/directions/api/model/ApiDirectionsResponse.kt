@@ -1,7 +1,9 @@
 package com.sygic.travel.sdk.directions.api.model
 
 import com.sygic.travel.sdk.directions.model.DirectionMode
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiDirectionsResponse(
 	val path: List<Directions>
 ) {

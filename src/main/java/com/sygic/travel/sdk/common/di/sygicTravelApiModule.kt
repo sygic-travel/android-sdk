@@ -6,20 +6,18 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.sygic.travel.sdk.session.service.AuthStorageService
+import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor.Companion.LOCALE_PLACEHOLDER
+import com.sygic.travel.sdk.session.service.AuthStorageService
 import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 internal val sygicTravelApiModule = Kodein.Module {
@@ -48,18 +46,11 @@ internal val sygicTravelApiModule = Kodein.Module {
 			.build()
 	}
 
-	bind<Gson>("sygicTravelGson") with singleton {
-		GsonBuilder()
-			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-			.serializeNulls()
-			.create()
-	}
-
 	bind<Retrofit>("sygicTravelApiRetrofit") with singleton {
 		Retrofit.Builder()
 			.client(instance<OkHttpClient>("sygicTravelHttpClient"))
 			.baseUrl(instance<String>("sygicTravelApiUrl") + "/$LOCALE_PLACEHOLDER/")
-			.addConverterFactory(GsonConverterFactory.create(instance<Gson>("sygicTravelGson")))
+			.addConverterFactory(MoshiConverterFactory.create(instance<Moshi>()).withNullSerialization())
 			.build()
 	}
 

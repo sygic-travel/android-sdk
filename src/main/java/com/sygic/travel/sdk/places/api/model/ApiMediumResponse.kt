@@ -6,7 +6,9 @@ import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.media.Original
 import com.sygic.travel.sdk.places.model.media.Suitability
 import com.sygic.travel.sdk.places.model.media.Type
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiMediumResponse(
 	val id: String,
 	val type: String,

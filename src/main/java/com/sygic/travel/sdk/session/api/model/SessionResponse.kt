@@ -1,14 +1,14 @@
 package com.sygic.travel.sdk.session.api.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal data class SessionResponse(
-	@SerializedName("access_token")
+	@Json(name = "access_token")
 	val accessToken: String,
-
-	@SerializedName("expires_in")
+	@Json(name = "expires_in")
 	val expiresIn: Long,
-
-	@SerializedName("refresh_token")
+	@Json(name = "refresh_token")
 	val refreshToken: String
 )
