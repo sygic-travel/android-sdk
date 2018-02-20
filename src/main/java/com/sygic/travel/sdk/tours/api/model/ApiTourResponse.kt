@@ -1,11 +1,13 @@
 package com.sygic.travel.sdk.tours.api.model
 
 import com.sygic.travel.sdk.tours.model.Tour
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiTourResponse(
-	private val tours: List<ApiTourItemResponse>
+	val tours: List<ApiTourItemResponse>
 ) {
-	fun getTours(): List<Tour> {
+	fun fromApi(): List<Tour> {
 		return tours.map { it.fromApi() }
 	}
 }

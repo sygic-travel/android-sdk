@@ -5,7 +5,7 @@ import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import com.sygic.travel.sdk.session.facade.SessionFacade
@@ -24,7 +24,7 @@ internal val sessionModule = Kodein.Module {
 			instance<SygicSsoApiClient>(),
 			instance<AuthStorageService>(),
 			instance<String>("clientId"),
-			instance<Gson>("sygicAuthGson")
+			instance<Moshi>()
 		)
 	}
 

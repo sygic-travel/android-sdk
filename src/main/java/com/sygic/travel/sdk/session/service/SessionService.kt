@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.session.service
 
-import com.google.gson.Gson
-import com.google.gson.JsonObject
+import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import com.sygic.travel.sdk.session.api.model.AuthenticationRequest
+import com.sygic.travel.sdk.session.api.model.ErrorResponse
 import com.sygic.travel.sdk.session.api.model.ResetPasswordRequest
 import com.sygic.travel.sdk.session.api.model.UserRegistrationRequest
 import com.sygic.travel.sdk.session.facade.AuthenticationResponseCode
@@ -17,7 +17,7 @@ internal class SessionService(
 	private val sygicSsoClient: SygicSsoApiClient,
 	private val authStorageService: AuthStorageService,
 	private val clientId: String,
-	private val gson: Gson
+	private val moshi: Moshi
 ) {
 	companion object {
 		private const val DEVICE_PLATFORM = "android"
@@ -103,8 +103,8 @@ internal class SessionService(
 			return RegistrationResponseCode.ERROR_ALREADY_REGISTERED
 
 		} else {
-			val responseJson = gson.fromJson<JsonObject?>(response.errorBody()?.string(), JsonObject::class.java)
-			return when (responseJson?.get("type")?.asString) {
+			val errorResponse = moshi.adapter(ErrorResponse::class.java).fromJsonValue(response.errorBody()?.string())
+			return when (errorResponse?.type) {
 				"validation.password.min_length" -> RegistrationResponseCode.ERROR_PASSWORD_MIN_LENGTH
 				"validation.username.min_length", "validation.email.invalid_format" -> RegistrationResponseCode.ERROR_EMAIL_INVALID_FORMAT
 				else -> RegistrationResponseCode.ERROR

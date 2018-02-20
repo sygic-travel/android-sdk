@@ -6,6 +6,8 @@ import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
+import com.squareup.moshi.Moshi
+import com.sygic.travel.sdk.common.api.model.ApplicationJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -21,5 +23,9 @@ internal val generalModule = Kodein.Module {
 
 	bind<SharedPreferences>() with singleton {
 		instance<Context>().getSharedPreferences("SygicTravelSdk", 0)
+	}
+
+	bind<Moshi>() with singleton {
+		Moshi.Builder().add(ApplicationJsonAdapterFactory).build()
 	}
 }

@@ -1,11 +1,13 @@
 package com.sygic.travel.sdk.places.api.model
 
 import com.sygic.travel.sdk.places.model.DetailedPlace
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiPlaceResponse(
-	private val place: ApiPlaceItemResponse
+	val place: ApiPlaceItemResponse
 ) {
-	fun getPlace(): DetailedPlace {
+	fun fromApi(): DetailedPlace {
 		return place.fromApi()
 	}
 }

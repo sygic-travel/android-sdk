@@ -1,7 +1,9 @@
 package com.sygic.travel.sdk.places.api.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
+import com.sygic.travel.sdk.places.api.TripCategoryConverter
+import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Description
 import com.sygic.travel.sdk.places.model.DescriptionProvider
 import com.sygic.travel.sdk.places.model.Detail
@@ -9,63 +11,45 @@ import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdk.places.model.TranslationProvider
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiPlaceItemResponse(
-	id: String,
-	level: String,
-	categories: List<String>,
-	rating: Float,
-	quadkey: String,
-	location: ApiLocationResponse,
-	bounds: ApiBounds,
-	name: String,
-	nameSuffix: String?,
-	perex: String?,
-	url: String?,
-	thumbnailUrl: String?,
-	marker: String,
-	parentIds: List<String>,
-	starRating: Float?,
-	starRatingUnofficial: Float?,
-	customerRating: Float?,
-	ownerId: String?,
+	val id: String,
+	val level: String,
+	val categories: List<String>,
+	val rating: Float,
+	val quadkey: String,
+	val location: ApiLocationResponse,
+	val bounding_box: ApiBoundsResponse?,
+	val name: String,
+	val name_suffix: String?,
+	val perex: String?,
+	val url: String?,
+	val thumbnail_url: String?,
+	val marker: String,
+	val parent_ids: List<String>,
+	val star_rating: Float?,
+	val star_rating_unofficial: Float?,
+	val customer_rating: Float?,
+	val owner_id: String?,
 	val tags: List<ApiTag>,
 	val description: ApiDescription?,
 	val address: String?,
 	val admission: String?,
 	val duration: Int?,
 	val email: String?,
-	@SerializedName("opening_hours")
+	@Json(name = "opening_hours")
 	val openingHours: String?,
 	val phone: String?,
-	@SerializedName("main_media")
+	@Json(name = "main_media")
 	val mainMedia: ApiMainMediaResponse?,
 	val references: List<ApiReference>
-) : ApiPlaceListItemResponse(
-	id,
-	level,
-	categories,
-	rating,
-	quadkey,
-	location,
-	bounds,
-	name,
-	nameSuffix,
-	perex,
-	url,
-	thumbnailUrl,
-	marker,
-	parentIds,
-	starRating,
-	starRatingUnofficial,
-	customerRating,
-	ownerId
 ) {
-
 	class ApiDescription(
 		val text: String,
 		val provider: String?,
-		@SerializedName("translation_provider")
+		@Json(name = "translation_provider")
 		val translationProvider: String?,
 		val link: String?
 	) {
@@ -108,7 +92,7 @@ internal class ApiPlaceItemResponse(
 		val id: Int,
 		val title: String,
 		val type: String,
-		@SerializedName("language_id")
+		@Json(name = "language_id")
 		val languageId: String?,
 		val url: String,
 		val supplier: String?,
@@ -133,7 +117,7 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
-	override fun fromApi(): DetailedPlace {
+	fun fromApi(): DetailedPlace {
 		val detail = Detail(
 			tags = tags.map { it.fromApi() },
 			description = description?.fromApi(),
@@ -151,8 +135,8 @@ internal class ApiPlaceItemResponse(
 
 		return DetailedPlace(
 			id = id,
-			level = fromApiLevel(level),
-			categories = fromApiCategories(categories),
+			level = TripLevelConverter.fromApiLevel(level),
+			categories = TripCategoryConverter.fromApiCategories(categories),
 			rating = rating,
 			quadkey = quadkey,
 			location = location.fromApi(),

@@ -17,7 +17,7 @@ internal class ToursService(
 			sortBy = query.sortBy?.apiSortBy,
 			sortDirection = query.sortDirection?.apiSortDirection
 		)
-		return request.execute().body()!!.data!!.getTours()
+		return request.execute().body()!!.data!!.fromApi()
 	}
 
 	fun getToursGetYourGuide(query: ToursGetYourGuideQuery): List<Tour> {
@@ -34,6 +34,6 @@ internal class ToursService(
 			sortBy = query.sortBy?.apiSortBy,
 			sortDirection = query.sortDirection?.apiSortDirection
 		)
-		return request.execute().body()!!.data!!.getTours()
+		return request.execute().body()!!.data!!.fromApi()
 	}
 }
