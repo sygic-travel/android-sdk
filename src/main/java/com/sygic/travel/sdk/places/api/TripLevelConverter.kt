@@ -24,7 +24,7 @@ internal object TripLevelConverter {
 			LEVEL_COUNTRY -> Level.COUNTRY
 			LEVEL_STATE -> Level.STATE
 			LEVEL_REGION -> Level.REGION
-			LEVEL_COUNTY -> Level.COUNTRY
+			LEVEL_COUNTY -> Level.COUNTY
 			LEVEL_CITY -> Level.CITY
 			LEVEL_TOWN -> Level.TOWN
 			LEVEL_VILLAGE -> Level.VILLAGE
@@ -35,6 +35,25 @@ internal object TripLevelConverter {
 			LEVEL_ISLAND -> Level.ISLAND
 			LEVEL_POI -> Level.POI
 			else -> Level.POI
+		}
+	}
+
+	fun toApiLevel(level: Level): String {
+		return when (level) {
+			Level.CONTINENT -> LEVEL_CONTINENT
+			Level.COUNTRY -> LEVEL_COUNTRY
+			Level.STATE -> LEVEL_STATE
+			Level.REGION -> LEVEL_REGION
+			Level.COUNTY -> LEVEL_COUNTY
+			Level.CITY -> LEVEL_CITY
+			Level.TOWN -> LEVEL_TOWN
+			Level.VILLAGE -> LEVEL_VILLAGE
+			Level.SETTLEMENT -> LEVEL_SETTLEMENT
+			Level.LOCALITY -> LEVEL_LOCALITY
+			Level.NEIGHBOURHOOD -> LEVEL_NEIGHBOURHOOD
+			Level.ARCHIPELAGO -> LEVEL_ARCHIPELAGO
+			Level.ISLAND -> LEVEL_ISLAND
+			Level.POI -> LEVEL_POI
 		}
 	}
 }

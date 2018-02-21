@@ -136,7 +136,7 @@ internal class ApiPlaceItemResponse(
 		return DetailedPlace(
 			id = id,
 			level = TripLevelConverter.fromApiLevel(level),
-			categories = TripCategoryConverter.fromApiCategories(categories),
+			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategories(it) }.toSet(),
 			rating = rating,
 			quadkey = quadkey,
 			location = location.fromApi(),
