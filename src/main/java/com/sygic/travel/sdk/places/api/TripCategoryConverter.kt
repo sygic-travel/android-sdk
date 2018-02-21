@@ -15,22 +15,20 @@ internal object TripCategoryConverter {
 	private const val CATEGORY_DOING_SPORTS = "doing_sports"
 	private const val CATEGORY_TRAVELING = "traveling"
 
-	fun fromApiCategories(categories: List<String>): Set<Category> {
-		return categories.mapNotNull {
-			when (it) {
-				CATEGORY_DISCOVERING -> Category.DISCOVERING
-				CATEGORY_EATING -> Category.EATING
-				CATEGORY_GOING_OUT -> Category.GOING_OUT
-				CATEGORY_HIKING -> Category.HIKING
-				CATEGORY_PLAYING -> Category.PLAYING
-				CATEGORY_RELAXING -> Category.RELAXING
-				CATEGORY_SHOPPING -> Category.SHOPPING
-				CATEGORY_SIGHTSEEING -> Category.SIGHTSEEING
-				CATEGORY_SLEEPING -> Category.SLEEPING
-				CATEGORY_DOING_SPORTS -> Category.DOING_SPORTS
-				CATEGORY_TRAVELING -> Category.TRAVELING
-				else -> null
-			}
-		}.toSet()
+	fun fromApiCategories(category: String): Category? {
+		return when (category) {
+			CATEGORY_DISCOVERING -> Category.DISCOVERING
+			CATEGORY_EATING -> Category.EATING
+			CATEGORY_GOING_OUT -> Category.GOING_OUT
+			CATEGORY_HIKING -> Category.HIKING
+			CATEGORY_PLAYING -> Category.PLAYING
+			CATEGORY_RELAXING -> Category.RELAXING
+			CATEGORY_SHOPPING -> Category.SHOPPING
+			CATEGORY_SIGHTSEEING -> Category.SIGHTSEEING
+			CATEGORY_SLEEPING -> Category.SLEEPING
+			CATEGORY_DOING_SPORTS -> Category.DOING_SPORTS
+			CATEGORY_TRAVELING -> Category.TRAVELING
+			else -> null
+		}
 	}
 }
