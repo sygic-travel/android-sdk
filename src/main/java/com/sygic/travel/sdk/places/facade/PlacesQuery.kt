@@ -1,5 +1,9 @@
 package com.sygic.travel.sdk.places.facade
 
+import com.sygic.travel.sdk.places.api.TripCategoryConverter
+import com.sygic.travel.sdk.places.api.TripLevelConverter
+import com.sygic.travel.sdk.places.model.Category
+import com.sygic.travel.sdk.places.model.Level
 import com.sygic.travel.sdk.places.model.geo.Bounds
 
 /**
@@ -10,7 +14,7 @@ import com.sygic.travel.sdk.places.model.geo.Bounds
 class PlacesQuery {
 	var query: String? = null
 	var bounds: Bounds? = null
-	var categories: List<String>? = null
+	var categories: List<Category>? = null
 	var categoriesOperator = LogicOperator.OR
 	var tags: List<String>? = null
 	var tagsOperator = LogicOperator.OR
@@ -19,12 +23,12 @@ class PlacesQuery {
 	var mapSpread: Int? = null
 	var mapTiles: List<String>? = null
 	var limit: Int? = null
-	var levels: List<String>? = null
+	var levels: List<Level>? = null
 
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
 			true -> null
-			false -> levels!!.joinToString(LogicOperator.OR.apiOperator)
+			false -> levels!!.map { TripLevelConverter.toApiLevel(it) }.joinToString(LogicOperator.OR.apiOperator)
 		}
 	}
 
@@ -38,7 +42,7 @@ class PlacesQuery {
 	internal fun getCategoriesApiQuery(): String? {
 		return when (categories == null || categories!!.isEmpty()) {
 			true -> null
-			false -> categories!!.joinToString(categoriesOperator.apiOperator)
+			false -> TripCategoryConverter.toApiCategories(categories!!).joinToString(categoriesOperator.apiOperator)
 		}
 	}
 

@@ -31,4 +31,22 @@ internal object TripCategoryConverter {
 			else -> null
 		}
 	}
+
+	fun toApiCategories(categories: List<Category>): List<String> {
+		return categories.map {
+			when (it) {
+				Category.DISCOVERING -> CATEGORY_DISCOVERING
+				Category.EATING -> CATEGORY_EATING
+				Category.GOING_OUT -> CATEGORY_GOING_OUT
+				Category.HIKING -> CATEGORY_HIKING
+				Category.PLAYING -> CATEGORY_PLAYING
+				Category.RELAXING -> CATEGORY_RELAXING
+				Category.SHOPPING -> CATEGORY_SHOPPING
+				Category.SIGHTSEEING -> CATEGORY_SIGHTSEEING
+				Category.SLEEPING -> CATEGORY_SLEEPING
+				Category.DOING_SPORTS -> CATEGORY_DOING_SPORTS
+				Category.TRAVELING -> CATEGORY_TRAVELING
+			}
+		}
+	}
 }
