@@ -1,6 +1,5 @@
 package com.sygic.travel.sdk.places.api.model
 
-import com.squareup.moshi.Json
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
@@ -39,18 +38,15 @@ internal class ApiPlaceItemResponse(
 	val admission: String?,
 	val duration: Int?,
 	val email: String?,
-	@Json(name = "opening_hours")
-	val openingHours: String?,
+	val opening_hours: String?,
 	val phone: String?,
-	@Json(name = "main_media")
-	val mainMedia: ApiMainMediaResponse?,
+	val main_media: ApiMainMediaResponse?,
 	val references: List<ApiReference>
 ) {
 	class ApiDescription(
 		val text: String,
 		val provider: String?,
-		@Json(name = "translation_provider")
-		val translationProvider: String?,
+		val translation_provider: String?,
 		val link: String?
 	) {
 		companion object {
@@ -67,7 +63,7 @@ internal class ApiPlaceItemResponse(
 					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
 					else -> DescriptionProvider.NONE
 				},
-				translationProvider = when (translationProvider) {
+				translationProvider = when (translation_provider) {
 					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
 					else -> TranslationProvider.NONE
 				},
@@ -92,8 +88,7 @@ internal class ApiPlaceItemResponse(
 		val id: Int,
 		val title: String,
 		val type: String,
-		@Json(name = "language_id")
-		val languageId: String?,
+		val language_id: String?,
 		val url: String,
 		val supplier: String?,
 		val priority: Int,
@@ -106,7 +101,7 @@ internal class ApiPlaceItemResponse(
 			reference.id = id
 			reference.title = title
 			reference.type = type
-			reference.languageId = languageId
+			reference.languageId = language_id
 			reference.url = url
 			reference.supplier = supplier
 			reference.priority = priority
@@ -125,9 +120,9 @@ internal class ApiPlaceItemResponse(
 			admission = admission,
 			duration = duration,
 			email = email,
-			openingHours = openingHours,
+			openingHours = opening_hours,
 			phone = phone,
-			mainMedia = mainMedia?.media?.map {
+			mainMedia = main_media?.media?.map {
 				it.fromApi()
 			} ?: emptyList(),
 			references = references.map { it.fromApi() }

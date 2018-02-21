@@ -5,8 +5,8 @@ import se.ansman.kotshi.JsonSerializable
 @JsonSerializable
 internal class ApiUpdateTripResponse(
 	val trip: ApiTripItemResponse,
-	val conflictResolution: String?,
-	val conflictInfo: ConflictInfo?
+	val conflict_resolution: String?,
+	val conflict_info: ConflictInfo?
 ) {
 	companion object {
 		const val CONFLICT_RESOLUTION_IGNORED = "ignored"

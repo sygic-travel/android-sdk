@@ -28,55 +28,55 @@ internal class SessionService(
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "password",
+			client_id = clientId,
+			grant_type = "password",
 			username = username,
 			password = password,
-			deviceCode = deviceId,
-			devicePlatform = DEVICE_PLATFORM
+			device_code = deviceId,
+			device_platform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithGoogleToken(token: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "google",
-			idToken = token,
-			deviceCode = deviceId,
-			devicePlatform = DEVICE_PLATFORM
+			client_id = clientId,
+			grant_type = "google",
+			id_token = token,
+			device_code = deviceId,
+			device_platform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithFacebookToken(token: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "facebook",
-			accessToken = token,
-			deviceCode = deviceId,
-			devicePlatform = DEVICE_PLATFORM
+			client_id = clientId,
+			grant_type = "facebook",
+			access_token = token,
+			device_code = deviceId,
+			device_platform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithJwtToken(token: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "external",
+			client_id = clientId,
+			grant_type = "external",
 			token = token,
-			deviceCode = deviceId,
-			devicePlatform = DEVICE_PLATFORM
+			device_code = deviceId,
+			device_platform = DEVICE_PLATFORM
 		))
 	}
 
 	fun authWithDeviceId(): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
 		return authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "client_credentials",
-			deviceCode = deviceId,
-			devicePlatform = DEVICE_PLATFORM
+			client_id = clientId,
+			grant_type = "client_credentials",
+			device_code = deviceId,
+			device_platform = DEVICE_PLATFORM
 		))
 	}
 
@@ -86,7 +86,7 @@ internal class SessionService(
 			email = email,
 			password = password,
 			name = name,
-			emailIsVerified = true
+			email_is_verified = true
 		)
 		var clientSession = authStorageService.getClientSession() ?: initClientSession()
 
@@ -155,9 +155,9 @@ internal class SessionService(
 		val response = sygicSsoClient.authenticate(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
-			authStorageService.setUserSession(userSession.accessToken)
-			authStorageService.setExpirationTime(userSession.expiresIn)
-			authStorageService.setRefreshToken(userSession.refreshToken)
+			authStorageService.setUserSession(userSession.access_token)
+			authStorageService.setExpirationTime(userSession.expires_in)
+			authStorageService.setRefreshToken(userSession.refresh_token)
 			return AuthenticationResponseCode.OK
 
 		} else if (response.code() == 401) {
@@ -170,20 +170,20 @@ internal class SessionService(
 
 	private fun refreshToken(refreshToken: String) {
 		authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "refresh_token",
-			refreshToken = refreshToken
+			client_id = clientId,
+			grant_type = "refresh_token",
+			refresh_token = refreshToken
 		))
 	}
 
 	private fun initClientSession(): String {
 		val request = sygicSsoClient.authenticate(AuthenticationRequest(
-			clientId = clientId,
-			grantType = "client_credentials"
+			client_id = clientId,
+			grant_type = "client_credentials"
 		))
 		val response = request.execute()
 		return if (response.isSuccessful) {
-			val accessToken = response.body()!!.accessToken
+			val accessToken = response.body()!!.access_token
 			authStorageService.setClientSession(accessToken)
 			accessToken
 		} else throw HttpException(response)

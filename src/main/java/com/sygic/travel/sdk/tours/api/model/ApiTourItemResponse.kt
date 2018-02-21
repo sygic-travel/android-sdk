@@ -9,13 +9,13 @@ internal class ApiTourItemResponse(
 	val perex: String,
 	val url: String,
 	val rating: Float,
-	val reviewCount: Int,
-	val photoUrl: String,
+	val review_count: Int,
+	val photo_url: String,
 	val price: Float,
-	val originalPrice: Float,
+	val original_price: Float,
 	val duration: String,
-	val durationMin: Int,
-	val durationMax: Int,
+	val duration_min: Int,
+	val duration_max: Int,
 	val flags: List<String>
 ) {
 	fun fromApi(): Tour {
@@ -26,13 +26,13 @@ internal class ApiTourItemResponse(
 		tour.perex = perex
 		tour.url = url
 		tour.rating = rating
-		tour.reviewCount = reviewCount
-		tour.photoUrl = photoUrl
+		tour.reviewCount = review_count
+		tour.photoUrl = photo_url
 		tour.price = price
-		tour.originalPrice = originalPrice
+		tour.originalPrice = original_price
 		tour.duration = duration
-		tour.durationMin = durationMin
-		tour.durationMax = durationMax
+		tour.durationMin = duration_min
+		tour.durationMax = duration_max
 		tour.flags = flags
 		return tour
 	}

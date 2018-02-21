@@ -102,7 +102,7 @@ internal class TripsSynchronizationService constructor(
 
 		val data = updateResponse.body()!!.data!!
 		var apiTripData = data.trip
-		when (data.conflictResolution) {
+		when (data.conflict_resolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
 				val conflictHandler = tripUpdateConflictHandler
 				val conflictResolution = when (conflictHandler) {
@@ -111,8 +111,8 @@ internal class TripsSynchronizationService constructor(
 						val conflictInfo = TripConflictInfo(
 							localTrip = localTrip,
 							remoteTrip = tripConverter.fromApi(apiTripData),
-							remoteTripUserName = data.conflictInfo!!.last_user_name,
-							remoteTripUpdatedAt = Date(DateTimeHelper.datetimeToTimestamp(data.conflictInfo.last_updated_at)!! * 1000)
+							remoteTripUserName = data.conflict_info!!.last_user_name,
+							remoteTripUpdatedAt = Date(DateTimeHelper.datetimeToTimestamp(data.conflict_info.last_updated_at)!! * 1000)
 						)
 						conflictHandler.invoke(conflictInfo)
 					}
