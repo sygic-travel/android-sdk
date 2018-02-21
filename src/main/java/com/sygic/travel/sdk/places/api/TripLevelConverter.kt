@@ -24,7 +24,7 @@ internal object TripLevelConverter {
 			LEVEL_COUNTRY -> Level.COUNTRY
 			LEVEL_STATE -> Level.STATE
 			LEVEL_REGION -> Level.REGION
-			LEVEL_COUNTY -> Level.COUNTRY
+			LEVEL_COUNTY -> Level.COUNTY
 			LEVEL_CITY -> Level.CITY
 			LEVEL_TOWN -> Level.TOWN
 			LEVEL_VILLAGE -> Level.VILLAGE
