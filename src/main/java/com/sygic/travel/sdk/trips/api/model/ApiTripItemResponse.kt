@@ -58,6 +58,7 @@ internal class ApiTripItemResponse(
 					const val MODE_CAR = "car"
 					const val MODE_PEDESTRIAN = "pedestrian"
 					const val MODE_PLANE = "plane"
+					const val MODE_PUBLIC_TRANSIT = "public_transit"
 					const val MODE_TRAIN = "train"
 					const val AVOID_FERRIES = "ferries"
 					const val AVOID_HIGHWAYS = "highways"
