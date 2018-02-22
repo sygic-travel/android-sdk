@@ -21,6 +21,7 @@ internal class TripItemTransportConverter {
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR -> DirectionMode.CAR
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN -> DirectionMode.PEDESTRIAN
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE -> DirectionMode.PLANE
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT -> DirectionMode.PUBLIC_TRANSIT
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
 				else -> DirectionMode.PEDESTRIAN
 			}
@@ -62,6 +63,7 @@ internal class TripItemTransportConverter {
 				DirectionMode.CAR -> ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR
 				DirectionMode.PEDESTRIAN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN
 				DirectionMode.PLANE -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE
+				DirectionMode.PUBLIC_TRANSIT -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT
 				DirectionMode.TRAIN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN
 			},
 			avoid = transport.avoid.map {
