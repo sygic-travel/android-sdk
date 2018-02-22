@@ -18,7 +18,7 @@ class PlacesQuery {
 	var categoriesOperator = LogicOperator.OR
 	var tags: List<String>? = null
 	var tagsOperator = LogicOperator.OR
-	var parents: List<String>? = null
+	var parentIds: List<String>? = null
 	var parentsOperator = LogicOperator.OR
 	var mapSpread: Int? = null
 	var mapTiles: List<String>? = null
@@ -54,9 +54,9 @@ class PlacesQuery {
 	}
 
 	internal fun getParentsApiQuery(): String? {
-		return when (parents == null || parents!!.isEmpty()) {
+		return when (parentIds == null || parentIds!!.isEmpty()) {
 			true -> null
-			false -> parents!!.joinToString(parentsOperator.apiOperator)
+			false -> parentIds!!.joinToString(parentsOperator.apiOperator)
 		}
 	}
 
