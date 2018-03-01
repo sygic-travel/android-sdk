@@ -40,10 +40,20 @@ internal class SynchronizationService constructor(
 		}
 	}
 
-	@SuppressLint("ApplySharedPref")
 	private fun runSynchronization() {
 		val result = SynchronizationResult()
+		try {
+			synchronizeWithResult(result)
+		} catch (e: Exception) {
+			result.success = false
+			result.exception = e
+		} finally {
+			synchronizationCompletionHandler?.invoke(result)
+		}
+	}
 
+	@SuppressLint("ApplySharedPref")
+	private fun synchronizeWithResult(result: SynchronizationResult) {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
@@ -82,8 +92,6 @@ internal class SynchronizationService constructor(
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.commit()
-
-		synchronizationCompletionHandler?.invoke(result)
 	}
 
 	fun clearUserData() {
