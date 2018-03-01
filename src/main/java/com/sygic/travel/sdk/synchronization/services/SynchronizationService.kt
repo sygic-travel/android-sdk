@@ -42,6 +42,8 @@ internal class SynchronizationService constructor(
 
 	@SuppressLint("ApplySharedPref")
 	private fun runSynchronization() {
+		val result = SynchronizationResult()
+
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
@@ -73,19 +75,13 @@ internal class SynchronizationService constructor(
 			}
 		}
 
-		val tripsResult = tripsSynchronizationResult.sync(changedTripIds, deletedTripIds)
-		val favoritesResult = favoritesSynchronizationService.sync(addedFavoriteIds, deletedFavoriteIds)
+		tripsSynchronizationResult.sync(changedTripIds, deletedTripIds, result)
+		favoritesSynchronizationService.sync(addedFavoriteIds, deletedFavoriteIds, result)
 
 		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp)!!
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.commit()
-
-		val result = SynchronizationResult(
-			changedTripIds = tripsResult.changedTripIds,
-			changedFavoriteIds = favoritesResult.changedFavoriteIds,
-			cratedTripIdsMapping = tripsResult.createdTripIdsMapping
-		)
 
 		synchronizationCompletionHandler?.invoke(result)
 	}
