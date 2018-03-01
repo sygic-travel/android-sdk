@@ -13,9 +13,9 @@ internal class ApiTourItemResponse(
 	val photo_url: String,
 	val price: Float,
 	val original_price: Float,
-	val duration: String,
-	val duration_min: Int,
-	val duration_max: Int,
+	val duration: String?,
+	val duration_min: Int?,
+	val duration_max: Int?,
 	val flags: List<String>
 ) {
 	fun fromApi(): Tour {
