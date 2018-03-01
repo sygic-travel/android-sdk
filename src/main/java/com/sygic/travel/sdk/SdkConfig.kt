@@ -1,9 +1,10 @@
 package com.sygic.travel.sdk
 
 abstract class SdkConfig {
-	abstract val clientId: String
-
 	abstract val apiKey: String
+
+	open val clientId: String?
+		get() = null
 
 	open val debugMode: Boolean
 		get() = BuildConfig.DEBUG
