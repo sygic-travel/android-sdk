@@ -18,7 +18,7 @@ internal class ApiDirectionsService constructor(
 	fun getDirections(requests: List<DirectionsRequest>): List<Directions?> {
 		val directions = getCalculatedDirections(requests)
 		return directions.mapIndexed { i, it ->
-			if (it.isEmpty()) {
+			if (it == null || it.isEmpty()) {
 				return@mapIndexed null
 			}
 
@@ -55,7 +55,7 @@ internal class ApiDirectionsService constructor(
 		}
 	}
 
-	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>> {
+	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
@@ -78,7 +78,7 @@ internal class ApiDirectionsService constructor(
 		try {
 			response = apiClient.getDirections(apiRequests).execute().body()!!
 		} catch (_: Exception) {
-			return emptyList()
+			return (0 until requests.size).map { null }
 		}
 
 		val directions = response.data!!.path.map { it.directions }
