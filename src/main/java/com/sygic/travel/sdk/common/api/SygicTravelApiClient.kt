@@ -70,6 +70,8 @@ internal interface SygicTravelApiClient {
 		@Query("bounding_box") bounds: String?,
 		@Query(encoded = true, value = "tags") tags: String?,
 		@Query(encoded = true, value = "parents") parents: String?,
+		@Query("star_rating") starRating: String?,
+		@Query("customer_rating") customerRating: String?,
 		@Query("limit") limit: Int?
 	): Call<ApiResponse<ApiPlacesListResponse>>
 

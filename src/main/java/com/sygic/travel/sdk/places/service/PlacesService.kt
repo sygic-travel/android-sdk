@@ -21,6 +21,8 @@ internal class PlacesService(
 			bounds = placesQuery.bounds?.toApiQuery(),
 			tags = placesQuery.getTagsApiQuery(),
 			parents = placesQuery.getParentsApiQuery(),
+			starRating = placesQuery.getStarRatingApiQuery(),
+			customerRating = placesQuery.getCustomerRatingApiQuery(),
 			limit = placesQuery.limit
 		)
 		val response = request.execute()
