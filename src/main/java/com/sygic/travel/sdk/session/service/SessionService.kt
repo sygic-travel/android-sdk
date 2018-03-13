@@ -146,9 +146,11 @@ internal class SessionService(
 	}
 
 	fun logout() {
-		authStorageService.setUserSession(null)
-		authStorageService.setExpirationTime(0)
-		authStorageService.setRefreshToken(null)
+		authStorageService.setUserSession(
+			accessToken = null,
+			refreshToken = null,
+			secondsToExpiration = 0
+		)
 		sessionUpdateHandler?.invoke(getUserSession())
 	}
 
@@ -156,9 +158,11 @@ internal class SessionService(
 		val response = sygicSsoClient.authenticate(authRequest).execute()
 		if (response.isSuccessful) {
 			val userSession = response.body()!!
-			authStorageService.setUserSession(userSession.access_token)
-			authStorageService.setExpirationTime(userSession.expires_in)
-			authStorageService.setRefreshToken(userSession.refresh_token)
+			authStorageService.setUserSession(
+				accessToken = userSession.access_token,
+				refreshToken = userSession.refresh_token,
+				secondsToExpiration = userSession.expires_in
+			)
 			sessionUpdateHandler?.invoke(getUserSession())
 			return AuthenticationResponseCode.OK
 

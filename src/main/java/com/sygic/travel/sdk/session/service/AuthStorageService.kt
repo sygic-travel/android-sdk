@@ -14,16 +14,6 @@ internal class AuthStorageService(private val sharedPreferences: SharedPreferenc
 		private const val DEVICE_ID = "auth.device_id"
 	}
 
-	fun setUserSession(accessToken: String?) {
-		val editor = sharedPreferences.edit()
-		editor.putString(USER_SESSION_KEY, accessToken)
-		editor.apply()
-	}
-
-	fun getUserSession(): String? {
-		return sharedPreferences.getString(USER_SESSION_KEY, null)
-	}
-
 	fun setClientSession(accessToken: String?) {
 		val editor = sharedPreferences.edit()
 		editor.putString(CLIENT_SESSION_KEY, accessToken)
@@ -46,16 +36,8 @@ internal class AuthStorageService(private val sharedPreferences: SharedPreferenc
 		return deviceId
 	}
 
-	fun setExpirationTime(secondsToExpiration: Long) {
-		// Add (1000 * secondsToExpiration) to current time will and we'll have exact token
-		// expiration time.
-		// We suggest to set refresh interval in 1/4th of total token expiration time,
-		// so that we add (1000/4 * secondsToExpiration) to current time in millis.
-		val now = Date().time
-		sharedPreferences.edit()
-			.putLong(EXPIRES_IN_TIMESTAMP, now + 1000 * secondsToExpiration)
-			.putLong(SUGGESTED_REFRESH_TIMESTAMP, now + 250 * secondsToExpiration)
-			.apply()
+	fun getUserSession(): String? {
+		return sharedPreferences.getString(USER_SESSION_KEY, null)
 	}
 
 	fun getSuggestedRefreshTime(): Long {
@@ -66,14 +48,22 @@ internal class AuthStorageService(private val sharedPreferences: SharedPreferenc
 		return sharedPreferences.getLong(EXPIRES_IN_TIMESTAMP, 0)
 	}
 
-	fun setRefreshToken(refreshToken: String?) {
-		val editor = sharedPreferences.edit()
-
-		editor.putString(REFRESH_TOKEN_KEY, refreshToken)
-		editor.apply()
-	}
-
 	fun getRefreshToken(): String? {
 		return sharedPreferences.getString(REFRESH_TOKEN_KEY, null)
+	}
+
+	fun setUserSession(accessToken: String?, refreshToken: String?, secondsToExpiration: Long) {
+		// Add (1000 * secondsToExpiration) to current time will and we'll have exact token
+		// expiration time.
+		// We suggest to set refresh interval in 1/4th of total token expiration time,
+		// so that we add (1000/4 * secondsToExpiration) to current time in millis.
+		val now = Date().time
+
+		val editor = sharedPreferences.edit()
+		editor.putString(USER_SESSION_KEY, accessToken)
+		editor.putString(REFRESH_TOKEN_KEY, refreshToken)
+		editor.putLong(EXPIRES_IN_TIMESTAMP, now + 1000 * secondsToExpiration)
+		editor.putLong(SUGGESTED_REFRESH_TIMESTAMP, now + 250 * secondsToExpiration)
+		editor.apply()
 	}
 }
