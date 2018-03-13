@@ -27,14 +27,6 @@ jobs:
           command: |
             ./gradlew assembleDebug assembleDebugUnitTest
       - run:
-          name: Setting Deploy Metadata
-          command: |
-            if [[ ! -z $CIRCLE_TAG ]]; then
-              export SDK_VERSION=${CIRCLE_TAG:1}
-              export BINTRAY_USER=$BINTRAY_USER
-              export BINTRAY_APIKEY=$ANDROID_SDK_BINTRAY_API_KEY
-            fi
-      - run:
           name: Generate Documentation
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
@@ -57,6 +49,9 @@ jobs:
           name: Upload SDK to Bintray
           command: |
             if [[ ! -z $CIRCLE_TAG ]]; then
+              export SDK_VERSION=${CIRCLE_TAG:1}
+              export BINTRAY_USER=$BINTRAY_USER
+              export BINTRAY_APIKEY=$ANDROID_SDK_BINTRAY_API_KEY
               ./gradlew install bintray
             fi
 deployment:
