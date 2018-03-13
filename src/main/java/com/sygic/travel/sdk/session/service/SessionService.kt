@@ -149,6 +149,7 @@ internal class SessionService(
 		authStorageService.setUserSession(null)
 		authStorageService.setExpirationTime(0)
 		authStorageService.setRefreshToken(null)
+		sessionUpdateHandler?.invoke(getUserSession())
 	}
 
 	private fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
@@ -158,6 +159,7 @@ internal class SessionService(
 			authStorageService.setUserSession(userSession.access_token)
 			authStorageService.setExpirationTime(userSession.expires_in)
 			authStorageService.setRefreshToken(userSession.refresh_token)
+			sessionUpdateHandler?.invoke(getUserSession())
 			return AuthenticationResponseCode.OK
 
 		} else if (response.code() == 401) {
