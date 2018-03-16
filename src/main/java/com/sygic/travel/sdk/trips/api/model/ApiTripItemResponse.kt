@@ -1,5 +1,8 @@
 package com.sygic.travel.sdk.trips.api.model
 
+import se.ansman.kotshi.JsonSerializable
+
+@JsonSerializable
 internal class ApiTripItemResponse(
 	id: String,
 	owner_id: String,
@@ -31,10 +34,12 @@ internal class ApiTripItemResponse(
 	days_count,
 	media
 ) {
+	@JsonSerializable
 	class Day(
 		val itinerary: List<DayItem>,
 		val note: String?
 	) {
+		@JsonSerializable
 		class DayItem(
 			val place_id: String,
 			val start_time: Int?,
@@ -42,6 +47,7 @@ internal class ApiTripItemResponse(
 			val note: String?,
 			val transport_from_previous: Transport?
 		) {
+			@JsonSerializable
 			class Transport(
 				val mode: String,
 				val avoid: List<String>,
@@ -66,10 +72,12 @@ internal class ApiTripItemResponse(
 					const val AVOID_UNPAVED = "unpaved"
 				}
 
+				@JsonSerializable
 				class Waypoint(
 					val placeId: String?,
 					val location: Location
 				) {
+					@JsonSerializable
 					class Location(
 						val lat: Float,
 						val lng: Float

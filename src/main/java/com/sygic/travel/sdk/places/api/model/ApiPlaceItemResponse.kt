@@ -43,6 +43,7 @@ internal class ApiPlaceItemResponse(
 	val main_media: ApiMainMediaResponse?,
 	val references: List<ApiReference>
 ) {
+	@JsonSerializable
 	class ApiDescription(
 		val text: String,
 		val provider: String?,
@@ -72,6 +73,7 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
+	@JsonSerializable
 	class ApiTag(
 		val key: String,
 		val name: String
@@ -84,6 +86,7 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
+	@JsonSerializable
 	class ApiReference(
 		val id: Int,
 		val title: String,

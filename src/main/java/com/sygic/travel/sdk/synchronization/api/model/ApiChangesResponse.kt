@@ -6,6 +6,7 @@ import se.ansman.kotshi.JsonSerializable
 internal class ApiChangesResponse(
 	val changes: List<ChangeEntry>
 ) {
+	@JsonSerializable
 	data class ChangeEntry(
 		val type: String,
 		val id: String?,

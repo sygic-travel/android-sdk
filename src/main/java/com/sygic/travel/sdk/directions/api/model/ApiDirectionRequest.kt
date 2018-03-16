@@ -16,6 +16,7 @@ internal class ApiDirectionRequest(
 		const val AVOID_UNPAVED = "unpaved"
 	}
 
+	@JsonSerializable
 	class Location(
 		val lat: Float,
 		val lng: Float
