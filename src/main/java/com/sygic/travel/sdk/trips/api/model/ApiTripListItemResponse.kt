@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.trips.api.model
 import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable
-open internal class ApiTripListItemResponse(
+internal class ApiTripListItemResponse(
 	val id: String,
 	val owner_id: String,
 	val name: String?,

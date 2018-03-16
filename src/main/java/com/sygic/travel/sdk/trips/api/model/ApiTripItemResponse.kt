@@ -4,35 +4,21 @@ import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable
 internal class ApiTripItemResponse(
-	id: String,
-	owner_id: String,
-	name: String?,
-	version: Int,
-	url: String,
-	updated_at: String,
-	is_deleted: Boolean,
-	privacy_level: String,
-	privileges: Privileges,
-	starts_on: String?,
-	ends_on: String?,
-	days_count: Int,
-	media: Media?,
+	val id: String,
+	val owner_id: String,
+	val name: String?,
+	val version: Int,
+	val url: String,
+	val updated_at: String,
+	val is_deleted: Boolean,
+	val privacy_level: String,
+	val privileges: ApiTripListItemResponse.Privileges,
+	val starts_on: String?,
+	val ends_on: String?,
+	val days_count: Int,
+	val media: ApiTripListItemResponse.Media?,
 	val days: List<Day>,
 	val destinations: List<String>
-) : ApiTripListItemResponse(
-	id,
-	owner_id,
-	name,
-	version,
-	url,
-	updated_at,
-	is_deleted,
-	privacy_level,
-	privileges,
-	starts_on,
-	ends_on,
-	days_count,
-	media
 ) {
 	@JsonSerializable
 	class Day(
