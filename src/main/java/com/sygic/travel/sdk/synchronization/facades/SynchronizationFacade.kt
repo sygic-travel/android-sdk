@@ -16,7 +16,7 @@ class SynchronizationFacade internal constructor(
 	private val favoritesService: FavoriteService
 ) {
 	fun synchronize() {
-		return synchronizationService.synchronize()
+		synchronizationService.synchronize()
 	}
 
 	fun hasChangesToSynchronize(): Boolean {
