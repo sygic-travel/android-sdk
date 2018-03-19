@@ -26,7 +26,7 @@ internal class HeadersInterceptor(
 
 			requestBuilder
 				.removeHeader("Authorization")
-				.addHeader("Authorization", "Bearer ${accessToken}")
+				.addHeader("Authorization", "Bearer $accessToken")
 		}
 
 		val request = requestBuilder.build()

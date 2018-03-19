@@ -7,9 +7,11 @@ import se.ansman.kotshi.JsonSerializable
 internal class ApiDirectionsResponse(
 	val path: List<Directions>
 ) {
+	@JsonSerializable
 	class Directions(
 		val directions: List<Direction>
 	) {
+		@JsonSerializable
 		class Direction(
 			val distance: Int,
 			val duration: Int,
@@ -23,6 +25,7 @@ internal class ApiDirectionsResponse(
 				const val MODE_PEDESTRIAN = "pedestrian"
 			}
 
+			@JsonSerializable
 			class Location(
 				val lat: Float,
 				val lng: Float

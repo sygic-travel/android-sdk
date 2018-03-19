@@ -1,7 +1,9 @@
 package com.sygic.travel.sdk.tours.api.model
 
 import com.sygic.travel.sdk.tours.model.Tour
+import se.ansman.kotshi.JsonSerializable
 
+@JsonSerializable
 internal class ApiTourItemResponse(
 	val id: String,
 	val supplier: String,

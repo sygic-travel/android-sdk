@@ -1,6 +1,5 @@
 package com.sygic.travel.sdk.synchronization.services
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
@@ -52,7 +51,6 @@ internal class SynchronizationService constructor(
 		}
 	}
 
-	@SuppressLint("ApplySharedPref")
 	private fun synchronizeWithResult(result: SynchronizationResult) {
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
@@ -91,7 +89,7 @@ internal class SynchronizationService constructor(
 		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp)!!
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
-			.commit()
+			.apply()
 	}
 
 	fun clearUserData() {

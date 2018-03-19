@@ -87,7 +87,7 @@ internal class TripsSynchronizationService constructor(
 		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).execute()
 		checkResponse(createResponse)
 		val trip = createResponse.body()!!.data!!.trip
-		syncResult.cratedTripIdsMapping[localTrip.id] = trip.id
+		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
 		tripsService.saveTrip(tripConverter.fromApi(trip))
 		tripIdUpdateHandler?.invoke(localTrip.id, trip.id)

@@ -30,6 +30,7 @@ internal class ApiMediumResponse(
 		private const val SUITABILITY_VIDEO_PREVIEW = "video_preview"
 	}
 
+	@JsonSerializable
 	class ApiOriginal(
 		val size: Int?,
 		val width: Int?,
@@ -44,6 +45,7 @@ internal class ApiMediumResponse(
 		}
 	}
 
+	@JsonSerializable
 	class ApiAttribution(
 		val author: String?,
 		val author_url: String?,
