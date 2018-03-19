@@ -62,6 +62,12 @@ open class TripInfo internal constructor(id: String) {
 		internal set
 	@Deprecated("Destinations property is deprecated and not functional in the public SDK release.")
 	var destinations: ArrayList<String> = arrayListOf()
+		get() {
+			return ArrayList(field.filter { it.isNotBlank() })
+		}
+		set(value) {
+			field = ArrayList(value.filter { it.isNotBlank() })
+		}
 	internal var ownerId: String? = null
 	internal var version: Int = 0
 
