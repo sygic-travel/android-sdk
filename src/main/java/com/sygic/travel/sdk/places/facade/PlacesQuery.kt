@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.places.facade
 
+import com.sygic.travel.sdk.common.api.rangeFormatter
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Category
@@ -24,6 +25,10 @@ class PlacesQuery {
 	var mapTiles: List<String>? = null
 	var limit: Int? = null
 	var levels: List<Level>? = null
+	var starRatingMin: Int? = null
+	var starRatingMax: Int? = null
+	var customerRatingMin: Int? = null
+	var customerRatingMax: Int? = null
 
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
@@ -58,6 +63,14 @@ class PlacesQuery {
 			true -> null
 			false -> parentIds!!.joinToString(parentsOperator.apiOperator)
 		}
+	}
+
+	internal fun getStarRatingApiQuery(): String? {
+		return rangeFormatter(starRatingMin, starRatingMax)
+	}
+
+	internal fun getCustomerRatingApiQuery(): String? {
+		return rangeFormatter(customerRatingMin, customerRatingMax)
 	}
 
 	enum class LogicOperator constructor(internal val apiOperator: String) {
