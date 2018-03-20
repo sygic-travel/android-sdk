@@ -74,7 +74,6 @@ internal class TripItemTransportConverter {
 					DirectionAvoid.UNPAVED -> ApiTripItemResponse.Day.DayItem.Transport.AVOID_UNPAVED
 				}
 			},
-			type = "fastest",
 			start_time = transport.startTime,
 			duration = transport.duration,
 			note = transport.note,

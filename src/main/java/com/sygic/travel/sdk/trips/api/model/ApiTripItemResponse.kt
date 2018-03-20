@@ -37,7 +37,6 @@ internal class ApiTripItemResponse(
 			class Transport(
 				val mode: String,
 				val avoid: List<String>,
-				val type: String,
 				val start_time: Int?,
 				val duration: Int?,
 				val note: String?,
