@@ -2,8 +2,6 @@ package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiTripListItemResponse
-import com.sygic.travel.sdk.trips.model.Trip
-import com.sygic.travel.sdk.trips.model.TripDay
 import org.junit.Assert.assertSame
 import org.junit.Test
 
@@ -24,7 +22,7 @@ class TripConverterTest {
 			privileges = ApiTripListItemResponse.Privileges(true, true, true),
 			starts_on = null,
 			ends_on = null,
-			days_count = 3,
+			day_count = 3,
 			media = null,
 			days = listOf(
 				ApiTripItemResponse.Day(arrayListOf(), "note1"),

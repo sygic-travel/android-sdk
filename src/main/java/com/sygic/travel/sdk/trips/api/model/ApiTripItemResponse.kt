@@ -15,7 +15,7 @@ internal class ApiTripItemResponse(
 	val privileges: ApiTripListItemResponse.Privileges,
 	val starts_on: String?,
 	val ends_on: String?,
-	val days_count: Int,
+	val day_count: Int,
 	val media: ApiTripListItemResponse.Media?,
 	val days: List<Day>,
 	val destinations: List<String>

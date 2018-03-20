@@ -26,7 +26,7 @@ internal class TripConverter constructor(
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
 		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)?.asDate()
-		localTrip.daysCount = apiTrip.days_count
+		localTrip.daysCount = apiTrip.day_count
 		localTrip.media = fromApiMedia(apiTrip.media)
 		localTrip.privileges = TripPrivileges(
 			edit = apiTrip.privileges.edit,
@@ -46,7 +46,7 @@ internal class TripConverter constructor(
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
 		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)?.asDate()
-		localTrip.daysCount = apiTrip.days_count
+		localTrip.daysCount = apiTrip.day_count
 		localTrip.media = fromApiMedia(apiTrip.media)
 		localTrip.destinations = ArrayList(apiTrip.destinations)
 		localTrip.days = apiTrip.days.map { tripDayConverter.fromApi(it, localTrip) }
