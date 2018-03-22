@@ -11,6 +11,9 @@ internal interface TripDayItemsDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun replaceAll(vararg tripDayItem: TripDayItem)
 
+	@Query("DELETE FROM trip_day_items WHERE trip_id = :tripId AND day_index > :dayIndex")
+	fun removeOverDayIndex(tripId: String, dayIndex: Int)
+
 	@Query("DELETE FROM trip_day_items WHERE trip_id = :tripId AND day_index = :dayIndex AND item_index > :itemIndex")
 	fun removeOverItemIndex(tripId: String, dayIndex: Int, itemIndex: Int)
 
