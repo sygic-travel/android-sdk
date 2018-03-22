@@ -170,9 +170,12 @@ internal class TripsService constructor(
 			.forEach {
 				val trip = tripsMap[it.key]!!
 				it.value.forEach {
-					val day = trip.days[it.key]
-					day.itinerary = it.value.map {
-						tripDayItemDbConverter.from(it, day)
+					val day = trip.days.getOrNull(it.key)
+					// workaround: we had not correctly deleted trip_day_items of removed days
+					if (day != null) {
+						day.itinerary = it.value.map {
+							tripDayItemDbConverter.from(it, day)
+						}
 					}
 				}
 			}
