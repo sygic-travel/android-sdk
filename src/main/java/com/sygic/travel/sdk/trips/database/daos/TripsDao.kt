@@ -2,8 +2,8 @@ package com.sygic.travel.sdk.trips.database.daos
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import com.sygic.travel.sdk.trips.database.entities.Trip
 
 @Dao
@@ -58,8 +58,11 @@ internal interface TripsDao {
 	@Query("SELECT * FROM trips WHERE id = :id")
 	fun get(id: String): Trip?
 
-	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun replace(trip: Trip)
+	@Insert
+	fun insert(trip: Trip)
+
+	@Update
+	fun update(trip: Trip)
 
 	@Query("SELECT * FROM trips WHERE is_changed = 1")
 	fun findAllChanged(): List<Trip>

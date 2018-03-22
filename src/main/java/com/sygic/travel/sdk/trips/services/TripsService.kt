@@ -64,42 +64,50 @@ internal class TripsService constructor(
 		}
 	}
 
-	fun saveTripAsChanged(trip: Trip) {
-		trip.isChanged = true
-		trip.updatedAt = DateTimeHelper.now()
-		saveTrip(trip)
-	}
-
 	fun saveTripAsChanged(trip: TripInfo) {
 		trip.isChanged = true
 		trip.updatedAt = DateTimeHelper.now()
-		saveTrip(trip)
+		if (trip.isLocal()) {
+			createTrip(trip)
+		} else {
+			updateTrip(trip)
+		}
 	}
 
-	fun saveTrip(trip: Trip) {
+	fun createTrip(trip: TripInfo) {
 		synchronized(trip) {
 			val dbTrip = tripDbConverter.to(trip)
-			tripsDao.replace(dbTrip)
+			tripsDao.insert(dbTrip)
 
-			val dbDays = trip.days.map {
-				tripDayDbConverter.to(it)
-			}
-			tripDaysDao.replaceAll(*dbDays.toTypedArray())
-			tripDaysDao.removeOverDayIndex(trip.id, dbDays.lastOrNull()?.dayIndex ?: -1)
-
-			for ((dayIndex, day) in trip.days.withIndex()) {
-				val dbItems = day.itinerary.map {
-					tripDayItemDbConverter.to(it)
-				}
-				tripDayItemsDao.replaceAll(*dbItems.toTypedArray())
-				tripDayItemsDao.removeOverItemIndex(trip.id, dayIndex, dbItems.lastOrNull()?.itemIndex ?: -1)
+			if (trip is Trip) {
+				saveTripDays(trip)
 			}
 		}
 	}
 
-	fun saveTrip(trip: TripInfo) {
-		val dbTrip = tripDbConverter.to(trip)
-		tripsDao.replace(dbTrip)
+	fun updateTrip(trip: TripInfo) {
+		synchronized(trip) {
+			val dbTrip = tripDbConverter.to(trip)
+			tripsDao.update(dbTrip)
+
+			if (trip is Trip) {
+				saveTripDays(trip)
+			}
+		}
+	}
+
+	private fun saveTripDays(trip: Trip) {
+		val dbDays = trip.days.map { tripDayDbConverter.to(it) }
+		tripDaysDao.replaceAll(*dbDays.toTypedArray())
+		tripDaysDao.removeOverDayIndex(trip.id, dbDays.lastOrNull()?.dayIndex ?: -1)
+
+		for ((dayIndex, day) in trip.days.withIndex()) {
+			val dbItems = day.itinerary.map {
+				tripDayItemDbConverter.to(it)
+			}
+			tripDayItemsDao.replaceAll(*dbItems.toTypedArray())
+			tripDayItemsDao.removeOverItemIndex(trip.id, dayIndex, dbItems.lastOrNull()?.itemIndex ?: -1)
+		}
 	}
 
 	fun deleteTrip(tripId: String) {

@@ -73,13 +73,13 @@ internal class TripsSynchronizationService constructor(
 
 	private fun createLocalTrip(apiTrip: ApiTripItemResponse, syncResult: SynchronizationResult) {
 		val localTrip = tripConverter.fromApi(apiTrip)
-		tripsService.saveTrip(localTrip)
+		tripsService.createTrip(localTrip)
 		syncResult.changedTripIds.add(localTrip.id)
 	}
 
 	private fun updateLocalTrip(apiTrip: ApiTripItemResponse, syncResult: SynchronizationResult) {
 		val localTrip = tripConverter.fromApi(apiTrip)
-		tripsService.saveTrip(localTrip)
+		tripsService.updateTrip(localTrip)
 		syncResult.changedTripIds.add(localTrip.id)
 	}
 
@@ -89,7 +89,7 @@ internal class TripsSynchronizationService constructor(
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
-		tripsService.saveTrip(tripConverter.fromApi(trip))
+		tripsService.updateTrip(tripConverter.fromApi(trip))
 		tripIdUpdateHandler?.invoke(localTrip.id, trip.id)
 	}
 
@@ -128,7 +128,7 @@ internal class TripsSynchronizationService constructor(
 					TripConflictResolution.USE_LOCAL_VERSION -> {
 						localTrip.updatedAt = DateTimeHelper.now()
 						// if request fails, user will not have to do the decision again
-						tripsService.saveTrip(localTrip)
+						tripsService.updateTrip(localTrip)
 						val repeatedUpdateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 						checkResponse(repeatedUpdateResponse)
 						apiTripData = repeatedUpdateResponse.body()!!.data!!.trip
@@ -144,7 +144,7 @@ internal class TripsSynchronizationService constructor(
 			}
 			else -> {
 				// do not track a change, restore isChanged to false
-				tripsService.saveTrip(tripConverter.fromApi(apiTripData))
+				tripsService.updateTrip(tripConverter.fromApi(apiTripData))
 			}
 		}
 	}
