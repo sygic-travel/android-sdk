@@ -99,7 +99,9 @@ internal class TripsService constructor(
 	private fun saveTripDays(trip: Trip) {
 		val dbDays = trip.days.map { tripDayDbConverter.to(it) }
 		tripDaysDao.replaceAll(*dbDays.toTypedArray())
-		tripDaysDao.removeOverDayIndex(trip.id, dbDays.lastOrNull()?.dayIndex ?: -1)
+		val lastDayIndex = dbDays.lastOrNull()?.dayIndex ?: -1
+		tripDaysDao.removeOverDayIndex(trip.id, lastDayIndex)
+		tripDayItemsDao.removeOverDayIndex(trip.id, lastDayIndex)
 
 		for ((dayIndex, day) in trip.days.withIndex()) {
 			val dbItems = day.itinerary.map {
