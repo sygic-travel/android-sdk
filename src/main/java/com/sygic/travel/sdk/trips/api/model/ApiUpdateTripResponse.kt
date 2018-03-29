@@ -17,7 +17,7 @@ internal class ApiUpdateTripResponse(
 
 	@JsonSerializable
 	class ConflictInfo(
-		val last_user_name: String,
+		val last_user_name: String?,
 		val last_updated_at: String
 	)
 }

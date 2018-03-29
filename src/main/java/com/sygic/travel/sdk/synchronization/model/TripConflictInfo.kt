@@ -6,6 +6,6 @@ import java.util.Date
 data class TripConflictInfo(
 	val localTrip: Trip,
 	val remoteTrip: Trip,
-	val remoteTripUserName: String,
+	val remoteTripUserName: String?,
 	val remoteTripUpdatedAt: Date
 )
