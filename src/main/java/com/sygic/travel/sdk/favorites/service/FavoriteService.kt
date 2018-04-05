@@ -7,16 +7,23 @@ internal class FavoriteService(
 	private val favoriteDao: FavoriteDao
 ) {
 	fun addPlace(id: String) {
-		val favorite = Favorite()
-		favorite.id = id
-		favorite.state = Favorite.STATE_TO_ADD
-		favoriteDao.insert(favorite)
+		var favorite = favoriteDao.get(id)
+		if (favorite == null) {
+			favorite = Favorite()
+			favorite.id = id
+			favorite.state = Favorite.STATE_TO_ADD
+			favoriteDao.replace(favorite)
+
+		} else if (favorite.state == Favorite.STATE_TO_REMOVE) {
+			favorite.state = Favorite.STATE_TO_ADD
+			favoriteDao.replace(favorite)
+		}
 	}
 
 	fun softDeletePlace(id: String) {
 		val favorite = favoriteDao.get(id) ?: return
 		favorite.state = Favorite.STATE_TO_REMOVE
-		favoriteDao.insert(favorite)
+		favoriteDao.replace(favorite)
 	}
 
 	fun hardDeletePlace(id: String) {

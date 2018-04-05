@@ -29,7 +29,7 @@ internal interface FavoriteDao {
 	fun get(id: String): Favorite?
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insert(favorite: Favorite)
+	fun replace(favorite: Favorite)
 
 	@Update
 	fun update(favorite: Favorite)
