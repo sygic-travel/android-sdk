@@ -16,7 +16,7 @@ internal class FavoritesSynchronizationService constructor(
 		}
 
 		for (favoriteId in deletedFavoriteIds) {
-			favoriteService.removePlace(favoriteId)
+			favoriteService.hardDeletePlace(favoriteId)
 		}
 
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
@@ -28,7 +28,7 @@ internal class FavoritesSynchronizationService constructor(
 			} else if (favorite.state == Favorite.STATE_TO_REMOVE) {
 				val response = apiClient.deleteFavorite(FavoriteRequest(favorite.id)).execute()
 				if (response.isSuccessful) {
-					favoriteService.markAsSynchronized(favorite)
+					favoriteService.hardDeletePlace(favorite.id)
 				}
 			}
 		}

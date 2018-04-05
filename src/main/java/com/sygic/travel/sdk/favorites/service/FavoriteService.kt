@@ -13,10 +13,16 @@ internal class FavoriteService(
 		favoriteDao.insert(favorite)
 	}
 
-	fun removePlace(id: String) {
+	fun softDeletePlace(id: String) {
 		val favorite = favoriteDao.get(id) ?: return
 		favorite.state = Favorite.STATE_TO_REMOVE
 		favoriteDao.insert(favorite)
+	}
+
+	fun hardDeletePlace(id: String) {
+		val favorite = Favorite()
+		favorite.id = id
+		favoriteDao.delete(favorite)
 	}
 
 	fun getPlaces(): List<String> {

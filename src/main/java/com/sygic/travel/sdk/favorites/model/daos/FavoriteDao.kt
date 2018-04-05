@@ -28,25 +28,14 @@ internal interface FavoriteDao {
 	@Query("SELECT * FROM favorites WHERE id = :id")
 	fun get(id: String): Favorite?
 
-	/**
-	 * Inserts one place's id into favorite table. If the id has already been inserted before, the
-	 * insertion of [placeId] is skipped. No error is provided.
-	 * @param placeId An id to be stored.
-	 * @return A rowid of the inserted place id (row).
-	 */
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insert(placeId: Favorite): Long
+	fun insert(favorite: Favorite)
 
 	@Update
 	fun update(favorite: Favorite)
 
-	/**
-	 * Removes a given place id from the favorite table.
-	 * @param placeId An id to be removed.
-	 * @return A number of deleted rows.
-	 */
 	@Delete
-	fun delete(placeId: Favorite): Int
+	fun delete(favorite: Favorite)
 
 	@Query("DELETE FROM favorites")
 	fun deleteAll()

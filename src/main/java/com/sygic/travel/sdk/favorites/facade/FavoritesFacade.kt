@@ -17,7 +17,7 @@ class FavoritesFacade internal constructor(
 
 	fun removeFromFavorites(placeId: String) {
 		checkNotRunningOnMainThread()
-		return favoritesService.removePlace(placeId)
+		return favoritesService.softDeletePlace(placeId)
 	}
 
 	fun getFavoritePlaceIds(): List<String> {
