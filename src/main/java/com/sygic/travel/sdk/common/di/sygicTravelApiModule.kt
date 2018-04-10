@@ -40,8 +40,12 @@ internal val sygicTravelApiModule = Kodein.Module {
 			builder.addInterceptor(instance<HttpLoggingInterceptor>())
 		}
 
+		if (instance<Boolean>("httpCacheEnabled")) {
+			builder
+				.cache(instance<Cache>())
+		}
+
 		builder
-			.cache(instance<Cache>())
 			.readTimeout(60, TimeUnit.SECONDS)
 			.build()
 	}

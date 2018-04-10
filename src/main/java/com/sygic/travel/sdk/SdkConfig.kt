@@ -14,4 +14,10 @@ abstract class SdkConfig {
 
 	open val sygicTravelApiUrl: String
 		get() = "https://api.sygictravelapi.com/1.0"
+
+	open val httpCacheEnabled: Boolean
+		get() = true
+
+	open val httpCacheSize: Long
+		get() = 10 * 1024 * 1024L // 10 MB Cache
 }

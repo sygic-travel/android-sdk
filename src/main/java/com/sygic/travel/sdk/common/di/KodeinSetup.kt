@@ -27,6 +27,8 @@ internal object KodeinSetup {
 		constant("debugMode") with sdkConfig.debugMode
 		constant("sygicAuthUrl") with sdkConfig.sygicAuthUrl
 		constant("sygicTravelApiUrl") with sdkConfig.sygicTravelApiUrl
+		constant("httpCacheEnabled") with sdkConfig.httpCacheEnabled
+		constant("httpCacheSize") with sdkConfig.httpCacheSize
 
 		bind<Context>() with singleton { applicationContext }
 

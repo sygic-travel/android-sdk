@@ -14,7 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 internal val generalModule = Kodein.Module {
 	bind<Cache>() with singleton {
 		val cacheFile = instance<Context>().cacheDir
-		Cache(cacheFile, 10 * 1024 * 1024L) // 10 MB Cache
+		Cache(cacheFile, instance<Long>("httpCacheSize"))
 	}
 
 	bind<HttpLoggingInterceptor>() with singleton {
