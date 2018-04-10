@@ -12,6 +12,7 @@ import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
+import kotlin.concurrent.thread
 
 internal class SessionService(
 	private val sygicSsoClient: SygicSsoApiClient,
@@ -136,7 +137,9 @@ internal class SessionService(
 		val refreshTimeExpiration = authStorageService.getSuggestedRefreshTime()
 
 		if (Date().time >= refreshTimeExpiration) {
-			refreshToken(refreshToken)
+			thread {
+				refreshToken(refreshToken)
+			}
 		}
 
 		return Session(
