@@ -130,7 +130,7 @@ internal class SessionService(
 		}
 	}
 
-	fun getUserSession(): Session? {
+	fun getSession(): Session? {
 		val accessToken = authStorageService.getUserSession() ?: return null
 		val refreshToken = authStorageService.getRefreshToken() ?: return null
 		val refreshTimeExpiration = authStorageService.getSuggestedRefreshTime()
@@ -151,7 +151,7 @@ internal class SessionService(
 			refreshToken = null,
 			secondsToExpiration = 0
 		)
-		sessionUpdateHandler?.invoke(getUserSession())
+		sessionUpdateHandler?.invoke(getSession())
 	}
 
 	private fun authenticate(authRequest: AuthenticationRequest): AuthenticationResponseCode {
@@ -163,7 +163,7 @@ internal class SessionService(
 				refreshToken = userSession.refresh_token,
 				secondsToExpiration = userSession.expires_in
 			)
-			sessionUpdateHandler?.invoke(getUserSession())
+			sessionUpdateHandler?.invoke(getSession())
 			return AuthenticationResponseCode.OK
 
 		} else if (response.code() == 401) {

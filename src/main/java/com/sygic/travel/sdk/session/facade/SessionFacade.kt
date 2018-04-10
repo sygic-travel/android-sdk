@@ -60,7 +60,7 @@ class SessionFacade internal constructor(
 	}
 
 	fun getSession(): Session? {
-		return sessionService.getUserSession()
+		return sessionService.getSession()
 	}
 
 	private fun checkEmptySession() {
