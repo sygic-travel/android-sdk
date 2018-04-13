@@ -36,15 +36,6 @@ jobs:
               fi
               aws s3 sync ./build/dokkaDoc/sdk $DOC_PATH --delete --acl public-read
             fi
-      - run:
-          name: Upload SDK to Bintray
-          command: |
-            if [[ ! -z $CIRCLE_TAG ]]; then
-              export SDK_VERSION=${CIRCLE_TAG:1}
-              export BINTRAY_USER=$BINTRAY_USER
-              export BINTRAY_APIKEY=$ANDROID_SDK_BINTRAY_API_KEY
-              ./gradlew install bintray
-            fi
 deployment:
   fake_deploy_for_cci2:
     tag: /.*/
