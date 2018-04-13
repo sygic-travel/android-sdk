@@ -23,39 +23,27 @@ jobs:
           paths:
             - ~/.gradle
       - run:
-          name: Unit Tests
-          command: |
-            ./gradlew assembleDebug assembleDebugUnitTest
-      - run:
-          name: Generate Documentation
+          name: Build Api Reference Doc
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               ./gradlew dokka
               cp /sdk-build/markdown-it.js ./.circleci/markdown-it.js
               cp /sdk-build/apidoc-style.css ./build/dokkaDoc/sdk/style.css
               node ./.circleci/build-apidoc.js ./build/dokkaDoc/sdk
-            fi
-      - run:
-          name: Upload Documentation
-          command: |
-            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/master"
               if [[ ! -z $CIRCLE_TAG ]]; then
                 DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/${CIRCLE_TAG:1}"
               fi
               aws s3 sync ./build/dokkaDoc/sdk $DOC_PATH --delete --acl public-read
             fi
-      - run:
-          name: Upload SDK to Bintray
-          command: |
-            if [[ ! -z $CIRCLE_TAG ]]; then
-              export SDK_VERSION=${CIRCLE_TAG:1}
-              export BINTRAY_USER=$BINTRAY_USER
-              export BINTRAY_APIKEY=$ANDROID_SDK_BINTRAY_API_KEY
-              ./gradlew install bintray
-            fi
-deployment:
-  fake_deploy_for_cci2:
-    tag: /.*/
-    commands:
-      - echo "make tags run in 2.0"
+workflows:
+  version: 2
+  doc:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /^v.*/

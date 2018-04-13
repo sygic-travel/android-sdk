@@ -41,6 +41,11 @@ class Spreader
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
 		for (place in places!!) {
+			if (place.location.lat == 0f && place.location.lng == 0f) {
+				hiddenPlaces.add(0, place)
+				continue
+			}
+
 			val canvasCoords = locationToCanvasCoords(place.location, bounds, canvasSize)
 			if (canvasCoords.x < 0 ||
 				canvasCoords.y < 0 ||

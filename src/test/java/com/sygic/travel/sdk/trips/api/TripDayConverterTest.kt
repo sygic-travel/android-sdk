@@ -26,7 +26,7 @@ class TripDayConverterTest {
 		assertSame(0, localDay.getDayIndex())
 
 		val localDay2 = converter.fromApi(apiDay, localTrip)
-		localTrip.days = localTrip.days + localDay
+		localTrip.days = localTrip.days + localDay2
 		assertSame(1, localDay2.getDayIndex())
 	}
 }
