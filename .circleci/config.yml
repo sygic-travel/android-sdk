@@ -23,22 +23,13 @@ jobs:
           paths:
             - ~/.gradle
       - run:
-          name: Unit Tests
-          command: |
-            ./gradlew assembleDebug assembleDebugUnitTest
-      - run:
-          name: Generate Documentation
+          name: Build Api Reference Doc
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               ./gradlew dokka
               cp /sdk-build/markdown-it.js ./.circleci/markdown-it.js
               cp /sdk-build/apidoc-style.css ./build/dokkaDoc/sdk/style.css
               node ./.circleci/build-apidoc.js ./build/dokkaDoc/sdk
-            fi
-      - run:
-          name: Upload Documentation
-          command: |
-            if [[ $CIRCLE_BRANCH = "master" ]] || [[ ! -z $CIRCLE_TAG ]]; then
               DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/master"
               if [[ ! -z $CIRCLE_TAG ]]; then
                 DOC_PATH="s3://docs.sygictravelapi.com/android-sdk/${CIRCLE_TAG:1}"
