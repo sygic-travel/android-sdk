@@ -36,8 +36,14 @@ jobs:
               fi
               aws s3 sync ./build/dokkaDoc/sdk $DOC_PATH --delete --acl public-read
             fi
-deployment:
-  fake_deploy_for_cci2:
-    tag: /.*/
-    commands:
-      - echo "make tags run in 2.0"
+workflows:
+  version: 2
+  doc:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /^v.*/
