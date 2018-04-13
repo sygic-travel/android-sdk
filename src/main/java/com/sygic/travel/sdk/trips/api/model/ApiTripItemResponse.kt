@@ -9,6 +9,7 @@ internal class ApiTripItemResponse(
 	val name: String?,
 	val version: Int,
 	val url: String,
+	val user_is_subscribed: Boolean,
 	val updated_at: String,
 	val is_deleted: Boolean,
 	val privacy_level: String,

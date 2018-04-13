@@ -22,6 +22,7 @@ internal class TripConverter constructor(
 		localTrip.name = apiTrip.name
 		localTrip.version = apiTrip.version
 		localTrip.url = apiTrip.url
+		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
 		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!.asDate()
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
@@ -42,6 +43,7 @@ internal class TripConverter constructor(
 		localTrip.name = apiTrip.name
 		localTrip.version = apiTrip.version
 		localTrip.url = apiTrip.url
+		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
 		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!.asDate()
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)

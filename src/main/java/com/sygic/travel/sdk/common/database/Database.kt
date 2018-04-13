@@ -19,7 +19,7 @@ import com.sygic.travel.sdk.trips.database.entities.TripDayItem
 		TripDay::class,
 		TripDayItem::class
 	],
-	version = 3
+	version = 4
 )
 @TypeConverters(Converters::class)
 internal abstract class Database : RoomDatabase() {

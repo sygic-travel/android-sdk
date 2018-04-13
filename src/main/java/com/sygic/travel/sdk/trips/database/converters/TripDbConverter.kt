@@ -25,6 +25,7 @@ internal class TripDbConverter {
 		trip.startsOn = dbTrip.startsOn?.asDate()
 		trip.privacyLevel = dbTrip.privacyLevel
 		trip.url = dbTrip.url
+		trip.isUserSubscribed = dbTrip.isUserSubscribed
 		trip.isDeleted = dbTrip.isDeleted
 		trip.media = dbTrip.media
 		trip.updatedAt = dbTrip.updatedAt.asDate()
@@ -45,6 +46,7 @@ internal class TripDbConverter {
 		dbTrip.privacyLevel = trip.privacyLevel
 		dbTrip.url = trip.url
 		dbTrip.privileges = trip.privileges
+		dbTrip.isUserSubscribed = trip.isUserSubscribed
 		dbTrip.isDeleted = trip.isDeleted
 		dbTrip.media = trip.media
 		dbTrip.updatedAt = trip.updatedAt!!.timeSeconds!!

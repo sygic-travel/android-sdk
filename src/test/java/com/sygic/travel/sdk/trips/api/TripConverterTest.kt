@@ -16,6 +16,7 @@ class TripConverterTest {
 			name = "Trip To Somewhere",
 			version = 1,
 			url = "http://travel.sygic.com",
+			user_is_subscribed = false,
 			updated_at = "2017-01-01T00:00:00Z",
 			is_deleted = false,
 			privacy_level = ApiTripListItemResponse.PRIVACY_PRIVATE,
