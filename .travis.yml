@@ -40,6 +40,5 @@ script: ./gradlew test connectedAndroidTest
 
 after_success:
   - if [[ ! -z $TRAVIS_TAG ]]; then
-      export SDK_VERSION=${TRAVIS_TAG:1}
-      ./gradlew install bintray
+      export SDK_VERSION=${TRAVIS_TAG:1} && ./gradlew install bintray;
     fi
