@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.directions.model.DirectionRequest
 
-internal class NaiveDirectionsService {
+internal class EstimatedDirectionsService {
 	companion object {
 		const val FALLBACK_DISTANCE_PEDESTRIAN_1 = 1.35
 		const val FALLBACK_DISTANCE_PEDESTRIAN_2 = 1.22

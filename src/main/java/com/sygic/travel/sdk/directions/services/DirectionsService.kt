@@ -5,7 +5,7 @@ import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class DirectionsService constructor(
 	private val apiDirectionsService: ApiDirectionsService,
-	private val naiveDirectionsService: NaiveDirectionsService,
+	private val estimatedDirectionsService: EstimatedDirectionsService,
 	private val cacheService: CacheService
 ) {
 	companion object {
@@ -17,7 +17,7 @@ internal class DirectionsService constructor(
 	fun getSimpleDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		return cachedDirections.mapIndexed { i, directions ->
-			directions ?: naiveDirectionsService.getDirection(requests[i])
+			directions ?: estimatedDirectionsService.getDirection(requests[i])
 		}
 	}
 
@@ -29,7 +29,7 @@ internal class DirectionsService constructor(
 		cacheService.storeDirections(missingRequests, apiDirections)
 
 		return cachedDirections.mapIndexed { i, directions ->
-			return@mapIndexed directions ?: apiDirections.removeAt(0) ?: naiveDirectionsService.getDirection(requests[i])
+			return@mapIndexed directions ?: apiDirections.removeAt(0) ?: estimatedDirectionsService.getDirection(requests[i])
 		}
 	}
 }

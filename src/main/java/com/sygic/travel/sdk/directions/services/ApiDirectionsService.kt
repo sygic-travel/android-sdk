@@ -13,7 +13,7 @@ import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient,
-	private val naiveDirectionsService: NaiveDirectionsService
+	private val estimatedDirectionsService: EstimatedDirectionsService
 ) {
 	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
 		val directions = getCalculatedDirections(requests)
@@ -35,7 +35,7 @@ internal class ApiDirectionsService constructor(
 				it.filterTo(car, { it2 -> it2.mode == DirectionMode.CAR })
 			}
 			if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
-				plane.add(naiveDirectionsService.getPlaneDirection(airDistance))
+				plane.add(estimatedDirectionsService.getPlaneDirection(airDistance))
 			}
 
 			if (pedestrian.isEmpty() && car.isEmpty()) {
