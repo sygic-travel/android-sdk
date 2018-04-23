@@ -31,8 +31,16 @@ class DirectionsFacade internal constructor(
 	/**
 	 * Queries the API for full directions. Reuses already cached directions.
 	 */
-	fun getComplexDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
+	fun getDirection(request: DirectionRequest): DirectionResponse? {
 		checkNotRunningOnMainThread()
-		return directionsService.getComplexDirections(requests)
+		return directionsService.getDirections(listOf(request)).first()
+	}
+
+	/**
+	 * Queries the API for full directions. Reuses already cached directions.
+	 */
+	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		checkNotRunningOnMainThread()
+		return directionsService.getDirections(requests)
 	}
 }

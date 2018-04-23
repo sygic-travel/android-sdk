@@ -16,15 +16,13 @@ internal class DirectionsService constructor(
 		return requests.map { estimatedDirectionsService.getDirection(it) }
 	}
 
-	fun getComplexDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
+	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		val missingRequests = requests.filterIndexed { i, _ -> cachedDirections[i] == null }
 
-		val apiDirections = ArrayList(apiDirectionsService.getDirections(missingRequests))
+		val apiDirections = apiDirectionsService.getDirections(missingRequests).toMutableList()
 		cacheService.storeDirections(missingRequests, apiDirections)
 
-		return cachedDirections.mapIndexed { i, directions ->
-			return@mapIndexed directions ?: apiDirections.removeAt(0) ?: estimatedDirectionsService.getDirection(requests[i])
-		}
+		return cachedDirections.map { it ?: apiDirections.removeAt(0) }
 	}
 }
