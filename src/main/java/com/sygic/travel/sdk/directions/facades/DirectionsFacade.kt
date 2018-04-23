@@ -13,11 +13,19 @@ class DirectionsFacade internal constructor(
 	private val directionsService: DirectionsService
 ) {
 	/**
-	 * Calculates directions fast & locally. Uses cached or air-distance estimated directions.
+	 * Calculates air-distance estimated direction.
+	 */
+	fun getEstimatedDirection(request: DirectionRequest): DirectionResponse {
+		checkNotRunningOnMainThread()
+		return directionsService.getEstimatedDirection(request)
+	}
+
+	/**
+	 * Calculates air-distance estimated directions.
 	 */
 	fun getEstimatedDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
 		checkNotRunningOnMainThread()
-		return directionsService.getSimpleDirections(requests)
+		return directionsService.getEstimatedDirections(requests)
 	}
 
 	/**

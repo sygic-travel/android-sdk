@@ -8,11 +8,12 @@ internal class DirectionsService constructor(
 	private val estimatedDirectionsService: EstimatedDirectionsService,
 	private val cacheService: CacheService
 ) {
-	fun getSimpleDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
-		val cachedDirections = cacheService.getCachedDirections(requests)
-		return cachedDirections.mapIndexed { i, directions ->
-			directions ?: estimatedDirectionsService.getDirection(requests[i])
-		}
+	fun getEstimatedDirection(request: DirectionRequest): DirectionResponse {
+		return estimatedDirectionsService.getDirection(request)
+	}
+
+	fun getEstimatedDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
+		return requests.map { estimatedDirectionsService.getDirection(it) }
 	}
 
 	fun getComplexDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
