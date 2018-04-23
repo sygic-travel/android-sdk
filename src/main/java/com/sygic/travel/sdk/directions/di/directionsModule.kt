@@ -15,8 +15,7 @@ import com.sygic.travel.sdk.directions.services.EstimatedDirectionsService
 internal val directionsModule = Kodein.Module {
 	bind<ApiDirectionsService>() with singleton {
 		ApiDirectionsService(
-			instance<SygicTravelApiClient>(),
-			instance<EstimatedDirectionsService>()
+			instance<SygicTravelApiClient>()
 		)
 	}
 
