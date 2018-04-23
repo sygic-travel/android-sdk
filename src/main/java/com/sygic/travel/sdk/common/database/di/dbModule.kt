@@ -8,6 +8,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import com.sygic.travel.sdk.common.database.Database
 import com.sygic.travel.sdk.common.database.migrations.migration1_2
+import com.sygic.travel.sdk.common.database.migrations.migration2_3
 
 internal val dbModule = Kodein.Module {
 	bind<Database>() with singleton {
@@ -17,7 +18,8 @@ internal val dbModule = Kodein.Module {
 			"st-sdk-db"
 		)
 			.addMigrations(
-				migration1_2
+				migration1_2,
+				migration2_3
 			)
 			.build()
 	}

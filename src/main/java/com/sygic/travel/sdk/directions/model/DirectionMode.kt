@@ -7,6 +7,6 @@ enum class DirectionMode {
 	CAR,
 	PEDESTRIAN,
 	PLANE,
-	PUBLIC_TRANSIT,
+	PUBLIC_TRANSPORT,
 	TRAIN,
 }
