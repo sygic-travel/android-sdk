@@ -16,42 +16,34 @@ internal class ApiDirectionsService constructor(
 	private val estimatedDirectionsService: EstimatedDirectionsService
 ) {
 	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
-		val directions = getCalculatedDirections(requests)
-		return directions.mapIndexed { i, it ->
+		val apiDirections = getCalculatedDirections(requests)
+		return apiDirections.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
 				return@mapIndexed null
 			}
 
 			val request = requests[i]
 			val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
-			val pedestrian = arrayListOf<Direction>()
-			val car = arrayListOf<Direction>()
-			val plane = arrayListOf<Direction>()
+			val directions = mutableListOf<Direction>()
 
 			if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
-				it.filterTo(pedestrian, { it2 -> it2.mode == DirectionMode.PEDESTRIAN })
+				it.filterTo(directions, { it2 -> it2.mode == DirectionMode.PEDESTRIAN })
 			}
 			if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
-				it.filterTo(car, { it2 -> it2.mode == DirectionMode.CAR })
+				it.filterTo(directions, { it2 -> it2.mode == DirectionMode.CAR })
 			}
 			if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
-				plane.add(estimatedDirectionsService.getPlaneDirection(airDistance))
+				directions.add(estimatedDirectionsService.getPlaneDirection(airDistance))
 			}
 
-			if (pedestrian.isEmpty() && car.isEmpty()) {
-				return@mapIndexed null
-			} else {
-				return@mapIndexed DirectionResponse(
-					startLocation = request.startLocation,
-					endLocation = request.endLocation,
-					waypoints = request.waypoints,
-					avoid = request.avoid,
-					airDistance = airDistance,
-					pedestrian = pedestrian,
-					car = car,
-					plane = plane
-				)
-			}
+			return@mapIndexed DirectionResponse(
+				startLocation = request.startLocation,
+				endLocation = request.endLocation,
+				waypoints = request.waypoints,
+				avoid = request.avoid,
+				airDistance = airDistance,
+				results = directions
+			)
 		}
 	}
 

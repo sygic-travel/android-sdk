@@ -23,18 +23,16 @@ internal class EstimatedDirectionsService {
 
 	fun getDirection(request: DirectionRequest): DirectionResponse {
 		val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
-		val pedestrian = arrayListOf<Direction>()
-		val car = arrayListOf<Direction>()
-		val plane = arrayListOf<Direction>()
+		val directions = arrayListOf<Direction>()
 
 		if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
-			pedestrian.add(getPedestrianFallbackDirection(airDistance))
+			directions.add(getPedestrianFallbackDirection(airDistance))
 		}
 		if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
-			car.add(getCarFallbackDirection(airDistance))
+			directions.add(getCarFallbackDirection(airDistance))
 		}
 		if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
-			plane.add(getPlaneDirection(airDistance))
+			directions.add(getPlaneDirection(airDistance))
 		}
 
 		return DirectionResponse(
@@ -43,9 +41,7 @@ internal class EstimatedDirectionsService {
 			waypoints = request.waypoints,
 			avoid = request.avoid,
 			airDistance = airDistance,
-			pedestrian = pedestrian,
-			car = car,
-			plane = plane
+			results = directions
 		)
 	}
 
