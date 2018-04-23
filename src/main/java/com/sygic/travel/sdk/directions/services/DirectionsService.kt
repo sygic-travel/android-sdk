@@ -1,19 +1,13 @@
 package com.sygic.travel.sdk.directions.services
 
-import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.directions.model.DirectionRequest
+import com.sygic.travel.sdk.directions.model.DirectionResponse
 
 internal class DirectionsService constructor(
 	private val apiDirectionsService: ApiDirectionsService,
 	private val estimatedDirectionsService: EstimatedDirectionsService,
 	private val cacheService: CacheService
 ) {
-	companion object {
-		const val PEDESTRIAN_MAX_LIMIT = 50_000
-		const val CAR_MAX_LIMIT = 2_000_000
-		const val PLANE_MIN_LIMIT = 50_000
-	}
-
 	fun getSimpleDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		return cachedDirections.mapIndexed { i, directions ->
