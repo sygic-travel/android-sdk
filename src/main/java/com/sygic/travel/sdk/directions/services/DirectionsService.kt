@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.directions.services
 
 import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class DirectionsService constructor(
 	private val apiDirectionsService: ApiDirectionsService,
@@ -14,14 +14,14 @@ internal class DirectionsService constructor(
 		const val PLANE_MIN_LIMIT = 50_000
 	}
 
-	fun getSimpleDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getSimpleDirections(requests: List<DirectionRequest>): List<Directions> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		return cachedDirections.mapIndexed { i, directions ->
 			directions ?: naiveDirectionsService.getDirection(requests[i])
 		}
 	}
 
-	fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getComplexDirections(requests: List<DirectionRequest>): List<Directions> {
 		val cachedDirections = cacheService.getCachedDirections(requests)
 		val missingRequests = requests.filterIndexed { i, _ -> cachedDirections[i] == null }
 

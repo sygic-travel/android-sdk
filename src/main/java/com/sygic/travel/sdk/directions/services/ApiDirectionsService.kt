@@ -9,13 +9,13 @@ import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val naiveDirectionsService: NaiveDirectionsService
 ) {
-	fun getDirections(requests: List<DirectionsRequest>): List<Directions?> {
+	fun getDirections(requests: List<DirectionRequest>): List<Directions?> {
 		val directions = getCalculatedDirections(requests)
 		return directions.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
@@ -55,7 +55,7 @@ internal class ApiDirectionsService constructor(
 		}
 	}
 
-	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>?> {
+	private fun getCalculatedDirections(requests: List<DirectionRequest>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),

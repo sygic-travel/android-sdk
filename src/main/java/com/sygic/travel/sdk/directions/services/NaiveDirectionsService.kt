@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class NaiveDirectionsService {
 	companion object {
@@ -21,7 +21,7 @@ internal class NaiveDirectionsService {
 		const val FALLBACK_PLANE_SPEED = 250.0 // 900 km/h
 	}
 
-	fun getDirection(request: DirectionsRequest): Directions {
+	fun getDirection(request: DirectionRequest): Directions {
 		val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
 		val pedestrian = arrayListOf<Direction>()
 		val car = arrayListOf<Direction>()

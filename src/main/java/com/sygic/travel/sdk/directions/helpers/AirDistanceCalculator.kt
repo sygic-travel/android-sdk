@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.directions.helpers
 
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 import com.sygic.travel.sdk.places.model.geo.Location
 
 internal object AirDistanceCalculator {
@@ -16,7 +16,7 @@ internal object AirDistanceCalculator {
 		return Math.round(results[0])
 	}
 
-	fun getAirDistances(path: List<DirectionsRequest>): List<Int> {
+	fun getAirDistances(path: List<DirectionRequest>): List<Int> {
 		return path.map { getAirDistance(it.startLocation, it.endLocation) }
 	}
 }
