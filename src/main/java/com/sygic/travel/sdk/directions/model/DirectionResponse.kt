@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.directions.model
 import com.sygic.travel.sdk.places.model.geo.Location
 import java.io.Serializable
 
-class Directions constructor(
+class DirectionResponse constructor(
 	val startLocation: Location,
 	val endLocation: Location,
 	val waypoints: List<Location>,

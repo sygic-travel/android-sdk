@@ -8,14 +8,14 @@ import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
-import com.sygic.travel.sdk.directions.model.Directions
+import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.directions.model.DirectionRequest
 
 internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val naiveDirectionsService: NaiveDirectionsService
 ) {
-	fun getDirections(requests: List<DirectionRequest>): List<Directions?> {
+	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
 		val directions = getCalculatedDirections(requests)
 		return directions.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
@@ -41,7 +41,7 @@ internal class ApiDirectionsService constructor(
 			if (pedestrian.isEmpty() && car.isEmpty()) {
 				return@mapIndexed null
 			} else {
-				return@mapIndexed Directions(
+				return@mapIndexed DirectionResponse(
 					startLocation = request.startLocation,
 					endLocation = request.endLocation,
 					waypoints = request.waypoints,

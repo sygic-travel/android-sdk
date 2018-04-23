@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.directions.facades
 
-import com.sygic.travel.sdk.directions.model.Directions
+import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.directions.model.DirectionRequest
 import com.sygic.travel.sdk.directions.services.DirectionsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
@@ -15,7 +15,7 @@ class DirectionsFacade internal constructor(
 	/**
 	 * Calculates directions fast & locally. Uses cached or air-distance estimated directions.
 	 */
-	fun getEstimatedDirections(requests: List<DirectionRequest>): List<Directions> {
+	fun getEstimatedDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
 		checkNotRunningOnMainThread()
 		return directionsService.getSimpleDirections(requests)
 	}
@@ -23,7 +23,7 @@ class DirectionsFacade internal constructor(
 	/**
 	 * Queries the API for full directions. Reuses already cached directions.
 	 */
-	fun getComplexDirections(requests: List<DirectionRequest>): List<Directions> {
+	fun getComplexDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
 		checkNotRunningOnMainThread()
 		return directionsService.getComplexDirections(requests)
 	}
