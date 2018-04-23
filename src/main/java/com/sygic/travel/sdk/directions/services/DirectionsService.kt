@@ -25,4 +25,8 @@ internal class DirectionsService constructor(
 
 		return cachedDirections.map { it ?: apiDirections.removeAt(0) }
 	}
+
+	fun getCachedDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		return cacheService.getCachedDirections(requests)
+	}
 }

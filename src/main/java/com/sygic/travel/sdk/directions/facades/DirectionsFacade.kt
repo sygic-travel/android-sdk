@@ -43,4 +43,12 @@ class DirectionsFacade internal constructor(
 		checkNotRunningOnMainThread()
 		return directionsService.getDirections(requests)
 	}
+
+	/**
+	 * Returns locally cached API full directions.
+	 */
+	fun getCachedDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		checkNotRunningOnMainThread()
+		return directionsService.getCachedDirections(requests)
+	}
 }
