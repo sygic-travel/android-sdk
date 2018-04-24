@@ -19,10 +19,10 @@ import com.sygic.travel.sdk.trips.database.entities.TripDayItem
 		TripDay::class,
 		TripDayItem::class
 	],
-	version = 2
+	version = 3
 )
 @TypeConverters(Converters::class)
-abstract internal class Database : RoomDatabase() {
+internal abstract class Database : RoomDatabase() {
 	abstract fun favoriteDao(): FavoriteDao
 	abstract fun tripsDao(): TripsDao
 	abstract fun tripDaysDao(): TripDaysDao

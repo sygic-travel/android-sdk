@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.directions.facades
 
-import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionResponse
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 import com.sygic.travel.sdk.directions.services.DirectionsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
 
@@ -13,18 +13,42 @@ class DirectionsFacade internal constructor(
 	private val directionsService: DirectionsService
 ) {
 	/**
-	 * Calculates directions fast & locally. Uses cached or air-distance estimated directions.
+	 * Calculates air-distance estimated direction.
 	 */
-	fun getEstimatedDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getEstimatedDirection(request: DirectionRequest): DirectionResponse {
 		checkNotRunningOnMainThread()
-		return directionsService.getSimpleDirections(requests)
+		return directionsService.getEstimatedDirection(request)
+	}
+
+	/**
+	 * Calculates air-distance estimated directions.
+	 */
+	fun getEstimatedDirections(requests: List<DirectionRequest>): List<DirectionResponse> {
+		checkNotRunningOnMainThread()
+		return directionsService.getEstimatedDirections(requests)
 	}
 
 	/**
 	 * Queries the API for full directions. Reuses already cached directions.
 	 */
-	fun getComplexDirections(requests: List<DirectionsRequest>): List<Directions> {
+	fun getDirection(request: DirectionRequest): DirectionResponse? {
 		checkNotRunningOnMainThread()
-		return directionsService.getComplexDirections(requests)
+		return directionsService.getDirections(listOf(request)).first()
+	}
+
+	/**
+	 * Queries the API for full directions. Reuses already cached directions.
+	 */
+	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		checkNotRunningOnMainThread()
+		return directionsService.getDirections(requests)
+	}
+
+	/**
+	 * Returns locally cached API full directions.
+	 */
+	fun getCachedDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		checkNotRunningOnMainThread()
+		return directionsService.getCachedDirections(requests)
 	}
 }

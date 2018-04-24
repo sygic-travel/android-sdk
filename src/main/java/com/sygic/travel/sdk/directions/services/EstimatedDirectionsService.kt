@@ -3,53 +3,52 @@ package com.sygic.travel.sdk.directions.services
 import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionMode
-import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
+import com.sygic.travel.sdk.directions.model.DirectionResponse
 
-internal class NaiveDirectionsService {
+internal class EstimatedDirectionsService {
 	companion object {
-		const val FALLBACK_DISTANCE_PEDESTRIAN_1 = 1.35
-		const val FALLBACK_DISTANCE_PEDESTRIAN_2 = 1.22
-		const val FALLBACK_DISTANCE_PEDESTRIAN_3 = 1.106
-		const val FALLBACK_DISTANCE_CAR_1 = 1.8
-		const val FALLBACK_DISTANCE_CAR_2 = 1.6
-		const val FALLBACK_DISTANCE_CAR_3 = 1.2
-		const val FALLBACK_SPEED_PEDESTRIAN = 1.3333 // 4.8 km/h
-		const val FALLBACK_SPEED_CAR_1 = 7.5 // 27 km/h
-		const val FALLBACK_CAR_SPEED_2 = 15.0 // 54 km/h
-		const val FALLBACK_CAR_SPEED_3 = 25.0 // 90 km/h
-		const val FALLBACK_PLANE_SPEED = 250.0 // 900 km/h
+		private const val PEDESTRIAN_MAX_LIMIT = 20_000
+		private const val CAR_MAX_LIMIT = 2_000_000
+		private const val PLANE_MIN_LIMIT = 100_000
+		private const val FALLBACK_DISTANCE_PEDESTRIAN_1 = 1.35
+		private const val FALLBACK_DISTANCE_PEDESTRIAN_2 = 1.22
+		private const val FALLBACK_DISTANCE_PEDESTRIAN_3 = 1.106
+		private const val FALLBACK_DISTANCE_CAR_1 = 1.8
+		private const val FALLBACK_DISTANCE_CAR_2 = 1.6
+		private const val FALLBACK_DISTANCE_CAR_3 = 1.2
+		private const val FALLBACK_SPEED_PEDESTRIAN = 1.3333 // 4.8 km/h
+		private const val FALLBACK_SPEED_CAR_1 = 7.5 // 27 km/h
+		private const val FALLBACK_CAR_SPEED_2 = 15.0 // 54 km/h
+		private const val FALLBACK_CAR_SPEED_3 = 25.0 // 90 km/h
+		private const val FALLBACK_PLANE_SPEED = 250.0 // 900 km/h
 	}
 
-	fun getDirection(request: DirectionsRequest): Directions {
+	fun getDirection(request: DirectionRequest): DirectionResponse {
 		val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
-		val pedestrian = arrayListOf<Direction>()
-		val car = arrayListOf<Direction>()
-		val plane = arrayListOf<Direction>()
+		val directions = mutableListOf<Direction>()
 
-		if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
-			pedestrian.add(getPedestrianFallbackDirection(airDistance))
+		if (airDistance <= PEDESTRIAN_MAX_LIMIT) {
+			directions.add(getPedestrianFallbackDirection(airDistance))
 		}
-		if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
-			car.add(getCarFallbackDirection(airDistance))
+		if (airDistance <= CAR_MAX_LIMIT) {
+			directions.add(getCarFallbackDirection(airDistance))
 		}
-		if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
-			plane.add(getPlaneDirection(airDistance))
+		if (airDistance > PLANE_MIN_LIMIT) {
+			directions.add(getPlaneDirection(airDistance))
 		}
 
-		return Directions(
+		return DirectionResponse(
 			startLocation = request.startLocation,
 			endLocation = request.endLocation,
 			waypoints = request.waypoints,
 			avoid = request.avoid,
 			airDistance = airDistance,
-			pedestrian = pedestrian,
-			car = car,
-			plane = plane
+			results = directions
 		)
 	}
 
-	fun getPedestrianFallbackDirection(distance: Int): Direction {
+	private fun getPedestrianFallbackDirection(distance: Int): Direction {
 		val fallbackDistance = getPedestrianFallbackDistance(distance)
 		return Direction(
 			mode = DirectionMode.PEDESTRIAN,
@@ -60,7 +59,7 @@ internal class NaiveDirectionsService {
 		)
 	}
 
-	fun getCarFallbackDirection(distance: Int): Direction {
+	private fun getCarFallbackDirection(distance: Int): Direction {
 		val fallbackDistance = getCarFallbackDistance(distance)
 		return Direction(
 			mode = DirectionMode.CAR,
@@ -71,7 +70,7 @@ internal class NaiveDirectionsService {
 		)
 	}
 
-	fun getPlaneDirection(distance: Int): Direction {
+	private fun getPlaneDirection(distance: Int): Direction {
 		return Direction(
 			mode = DirectionMode.PLANE,
 			distance = distance,

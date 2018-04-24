@@ -5,10 +5,10 @@ buildscript {
 		mavenCentral()
 	}
 
-	ext.kotlin_version = "1.2.31"
+	ext.kotlin_version = "1.2.40"
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:3.1.1'
+		classpath 'com.android.tools.build:gradle:3.1.2'
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 		classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
@@ -60,7 +60,7 @@ dependencies {
 	implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
 	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 	implementation 'se.ansman.kotshi:api:1.0.2'
 
 	kapt 'android.arch.persistence.room:compiler:1.0.0'

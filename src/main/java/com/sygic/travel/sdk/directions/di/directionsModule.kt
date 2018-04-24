@@ -10,18 +10,17 @@ import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.directions.services.ApiDirectionsService
 import com.sygic.travel.sdk.directions.services.CacheService
 import com.sygic.travel.sdk.directions.services.DirectionsService
-import com.sygic.travel.sdk.directions.services.NaiveDirectionsService
+import com.sygic.travel.sdk.directions.services.EstimatedDirectionsService
 
 internal val directionsModule = Kodein.Module {
 	bind<ApiDirectionsService>() with singleton {
 		ApiDirectionsService(
-			instance<SygicTravelApiClient>(),
-			instance<NaiveDirectionsService>()
+			instance<SygicTravelApiClient>()
 		)
 	}
 
-	bind<NaiveDirectionsService>() with singleton {
-		NaiveDirectionsService()
+	bind<EstimatedDirectionsService>() with singleton {
+		EstimatedDirectionsService()
 	}
 
 	bind<CacheService>() with singleton {
@@ -31,7 +30,7 @@ internal val directionsModule = Kodein.Module {
 	bind<DirectionsService>() with singleton {
 		DirectionsService(
 			instance<ApiDirectionsService>(),
-			instance<NaiveDirectionsService>(),
+			instance<EstimatedDirectionsService>(),
 			instance<CacheService>()
 		)
 	}

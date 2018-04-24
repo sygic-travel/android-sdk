@@ -2,20 +2,20 @@ package com.sygic.travel.sdk.directions.services
 
 import android.content.Context
 import com.sygic.travel.sdk.directions.helpers.CachingHelper
-import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionResponse
+import com.sygic.travel.sdk.directions.model.DirectionRequest
 import java.io.File
 
 internal class CacheService constructor(
 	context: Context
 ) {
-	private val cache = CachingHelper<Directions>(File(context.cacheDir.path + File.separator + "sygic-travel-directions"))
+	private val cache = CachingHelper<DirectionResponse>(File(context.cacheDir.path + File.separator + "sygic-travel-directions"))
 
-	fun getCachedDirections(requests: List<DirectionsRequest>): List<Directions?> {
+	fun getCachedDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
 		return requests.map { getCachedDirections(it) }
 	}
 
-	fun storeDirections(requests: List<DirectionsRequest>, allDirections: List<Directions?>) {
+	fun storeDirections(requests: List<DirectionRequest>, allDirections: List<DirectionResponse?>) {
 		allDirections.forEachIndexed { i, directions ->
 			if (directions != null) {
 				val key = getCacheKey(requests[i])
@@ -24,11 +24,11 @@ internal class CacheService constructor(
 		}
 	}
 
-	private fun getCachedDirections(request: DirectionsRequest): Directions? {
+	private fun getCachedDirections(request: DirectionRequest): DirectionResponse? {
 		return cache.get(getCacheKey(request))
 	}
 
-	private fun getCacheKey(request: DirectionsRequest): String {
+	private fun getCacheKey(request: DirectionRequest): String {
 		return request.hashCode().toString()
 	}
 }

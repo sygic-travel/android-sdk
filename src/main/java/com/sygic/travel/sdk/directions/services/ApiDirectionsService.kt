@@ -7,55 +7,34 @@ import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
 import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionMode
-import com.sygic.travel.sdk.directions.model.Directions
-import com.sygic.travel.sdk.directions.model.DirectionsRequest
+import com.sygic.travel.sdk.directions.model.DirectionRequest
+import com.sygic.travel.sdk.directions.model.DirectionResponse
 
 internal class ApiDirectionsService constructor(
-	private val apiClient: SygicTravelApiClient,
-	private val naiveDirectionsService: NaiveDirectionsService
+	private val apiClient: SygicTravelApiClient
 ) {
-	fun getDirections(requests: List<DirectionsRequest>): List<Directions?> {
-		val directions = getCalculatedDirections(requests)
-		return directions.mapIndexed { i, it ->
+	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+		val apiDirections = getCalculatedDirections(requests)
+		return apiDirections.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
 				return@mapIndexed null
 			}
 
 			val request = requests[i]
 			val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
-			val pedestrian = arrayListOf<Direction>()
-			val car = arrayListOf<Direction>()
-			val plane = arrayListOf<Direction>()
 
-			if (airDistance <= DirectionsService.PEDESTRIAN_MAX_LIMIT) {
-				it.filterTo(pedestrian, { it2 -> it2.mode == DirectionMode.PEDESTRIAN })
-			}
-			if (airDistance <= DirectionsService.CAR_MAX_LIMIT) {
-				it.filterTo(car, { it2 -> it2.mode == DirectionMode.CAR })
-			}
-			if (airDistance > DirectionsService.PLANE_MIN_LIMIT) {
-				plane.add(naiveDirectionsService.getPlaneDirection(airDistance))
-			}
-
-			if (pedestrian.isEmpty() && car.isEmpty()) {
-				return@mapIndexed null
-			} else {
-				return@mapIndexed Directions(
-					startLocation = request.startLocation,
-					endLocation = request.endLocation,
-					waypoints = request.waypoints,
-					avoid = request.avoid,
-					airDistance = airDistance,
-					pedestrian = pedestrian,
-					car = car,
-					plane = plane
-				)
-			}
+			return@mapIndexed DirectionResponse(
+				startLocation = request.startLocation,
+				endLocation = request.endLocation,
+				waypoints = request.waypoints,
+				avoid = request.avoid,
+				airDistance = airDistance,
+				results = it
+			)
 		}
 	}
 
-	private fun getCalculatedDirections(requests: List<DirectionsRequest>): List<List<Direction>?> {
+	private fun getCalculatedDirections(requests: List<DirectionRequest>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
