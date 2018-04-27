@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.tours.service
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.tours.facade.ToursGetYourGuideQuery
 import com.sygic.travel.sdk.tours.facade.ToursViatorQuery
 import com.sygic.travel.sdk.tours.model.Tour
@@ -11,17 +12,16 @@ internal class ToursService(
 	private val apiClient: SygicTravelApiClient
 ) {
 	fun getToursViator(query: ToursViatorQuery): List<Tour> {
-		val request = apiClient.getToursViator(
+		return apiClient.getToursViator(
 			parentPlaceId = query.parentPlaceId,
 			page = query.page,
 			sortBy = query.sortBy?.apiSortBy,
 			sortDirection = query.sortDirection?.apiSortDirection
-		)
-		return request.execute().body()!!.data!!.fromApi()
+		).checkedExecute().body()!!.data!!.fromApi()
 	}
 
 	fun getToursGetYourGuide(query: ToursGetYourGuideQuery): List<Tour> {
-		val request = apiClient.getToursGetYourGuide(
+		return apiClient.getToursGetYourGuide(
 			query = query.query,
 			bounds = query.bounds?.toApiQuery(),
 			parentPlaceId = query.parentPlaceId,
@@ -33,7 +33,6 @@ internal class ToursService(
 			count = query.count,
 			sortBy = query.sortBy?.apiSortBy,
 			sortDirection = query.sortDirection?.apiSortDirection
-		)
-		return request.execute().body()!!.data!!.fromApi()
+		).checkedExecute().body()!!.data!!.fromApi()
 	}
 }

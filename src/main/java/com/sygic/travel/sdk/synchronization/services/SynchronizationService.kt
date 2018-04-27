@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.synchronization.services
 
 import android.content.SharedPreferences
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.utils.DateTimeHelper
@@ -55,7 +56,7 @@ internal class SynchronizationService constructor(
 		val since = sharedPreferences.getLong(SINCE_KEY, 0)
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
-		).execute().body()!!
+		).checkedExecute().body()!!
 
 		val changedTripIds = mutableListOf<String>()
 		val deletedTripIds = mutableListOf<String>()

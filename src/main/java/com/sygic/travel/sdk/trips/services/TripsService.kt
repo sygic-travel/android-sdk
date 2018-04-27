@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.trips.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.trips.database.converters.TripDayDbConverter
 import com.sygic.travel.sdk.trips.database.converters.TripDayItemDbConverter
 import com.sygic.travel.sdk.trips.database.converters.TripDbConverter
@@ -117,7 +118,7 @@ internal class TripsService constructor(
 	}
 
 	fun emptyTrash() {
-		val response = apiClient.deleteTripsInTrash().execute().body()!!
+		val response = apiClient.deleteTripsInTrash().checkedExecute().body()!!
 		for (tripId in response.data!!.deleted_trip_ids) {
 			deleteTrip(tripId)
 		}
