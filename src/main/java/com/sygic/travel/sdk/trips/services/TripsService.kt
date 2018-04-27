@@ -68,7 +68,7 @@ internal class TripsService constructor(
 	fun saveTripAsChanged(trip: TripInfo) {
 		trip.isChanged = true
 		trip.updatedAt = DateTimeHelper.now()
-		if (trip.isLocal()) {
+		if (tripsDao.exists(trip.id) == null) {
 			createTrip(trip)
 		} else {
 			updateTrip(trip)

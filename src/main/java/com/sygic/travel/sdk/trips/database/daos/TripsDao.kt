@@ -70,6 +70,9 @@ internal interface TripsDao {
 	@Query("SELECT COUNT(*) FROM trips WHERE is_changed = 1")
 	fun getAllChangedCount(): Int
 
+	@Query("SELECT id FROM trips WHERE id = :id")
+	fun exists(id: String): String?
+
 	@Query("DELETE FROM trips WHERE id = :id")
 	fun delete(id: String)
 
