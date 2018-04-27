@@ -104,7 +104,7 @@ internal class SessionService(
 			return RegistrationResponseCode.ERROR_ALREADY_REGISTERED
 
 		} else {
-			val errorResponse = moshi.adapter(ErrorResponse::class.java).fromJsonValue(response.errorBody()?.string())
+			val errorResponse = moshi.adapter(ErrorResponse::class.java).fromJson(response.errorBody()!!.string())
 			return when (errorResponse?.type) {
 				"validation.password.min_length" -> RegistrationResponseCode.ERROR_PASSWORD_MIN_LENGTH
 				"validation.username.min_length", "validation.email.invalid_format" -> RegistrationResponseCode.ERROR_EMAIL_INVALID_FORMAT
