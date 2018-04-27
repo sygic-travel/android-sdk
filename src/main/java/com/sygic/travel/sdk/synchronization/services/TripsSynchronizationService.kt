@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.synchronization.services
 
-import com.sygic.travel.sdk.common.ApiResponseException
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.synchronization.model.TripConflictInfo
 import com.sygic.travel.sdk.synchronization.model.TripConflictResolution
@@ -11,8 +11,7 @@ import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import retrofit2.Response
-import java.io.IOException
+import retrofit2.HttpException
 import java.util.Date
 
 internal class TripsSynchronizationService constructor(
@@ -25,8 +24,7 @@ internal class TripsSynchronizationService constructor(
 
 	fun sync(changedTripIds: List<String>, deletedTripIds: List<String>, syncResult: SynchronizationResult) {
 		val changedTrips = if (changedTripIds.isNotEmpty()) {
-			val changesResponse = apiClient.getTrips(changedTripIds.joinToString("|")).execute()
-			checkResponse(changesResponse)
+			val changesResponse = apiClient.getTrips(changedTripIds.joinToString("|")).checkedExecute()
 			changesResponse.body()!!.data!!.trips
 		} else {
 			listOf()
@@ -84,8 +82,7 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
-		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).execute()
-		checkResponse(createResponse)
+		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).checkedExecute()
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
@@ -100,9 +97,10 @@ internal class TripsSynchronizationService constructor(
 			tripsService.deleteTrip(localTrip.id)
 			syncResult.changedTripIds.add(localTrip.id)
 			return
+		} else if (!updateResponse.isSuccessful) {
+			throw HttpException(updateResponse)
 		}
 
-		checkResponse(updateResponse)
 		val data = updateResponse.body()!!.data!!
 		var apiTripData = data.trip
 		when (data.conflict_resolution) {
@@ -129,8 +127,7 @@ internal class TripsSynchronizationService constructor(
 						localTrip.updatedAt = DateTimeHelper.now()
 						// if request fails, user will not have to do the decision again
 						tripsService.updateTrip(localTrip)
-						val repeatedUpdateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
-						checkResponse(repeatedUpdateResponse)
+						val repeatedUpdateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).checkedExecute()
 						apiTripData = repeatedUpdateResponse.body()!!.data!!.trip
 						updateLocalTrip(apiTripData, syncResult)
 					}
@@ -145,18 +142,6 @@ internal class TripsSynchronizationService constructor(
 			else -> {
 				// do not track a change, restore isChanged to false
 				tripsService.updateTrip(tripConverter.fromApi(apiTripData))
-			}
-		}
-	}
-
-	private fun checkResponse(response: Response<*>) {
-		if (!response.isSuccessful) {
-			if (response.code() < 500) {
-				val exception = ApiResponseException("Invalid request: " + response.code())
-				exception.response = response
-				throw exception
-			} else {
-				throw IOException("Server error: " + response.code())
 			}
 		}
 	}
