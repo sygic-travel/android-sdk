@@ -32,6 +32,14 @@ class TripsFacade internal constructor(
 		return tripsService.getDeletedTrips()
 	}
 
+	/**
+	 * Fetches trip from API without storing it into local db.
+	 */
+	fun fetchTrip(id: String): Trip? {
+		checkNotRunningOnMainThread()
+		return tripsService.fetchTrip(id)
+	}
+
 	fun getTrip(id: String): Trip? {
 		checkNotRunningOnMainThread()
 		return tripsService.getTrip(id)
