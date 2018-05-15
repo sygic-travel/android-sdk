@@ -67,7 +67,7 @@ dependencies {
 	kapt 'se.ansman.kotshi:compiler:1.0.2'
 
 	testImplementation "android.arch.persistence.room:testing:1.0.0"
-	testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
+	testImplementation "io.mockk:mockk:1.7.17"
 	testImplementation "junit:junit:4.12"
 
 	androidTestImplementation "android.arch.persistence.room:testing:1.0.0"

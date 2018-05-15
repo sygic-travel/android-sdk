@@ -1,11 +1,13 @@
 package com.sygic.travel.sdk.places.geo.spread
 
 import android.content.res.Resources
-import com.nhaarman.mockito_kotlin.mock
+import com.sygic.travel.sdk.R
 import com.sygic.travel.sdk.places.model.Level
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -26,7 +28,15 @@ class SpreaderTest {
 		places.add(createPlace(Location(48.4444f, 17.4444f)))
 
 		// configuration
-		val resource = mock<Resources> { }
+		val resource = mockk<Resources>()
+		every { resource.getDimensionPixelSize(R.dimen.marker_radius_popular) } returns 40
+		every { resource.getDimensionPixelSize(R.dimen.marker_margin_popular) } returns 30
+		every { resource.getDimensionPixelSize(R.dimen.marker_radius_big) } returns 27
+		every { resource.getDimensionPixelSize(R.dimen.marker_margin_big) } returns 22
+		every { resource.getDimensionPixelSize(R.dimen.marker_radius_medium) } returns 18
+		every { resource.getDimensionPixelSize(R.dimen.marker_margin_medium) } returns 15
+		every { resource.getDimensionPixelSize(R.dimen.marker_radius_small) } returns 9
+		every { resource.getDimensionPixelSize(R.dimen.marker_margin_small) } returns 7
 		val testedObject = Spreader(resource)
 
 		val canvasSize = CanvasSize(740, 320)
