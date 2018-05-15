@@ -138,7 +138,11 @@ internal class SessionService(
 
 		if (Date().time >= refreshTimeExpiration) {
 			thread {
-				refreshToken(refreshToken)
+				try {
+					refreshToken(refreshToken)
+				} catch (e: Exception) {
+					e.printStackTrace()
+				}
 			}
 		}
 
