@@ -97,6 +97,15 @@ internal class TripsSynchronizationService constructor(
 			tripsService.deleteTrip(localTrip.id)
 			syncResult.changedTripIds.add(localTrip.id)
 			return
+
+		} else if (updateResponse.code() == 403) {
+			val tripResponse = apiClient.getTrip(localTrip.id).execute()
+			if (tripResponse.isSuccessful) {
+				val apiTripData = tripResponse.body()!!.data!!.trip
+				updateLocalTrip(apiTripData, syncResult)
+			}
+			return
+
 		} else if (!updateResponse.isSuccessful) {
 			throw HttpException(updateResponse)
 		}
