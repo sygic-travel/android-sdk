@@ -178,11 +178,14 @@ internal class SessionService(
 	}
 
 	private fun refreshToken(refreshToken: String) {
-		authenticate(AuthenticationRequest(
+		val result = authenticate(AuthenticationRequest(
 			client_id = clientId,
 			grant_type = "refresh_token",
 			refresh_token = refreshToken
 		))
+		if (result == AuthenticationResponseCode.ERROR_INVALID_CREDENTIALS) {
+			logout()
+		}
 	}
 
 	private fun initClientSession(): String {
