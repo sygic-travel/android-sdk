@@ -1,7 +1,6 @@
 package com.sygic.travel.sdk.synchronization.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
-import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
 import com.sygic.travel.sdk.favorites.model.Favorite
 import com.sygic.travel.sdk.favorites.service.FavoriteService
@@ -22,12 +21,27 @@ internal class FavoritesSynchronizationService constructor(
 
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
 			if (favorite.state == Favorite.STATE_TO_ADD) {
-				apiClient.createFavorite(FavoriteRequest(favorite.id)).checkedExecute()
-				favoriteService.markAsSynchronized(favorite)
+				val createResponse = apiClient.createFavorite(FavoriteRequest(favorite.id)).execute()
+				when {
+					createResponse.isSuccessful -> {
+						favoriteService.markAsSynchronized(favorite)
+					}
+					createResponse.code() in 400..499 -> {
+						// place id does not exist
+						favoriteService.hardDeletePlace(favorite.id)
+					}
+					else -> {
+						// try deleting next time
+					}
+				}
 
 			} else if (favorite.state == Favorite.STATE_TO_REMOVE) {
-				apiClient.deleteFavorite(FavoriteRequest(favorite.id)).checkedExecute()
-				favoriteService.hardDeletePlace(favorite.id)
+				val deleteResponse = apiClient.deleteFavorite(FavoriteRequest(favorite.id)).execute()
+				if (deleteResponse.isSuccessful || deleteResponse.code() in 400..499) {
+					favoriteService.hardDeletePlace(favorite.id)
+				} else {
+					// try deleting next time
+				}
 			}
 		}
 
