@@ -5,17 +5,17 @@ import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.database.entities.TripDay as DbTripDay
 
 internal class TripDayDbConverter {
-	fun from(dbDay: DbTripDay, trip: Trip): TripDay {
-		val day = TripDay(trip)
-		day.note = dbDay.note
-		return day
+	fun from(dbDay: DbTripDay): TripDay {
+		return TripDay(
+			note = dbDay.note
+		)
 	}
 
-	fun to(day: TripDay): DbTripDay {
+	fun to(day: TripDay, trip: Trip): DbTripDay {
 		val dbDay = DbTripDay()
 		dbDay.note = day.note
-		dbDay.tripId = day.trip.id
-		dbDay.dayIndex = day.getDayIndex()
+		dbDay.tripId = trip.id
+		dbDay.dayIndex = trip.days.indexOf(day)
 		return dbDay
 	}
 }

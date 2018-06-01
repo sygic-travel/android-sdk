@@ -23,10 +23,9 @@ class TripDayConverterTest {
 		assertSame(2, localDay.itinerary.size)
 		assertSame("poi:540", localDay.itinerary[0].placeId)
 		assertSame("poi:531", localDay.itinerary[1].placeId)
-		assertSame(0, localDay.getDayIndex())
 
 		val localDay2 = converter.fromApi(apiDay, localTrip)
 		localTrip.days = localTrip.days + localDay2
-		assertSame(1, localDay2.getDayIndex())
+		assertSame(1, localTrip.days.indexOf(localDay2))
 	}
 }

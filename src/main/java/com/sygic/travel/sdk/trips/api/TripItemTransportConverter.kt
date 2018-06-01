@@ -13,7 +13,7 @@ internal class TripItemTransportConverter {
 			return null
 		}
 
-		val transport = TripItemTransport(
+		return TripItemTransport(
 			mode = when (apiTransport.mode) {
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE -> DirectionMode.BIKE
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT -> DirectionMode.BOAT
@@ -24,30 +24,29 @@ internal class TripItemTransportConverter {
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT -> DirectionMode.PUBLIC_TRANSPORT
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
 				else -> DirectionMode.PEDESTRIAN
-			}
-		)
-		transport.avoid = ArrayList(apiTransport.avoid.map {
-			when (it) {
-				ApiTripItemResponse.Day.DayItem.Transport.AVOID_FERRIES -> DirectionAvoid.FERRIES
-				ApiTripItemResponse.Day.DayItem.Transport.AVOID_HIGHWAYS -> DirectionAvoid.HIGHWAYS
-				ApiTripItemResponse.Day.DayItem.Transport.AVOID_TOLLS -> DirectionAvoid.TOLLS
-				ApiTripItemResponse.Day.DayItem.Transport.AVOID_UNPAVED -> DirectionAvoid.UNPAVED
-				else -> null
-			}
-		}.filterNotNull())
-		transport.startTime = apiTransport.start_time
-		transport.duration = apiTransport.duration
-		transport.note = apiTransport.note
-		transport.waypoints = ArrayList(apiTransport.waypoints.map {
-			TripItemTransportWaypoint(
-				placeId = it.placeId,
-				location = Location(
-					lat = it.location.lat,
-					lng = it.location.lng
+			},
+			avoid = ArrayList(apiTransport.avoid.map {
+				when (it) {
+					ApiTripItemResponse.Day.DayItem.Transport.AVOID_FERRIES -> DirectionAvoid.FERRIES
+					ApiTripItemResponse.Day.DayItem.Transport.AVOID_HIGHWAYS -> DirectionAvoid.HIGHWAYS
+					ApiTripItemResponse.Day.DayItem.Transport.AVOID_TOLLS -> DirectionAvoid.TOLLS
+					ApiTripItemResponse.Day.DayItem.Transport.AVOID_UNPAVED -> DirectionAvoid.UNPAVED
+					else -> null
+				}
+			}.filterNotNull()),
+			startTime = apiTransport.start_time,
+			duration = apiTransport.duration,
+			note = apiTransport.note,
+			waypoints = ArrayList(apiTransport.waypoints.map {
+				TripItemTransportWaypoint(
+					placeId = it.placeId,
+					location = Location(
+						lat = it.location.lat,
+						lng = it.location.lng
+					)
 				)
-			)
-		})
-		return transport
+			})
+		)
 	}
 
 	fun toApi(transport: TripItemTransport?): ApiTripItemResponse.Day.DayItem.Transport? {

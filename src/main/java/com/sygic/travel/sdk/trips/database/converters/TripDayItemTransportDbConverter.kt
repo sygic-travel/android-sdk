@@ -6,13 +6,14 @@ import com.sygic.travel.sdk.trips.database.entities.TripDayItemTransport as DbTr
 internal class TripDayItemTransportDbConverter {
 	fun from(dbTransport: DbTripItemTransport?): TripItemTransport? {
 		dbTransport ?: return null
-		val transport = TripItemTransport(dbTransport.mode)
-		transport.avoid = dbTransport.avoid
-		transport.startTime = dbTransport.startTime
-		transport.duration = dbTransport.duration
-		transport.note = dbTransport.note
-		transport.waypoints = dbTransport.waypoints
-		return transport
+		return TripItemTransport(
+			mode = dbTransport.mode,
+			avoid = dbTransport.avoid,
+			startTime = dbTransport.startTime,
+			duration = dbTransport.duration,
+			note = dbTransport.note,
+			waypoints = dbTransport.waypoints
+		)
 	}
 
 	fun to(transport: TripItemTransport?): DbTripItemTransport? {
