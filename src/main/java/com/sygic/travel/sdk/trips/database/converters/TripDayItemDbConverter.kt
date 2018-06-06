@@ -18,11 +18,11 @@ internal class TripDayItemDbConverter(
 		)
 	}
 
-	fun to(item: TripDayItem, trip: Trip, tripDay: TripDay): DbTripDayItem {
+	fun to(item: TripDayItem, itemIndex: Int, dayIndex: Int, trip: Trip): DbTripDayItem {
 		val dbItem = DbTripDayItem()
 		dbItem.tripId = trip.id
-		dbItem.dayIndex = trip.days.indexOf(tripDay)
-		dbItem.itemIndex = tripDay.itinerary.indexOf(item)
+		dbItem.dayIndex = dayIndex
+		dbItem.itemIndex = itemIndex
 		dbItem.placeId = item.placeId
 		dbItem.startTime = item.startTime
 		dbItem.duration = item.duration

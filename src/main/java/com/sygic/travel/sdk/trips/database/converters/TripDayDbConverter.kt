@@ -11,11 +11,11 @@ internal class TripDayDbConverter {
 		)
 	}
 
-	fun to(day: TripDay, trip: Trip): DbTripDay {
+	fun to(day: TripDay, index: Int, trip: Trip): DbTripDay {
 		val dbDay = DbTripDay()
 		dbDay.note = day.note
 		dbDay.tripId = trip.id
-		dbDay.dayIndex = trip.days.indexOf(day)
+		dbDay.dayIndex = index
 		return dbDay
 	}
 }
