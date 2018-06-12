@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.Trip
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Test
 
@@ -25,7 +26,8 @@ class TripDayConverterTest {
 		assertSame("poi:531", localDay.itinerary[1].placeId)
 
 		val localDay2 = converter.fromApi(apiDay, localTrip)
+		assertEquals(localDay, localDay2)
 		localTrip.days = localTrip.days + localDay2
-		assertSame(1, localTrip.days.indexOf(localDay2))
+		assertSame(0, localTrip.days.indexOf(localDay2))
 	}
 }
