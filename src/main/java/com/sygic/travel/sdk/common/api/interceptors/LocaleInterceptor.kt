@@ -1,24 +1,22 @@
 package com.sygic.travel.sdk.common.api.interceptors
 
-import com.sygic.travel.sdk.common.SupportedLanguages
+import com.sygic.travel.sdk.common.Language
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-internal class LocaleInterceptor : Interceptor {
-	private var locale: String? = null
-
-	init {
-		updateLocale()
-	}
-
+internal class LocaleInterceptor(
+	language: Language
+) : Interceptor {
 	companion object {
 		const val LOCALE_PLACEHOLDER = "[api_locale]"
 	}
 
-	fun updateLocale() {
-		locale = SupportedLanguages.actualLocale
+	private var locale = language.isoCode
+
+	fun updateLanguage(language: Language) {
+		locale = language.isoCode
 	}
 
 	@Throws(IOException::class)
@@ -26,7 +24,7 @@ internal class LocaleInterceptor : Interceptor {
 		val original = chain.request()
 		var url = original.url().toString()
 
-		url = url.replace(LOCALE_PLACEHOLDER, locale.toString())
+		url = url.replace(LOCALE_PLACEHOLDER, locale)
 
 		val request = original.newBuilder()
 			.url(url)

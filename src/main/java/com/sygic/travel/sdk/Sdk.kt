@@ -2,6 +2,8 @@ package com.sygic.travel.sdk
 
 import android.content.Context
 import com.github.salomonbrys.kodein.instance
+import com.sygic.travel.sdk.common.Language
+import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.di.KodeinSetup
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.events.facades.EventsFacade
@@ -15,10 +17,18 @@ import com.sygic.travel.sdk.trips.facades.TripsFacade
 /**
  * Provides public methods for requesting API.
  */
+@Suppress("unused")
 class Sdk(
 	applicationContext: Context,
-	sdkConfig: SdkConfig
+	private val sdkConfig: SdkConfig
 ) {
+	var language: Language
+		get() = sdkConfig.language
+		set(value) {
+			sdkConfig.language = value
+			kodein.instance<LocaleInterceptor>().updateLanguage(value)
+		}
+
 	val directionsFacade: DirectionsFacade by lazy {
 		kodein.instance<DirectionsFacade>()
 	}
