@@ -7,6 +7,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.provider
 import com.github.salomonbrys.kodein.singleton
 import com.squareup.moshi.Moshi
+import com.sygic.travel.sdk.common.Language
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
@@ -29,7 +30,9 @@ internal val sygicTravelApiModule = Kodein.Module {
 		)
 	}
 
-	bind<LocaleInterceptor>() with singleton { LocaleInterceptor() }
+	bind<LocaleInterceptor>() with singleton {
+		LocaleInterceptor(instance<Language>("defaultLanguage"))
+	}
 
 	bind<OkHttpClient>("sygicTravelHttpClient") with singleton {
 		val builder = OkHttpClient.Builder()

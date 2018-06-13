@@ -1,5 +1,7 @@
 package com.sygic.travel.sdk
 
+import com.sygic.travel.sdk.common.Language
+
 abstract class SdkConfig {
 	abstract val apiKey: String
 
@@ -20,4 +22,6 @@ abstract class SdkConfig {
 
 	open val httpCacheSize: Long
 		get() = 10 * 1024 * 1024L // 10 MB Cache
+
+	open var language: Language = Language.EN
 }
