@@ -44,6 +44,8 @@ open class TripInfo internal constructor(id: String) {
 		internal set
 	var privileges: TripPrivileges = TripPrivileges(edit = true, delete = true, manage = true)
 		internal set
+	var isUserSubscribed: Boolean = false
+		internal set
 	var isDeleted: Boolean = false
 		set(value) {
 			if (privileges.delete) {
@@ -68,7 +70,8 @@ open class TripInfo internal constructor(id: String) {
 		set(value) {
 			field = ArrayList(value.filter { it.isNotBlank() })
 		}
-	internal var ownerId: String? = null
+	var ownerId: String? = null
+		internal set
 	internal var version: Int = 0
 
 	fun isLocal(): Boolean {

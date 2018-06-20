@@ -16,6 +16,9 @@ internal class Trip {
 	@ColumnInfo(name = "owner_id")
 	var ownerId: String? = null
 
+	@ColumnInfo(name = "is_user_subscribed")
+	var isUserSubscribed: Boolean = true
+
 	@ColumnInfo(name = "name")
 	var name: String? = ""
 

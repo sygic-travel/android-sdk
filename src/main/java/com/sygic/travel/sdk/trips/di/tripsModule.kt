@@ -30,7 +30,8 @@ internal val tripsModule = Kodein.Module {
 			instance<TripDayItemsDao>(),
 			instance<TripDbConverter>(),
 			instance<TripDayDbConverter>(),
-			instance<TripDayItemDbConverter>()
+			instance<TripDayItemDbConverter>(),
+			instance<TripConverter>()
 		)
 	}
 	bind<TripsDao>() with singleton { instance<Database>().tripsDao() }

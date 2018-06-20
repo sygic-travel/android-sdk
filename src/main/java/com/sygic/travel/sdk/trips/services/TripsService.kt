@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.trips.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.checkedExecute
+import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.database.converters.TripDayDbConverter
 import com.sygic.travel.sdk.trips.database.converters.TripDayItemDbConverter
 import com.sygic.travel.sdk.trips.database.converters.TripDbConverter
@@ -22,7 +23,8 @@ internal class TripsService constructor(
 	private val tripDayItemsDao: TripDayItemsDao,
 	private val tripDbConverter: TripDbConverter,
 	private val tripDayDbConverter: TripDayDbConverter,
-	private val tripDayItemDbConverter: TripDayItemDbConverter
+	private val tripDayItemDbConverter: TripDayItemDbConverter,
+	private val tripApiConverter: TripConverter
 ) {
 	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
 		val trips = if (includeOverlapping) {
@@ -182,5 +184,10 @@ internal class TripsService constructor(
 			}
 
 		return trips
+	}
+
+	fun fetchTrip(id: String): Trip? {
+		val apiTrip = apiClient.getTrip(id).checkedExecute().body()!!.data!!.trip
+		return tripApiConverter.fromApi(apiTrip)
 	}
 }
