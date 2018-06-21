@@ -1,5 +1,6 @@
 # Sygic Travel Android SDK
 
+[![Build Status](https://travis-ci.org/sygic-travel/android-sdk.svg?branch=master)](https://travis-ci.org/sygic-travel/android-sdk)
 ![Minamal API version level 15](https://img.shields.io/badge/API_level-15-green.svg)
 
 Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
@@ -15,7 +16,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.sygic.travel:sdk:1.0.1'
+	implementation 'com.sygic.travel:sdk:2.0.0-beta-2'
 }
 ```
 
