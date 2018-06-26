@@ -67,7 +67,7 @@ internal interface SygicTravelApiClient {
 		@Query(encoded = true, value = "categories") categories: String?,
 		@Query(encoded = true, value = "map_tiles") mapTiles: String?,
 		@Query("map_spread") mapSpread: Int?,
-		@Query("bounding_box") bounds: String?,
+		@Query("bounds") bounds: String?,
 		@Query(encoded = true, value = "tags") tags: String?,
 		@Query(encoded = true, value = "parents") parents: String?,
 		@Query("star_rating") starRating: String?,
