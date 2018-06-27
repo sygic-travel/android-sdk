@@ -54,7 +54,6 @@ repositories {
 
 dependencies {
 	implementation "android.arch.persistence.room:runtime:1.0.0"
-	implementation 'com.android.support:appcompat-v7:27.1.0'
 	implementation 'com.jakewharton:disklrucache:2.0.2'
 	implementation 'com.squareup.moshi:moshi:1.6.0'
 	implementation 'com.squareup.okhttp3:okhttp:3.10.0'
