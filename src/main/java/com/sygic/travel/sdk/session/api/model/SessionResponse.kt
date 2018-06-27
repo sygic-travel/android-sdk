@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.session.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal data class SessionResponse(
 	val access_token: String,
 	val expires_in: Long,

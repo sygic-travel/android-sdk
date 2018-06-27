@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.tours.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.tours.model.Tour
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiTourResponse(
 	val tours: List<ApiTourItemResponse>
 ) {

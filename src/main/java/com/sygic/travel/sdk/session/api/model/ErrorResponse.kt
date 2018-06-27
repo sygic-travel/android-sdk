@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.session.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
-data class ErrorResponse(
+@JsonClass(generateAdapter = true)
+internal data class ErrorResponse(
 	val type: String
 )

@@ -1,18 +1,18 @@
 package com.sygic.travel.sdk.directions.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.directions.model.DirectionMode
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiDirectionsResponse(
 	val path: List<Directions>
 ) {
-	@JsonSerializable
-	class Directions(
+	@JsonClass(generateAdapter = true)
+	internal class Directions(
 		val directions: List<Direction>
 	) {
-		@JsonSerializable
-		class Direction(
+		@JsonClass(generateAdapter = true)
+		internal class Direction(
 			val distance: Int,
 			val duration: Int,
 			val polyline: String,
@@ -25,8 +25,8 @@ internal class ApiDirectionsResponse(
 				const val MODE_PEDESTRIAN = "pedestrian"
 			}
 
-			@JsonSerializable
-			class Location(
+			@JsonClass(generateAdapter = true)
+			internal class Location(
 				val lat: Float,
 				val lng: Float
 			)

@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.trips.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiTripListItemResponse(
 	val id: String,
 	val owner_id: String,
@@ -25,22 +25,22 @@ internal class ApiTripListItemResponse(
 		const val PRIVACY_PUBLIC = "public"
 	}
 
-	@JsonSerializable
-	class Privileges(
+	@JsonClass(generateAdapter = true)
+	internal class Privileges(
 		val edit: Boolean,
 		val manage: Boolean,
 		val delete: Boolean
 	)
 
-	@JsonSerializable
-	class Media(
+	@JsonClass(generateAdapter = true)
+	internal class Media(
 		val square: MediaProperties,
 		val landscape: MediaProperties,
 		val portrait: MediaProperties,
 		val video_preview: MediaProperties?
 	) {
-		@JsonSerializable
-		class MediaProperties(
+		@JsonClass(generateAdapter = true)
+		internal class MediaProperties(
 			val id: String,
 			val url_template: String
 		)

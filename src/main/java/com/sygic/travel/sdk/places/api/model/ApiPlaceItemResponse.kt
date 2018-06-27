@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.places.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
@@ -10,9 +11,8 @@ import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdk.places.model.TranslationProvider
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiPlaceItemResponse(
 	val id: String,
 	val level: String,
@@ -43,8 +43,8 @@ internal class ApiPlaceItemResponse(
 	val main_media: ApiMainMediaResponse?,
 	val references: List<ApiReference>
 ) {
-	@JsonSerializable
-	class ApiDescription(
+	@JsonClass(generateAdapter = true)
+	internal class ApiDescription(
 		val text: String,
 		val provider: String?,
 		val translation_provider: String?,
@@ -73,8 +73,8 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
-	@JsonSerializable
-	class ApiTag(
+	@JsonClass(generateAdapter = true)
+	internal class ApiTag(
 		val key: String,
 		val name: String
 	) {
@@ -86,8 +86,8 @@ internal class ApiPlaceItemResponse(
 		}
 	}
 
-	@JsonSerializable
-	class ApiReference(
+	@JsonClass(generateAdapter = true)
+	internal class ApiReference(
 		val id: Int,
 		val title: String,
 		val type: String,

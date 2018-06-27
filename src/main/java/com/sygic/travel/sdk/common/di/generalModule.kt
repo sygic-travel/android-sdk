@@ -3,7 +3,6 @@ package com.sygic.travel.sdk.common.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.squareup.moshi.Moshi
-import com.sygic.travel.sdk.common.api.model.ApplicationJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -26,6 +25,6 @@ internal val generalModule = Kodein.Module("generalModule") {
 	}
 
 	bind<Moshi>() with singleton {
-		Moshi.Builder().add(ApplicationJsonAdapterFactory).build()
+		Moshi.Builder().build()
 	}
 }
