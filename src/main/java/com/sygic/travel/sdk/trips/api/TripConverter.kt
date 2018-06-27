@@ -51,7 +51,7 @@ internal class TripConverter constructor(
 		localTrip.daysCount = apiTrip.day_count
 		localTrip.media = fromApiMedia(apiTrip.media)
 		localTrip.destinations = ArrayList(apiTrip.destinations)
-		localTrip.days = apiTrip.days.map { tripDayConverter.fromApi(it, localTrip) }
+		localTrip.days = apiTrip.days.map { tripDayConverter.fromApi(it) }
 		localTrip.privileges = TripPrivileges(
 			edit = apiTrip.privileges.edit,
 			manage = apiTrip.privileges.manage,
