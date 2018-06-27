@@ -1,9 +1,5 @@
 package com.sygic.travel.sdk.trips.di
 
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.bind
-import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.singleton
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.database.Database
 import com.sygic.travel.sdk.trips.api.TripConverter
@@ -19,9 +15,17 @@ import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 import com.sygic.travel.sdk.trips.services.TripsService
+import com.sygic.travel.sdk.utils.checkUserDataSupport
+import org.kodein.di.Kodein
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.singleton
 
-internal val tripsModule = Kodein.Module {
-	bind<TripsFacade>() with singleton { TripsFacade(instance<TripsService>()) }
+internal val tripsModule = Kodein.Module("tripsModule") {
+	bind<TripsFacade>() with singleton {
+		checkUserDataSupport(instance<Boolean>("userDataSupported"), "Trips")
+		TripsFacade(instance<TripsService>())
+	}
 	bind<TripsService>() with singleton {
 		TripsService(
 			instance<SygicTravelApiClient>(),

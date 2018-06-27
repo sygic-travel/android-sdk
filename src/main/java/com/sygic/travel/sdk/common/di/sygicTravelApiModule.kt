@@ -1,11 +1,6 @@
 package com.sygic.travel.sdk.common.di
 
 import android.content.Context
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.bind
-import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.provider
-import com.github.salomonbrys.kodein.singleton
 import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.common.Language
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
@@ -17,11 +12,16 @@ import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.kodein.di.Kodein
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.provider
+import org.kodein.di.erased.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-internal val sygicTravelApiModule = Kodein.Module {
+internal val sygicTravelApiModule = Kodein.Module("sygicTravelApiModule") {
 	bind<HeadersInterceptor>() with singleton {
 		HeadersInterceptor(
 			authStorageService = provider<AuthStorageService>(),

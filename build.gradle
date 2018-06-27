@@ -40,6 +40,10 @@ android {
 	sourceSets {
 		androidTest.assets.srcDirs += files("$projectDir/db-schemas".toString())
 	}
+
+	packagingOptions {
+		exclude 'META-INF/main.kotlin_module'
+	}
 }
 
 repositories {
@@ -57,10 +61,9 @@ dependencies {
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 	implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 	implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
-	implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
-	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	implementation 'org.kodein.di:kodein-di-erased-jvm:5.2.0'
 	implementation 'se.ansman.kotshi:api:1.0.2'
 
 	kapt 'android.arch.persistence.room:compiler:1.0.0'
