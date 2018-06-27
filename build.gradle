@@ -70,7 +70,7 @@ dependencies {
 	kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
 
 	testImplementation "android.arch.persistence.room:testing:1.1.1"
-	testImplementation "io.mockk:mockk:1.7.17"
+	testImplementation "io.mockk:mockk:1.8.4"
 	testImplementation "junit:junit:4.12"
 
 	androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
