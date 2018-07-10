@@ -22,4 +22,12 @@ open class Place(
 	val starRatingUnofficial: Float?,
 	val customerRating: Float?,
 	val ownerId: String?
-)
+) {
+	override fun equals(other: Any?): Boolean {
+		return id == (other as? Place)?.id
+	}
+
+	override fun hashCode(): Int {
+		return id.hashCode()
+	}
+}
