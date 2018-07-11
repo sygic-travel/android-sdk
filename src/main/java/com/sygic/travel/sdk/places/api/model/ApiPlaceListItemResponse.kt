@@ -25,6 +25,7 @@ internal class ApiPlaceListItemResponse(
 	val star_rating: Float?,
 	val star_rating_unofficial: Float?,
 	val customer_rating: Float?,
+	val duration: Int?,
 	val owner_id: String?
 ) {
 	fun fromApi(): Place {
@@ -46,6 +47,7 @@ internal class ApiPlaceListItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			duration = duration,
 			ownerId = owner_id
 		)
 	}

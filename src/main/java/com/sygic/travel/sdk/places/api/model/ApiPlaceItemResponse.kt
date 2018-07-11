@@ -31,12 +31,12 @@ internal class ApiPlaceItemResponse(
 	val star_rating: Float?,
 	val star_rating_unofficial: Float?,
 	val customer_rating: Float?,
+	val duration: Int?,
 	val owner_id: String?,
 	val tags: List<ApiTag>,
 	val description: ApiDescription?,
 	val address: String?,
 	val admission: String?,
-	val duration: Int?,
 	val email: String?,
 	val opening_hours: String?,
 	val phone: String?,
@@ -121,7 +121,6 @@ internal class ApiPlaceItemResponse(
 			description = description?.fromApi(),
 			address = address,
 			admission = admission,
-			duration = duration,
 			email = email,
 			openingHours = opening_hours,
 			phone = phone,
@@ -150,6 +149,7 @@ internal class ApiPlaceItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			duration = duration,
 			ownerId = owner_id
 		)
 	}

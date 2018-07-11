@@ -78,6 +78,7 @@ class SpreaderTest {
 			starRating = null,
 			starRatingUnofficial = null,
 			customerRating = null,
+			duration = null,
 			ownerId = null
 		)
 	}

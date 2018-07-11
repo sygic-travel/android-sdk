@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.places.model
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
 
+@Suppress("unused")
 open class Place(
 	val id: String,
 	val level: Level,
@@ -21,6 +22,7 @@ open class Place(
 	val starRating: Float?,
 	val starRatingUnofficial: Float?,
 	val customerRating: Float?,
+	val duration: Int?,
 	val ownerId: String?
 ) {
 	override fun equals(other: Any?): Boolean {

@@ -3,6 +3,7 @@ package com.sygic.travel.sdk.places.model
 import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.Location
 
+@Suppress("unused")
 class DetailedPlace(
 	id: String,
 	level: Level,
@@ -22,6 +23,7 @@ class DetailedPlace(
 	starRatingUnofficial: Float?,
 	customerRating: Float?,
 	ownerId: String?,
+	duration: Int?,
 	val detail: Detail
 ) : Place(
 	id,
@@ -41,5 +43,6 @@ class DetailedPlace(
 	starRating,
 	starRatingUnofficial,
 	customerRating,
+	duration,
 	ownerId
 )
