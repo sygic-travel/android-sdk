@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.places.service
 
+import com.sygic.travel.sdk.common.LogicalOperator
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.places.facade.PlacesQuery
@@ -38,7 +39,7 @@ internal class PlacesService(
 	}
 
 	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace> {
-		val queryIds = ids.joinToString(PlacesQuery.LogicOperator.OR.apiOperator)
+		val queryIds = ids.joinToString(LogicalOperator.OR.apiOperator)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}

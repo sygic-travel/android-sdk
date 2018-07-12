@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.places.facade
 
+import com.sygic.travel.sdk.common.LogicalOperator
 import com.sygic.travel.sdk.common.api.rangeFormatter
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
@@ -17,15 +18,15 @@ class PlacesQuery {
 	var query: String? = null
 	var bounds: Bounds? = null
 	var categories: List<Category>? = null
-	var categoriesOperator = LogicOperator.OR
+	var categoriesOperator = LogicalOperator.OR
 	var categoriesNot: List<Category>? = null
-	var categoriesNotOperator = LogicOperator.OR
+	var categoriesNotOperator = LogicalOperator.OR
 	var tags: List<String>? = null
-	var tagsOperator = LogicOperator.OR
+	var tagsOperator = LogicalOperator.OR
 	var tagsNot: List<String>? = null
-	var tagsNotOperator = LogicOperator.OR
+	var tagsNotOperator = LogicalOperator.OR
 	var parentIds: List<String>? = null
-	var parentsOperator = LogicOperator.OR
+	var parentsOperator = LogicalOperator.OR
 	var mapSpread: Int? = null
 	var mapTiles: List<String>? = null
 	var limit: Int? = null
@@ -38,14 +39,14 @@ class PlacesQuery {
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
 			true -> null
-			false -> levels!!.joinToString(LogicOperator.OR.apiOperator) { TripLevelConverter.toApiLevel(it) }
+			false -> levels!!.joinToString(LogicalOperator.OR.apiOperator) { TripLevelConverter.toApiLevel(it) }
 		}
 	}
 
 	internal fun getMapTilesApiQuery(): String? {
 		return when (mapTiles == null || mapTiles!!.isEmpty()) {
 			true -> null
-			false -> mapTiles!!.joinToString(LogicOperator.OR.apiOperator)
+			false -> mapTiles!!.joinToString(LogicalOperator.OR.apiOperator)
 		}
 	}
 
@@ -90,10 +91,5 @@ class PlacesQuery {
 
 	internal fun getCustomerRatingApiQuery(): String? {
 		return rangeFormatter(customerRatingMin, customerRatingMax)
-	}
-
-	enum class LogicOperator constructor(internal val apiOperator: String) {
-		AND(","),
-		OR("%7C");
 	}
 }
