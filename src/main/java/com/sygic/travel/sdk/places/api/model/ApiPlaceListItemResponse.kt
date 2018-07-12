@@ -32,7 +32,7 @@ internal class ApiPlaceListItemResponse(
 		return Place(
 			id = id,
 			level = TripLevelConverter.fromApiLevel(level),
-			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategories(it) }.toSet(),
+			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategory(it) }.toSet(),
 			rating = rating,
 			quadkey = quadkey,
 			location = location.fromApi(),
