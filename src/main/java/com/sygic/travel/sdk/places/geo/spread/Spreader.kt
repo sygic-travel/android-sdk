@@ -4,7 +4,7 @@ import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 import java.util.LinkedList
 
 /**
@@ -41,7 +41,7 @@ class Spreader
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
 		for (place in places!!) {
-			if (place.location.lat == 0f && place.location.lng == 0f) {
+			if (place.location.lat == 0.0 && place.location.lng == 0.0) {
 				hiddenPlaces.add(0, place)
 				continue
 			}
@@ -118,7 +118,7 @@ class Spreader
 	 * @return [Point] on a canvas.
 	 */
 	private fun locationToCanvasCoords(
-		location: Location,
+		location: LatLng,
 		bounds: Bounds,
 		canvasSize: CanvasSize
 	): Point {
@@ -136,10 +136,10 @@ class Spreader
 		if (west > east) { //date border
 			lngRatio = canvasSize.width / Math.abs(180 - west + 180.0 + east)
 			if (location.lng < 0 && location.lng < east) {
-				lngDiff = 180 - west + 180.0 + location.lng.toDouble()
+				lngDiff = 180 - west + 180.0 + location.lng
 			}
 			if (location.lng > 0 && location.lng < west) {
-				lngDiff = 180 - west + 180.0 + location.lng.toDouble()
+				lngDiff = 180 - west + 180.0 + location.lng
 			}
 		} else {
 			lngRatio = canvasSize.width / Math.abs(west - east)

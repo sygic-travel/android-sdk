@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.places.geo.quadkey
 
 import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 import java.util.ArrayList
 
 /**
@@ -47,8 +47,8 @@ object QuadkeysGenerator {
 	 * *
 	 * @return Generated quadkey.
 	 */
-	fun generateQuadkey(latLng: Location, zoom: Int): String {
-		val xy = getXYFromLatLng(latLng.lat.toDouble(), latLng.lng.toDouble(), zoom)
+	fun generateQuadkey(latLng: LatLng, zoom: Int): String {
+		val xy = getXYFromLatLng(latLng.lat, latLng.lng, zoom)
 		return toQuad(xy[0], xy[1], zoom)
 	}
 

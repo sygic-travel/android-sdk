@@ -1,16 +1,16 @@
 package com.sygic.travel.sdk.directions.helpers
 
 import com.sygic.travel.sdk.directions.model.DirectionRequest
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 
 internal object AirDistanceCalculator {
-	fun getAirDistance(location1: Location, location2: Location): Int {
+	fun getAirDistance(location1: LatLng, location2: LatLng): Int {
 		val results = floatArrayOf(0f, 0f, 0f)
 		android.location.Location.distanceBetween(
-			location1.lat.toDouble(),
-			location1.lng.toDouble(),
-			location2.lat.toDouble(),
-			location2.lng.toDouble(),
+			location1.lat,
+			location1.lng,
+			location2.lat,
+			location2.lng,
 			results
 		)
 		return Math.round(results[0])

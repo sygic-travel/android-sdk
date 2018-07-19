@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.places.model
 
 import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 
 @Suppress("unused")
 class DetailedPlace(
@@ -10,7 +10,7 @@ class DetailedPlace(
 	categories: Set<Category>,
 	rating: Float,
 	quadkey: String,
-	location: Location,
+	location: LatLng,
 	name: String,
 	nameSuffix: String?,
 	boundingBox: Bounds?,

@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.places.model.media
 
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 
 /**
  * DetailedPlace medium.
@@ -13,5 +13,5 @@ class Medium(
 	val original: Original?,
 	val suitability: Set<Suitability>,
 	val attribution: Attribution,
-	val location: Location?
+	val location: LatLng?
 )
