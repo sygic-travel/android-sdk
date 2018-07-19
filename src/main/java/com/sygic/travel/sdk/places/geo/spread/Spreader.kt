@@ -3,8 +3,8 @@ package com.sygic.travel.sdk.places.geo.spread
 import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.LinkedList
 
 /**
@@ -32,7 +32,7 @@ class Spreader
 	 */
 	fun spreadPlacesOnMap(
 		places: List<Place>?,
-		bounds: Bounds,
+		bounds: LatLngBounds,
 		canvasSize: CanvasSize
 	): SpreadResult {
 		val visiblePlaces = LinkedList<SpreadedPlace>()
@@ -119,13 +119,13 @@ class Spreader
 	 */
 	private fun locationToCanvasCoords(
 		location: LatLng,
-		bounds: Bounds,
+		bounds: LatLngBounds,
 		canvasSize: CanvasSize
 	): Point {
-		val south: Double = bounds.south.toDouble()
-		val west: Double = bounds.west.toDouble()
-		val north: Double = bounds.north.toDouble()
-		val east: Double = bounds.east.toDouble()
+		val south = bounds.southwest.lat
+		val west = bounds.southwest.lng
+		val north = bounds.northeast.lat
+		val east = bounds.northeast.lng
 
 		val latDiff = north - location.lat
 		var lngDiff = location.lng - west

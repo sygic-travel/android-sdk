@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
 
 @Suppress("unused")
@@ -13,7 +13,7 @@ open class Place(
 	val location: LatLng,
 	val name: String,
 	val nameSuffix: String?,
-	val boundingBox: Bounds?,
+	val boundingBox: LatLngBounds?,
 	val perex: String?,
 	val url: String?,
 	val thumbnailUrl: String?,

@@ -4,8 +4,8 @@ import android.content.res.Resources
 import com.sygic.travel.sdk.R
 import com.sygic.travel.sdk.places.model.Level
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.geo.Bounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertTrue
@@ -41,11 +41,9 @@ class SpreaderTest {
 
 		val canvasSize = CanvasSize(740, 320)
 
-		val bounds = Bounds(
-			east = 48f,
-			west = 49f,
-			north = 17f,
-			south = 16f
+		val bounds = LatLngBounds(
+			LatLng(17.0, 48.0),
+			LatLng(16.0, 49.0)
 		)
 
 		// calling tested method

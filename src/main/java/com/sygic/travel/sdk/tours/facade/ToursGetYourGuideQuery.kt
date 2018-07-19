@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.tours.facade
 
 import com.sygic.travel.sdk.common.api.rangeFormatter
-import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.Date
 
 /**
@@ -11,7 +11,7 @@ import java.util.Date
  */
 class ToursGetYourGuideQuery {
 	var query: String? = null
-	var bounds: Bounds? = null
+	var bounds: LatLngBounds? = null
 	var parentPlaceId: String? = null
 	var tags: String? = null
 	var startDate: Date? = null

@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Category
 import com.sygic.travel.sdk.places.model.Level
-import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 
 /**
  * PlacesQuery contains values which define the places to be fetched.
@@ -16,7 +16,7 @@ import com.sygic.travel.sdk.places.model.geo.Bounds
 @Suppress("MemberVisibilityCanBePrivate")
 class PlacesQuery {
 	var query: String? = null
-	var bounds: Bounds? = null
+	var bounds: LatLngBounds? = null
 	var categories: List<Category>? = null
 	var categoriesOperator = LogicalOperator.OR
 	var categoriesNot: List<Category>? = null
