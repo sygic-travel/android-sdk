@@ -12,12 +12,14 @@ import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdk.places.model.TranslationProvider
 
+@Suppress("MemberVisibilityCanBePrivate")
 @JsonClass(generateAdapter = true)
 internal class ApiPlaceItemResponse(
 	val id: String,
 	val level: String,
 	val categories: List<String>,
 	val rating: Float,
+	val rating_local: Float,
 	val quadkey: String,
 	val location: ApiLocationResponse,
 	val bounding_box: ApiBoundsResponse?,
@@ -135,6 +137,7 @@ internal class ApiPlaceItemResponse(
 			level = TripLevelConverter.fromApiLevel(level),
 			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategory(it) }.toSet(),
 			rating = rating,
+			ratingLocal = rating_local,
 			quadkey = quadkey,
 			location = location.fromApi(),
 			boundingBox = bounding_box?.fromApi(),

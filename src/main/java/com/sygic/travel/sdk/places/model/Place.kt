@@ -4,11 +4,12 @@ import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
 
 @Suppress("unused")
-open class Place(
+open class Place constructor(
 	val id: String,
 	val level: Level,
 	val categories: Set<Category>,
 	val rating: Float,
+	val ratingLocal: Float,
 	val quadkey: String,
 	val location: LatLng,
 	val name: String,

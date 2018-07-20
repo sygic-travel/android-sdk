@@ -4,11 +4,12 @@ import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
 
 @Suppress("unused")
-class DetailedPlace(
+class DetailedPlace constructor(
 	id: String,
 	level: Level,
 	categories: Set<Category>,
 	rating: Float,
+	ratingLocal: Float,
 	quadkey: String,
 	location: LatLng,
 	name: String,
@@ -30,6 +31,7 @@ class DetailedPlace(
 	level,
 	categories,
 	rating,
+	ratingLocal,
 	quadkey,
 	location,
 	name,
