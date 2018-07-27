@@ -72,7 +72,8 @@ open class TripInfo internal constructor(id: String) {
 		}
 	var ownerId: String? = null
 		internal set
-	internal var version: Int = 0
+	var version: Int = 0
+		internal set
 
 	fun isLocal(): Boolean {
 		return id.startsWith(LOCAL_ID_PREFIX)
