@@ -12,12 +12,14 @@ import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
 import com.sygic.travel.sdk.places.model.TranslationProvider
 
+@Suppress("MemberVisibilityCanBePrivate")
 @JsonClass(generateAdapter = true)
 internal class ApiPlaceItemResponse(
 	val id: String,
 	val level: String,
 	val categories: List<String>,
 	val rating: Float,
+	val rating_local: Float,
 	val quadkey: String,
 	val location: ApiLocationResponse,
 	val bounding_box: ApiBoundsResponse?,
@@ -31,12 +33,12 @@ internal class ApiPlaceItemResponse(
 	val star_rating: Float?,
 	val star_rating_unofficial: Float?,
 	val customer_rating: Float?,
+	val duration: Int?,
 	val owner_id: String?,
 	val tags: List<ApiTag>,
 	val description: ApiDescription?,
 	val address: String?,
 	val admission: String?,
-	val duration: Int?,
 	val email: String?,
 	val opening_hours: String?,
 	val phone: String?,
@@ -121,7 +123,6 @@ internal class ApiPlaceItemResponse(
 			description = description?.fromApi(),
 			address = address,
 			admission = admission,
-			duration = duration,
 			email = email,
 			openingHours = opening_hours,
 			phone = phone,
@@ -134,8 +135,9 @@ internal class ApiPlaceItemResponse(
 		return DetailedPlace(
 			id = id,
 			level = TripLevelConverter.fromApiLevel(level),
-			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategories(it) }.toSet(),
+			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategory(it) }.toSet(),
 			rating = rating,
+			ratingLocal = rating_local,
 			quadkey = quadkey,
 			location = location.fromApi(),
 			boundingBox = bounding_box?.fromApi(),
@@ -150,6 +152,7 @@ internal class ApiPlaceItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			duration = duration,
 			ownerId = owner_id
 		)
 	}

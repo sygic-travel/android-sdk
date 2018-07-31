@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.places.geo.quadkey
 
-import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.ArrayList
 
 /**
@@ -13,17 +13,17 @@ object QuadkeysGenerator {
 	/**
 	 *
 	 * Generates quadkeys.
-	 * @param bounds Map [bounding_box][Bounds], which the quadkeys are supposed to be generated for.
+	 * @param bounds Map [bounding_box][LatLngBounds], which the quadkeys are supposed to be generated for.
 	 * *
 	 * @param zoom Map zoom level.
 	 * *
 	 * @return List of generated quadkeys.
 	 */
-	fun generateQuadkeys(bounds: Bounds, zoom: Int): List<String> {
+	fun generateQuadkeys(bounds: LatLngBounds, zoom: Int): List<String> {
 		val quadkeys = ArrayList<String>()
-		val nw = getXYFromLatLng(bounds.north.toDouble(), bounds.west.toDouble(), zoom)
-		val ne = getXYFromLatLng(bounds.north.toDouble(), bounds.east.toDouble(), zoom)
-		val sw = getXYFromLatLng(bounds.south.toDouble(), bounds.west.toDouble(), zoom)
+		val nw = getXYFromLatLng(bounds.northeast.lat, bounds.southwest.lng, zoom)
+		val ne = getXYFromLatLng(bounds.northeast.lat, bounds.northeast.lng, zoom)
+		val sw = getXYFromLatLng(bounds.southwest.lat, bounds.southwest.lng, zoom)
 
 		val xMin = nw[0]
 		val xMax = ne[0]
@@ -47,8 +47,8 @@ object QuadkeysGenerator {
 	 * *
 	 * @return Generated quadkey.
 	 */
-	fun generateQuadkey(latLng: Location, zoom: Int): String {
-		val xy = getXYFromLatLng(latLng.lat.toDouble(), latLng.lng.toDouble(), zoom)
+	fun generateQuadkey(latLng: LatLng, zoom: Int): String {
+		val xy = getXYFromLatLng(latLng.lat, latLng.lng, zoom)
 		return toQuad(xy[0], xy[1], zoom)
 	}
 

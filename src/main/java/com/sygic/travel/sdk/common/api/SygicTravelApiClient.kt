@@ -63,13 +63,15 @@ internal interface SygicTravelApiClient {
 	@GET("places/list")
 	fun getPlaces(
 		@Query("query") query: String?,
-		@Query(encoded = true, value = "levels") levels: String?,
-		@Query(encoded = true, value = "categories") categories: String?,
-		@Query(encoded = true, value = "map_tiles") mapTiles: String?,
+		@Query("levels") levels: String?,
+		@Query("categories") categories: String?,
+		@Query("categories_not") categoriesNot: String?,
+		@Query("map_tiles") mapTiles: String?,
 		@Query("map_spread") mapSpread: Int?,
 		@Query("bounds") bounds: String?,
-		@Query(encoded = true, value = "tags") tags: String?,
-		@Query(encoded = true, value = "parents") parents: String?,
+		@Query("tags") tags: String?,
+		@Query("tags_not") tagsNot: String?,
+		@Query("parents") parents: String?,
 		@Query("star_rating") starRating: String?,
 		@Query("customer_rating") customerRating: String?,
 		@Query("limit") limit: Int?
@@ -82,7 +84,7 @@ internal interface SygicTravelApiClient {
 
 	@GET("places")
 	fun getPlacesDetailed(
-		@Query(encoded = true, value = "ids") ids: String
+		@Query("ids") ids: String
 	): Call<ApiResponse<ApiPlacesResponse>>
 
 	@GET("places/{id}/media")

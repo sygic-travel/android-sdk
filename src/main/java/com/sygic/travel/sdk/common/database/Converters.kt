@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.common.database
 import android.arch.persistence.room.TypeConverter
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 
@@ -91,9 +91,9 @@ internal class Converters {
 						true -> null
 						false -> parts[0]
 					},
-					location = Location(
-						lat = parts[1].toFloat(),
-						lng = parts[2].toFloat()
+					location = LatLng(
+						lat = parts[1].toDouble(),
+						lng = parts[2].toDouble()
 					)
 				)
 			})

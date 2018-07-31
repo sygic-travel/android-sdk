@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripItemTransport
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
@@ -40,7 +40,7 @@ internal class TripItemTransportConverter {
 			waypoints = ArrayList(apiTransport.waypoints.map {
 				TripItemTransportWaypoint(
 					placeId = it.placeId,
-					location = Location(
+					location = LatLng(
 						lat = it.location.lat,
 						lng = it.location.lng
 					)

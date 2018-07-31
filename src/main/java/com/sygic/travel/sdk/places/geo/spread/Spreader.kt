@@ -3,8 +3,8 @@ package com.sygic.travel.sdk.places.geo.spread
 import android.content.res.Resources
 import android.graphics.Point
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.LinkedList
 
 /**
@@ -32,7 +32,7 @@ class Spreader
 	 */
 	fun spreadPlacesOnMap(
 		places: List<Place>?,
-		bounds: Bounds,
+		bounds: LatLngBounds,
 		canvasSize: CanvasSize
 	): SpreadResult {
 		val visiblePlaces = LinkedList<SpreadedPlace>()
@@ -41,7 +41,7 @@ class Spreader
 		val sizeConfigs = SpreadConfigGenerator.getSpreadSizeConfigs(resources, bounds, canvasSize)
 
 		for (place in places!!) {
-			if (place.location.lat == 0f && place.location.lng == 0f) {
+			if (place.location.lat == 0.0 && place.location.lng == 0.0) {
 				hiddenPlaces.add(0, place)
 				continue
 			}
@@ -118,14 +118,14 @@ class Spreader
 	 * @return [Point] on a canvas.
 	 */
 	private fun locationToCanvasCoords(
-		location: Location,
-		bounds: Bounds,
+		location: LatLng,
+		bounds: LatLngBounds,
 		canvasSize: CanvasSize
 	): Point {
-		val south: Double = bounds.south.toDouble()
-		val west: Double = bounds.west.toDouble()
-		val north: Double = bounds.north.toDouble()
-		val east: Double = bounds.east.toDouble()
+		val south = bounds.southwest.lat
+		val west = bounds.southwest.lng
+		val north = bounds.northeast.lat
+		val east = bounds.northeast.lng
 
 		val latDiff = north - location.lat
 		var lngDiff = location.lng - west
@@ -136,10 +136,10 @@ class Spreader
 		if (west > east) { //date border
 			lngRatio = canvasSize.width / Math.abs(180 - west + 180.0 + east)
 			if (location.lng < 0 && location.lng < east) {
-				lngDiff = 180 - west + 180.0 + location.lng.toDouble()
+				lngDiff = 180 - west + 180.0 + location.lng
 			}
 			if (location.lng > 0 && location.lng < west) {
-				lngDiff = 180 - west + 180.0 + location.lng.toDouble()
+				lngDiff = 180 - west + 180.0 + location.lng
 			}
 		} else {
 			lngRatio = canvasSize.width / Math.abs(west - east)

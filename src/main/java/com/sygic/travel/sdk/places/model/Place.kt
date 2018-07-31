@@ -1,18 +1,20 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
+import com.sygic.travel.sdk.places.model.geo.LatLng
 
-open class Place(
+@Suppress("unused")
+open class Place constructor(
 	val id: String,
 	val level: Level,
 	val categories: Set<Category>,
 	val rating: Float,
+	val ratingLocal: Float,
 	val quadkey: String,
-	val location: Location,
+	val location: LatLng,
 	val name: String,
 	val nameSuffix: String?,
-	val boundingBox: Bounds?,
+	val boundingBox: LatLngBounds?,
 	val perex: String?,
 	val url: String?,
 	val thumbnailUrl: String?,
@@ -21,5 +23,14 @@ open class Place(
 	val starRating: Float?,
 	val starRatingUnofficial: Float?,
 	val customerRating: Float?,
+	val duration: Int?,
 	val ownerId: String?
-)
+) {
+	override fun equals(other: Any?): Boolean {
+		return id == (other as? Place)?.id
+	}
+
+	override fun hashCode(): Int {
+		return id.hashCode()
+	}
+}

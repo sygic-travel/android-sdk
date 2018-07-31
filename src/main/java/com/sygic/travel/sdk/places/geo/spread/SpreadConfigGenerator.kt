@@ -2,7 +2,7 @@ package com.sygic.travel.sdk.places.geo.spread
 
 import android.content.res.Resources
 import com.sygic.travel.sdk.R
-import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.ArrayList
 
 /**
@@ -24,7 +24,7 @@ object SpreadConfigGenerator {
 	 */
 	internal fun getSpreadSizeConfigs(
 		resources: Resources,
-		bounds: Bounds,
+		bounds: LatLngBounds,
 		canvasSize: CanvasSize
 	): List<SpreadSizeConfig> {
 		val zoom = getZoom(bounds, canvasSize)
@@ -69,8 +69,8 @@ object SpreadConfigGenerator {
 	 * *
 	 * @return Zoom level for current bounding_box and canvas size.
 	 */
-	private fun getZoom(bounds: Bounds, canvasSize: CanvasSize): Int {
-		var angle = bounds.east - bounds.west
+	private fun getZoom(bounds: LatLngBounds, canvasSize: CanvasSize): Int {
+		var angle = bounds.northeast.lng - bounds.southwest.lng
 		if (angle < 0) {
 			angle += 360f
 		}

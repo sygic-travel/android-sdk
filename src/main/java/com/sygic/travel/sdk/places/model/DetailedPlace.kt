@@ -1,18 +1,20 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
+import com.sygic.travel.sdk.places.model.geo.LatLng
 
-class DetailedPlace(
+@Suppress("unused")
+class DetailedPlace constructor(
 	id: String,
 	level: Level,
 	categories: Set<Category>,
 	rating: Float,
+	ratingLocal: Float,
 	quadkey: String,
-	location: Location,
+	location: LatLng,
 	name: String,
 	nameSuffix: String?,
-	boundingBox: Bounds?,
+	boundingBox: LatLngBounds?,
 	perex: String?,
 	url: String?,
 	thumbnailUrl: String?,
@@ -22,12 +24,14 @@ class DetailedPlace(
 	starRatingUnofficial: Float?,
 	customerRating: Float?,
 	ownerId: String?,
+	duration: Int?,
 	val detail: Detail
 ) : Place(
 	id,
 	level,
 	categories,
 	rating,
+	ratingLocal,
 	quadkey,
 	location,
 	name,
@@ -41,5 +45,6 @@ class DetailedPlace(
 	starRating,
 	starRatingUnofficial,
 	customerRating,
+	duration,
 	ownerId
 )

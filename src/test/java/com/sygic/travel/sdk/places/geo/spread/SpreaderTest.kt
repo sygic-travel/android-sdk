@@ -4,8 +4,8 @@ import android.content.res.Resources
 import com.sygic.travel.sdk.R
 import com.sygic.travel.sdk.places.model.Level
 import com.sygic.travel.sdk.places.model.Place
-import com.sygic.travel.sdk.places.model.geo.Bounds
-import com.sygic.travel.sdk.places.model.geo.Location
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertTrue
@@ -19,13 +19,13 @@ class SpreaderTest {
 		val places = mutableListOf<Place>()
 
 		// this place will be evaluated as hidden because location has (0,0) coordinates
-		places.add(createPlace(Location(0f, 0f)))
+		places.add(createPlace(LatLng(0.0, 0.0)))
 
 		// visible place
-		places.add(createPlace(Location(48.3333f, 17.3333f)))
+		places.add(createPlace(LatLng(48.3333, 17.3333)))
 
 		// this place will intersects, so that it won't be neither visible nor hidden
-		places.add(createPlace(Location(48.4444f, 17.4444f)))
+		places.add(createPlace(LatLng(48.4444, 17.4444)))
 
 		// configuration
 		val resource = mockk<Resources>()
@@ -41,11 +41,9 @@ class SpreaderTest {
 
 		val canvasSize = CanvasSize(740, 320)
 
-		val bounds = Bounds(
-			east = 48f,
-			west = 49f,
-			north = 17f,
-			south = 16f
+		val bounds = LatLngBounds(
+			LatLng(17.0, 48.0),
+			LatLng(16.0, 49.0)
 		)
 
 		// calling tested method
@@ -59,7 +57,7 @@ class SpreaderTest {
 		assertTrue(hiddenPlaces?.size == 1)
 	}
 
-	private fun createPlace(location: Location): Place {
+	private fun createPlace(location: LatLng): Place {
 		return Place(
 			id = "id",
 			boundingBox = null,
@@ -74,10 +72,12 @@ class SpreaderTest {
 			perex = null,
 			quadkey = "1",
 			rating = 0f,
+			ratingLocal = 0f,
 			thumbnailUrl = null,
 			starRating = null,
 			starRatingUnofficial = null,
 			customerRating = null,
+			duration = null,
 			ownerId = null
 		)
 	}

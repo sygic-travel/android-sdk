@@ -1,21 +1,20 @@
 package com.sygic.travel.sdk.places.api.model
 
 import com.squareup.moshi.JsonClass
-import com.sygic.travel.sdk.places.model.geo.Bounds
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 
 @JsonClass(generateAdapter = true)
 internal class ApiBoundsResponse(
-	val north: Float,
-	val east: Float,
-	val south: Float,
-	val west: Float
+	val north: Double,
+	val east: Double,
+	val south: Double,
+	val west: Double
 ) {
-	fun fromApi(): Bounds {
-		return Bounds(
-			north = north,
-			east = east,
-			south = south,
-			west = west
+	fun fromApi(): LatLngBounds {
+		return LatLngBounds(
+			LatLng(north, east),
+			LatLng(south, west)
 		)
 	}
 }

@@ -12,6 +12,7 @@ internal class ApiPlaceListItemResponse(
 	val level: String,
 	val categories: List<String>,
 	val rating: Float,
+	val rating_local: Float,
 	val quadkey: String,
 	val location: ApiLocationResponse,
 	val bounding_box: ApiBoundsResponse?,
@@ -25,14 +26,16 @@ internal class ApiPlaceListItemResponse(
 	val star_rating: Float?,
 	val star_rating_unofficial: Float?,
 	val customer_rating: Float?,
+	val duration: Int?,
 	val owner_id: String?
 ) {
 	fun fromApi(): Place {
 		return Place(
 			id = id,
 			level = TripLevelConverter.fromApiLevel(level),
-			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategories(it) }.toSet(),
+			categories = categories.mapNotNull { TripCategoryConverter.fromApiCategory(it) }.toSet(),
 			rating = rating,
+			ratingLocal = rating_local,
 			quadkey = quadkey,
 			location = location.fromApi(),
 			boundingBox = bounding_box?.fromApi(),
@@ -46,6 +49,7 @@ internal class ApiPlaceListItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			duration = duration,
 			ownerId = owner_id
 		)
 	}
