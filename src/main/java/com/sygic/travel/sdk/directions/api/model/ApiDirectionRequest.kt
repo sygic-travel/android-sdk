@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.directions.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiDirectionRequest(
 	val origin: Location,
 	val destination: Location,
@@ -16,8 +16,8 @@ internal class ApiDirectionRequest(
 		const val AVOID_UNPAVED = "unpaved"
 	}
 
-	@JsonSerializable
-	class Location(
+	@JsonClass(generateAdapter = true)
+	internal class Location(
 		val lat: Float,
 		val lng: Float
 	)

@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.places.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiMainMediaResponse(
 	val media: List<ApiMediumResponse>
 )

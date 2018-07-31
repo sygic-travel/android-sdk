@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.places.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.places.model.geo.Bounds
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiBoundsResponse(
 	val north: Float,
 	val east: Float,

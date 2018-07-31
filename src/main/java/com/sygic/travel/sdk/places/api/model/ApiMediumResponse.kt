@@ -1,14 +1,14 @@
 package com.sygic.travel.sdk.places.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.model.media.Attribution
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.model.media.Original
 import com.sygic.travel.sdk.places.model.media.Suitability
 import com.sygic.travel.sdk.places.model.media.Type
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiMediumResponse(
 	val id: String,
 	val type: String,
@@ -30,8 +30,8 @@ internal class ApiMediumResponse(
 		private const val SUITABILITY_VIDEO_PREVIEW = "video_preview"
 	}
 
-	@JsonSerializable
-	class ApiOriginal(
+	@JsonClass(generateAdapter = true)
+	internal class ApiOriginal(
 		val size: Int?,
 		val width: Int?,
 		val height: Int?
@@ -45,8 +45,8 @@ internal class ApiMediumResponse(
 		}
 	}
 
-	@JsonSerializable
-	class ApiAttribution(
+	@JsonClass(generateAdapter = true)
+	internal class ApiAttribution(
 		val author: String?,
 		val author_url: String?,
 		val license: String?,

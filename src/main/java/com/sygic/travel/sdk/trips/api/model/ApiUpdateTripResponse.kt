@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.trips.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiUpdateTripResponse(
 	val trip: ApiTripItemResponse,
 	val conflict_resolution: String?,
@@ -15,8 +15,8 @@ internal class ApiUpdateTripResponse(
 		val NO_CONFLICT = null
 	}
 
-	@JsonSerializable
-	class ConflictInfo(
+	@JsonClass(generateAdapter = true)
+	internal class ConflictInfo(
 		val last_user_name: String?,
 		val last_updated_at: String
 	)

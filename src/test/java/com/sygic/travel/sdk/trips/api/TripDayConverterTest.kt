@@ -17,7 +17,7 @@ class TripDayConverterTest {
 		), "new note")
 
 		val localTrip = Trip("123")
-		val localDay = converter.fromApi(apiDay, localTrip)
+		val localDay = converter.fromApi(apiDay)
 		localTrip.days = listOf(localDay)
 
 		assertSame("new note", localDay.note)
@@ -25,7 +25,7 @@ class TripDayConverterTest {
 		assertSame("poi:540", localDay.itinerary[0].placeId)
 		assertSame("poi:531", localDay.itinerary[1].placeId)
 
-		val localDay2 = converter.fromApi(apiDay, localTrip)
+		val localDay2 = converter.fromApi(apiDay)
 		assertEquals(localDay, localDay2)
 		localTrip.days = localTrip.days + localDay2
 		assertSame(0, localTrip.days.indexOf(localDay2))

@@ -1,7 +1,6 @@
 package com.sygic.travel.sdk
 
 import android.content.Context
-import com.github.salomonbrys.kodein.instance
 import com.sygic.travel.sdk.common.Language
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.di.KodeinSetup
@@ -13,6 +12,7 @@ import com.sygic.travel.sdk.session.facade.SessionFacade
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.tours.facade.ToursFacade
 import com.sygic.travel.sdk.trips.facades.TripsFacade
+import org.kodein.di.erased.instance
 
 /**
  * Provides public methods for requesting API.
@@ -22,54 +22,22 @@ class Sdk(
 	applicationContext: Context,
 	private val sdkConfig: SdkConfig
 ) {
+	private val kodein = KodeinSetup.setupKodein(applicationContext, sdkConfig)
+
 	var language: Language
 		get() = sdkConfig.language
 		set(value) {
 			sdkConfig.language = value
-			kodein.instance<LocaleInterceptor>().updateLanguage(value)
+			val localeInterceptor by kodein.instance<LocaleInterceptor>()
+			localeInterceptor.updateLanguage(value)
 		}
 
-	val directionsFacade: DirectionsFacade by lazy {
-		kodein.instance<DirectionsFacade>()
-	}
-
-	val eventsFacade: EventsFacade by lazy {
-		kodein.instance<EventsFacade>()
-	}
-
-	val favoritesFacade: FavoritesFacade by lazy {
-		checkUserDataSupport("Favorites")
-		kodein.instance<FavoritesFacade>()
-	}
-
-	val placesFacade: PlacesFacade by lazy {
-		kodein.instance<PlacesFacade>()
-	}
-
-	val sessionFacade: SessionFacade by lazy {
-		checkUserDataSupport("Session")
-		kodein.instance<SessionFacade>()
-	}
-
-	val synchronizationFacade: SynchronizationFacade by lazy {
-		checkUserDataSupport("Synchronization")
-		kodein.instance<SynchronizationFacade>()
-	}
-
-	val toursFacade: ToursFacade by lazy {
-		kodein.instance<ToursFacade>()
-	}
-
-	val tripsFacade: TripsFacade by lazy {
-		checkUserDataSupport("Trips")
-		kodein.instance<TripsFacade>()
-	}
-
-	private val kodein = KodeinSetup.setupKodein(applicationContext, sdkConfig)
-
-	private fun checkUserDataSupport(module: String) {
-		if (!kodein.instance<Boolean>("userDataSupported")) {
-			throw IllegalStateException("$module module can be used only with enabled user-data support. To enable it, configure Sdk with clientId.")
-		}
-	}
+	val directionsFacade: DirectionsFacade by kodein.instance()
+	val eventsFacade: EventsFacade by kodein.instance()
+	val favoritesFacade: FavoritesFacade by kodein.instance()
+	val placesFacade: PlacesFacade by kodein.instance()
+	val sessionFacade: SessionFacade by kodein.instance()
+	val synchronizationFacade: SynchronizationFacade by kodein.instance()
+	val toursFacade: ToursFacade by kodein.instance()
+	val tripsFacade: TripsFacade by kodein.instance()
 }

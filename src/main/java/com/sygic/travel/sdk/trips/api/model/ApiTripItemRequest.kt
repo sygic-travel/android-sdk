@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.trips.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiTripItemRequest(
 	val name: String?,
 	val base_version: Int,

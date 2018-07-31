@@ -1,13 +1,13 @@
 package com.sygic.travel.sdk.synchronization.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiChangesResponse(
 	val changes: List<ChangeEntry>
 ) {
-	@JsonSerializable
-	data class ChangeEntry(
+	@JsonClass(generateAdapter = true)
+	internal class ChangeEntry(
 		val type: String,
 		val id: String?,
 		val change: String,

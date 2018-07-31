@@ -1,12 +1,12 @@
 package com.sygic.travel.sdk.places.api.model
 
+import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Place
-import se.ansman.kotshi.JsonSerializable
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class ApiPlaceListItemResponse(
 	val id: String,
 	val level: String,

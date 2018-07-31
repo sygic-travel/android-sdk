@@ -2,7 +2,6 @@ buildscript {
 	repositories {
 		google()
 		jcenter()
-		mavenCentral()
 	}
 
 	ext.kotlin_version = "1.2.50"
@@ -24,6 +23,11 @@ android {
 	compileSdkVersion 27
 	buildToolsVersion "27.0.3"
 
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
 	defaultConfig {
 		minSdkVersion 15
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,37 +44,36 @@ android {
 	sourceSets {
 		androidTest.assets.srcDirs += files("$projectDir/db-schemas".toString())
 	}
+
+	packagingOptions {
+		exclude 'META-INF/main.kotlin_module'
+	}
 }
 
 repositories {
 	google()
 	jcenter()
-	mavenCentral()
 }
 
 dependencies {
-	implementation "android.arch.persistence.room:runtime:1.0.0"
-	implementation 'com.android.support:appcompat-v7:27.1.0'
+	implementation 'android.arch.persistence.room:runtime:1.1.1'
 	implementation 'com.jakewharton:disklrucache:2.0.2'
-	implementation 'com.squareup.moshi:moshi:1.5.0'
+	implementation 'com.squareup.moshi:moshi:1.6.0'
 	implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 	implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 	implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
-	implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
-	implementation 'com.github.salomonbrys.kodein:kodein-android:4.1.0'
-	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-	implementation 'se.ansman.kotshi:api:1.0.2'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+	implementation 'org.kodein.di:kodein-di-erased-jvm:5.2.0'
 
-	kapt 'android.arch.persistence.room:compiler:1.0.0'
-	kapt 'se.ansman.kotshi:compiler:1.0.2'
+	kapt 'android.arch.persistence.room:compiler:1.1.1'
+	kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
 
-	testImplementation "android.arch.persistence.room:testing:1.0.0"
-	testImplementation "io.mockk:mockk:1.7.17"
+	testImplementation "android.arch.persistence.room:testing:1.1.1"
+	testImplementation "io.mockk:mockk:1.8.4"
 	testImplementation "junit:junit:4.12"
 
-	androidTestImplementation "android.arch.persistence.room:testing:1.0.0"
+	androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
 	androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 	androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'

@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.favorites.api.model
 
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 internal class FavoriteRequest(
 	val place_id: String
 )
