@@ -60,7 +60,7 @@ internal class ApiTripItemResponse(
 
 				@JsonClass(generateAdapter = true)
 				internal class Waypoint(
-					val placeId: String?,
+					val place_id: String?,
 					val location: Location
 				) {
 					@JsonClass(generateAdapter = true)

@@ -39,7 +39,7 @@ internal class TripItemTransportConverter {
 			note = apiTransport.note,
 			waypoints = ArrayList(apiTransport.waypoints.map {
 				TripItemTransportWaypoint(
-					placeId = it.placeId,
+					placeId = it.place_id,
 					location = LatLng(
 						lat = it.location.lat,
 						lng = it.location.lng
@@ -78,7 +78,7 @@ internal class TripItemTransportConverter {
 			note = transport.note,
 			waypoints = transport.waypoints.map {
 				ApiTripItemResponse.Day.DayItem.Transport.Waypoint(
-					placeId = it.placeId,
+					place_id = it.placeId,
 					location = ApiTripItemResponse.Day.DayItem.Transport.Waypoint.Location(
 						lat = it.location.lat,
 						lng = it.location.lng
