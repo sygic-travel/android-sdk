@@ -14,6 +14,7 @@ open class Place constructor(
 	val location: LatLng,
 	val name: String,
 	val nameSuffix: String?,
+	val originalName: String?,
 	val boundingBox: LatLngBounds?,
 	val perex: String?,
 	val url: String?,

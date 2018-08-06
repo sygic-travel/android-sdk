@@ -68,6 +68,7 @@ class SpreaderTest {
 			level = Level.POI,
 			marker = "marker",
 			nameSuffix = null,
+			originalName = null,
 			parentIds = emptySet(),
 			perex = null,
 			quadkey = "1",
