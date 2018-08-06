@@ -25,7 +25,7 @@ internal class TripItemTransportConverter {
 				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
 				else -> DirectionMode.PEDESTRIAN
 			},
-			avoid = ArrayList(apiTransport.avoid.map {
+			avoid = ArrayList(apiTransport.avoid.mapNotNull {
 				when (it) {
 					ApiTripItemResponse.Day.DayItem.Transport.AVOID_FERRIES -> DirectionAvoid.FERRIES
 					ApiTripItemResponse.Day.DayItem.Transport.AVOID_HIGHWAYS -> DirectionAvoid.HIGHWAYS
@@ -33,7 +33,7 @@ internal class TripItemTransportConverter {
 					ApiTripItemResponse.Day.DayItem.Transport.AVOID_UNPAVED -> DirectionAvoid.UNPAVED
 					else -> null
 				}
-			}.filterNotNull()),
+			}),
 			startTime = apiTransport.start_time,
 			duration = apiTransport.duration,
 			note = apiTransport.note,
