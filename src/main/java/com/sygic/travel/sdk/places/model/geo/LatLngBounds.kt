@@ -10,6 +10,6 @@ data class LatLngBounds(
 	val southwest: LatLng
 ) : Parcelable, Serializable {
 	internal fun toApiQuery(): String {
-		return "${southwest.lng},${southwest.lat},${northeast.lng},${northeast.lat}"
+		return "${southwest.lat},${southwest.lng},${northeast.lat},${northeast.lng}"
 	}
 }
