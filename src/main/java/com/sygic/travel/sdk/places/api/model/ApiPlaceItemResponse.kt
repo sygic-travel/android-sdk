@@ -103,18 +103,18 @@ internal class ApiPlaceItemResponse(
 		val flags: List<String>
 	) {
 		fun fromApi(): Reference {
-			val reference = Reference()
-			reference.id = id
-			reference.title = title
-			reference.type = type
-			reference.languageId = language_id
-			reference.url = url
-			reference.supplier = supplier
-			reference.priority = priority
-			reference.currency = currency
-			reference.price = price
-			reference.flags = flags
-			return reference
+			return Reference(
+				id = id,
+				title = title,
+				type = type,
+				languageId = language_id,
+				url = url,
+				supplier = supplier,
+				priority = priority,
+				currency = currency,
+				price = price,
+				flags = flags.toHashSet()
+			)
 		}
 	}
 
