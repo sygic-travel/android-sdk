@@ -2,6 +2,8 @@ package com.sygic.travel.sdk.places.facade
 
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
@@ -47,5 +49,21 @@ class PlacesFacade internal constructor(
 	fun getPlaceMedia(id: String): List<Medium> {
 		checkNotRunningOnMainThread()
 		return placesService.getPlaceMedia(id)
+	}
+
+	/**
+	 * Detects places for specific location sorted by the area. Mainly return regions, but may return a POI.
+	 */
+	fun detectPlacesForLocation(location: LatLng): List<Place> {
+		checkNotRunningOnMainThread()
+		return placesService.detectPlacesForLocation(location)
+	}
+
+	/**
+	 * Detect places that cover enough of the area and its parents in area sorted by the coverage of the area.
+	 */
+	fun detectPlacesForLocation(location: LatLngBounds): List<Place> {
+		checkNotRunningOnMainThread()
+		return placesService.detectPlacesForLocation(location)
 	}
 }

@@ -6,6 +6,8 @@ import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.places.facade.PlacesQuery
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
 
 internal class PlacesService(
@@ -46,6 +48,21 @@ internal class PlacesService(
 
 	fun getPlaceMedia(id: String): List<Medium> {
 		val request = sygicTravelApiClient.getPlaceMedia(id)
+		return request.checkedExecute().body()!!.data!!.fromApi()
+	}
+
+	fun detectPlacesForLocation(location: LatLng): List<Place> {
+		val request = sygicTravelApiClient.getPlacesDetectParents(
+			"${location.lat},${location.lng}"
+		)
+		return request.checkedExecute().body()!!.data!!.fromApi()
+	}
+
+	fun detectPlacesForLocation(location: LatLngBounds): List<Place> {
+		val request = sygicTravelApiClient.getPlacesDetectParentsMainInBounds(
+			bounds = location.toApiQuery(),
+			tiles = null
+		)
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}
 }

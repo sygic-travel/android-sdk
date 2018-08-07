@@ -92,6 +92,17 @@ internal interface SygicTravelApiClient {
 		@Path("id") id: String
 	): Call<ApiResponse<ApiPlaceMediaResponse>>
 
+	@GET("places/detect-parents")
+	fun getPlacesDetectParents(
+		@Query("location") location: String
+	): Call<ApiResponse<ApiPlacesListResponse>>
+
+	@GET("places/detect-parents/main-in-bounds")
+	fun getPlacesDetectParentsMainInBounds(
+		@Query("bounds") bounds: String?,
+		@Query("map_tile_bounds") tiles: String?
+	): Call<ApiResponse<ApiPlacesListResponse>>
+
 
 	// ==== SYNCHRONIZATION=========================================================================
 
