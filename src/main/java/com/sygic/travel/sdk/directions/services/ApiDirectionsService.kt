@@ -4,11 +4,11 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
-import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionRequest
 import com.sygic.travel.sdk.directions.model.DirectionResponse
+import kotlin.math.roundToInt
 
 internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient
@@ -21,7 +21,7 @@ internal class ApiDirectionsService constructor(
 			}
 
 			val request = requests[i]
-			val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
+			val airDistance = request.startLocation.distanceTo(request.endLocation).roundToInt()
 
 			return@mapIndexed DirectionResponse(
 				startLocation = request.startLocation,

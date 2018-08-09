@@ -1,10 +1,10 @@
 package com.sygic.travel.sdk.directions.services
 
-import com.sygic.travel.sdk.directions.helpers.AirDistanceCalculator
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.DirectionRequest
 import com.sygic.travel.sdk.directions.model.DirectionResponse
+import kotlin.math.roundToInt
 
 internal class EstimatedDirectionsService {
 	companion object {
@@ -25,7 +25,7 @@ internal class EstimatedDirectionsService {
 	}
 
 	fun getDirection(request: DirectionRequest): DirectionResponse {
-		val airDistance = AirDistanceCalculator.getAirDistance(request.startLocation, request.endLocation)
+		val airDistance = request.startLocation.distanceTo(request.endLocation).roundToInt()
 		val directions = mutableListOf<Direction>()
 
 		if (airDistance <= PEDESTRIAN_MAX_LIMIT) {
