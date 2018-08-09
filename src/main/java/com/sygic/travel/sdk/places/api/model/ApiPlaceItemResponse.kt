@@ -119,6 +119,10 @@ internal class ApiPlaceItemResponse(
 	}
 
 	fun fromApi(): DetailedPlace {
+		val media = main_media?.media
+			?.map { it.fromApi() }
+			?.associateBy { it.id }
+
 		val detail = Detail(
 			tags = tags.map { it.fromApi() },
 			description = description?.fromApi(),
@@ -127,9 +131,10 @@ internal class ApiPlaceItemResponse(
 			email = email,
 			openingHours = opening_hours,
 			phone = phone,
-			mainMedia = main_media?.media?.map {
-				it.fromApi()
-			} ?: emptyList(),
+			mediumSquare = media?.get(main_media?.usage?.square),
+			mediumLandscape = media?.get(main_media?.usage?.landscape),
+			mediumPortrait = media?.get(main_media?.usage?.portrait),
+			mediumVideoPreview = media?.get(main_media?.usage?.video_preview),
 			references = references.map { it.fromApi() }
 		)
 
