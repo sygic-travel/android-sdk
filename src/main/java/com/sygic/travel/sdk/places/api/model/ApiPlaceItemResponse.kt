@@ -5,12 +5,10 @@ import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Description
-import com.sygic.travel.sdk.places.model.DescriptionProvider
 import com.sygic.travel.sdk.places.model.Detail
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
-import com.sygic.travel.sdk.places.model.TranslationProvider
 
 @Suppress("MemberVisibilityCanBePrivate")
 @JsonClass(generateAdapter = true)
@@ -54,26 +52,13 @@ internal class ApiPlaceItemResponse(
 		val translation_provider: String?,
 		val link: String?
 	) {
-		companion object {
-			private const val PROVIDER_WIKIPEDIA = "wikipedia"
-			private const val PROVIDER_WIKIVOYAGE = "wikivoyage"
-			private const val TRANSLATION_PROVIDER_GOOGLE = "google"
-		}
-
 		fun fromApi(): Description {
 			return Description(
 				text = text,
-				provider = when (provider) {
-					PROVIDER_WIKIPEDIA -> DescriptionProvider.WIKIPEDIA
-					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
-					else -> DescriptionProvider.NONE
-				},
+				provider = provider,
 				providerLink = link,
 				isTranslated = is_translated,
-				translationProvider = when (translation_provider) {
-					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
-					else -> TranslationProvider.NONE
-				}
+				translationProvider = translation_provider
 			)
 		}
 	}
