@@ -68,12 +68,12 @@ internal class ApiPlaceItemResponse(
 					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
 					else -> DescriptionProvider.NONE
 				},
+				providerLink = link,
 				isTranslated = is_translated,
 				translationProvider = when (translation_provider) {
 					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
 					else -> TranslationProvider.NONE
-				},
-				link = link
+				}
 			)
 		}
 	}

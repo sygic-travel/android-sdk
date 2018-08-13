@@ -4,7 +4,7 @@ package com.sygic.travel.sdk.places.model
 class Description constructor(
 	val text: String,
 	val provider: DescriptionProvider,
+	val providerLink: String?,
 	val isTranslated: Boolean,
-	val translationProvider: TranslationProvider,
-	val link: String?
+	val translationProvider: TranslationProvider
 )
