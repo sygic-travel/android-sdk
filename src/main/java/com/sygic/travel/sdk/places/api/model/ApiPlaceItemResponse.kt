@@ -49,6 +49,7 @@ internal class ApiPlaceItemResponse(
 	@JsonClass(generateAdapter = true)
 	internal class ApiDescription(
 		val text: String,
+		val is_translated: Boolean,
 		val provider: String?,
 		val translation_provider: String?,
 		val link: String?
@@ -67,6 +68,7 @@ internal class ApiPlaceItemResponse(
 					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
 					else -> DescriptionProvider.NONE
 				},
+				isTranslated = is_translated,
 				translationProvider = when (translation_provider) {
 					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
 					else -> TranslationProvider.NONE
