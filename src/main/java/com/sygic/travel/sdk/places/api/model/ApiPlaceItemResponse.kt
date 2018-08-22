@@ -5,12 +5,10 @@ import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Description
-import com.sygic.travel.sdk.places.model.DescriptionProvider
 import com.sygic.travel.sdk.places.model.Detail
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
-import com.sygic.travel.sdk.places.model.TranslationProvider
 
 @Suppress("MemberVisibilityCanBePrivate")
 @JsonClass(generateAdapter = true)
@@ -49,29 +47,18 @@ internal class ApiPlaceItemResponse(
 	@JsonClass(generateAdapter = true)
 	internal class ApiDescription(
 		val text: String,
+		val is_translated: Boolean,
 		val provider: String?,
 		val translation_provider: String?,
 		val link: String?
 	) {
-		companion object {
-			private const val PROVIDER_WIKIPEDIA = "wikipedia"
-			private const val PROVIDER_WIKIVOYAGE = "wikivoyage"
-			private const val TRANSLATION_PROVIDER_GOOGLE = "google"
-		}
-
 		fun fromApi(): Description {
 			return Description(
 				text = text,
-				provider = when (provider) {
-					PROVIDER_WIKIPEDIA -> DescriptionProvider.WIKIPEDIA
-					PROVIDER_WIKIVOYAGE -> DescriptionProvider.WIKIVOYAGE
-					else -> DescriptionProvider.NONE
-				},
-				translationProvider = when (translation_provider) {
-					TRANSLATION_PROVIDER_GOOGLE -> TranslationProvider.GOOGLE
-					else -> TranslationProvider.NONE
-				},
-				link = link
+				provider = provider,
+				providerLink = link,
+				isTranslated = is_translated,
+				translationProvider = translation_provider
 			)
 		}
 	}
@@ -119,6 +106,10 @@ internal class ApiPlaceItemResponse(
 	}
 
 	fun fromApi(): DetailedPlace {
+		val media = main_media?.media
+			?.map { it.fromApi() }
+			?.associateBy { it.id }
+
 		val detail = Detail(
 			tags = tags.map { it.fromApi() },
 			description = description?.fromApi(),
@@ -127,9 +118,10 @@ internal class ApiPlaceItemResponse(
 			email = email,
 			openingHours = opening_hours,
 			phone = phone,
-			mainMedia = main_media?.media?.map {
-				it.fromApi()
-			} ?: emptyList(),
+			mediumSquare = media?.get(main_media?.usage?.square),
+			mediumLandscape = media?.get(main_media?.usage?.landscape),
+			mediumPortrait = media?.get(main_media?.usage?.portrait),
+			mediumVideoPreview = media?.get(main_media?.usage?.video_preview),
 			references = references.map { it.fromApi() }
 		)
 

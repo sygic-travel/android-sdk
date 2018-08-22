@@ -14,6 +14,9 @@ class Detail(
 	val email: String?,
 	val openingHours: String?,
 	val phone: String?,
-	val mainMedia: List<Medium>,
+	val mediumSquare: Medium?,
+	val mediumLandscape: Medium?,
+	val mediumPortrait: Medium?,
+	val mediumVideoPreview: Medium?,
 	val references: List<Reference>
 )
