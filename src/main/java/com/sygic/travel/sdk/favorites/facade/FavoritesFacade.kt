@@ -25,6 +25,11 @@ class FavoritesFacade internal constructor(
 		return favoritesService.getPlaces()
 	}
 
+	fun isPlaceFavorite(placeId: String): Boolean {
+		checkNotRunningOnMainThread()
+		return favoritesService.hasPlace(placeId)
+	}
+
 	internal fun clearUserData() {
 		favoritesService.clearUserData()
 	}
