@@ -69,8 +69,7 @@ internal class ApiDirectionsService constructor(
 					mode = it.enumMode!!,
 					duration = it.duration,
 					distance = it.distance,
-					polyline = it.polyline,
-					isEstimated = false
+					polyline = it.polyline
 				)
 			}
 		}

@@ -8,6 +8,5 @@ class Direction(
 	val duration: Int?,
 	/** Distance in meters */
 	val distance: Int?,
-	val polyline: String?,
-	val isEstimated: Boolean
+	val polyline: String?
 ) : Serializable
