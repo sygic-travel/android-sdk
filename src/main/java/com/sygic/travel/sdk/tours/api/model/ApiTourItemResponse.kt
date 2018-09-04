@@ -21,21 +21,21 @@ internal class ApiTourItemResponse(
 	val flags: List<String>
 ) {
 	fun fromApi(): Tour {
-		val tour = Tour()
-		tour.id = id
-		tour.supplier = supplier
-		tour.title = title
-		tour.perex = perex
-		tour.url = url
-		tour.rating = rating
-		tour.reviewCount = review_count
-		tour.photoUrl = photo_url
-		tour.price = price
-		tour.originalPrice = original_price
-		tour.duration = duration
-		tour.durationMin = duration_min
-		tour.durationMax = duration_max
-		tour.flags = flags
-		return tour
+		return Tour(
+			id = id,
+			supplier = supplier,
+			title = title,
+			perex = perex,
+			url = url,
+			rating = rating,
+			reviewCount = review_count,
+			photoUrl = photo_url,
+			price = price,
+			originalPrice = original_price,
+			duration = duration,
+			durationMin = duration_min,
+			durationMax = duration_max,
+			flags = flags.toHashSet()
+		)
 	}
 }
