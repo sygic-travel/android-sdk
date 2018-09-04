@@ -1,10 +1,9 @@
 package com.sygic.travel.sdk.trips.model
 
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionMode
 
 data class TripItemTransport(
-	var mode: DirectionMode,
+	var mode: TripItemTransportMode,
 	var avoid: List<DirectionAvoid> = emptyList(),
 	var startTime: Int? = null,
 	var duration: Int? = null,

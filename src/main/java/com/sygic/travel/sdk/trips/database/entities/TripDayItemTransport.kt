@@ -2,12 +2,12 @@ package com.sygic.travel.sdk.trips.database.entities
 
 import android.arch.persistence.room.ColumnInfo
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionMode
+import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 
 internal class TripDayItemTransport {
 	@ColumnInfo
-	lateinit var mode: DirectionMode
+	lateinit var mode: TripItemTransportMode
 
 	@ColumnInfo
 	var avoid: ArrayList<DirectionAvoid> = arrayListOf()
