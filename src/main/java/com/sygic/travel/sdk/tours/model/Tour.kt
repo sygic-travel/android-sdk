@@ -3,19 +3,32 @@ package com.sygic.travel.sdk.tours.model
 /**
  * Model class for Tour.
  */
-class Tour {
-	var id: String? = null
-	var supplier: String? = null
-	var title: String? = null
-	var perex: String? = null
-	var url: String? = null
-	var rating: Float? = null
-	var reviewCount: Int? = null
-	var photoUrl: String? = null
-	var price: Float? = null
-	var originalPrice: Float? = null
-	var duration: String? = null
-	var durationMin: Int? = null
-	var durationMax: Int? = null
-	var flags: List<String>? = null
+@Suppress("unused")
+class Tour constructor(
+	val id: String,
+	val supplier: String,
+	val title: String,
+	val perex: String,
+	val url: String,
+	val rating: Float,
+	val reviewCount: Int,
+	/**
+	 * In case of get_your_guide supplier the url contains a placeholder [format_id] which has to be replaced.
+	 * See documentation of API endpoin response on http://docs.sygictravelapi.com/1.1/#section-tours.
+	 */
+	val photoUrl: String,
+	val price: Float,
+	val originalPrice: Float,
+	val duration: String?,
+	val durationMin: Int?,
+	val durationMax: Int?,
+	val flags: Set<String>
+) {
+	companion object {
+		const val FLAG_BESTSELLER = "bestseller"
+		const val FLAG_INSTANT_CONFIRMATION = "instant_confirmation"
+		const val FLAG_PORTABLE_TICKET = "portable_ticket"
+		const val FLAG_WHEELCHAIR_ACCESS = "wheelchair_access"
+		const val FLAG_SKIP_THE_LINE = "skip_the_line"
+	}
 }

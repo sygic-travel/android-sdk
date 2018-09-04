@@ -37,6 +37,10 @@ internal class FavoriteService(
 		return favorites.map { it.id }
 	}
 
+	fun hasPlace(placeId: String): Boolean {
+		return favoriteDao.get(placeId) != null
+	}
+
 	fun getFavoritesForSynchronization(): List<Favorite> {
 		return favoriteDao.findForSynchronization()
 	}
