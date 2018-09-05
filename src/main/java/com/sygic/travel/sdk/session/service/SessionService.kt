@@ -12,6 +12,7 @@ import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.model.Session
 import retrofit2.HttpException
 import java.util.Date
+import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.thread
 
 internal class SessionService(
@@ -25,6 +26,7 @@ internal class SessionService(
 	}
 
 	var sessionUpdateHandler: ((session: Session?) -> Unit)? = null
+	private val refreshLock = ReentrantLock()
 
 	fun authWithPassword(username: String, password: String): AuthenticationResponseCode {
 		val deviceId = authStorageService.getDeviceId()
@@ -137,13 +139,7 @@ internal class SessionService(
 		val refreshTimeExpiration = authStorageService.getSuggestedRefreshTime()
 
 		if (Date().time >= refreshTimeExpiration) {
-			thread {
-				try {
-					refreshToken(refreshToken)
-				} catch (e: Exception) {
-					e.printStackTrace()
-				}
-			}
+			tryRefreshToken(refreshToken)
 		}
 
 		return Session(
@@ -178,6 +174,25 @@ internal class SessionService(
 
 		} else {
 			return AuthenticationResponseCode.ERROR
+		}
+	}
+
+	private fun tryRefreshToken(refreshToken: String) {
+		if (refreshLock.isLocked) {
+			return
+		}
+
+		thread {
+			try {
+				if (!refreshLock.tryLock()) {
+					return@thread
+				}
+				refreshToken(refreshToken)
+			} catch (e: Exception) {
+				e.printStackTrace()
+			} finally {
+				refreshLock.unlock()
+			}
 		}
 	}
 
