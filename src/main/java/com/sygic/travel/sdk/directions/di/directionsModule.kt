@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.directions.di
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.directions.api.DirectionConverter
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.directions.services.ApiDirectionsService
 import org.kodein.di.Kodein
@@ -11,11 +12,16 @@ import org.kodein.di.erased.singleton
 internal val directionsModule = Kodein.Module("directionsModule") {
 	bind<ApiDirectionsService>() with singleton {
 		ApiDirectionsService(
-			instance<SygicTravelApiClient>()
+			instance<SygicTravelApiClient>(),
+			instance<DirectionConverter>()
 		)
 	}
 
 	bind<DirectionsFacade>() with singleton {
 		DirectionsFacade(instance<ApiDirectionsService>())
+	}
+
+	bind<DirectionConverter>() with singleton {
+		DirectionConverter()
 	}
 }

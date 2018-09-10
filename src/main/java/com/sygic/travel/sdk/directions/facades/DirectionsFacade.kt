@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.directions.facades
 
-import com.sygic.travel.sdk.directions.model.DirectionRequest
+import com.sygic.travel.sdk.directions.model.DirectionQuery
 import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.directions.services.ApiDirectionsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
@@ -15,7 +15,7 @@ class DirectionsFacade internal constructor(
 	/**
 	 * Queries the API for full directions. Reuses already cached directions.
 	 */
-	fun getDirection(request: DirectionRequest): DirectionResponse? {
+	fun getDirection(request: DirectionQuery): DirectionResponse? {
 		checkNotRunningOnMainThread()
 		return directionsService.getDirections(listOf(request)).first()
 	}
@@ -23,7 +23,7 @@ class DirectionsFacade internal constructor(
 	/**
 	 * Queries the API for full directions. Reuses already cached directions.
 	 */
-	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+	fun getDirections(requests: List<DirectionQuery>): List<DirectionResponse?> {
 		checkNotRunningOnMainThread()
 		return directionsService.getDirections(requests)
 	}
