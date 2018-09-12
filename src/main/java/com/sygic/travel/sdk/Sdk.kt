@@ -8,6 +8,7 @@ import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.events.facades.EventsFacade
 import com.sygic.travel.sdk.favorites.facade.FavoritesFacade
 import com.sygic.travel.sdk.places.facade.PlacesFacade
+import com.sygic.travel.sdk.places.facade.PlacesReviewsFacade
 import com.sygic.travel.sdk.session.facade.SessionFacade
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.tours.facade.ToursFacade
@@ -36,6 +37,7 @@ class Sdk(
 	val eventsFacade: EventsFacade by kodein.instance()
 	val favoritesFacade: FavoritesFacade by kodein.instance()
 	val placesFacade: PlacesFacade by kodein.instance()
+	val placeReviewsFacade: PlacesReviewsFacade by kodein.instance()
 	val sessionFacade: SessionFacade by kodein.instance()
 	val synchronizationFacade: SynchronizationFacade by kodein.instance()
 	val toursFacade: ToursFacade by kodein.instance()

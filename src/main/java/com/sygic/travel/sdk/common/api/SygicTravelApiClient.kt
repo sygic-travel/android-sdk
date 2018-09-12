@@ -4,10 +4,13 @@ import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
 import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
+import com.sygic.travel.sdk.places.api.model.ApiCreateReviewRequest
+import com.sygic.travel.sdk.places.api.model.ApiGetReviewsResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceMediaResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlaceResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesListResponse
 import com.sygic.travel.sdk.places.api.model.ApiPlacesResponse
+import com.sygic.travel.sdk.places.api.model.ApiUpdateReviewVoteRequest
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.tours.api.model.ApiTourResponse
 import com.sygic.travel.sdk.trips.api.model.ApiCloneTripRequest
@@ -103,6 +106,35 @@ internal interface SygicTravelApiClient {
 		@Query("map_tile_bounds") tiles: String?
 	): Call<ApiResponse<ApiPlacesListResponse>>
 
+
+	// ==== REVIEWS ================================================================================
+
+	@GET("places/{place_id}/reviews")
+	@Headers("Authorization: [toIntercept]")
+	fun getReviews(
+		@Path("place_id") placeId: String,
+		@Query("limit") limit: Int = 40
+	): Call<ApiResponse<ApiGetReviewsResponse>>
+
+	@POST("reviews")
+	@Headers("Authorization: [toIntercept]")
+	fun createReview(
+		@Body reviewRequest: ApiCreateReviewRequest
+	): Call<Void>
+
+	@DELETE("reviews/{review_id}")
+	@Headers("Authorization: [toIntercept]")
+	fun deleteReview(
+		@Path("review_id") reviewId: Int
+	): Call<Void>
+
+	@PUT("reviews/{review_id}/votes")
+	@Headers("Authorization: [toIntercept]")
+	fun updateReviewVote(
+		@Path("review_id") reviewId: Int,
+		@Body reviewVote: ApiUpdateReviewVoteRequest
+	): Call<Void>
+	
 
 	// ==== SYNCHRONIZATION=========================================================================
 
