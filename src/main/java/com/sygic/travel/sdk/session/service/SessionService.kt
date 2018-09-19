@@ -183,10 +183,11 @@ internal class SessionService(
 		}
 
 		thread {
+			if (!refreshLock.tryLock()) {
+				return@thread
+			}
+
 			try {
-				if (!refreshLock.tryLock()) {
-					return@thread
-				}
 				refreshToken(refreshToken)
 			} catch (e: Exception) {
 				e.printStackTrace()
