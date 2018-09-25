@@ -4,33 +4,28 @@ import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-internal val sygicAuthApiModule = Kodein.Module("sygicAuthApiModule") {
-	bind<OkHttpClient>("sygicAuthHttpClient") with singleton {
+internal val sygicAuthApiModule = module {
+	single("sygicAuthHttpClient") {
 		val builder = OkHttpClient.Builder()
 
-		if (instance("debugMode")) {
-			builder.addInterceptor(instance<HttpLoggingInterceptor>())
+		if (getProperty("debugMode")) {
+			builder.addInterceptor(get<HttpLoggingInterceptor>())
 		}
 
 		builder.build()
 	}
-
-	bind<Retrofit>("sygicAuthApiRetrofit") with singleton {
+	single("sygicAuthApiRetrofit") {
 		Retrofit.Builder()
-			.client(instance("sygicAuthHttpClient"))
-			.baseUrl(instance<String>("sygicAuthUrl"))
-			.addConverterFactory(MoshiConverterFactory.create(instance<Moshi>()))
+			.client(get<OkHttpClient>("sygicAuthHttpClient"))
+			.baseUrl(getProperty<String>("sygicAuthUrl"))
+			.addConverterFactory(MoshiConverterFactory.create(get<Moshi>()))
 			.build()
 	}
-
-	bind<SygicSsoApiClient>() with singleton {
-		instance<Retrofit>("sygicAuthApiRetrofit").create(SygicSsoApiClient::class.java)
+	single {
+		get<Retrofit>("sygicAuthApiRetrofit").create(SygicSsoApiClient::class.java)
 	}
 }

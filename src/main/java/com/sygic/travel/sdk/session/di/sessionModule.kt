@@ -10,34 +10,29 @@ import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 
-internal val sessionModule = Kodein.Module("sessionModule") {
-	bind<AuthStorageService>() with singleton {
-		AuthStorageService(instance<SharedPreferences>())
+internal val sessionModule = module {
+	single {
+		AuthStorageService(get<SharedPreferences>())
 	}
-
-	bind<SessionService>() with singleton {
+	single {
 		SessionService(
-			instance<SygicSsoApiClient>(),
-			instance<AuthStorageService>(),
-			instance<String>("clientId"),
-			instance<Moshi>()
+			get<SygicSsoApiClient>(),
+			get<AuthStorageService>(),
+			getProperty<String>("clientId"),
+			get<Moshi>()
 		)
 	}
-
-	bind<SessionFacade>() with singleton {
-		checkUserDataSupport(instance<Boolean>("userDataSupported"), "Session")
+	single {
+		checkUserDataSupport(getProperty("userDataSupported"), "Session")
 		val authFacade = SessionFacade(
-			instance<SessionService>()
+			get<SessionService>()
 		)
 		authFacade.onSignOut.add {
-			instance<TripsFacade>().clearUserData()
-			instance<FavoritesFacade>().clearUserData()
-			instance<SynchronizationFacade>().clearUserData()
+			get<TripsFacade>().clearUserData()
+			get<FavoritesFacade>().clearUserData()
+			get<SynchronizationFacade>().clearUserData()
 		}
 		authFacade
 	}

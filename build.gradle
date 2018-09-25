@@ -45,10 +45,6 @@ android {
 	sourceSets {
 		androidTest.assets.srcDirs += files("$projectDir/db-schemas".toString())
 	}
-
-	packagingOptions {
-		exclude 'META-INF/main.kotlin_module'
-	}
 }
 
 repositories {
@@ -64,7 +60,7 @@ dependencies {
 	implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 	implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-	implementation 'org.kodein.di:kodein-di-erased-jvm:5.2.0'
+	implementation 'org.koin:koin-core:1.0.1'
 
 	kapt 'android.arch.persistence.room:compiler:1.1.1'
 	kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'

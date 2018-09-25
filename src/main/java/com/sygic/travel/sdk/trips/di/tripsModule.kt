@@ -16,37 +16,56 @@ import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 
-internal val tripsModule = Kodein.Module("tripsModule") {
-	bind<TripsFacade>() with singleton {
-		checkUserDataSupport(instance<Boolean>("userDataSupported"), "Trips")
-		TripsFacade(instance<TripsService>())
+internal val tripsModule = module {
+	single {
+		checkUserDataSupport(getProperty("userDataSupported"), "Trips")
+		TripsFacade(get<TripsService>())
 	}
-	bind<TripsService>() with singleton {
+	single {
 		TripsService(
-			instance<SygicTravelApiClient>(),
-			instance<TripsDao>(),
-			instance<TripDaysDao>(),
-			instance<TripDayItemsDao>(),
-			instance<TripDbConverter>(),
-			instance<TripDayDbConverter>(),
-			instance<TripDayItemDbConverter>(),
-			instance<TripConverter>()
+			get<SygicTravelApiClient>(),
+			get<TripsDao>(),
+			get<TripDaysDao>(),
+			get<TripDayItemsDao>(),
+			get<TripDbConverter>(),
+			get<TripDayDbConverter>(),
+			get<TripDayItemDbConverter>(),
+			get<TripConverter>()
 		)
 	}
-	bind<TripsDao>() with singleton { instance<Database>().tripsDao() }
-	bind<TripDaysDao>() with singleton { instance<Database>().tripDaysDao() }
-	bind<TripDayItemsDao>() with singleton { instance<Database>().tripDayItemsDao() }
-	bind<TripConverter>() with singleton { TripConverter(instance<TripDayConverter>()) }
-	bind<TripDayConverter>() with singleton { TripDayConverter(instance<TripDayItemConverter>()) }
-	bind<TripDayItemConverter>() with singleton { TripDayItemConverter(instance<TripItemTransportConverter>()) }
-	bind<TripItemTransportConverter>() with singleton { TripItemTransportConverter() }
-	bind<TripDbConverter>() with singleton { TripDbConverter() }
-	bind<TripDayDbConverter>() with singleton { TripDayDbConverter() }
-	bind<TripDayItemDbConverter>() with singleton { TripDayItemDbConverter(instance<TripDayItemTransportDbConverter>()) }
-	bind<TripDayItemTransportDbConverter>() with singleton { TripDayItemTransportDbConverter() }
+	single {
+		get<Database>().tripsDao()
+	}
+	single {
+		get<Database>().tripDaysDao()
+	}
+	single {
+		get<Database>().tripDayItemsDao()
+	}
+	single {
+		TripConverter(get<TripDayConverter>())
+	}
+	single {
+		TripDayConverter(get<TripDayItemConverter>())
+	}
+	single {
+		TripDayItemConverter(get<TripItemTransportConverter>())
+	}
+	single {
+		TripItemTransportConverter()
+	}
+	single {
+		TripDbConverter()
+	}
+	single {
+		TripDayDbConverter()
+	}
+	single {
+		TripDayItemDbConverter(get<TripDayItemTransportDbConverter>())
+	}
+	single {
+		TripDayItemTransportDbConverter()
+	}
 }

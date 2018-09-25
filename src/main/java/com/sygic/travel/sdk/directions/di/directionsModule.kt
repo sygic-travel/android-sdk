@@ -4,24 +4,19 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.directions.api.DirectionConverter
 import com.sygic.travel.sdk.directions.facades.DirectionsFacade
 import com.sygic.travel.sdk.directions.services.ApiDirectionsService
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 
-internal val directionsModule = Kodein.Module("directionsModule") {
-	bind<ApiDirectionsService>() with singleton {
+internal val directionsModule = module {
+	single {
 		ApiDirectionsService(
-			instance<SygicTravelApiClient>(),
-			instance<DirectionConverter>()
+			get<SygicTravelApiClient>(),
+			get<DirectionConverter>()
 		)
 	}
-
-	bind<DirectionsFacade>() with singleton {
-		DirectionsFacade(instance<ApiDirectionsService>())
+	single {
+		DirectionsFacade(get<ApiDirectionsService>())
 	}
-
-	bind<DirectionConverter>() with singleton {
+	single {
 		DirectionConverter()
 	}
 }

@@ -1,30 +1,23 @@
 package com.sygic.travel.sdk.common.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 
-internal val generalModule = Kodein.Module("generalModule") {
-	bind<Cache>() with singleton {
-		val cacheFile = instance<Context>().cacheDir
-		Cache(cacheFile, instance<Long>("httpCacheSize"))
+internal val generalModule = module {
+	single {
+		val cacheFile = get<Context>().cacheDir
+		Cache(cacheFile, getProperty<Long>("httpCacheSize"))
 	}
-
-	bind<HttpLoggingInterceptor>() with singleton {
+	single {
 		HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 	}
-
-	bind<SharedPreferences>() with singleton {
-		instance<Context>().getSharedPreferences("SygicTravelSdk", 0)
+	single {
+		get<Context>().getSharedPreferences("SygicTravelSdk", 0)
 	}
-
-	bind<Moshi>() with singleton {
+	single {
 		Moshi.Builder().build()
 	}
 }

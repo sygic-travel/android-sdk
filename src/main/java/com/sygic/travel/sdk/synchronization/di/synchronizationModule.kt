@@ -10,39 +10,36 @@ import com.sygic.travel.sdk.synchronization.services.TripsSynchronizationService
 import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.koin.dsl.module.module
 
-internal val synchronizationModule = Kodein.Module("synchronizationModule") {
-	bind<SynchronizationFacade>() with singleton {
-		checkUserDataSupport(instance<Boolean>("userDataSupported"), "Synchronization")
+internal val synchronizationModule = module {
+	single {
+		checkUserDataSupport(getProperty("userDataSupported"), "Synchronization")
 		SynchronizationFacade(
-			instance<SynchronizationService>(),
-			instance<TripsService>(),
-			instance<FavoriteService>()
+			get<SynchronizationService>(),
+			get<TripsService>(),
+			get<FavoriteService>()
 		)
 	}
-	bind<SynchronizationService>() with singleton {
+	single {
 		SynchronizationService(
-			instance<SharedPreferences>(),
-			instance<SygicTravelApiClient>(),
-			instance<FavoritesSynchronizationService>(),
-			instance<TripsSynchronizationService>()
+			get<SharedPreferences>(),
+			get<SygicTravelApiClient>(),
+			get<FavoritesSynchronizationService>(),
+			get<TripsSynchronizationService>()
 		)
 	}
-	bind<TripsSynchronizationService>() with singleton {
+	single {
 		TripsSynchronizationService(
-			instance<SygicTravelApiClient>(),
-			instance<TripConverter>(),
-			instance<TripsService>()
+			get<SygicTravelApiClient>(),
+			get<TripConverter>(),
+			get<TripsService>()
 		)
 	}
-	bind<FavoritesSynchronizationService>() with singleton {
+	single {
 		FavoritesSynchronizationService(
-			instance<SygicTravelApiClient>(),
-			instance<FavoriteService>()
+			get<SygicTravelApiClient>(),
+			get<FavoriteService>()
 		)
 	}
 }
