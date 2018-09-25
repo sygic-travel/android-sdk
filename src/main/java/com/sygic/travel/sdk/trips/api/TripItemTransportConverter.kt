@@ -1,10 +1,10 @@
 package com.sygic.travel.sdk.trips.api
 
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripItemTransport
+import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 
 internal class TripItemTransportConverter {
@@ -15,15 +15,15 @@ internal class TripItemTransportConverter {
 
 		return TripItemTransport(
 			mode = when (apiTransport.mode) {
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE -> DirectionMode.BIKE
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT -> DirectionMode.BOAT
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS -> DirectionMode.BUS
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR -> DirectionMode.CAR
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN -> DirectionMode.PEDESTRIAN
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE -> DirectionMode.PLANE
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT -> DirectionMode.PUBLIC_TRANSPORT
-				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> DirectionMode.TRAIN
-				else -> DirectionMode.PEDESTRIAN
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE -> TripItemTransportMode.BIKE
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT -> TripItemTransportMode.BOAT
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS -> TripItemTransportMode.BUS
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR -> TripItemTransportMode.CAR
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN -> TripItemTransportMode.PEDESTRIAN
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE -> TripItemTransportMode.PLANE
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT -> TripItemTransportMode.PUBLIC_TRANSPORT
+				ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN -> TripItemTransportMode.TRAIN
+				else -> TripItemTransportMode.PEDESTRIAN
 			},
 			avoid = ArrayList(apiTransport.avoid.mapNotNull {
 				when (it) {
@@ -56,14 +56,14 @@ internal class TripItemTransportConverter {
 
 		return ApiTripItemResponse.Day.DayItem.Transport(
 			mode = when (transport.mode) {
-				DirectionMode.BIKE -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE
-				DirectionMode.BOAT -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT
-				DirectionMode.BUS -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS
-				DirectionMode.CAR -> ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR
-				DirectionMode.PEDESTRIAN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN
-				DirectionMode.PLANE -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE
-				DirectionMode.PUBLIC_TRANSPORT -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT
-				DirectionMode.TRAIN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN
+				TripItemTransportMode.BIKE -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BIKE
+				TripItemTransportMode.BOAT -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BOAT
+				TripItemTransportMode.BUS -> ApiTripItemResponse.Day.DayItem.Transport.MODE_BUS
+				TripItemTransportMode.CAR -> ApiTripItemResponse.Day.DayItem.Transport.MODE_CAR
+				TripItemTransportMode.PEDESTRIAN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PEDESTRIAN
+				TripItemTransportMode.PLANE -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PLANE
+				TripItemTransportMode.PUBLIC_TRANSPORT -> ApiTripItemResponse.Day.DayItem.Transport.MODE_PUBLIC_TRANSIT
+				TripItemTransportMode.TRAIN -> ApiTripItemResponse.Day.DayItem.Transport.MODE_TRAIN
 			},
 			avoid = transport.avoid.map {
 				when (it) {

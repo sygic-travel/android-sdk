@@ -2,8 +2,8 @@ package com.sygic.travel.sdk.common.database
 
 import android.arch.persistence.room.TypeConverter
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 
@@ -41,7 +41,7 @@ internal class Converters {
 	}
 
 	@TypeConverter
-	fun modeToString(mode: DirectionMode?): String? {
+	fun tripModeToString(mode: TripItemTransportMode?): String? {
 		return when (mode) {
 			null -> null
 			else -> mode.name
@@ -49,10 +49,10 @@ internal class Converters {
 	}
 
 	@TypeConverter
-	fun stringToMode(mode: String?): DirectionMode? {
+	fun stringToTripMode(mode: String?): TripItemTransportMode? {
 		return when (mode) {
 			null -> null
-			else -> DirectionMode.valueOf(mode)
+			else -> TripItemTransportMode.valueOf(mode)
 		}
 	}
 

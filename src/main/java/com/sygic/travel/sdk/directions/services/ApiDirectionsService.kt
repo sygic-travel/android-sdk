@@ -2,18 +2,22 @@ package com.sygic.travel.sdk.directions.services
 
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.model.ApiResponse
+import com.sygic.travel.sdk.directions.api.DirectionConverter
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionRequest
+import com.sygic.travel.sdk.directions.model.DirectionQuery
 import com.sygic.travel.sdk.directions.model.DirectionResponse
+import com.sygic.travel.sdk.utils.DateTimeHelper
+import com.sygic.travel.sdk.utils.timeSeconds
 import kotlin.math.roundToInt
 
 internal class ApiDirectionsService constructor(
-	private val apiClient: SygicTravelApiClient
+	private val apiClient: SygicTravelApiClient,
+	private val directionConverter: DirectionConverter
 ) {
-	fun getDirections(requests: List<DirectionRequest>): List<DirectionResponse?> {
+	fun getDirections(requests: List<DirectionQuery>): List<DirectionResponse?> {
 		val apiDirections = getCalculatedDirections(requests)
 		return apiDirections.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
@@ -29,26 +33,31 @@ internal class ApiDirectionsService constructor(
 				waypoints = request.waypoints,
 				avoid = request.avoid,
 				airDistance = airDistance,
-				results = it
+				directions = it
 			)
 		}
 	}
 
-	private fun getCalculatedDirections(requests: List<DirectionRequest>): List<List<Direction>?> {
+	private fun getCalculatedDirections(requests: List<DirectionQuery>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
+				depart_at = DateTimeHelper.timestampToDatetime(it.departAt.timeSeconds),
+				arrive_at = DateTimeHelper.timestampToDatetime(it.arriveAt.timeSeconds),
+				modes = it.modes?.map { mode -> mode.name },
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
 				destination = ApiDirectionRequest.Location(it.endLocation.lat, it.endLocation.lng),
-				avoid = it.avoid.map {
-					when (it) {
+				avoid = it.avoid.map { avoid ->
+					when (avoid) {
 						DirectionAvoid.TOLLS -> ApiDirectionRequest.AVOID_TOLLS
 						DirectionAvoid.HIGHWAYS -> ApiDirectionRequest.AVOID_HIGHWAYS
 						DirectionAvoid.FERRIES -> ApiDirectionRequest.AVOID_FERRIES
 						DirectionAvoid.UNPAVED -> ApiDirectionRequest.AVOID_UNPAVED
 					}
 				},
-				waypoints = it.waypoints.map {
-					ApiDirectionRequest.Location(it.lat, it.lng)
+				waypoints = it.waypoints.map { waypoint ->
+					ApiDirectionRequest.Waypoint(
+						ApiDirectionRequest.Location(waypoint.lat, waypoint.lng)
+					)
 				}
 			)
 		}
@@ -64,15 +73,7 @@ internal class ApiDirectionsService constructor(
 		assert(directions.size == requests.size)
 
 		return directions.map {
-			it.filter { it.enumMode != null }.map {
-				Direction(
-					mode = it.enumMode!!,
-					duration = it.duration,
-					distance = it.distance,
-					polyline = it.polyline,
-					isEstimated = false
-				)
-			}
+			it.mapNotNull { innerDirection -> directionConverter.fromApi(innerDirection) }
 		}
 	}
 }
