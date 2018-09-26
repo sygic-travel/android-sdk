@@ -41,8 +41,8 @@ internal class ApiDirectionsService constructor(
 	private fun getCalculatedDirections(requests: List<DirectionQuery>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
-				depart_at = DateTimeHelper.timestampToDatetime(it.departAt.timeSeconds),
-				arrive_at = DateTimeHelper.timestampToDatetime(it.arriveAt.timeSeconds),
+				depart_at = DateTimeHelper.timestampToDatetimeLocal(it.departAt.timeSeconds),
+				arrive_at = DateTimeHelper.timestampToDatetimeLocal(it.arriveAt.timeSeconds),
 				modes = it.modes?.map { mode -> mode.name },
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
 				destination = ApiDirectionRequest.Location(it.endLocation.lat, it.endLocation.lng),

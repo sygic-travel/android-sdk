@@ -70,7 +70,7 @@ internal class DirectionConverter {
 
 	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime {
 		return DirectionTime(
-			datetimeLocal = DateTimeHelper.datetimeToTimestamp(time.datetime_local).asDate(),
+			datetimeLocal = DateTimeHelper.datetimeLocalToTimestamp(time.datetime_local).asDate(),
 			datetime = DateTimeHelper.datetimeToTimestamp(time.datetime).asDate()
 		)
 	}
