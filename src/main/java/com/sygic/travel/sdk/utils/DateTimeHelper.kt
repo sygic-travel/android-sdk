@@ -23,28 +23,28 @@ internal object DateTimeHelper {
 		parseDateFormat.timeZone = timezone
 	}
 
-	fun timestampToDatetime(timestamp: Long?): String? {
+	fun timestampToDatetime(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateTimeFormatTz.format(Date(timestamp * 1000))
+			else -> outDateTimeFormatTz.format(timestamp)
 		}
 	}
 
-	fun timestampToDatetimeLocal(timestamp: Long?): String? {
+	fun timestampToDatetimeLocal(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateTimeFormat.format(Date(timestamp * 1000))
+			else -> outDateTimeFormat.format(timestamp)
 		}
 	}
 
-	fun timestampToDate(timestamp: Long?): String? {
+	fun timestampToDate(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateFormat.format(Date(timestamp * 1000))
+			else -> outDateFormat.format(timestamp)
 		}
 	}
 
-	fun datetimeToTimestamp(datetime: String?): Long? {
+	fun datetimeToTimestamp(datetime: String?): Date? {
 		return when (datetime) {
 			null -> null
 			else -> {
@@ -54,29 +54,22 @@ internal object DateTimeHelper {
 					// strip : in timezone part
 					string = string.substring(0, 22) + string.substring(23)
 				}
-				val parsed = parseDateTimeFormatTz.parse(string)
-				return parsed.time / 1000
+				parseDateTimeFormatTz.parse(string)
 			}
 		}
 	}
 
-	fun datetimeLocalToTimestamp(datetime: String?): Long? {
+	fun datetimeLocalToTimestamp(datetime: String?): Date? {
 		return when (datetime) {
 			null -> null
-			else -> {
-				val parsed = parseDateTimeFormat.parse(datetime)
-				return parsed.time / 1000
-			}
+			else -> parseDateTimeFormat.parse(datetime)
 		}
 	}
 
-	fun dateToTimestamp(date: String?): Long? {
+	fun dateToTimestamp(date: String?): Date? {
 		return when (date) {
 			null -> null
-			else -> {
-				val parsed = parseDateFormat.parse(date)
-				return parsed.time / 1000L
-			}
+			else -> parseDateFormat.parse(date)
 		}
 	}
 

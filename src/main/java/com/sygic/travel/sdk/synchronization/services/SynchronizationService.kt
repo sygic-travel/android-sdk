@@ -6,6 +6,8 @@ import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 import com.sygic.travel.sdk.utils.DateTimeHelper
+import com.sygic.travel.sdk.utils.asDate
+import com.sygic.travel.sdk.utils.timeSeconds
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.thread
 
@@ -53,7 +55,7 @@ internal class SynchronizationService constructor(
 	}
 
 	private fun synchronizeWithResult(result: SynchronizationResult) {
-		val since = sharedPreferences.getLong(SINCE_KEY, 0)
+		val since = sharedPreferences.getLong(SINCE_KEY, 0).asDate()!!
 		val changesResponse = apiClient.getChanges(
 			DateTimeHelper.timestampToDatetime(since)
 		).checkedExecute().body()!!
@@ -87,7 +89,7 @@ internal class SynchronizationService constructor(
 		tripsSynchronizationResult.sync(changedTripIds, deletedTripIds, result)
 		favoritesSynchronizationService.sync(addedFavoriteIds, deletedFavoriteIds, result)
 
-		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp)!!
+		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp).timeSeconds!!
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.apply()

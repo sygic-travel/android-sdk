@@ -12,7 +12,6 @@ import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.DateTimeHelper
 import retrofit2.HttpException
-import java.util.Date
 
 internal class TripsSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
@@ -122,7 +121,7 @@ internal class TripsSynchronizationService constructor(
 							localTrip = localTrip,
 							remoteTrip = tripConverter.fromApi(apiTripData),
 							remoteTripUserName = data.conflict_info!!.last_user_name,
-							remoteTripUpdatedAt = Date(DateTimeHelper.datetimeToTimestamp(data.conflict_info.last_updated_at)!! * 1000)
+							remoteTripUpdatedAt = DateTimeHelper.datetimeToTimestamp(data.conflict_info.last_updated_at)!!
 						)
 						conflictHandler.invoke(conflictInfo)
 					}

@@ -6,7 +6,6 @@ import com.sygic.travel.sdk.tours.facade.ToursGetYourGuideQuery
 import com.sygic.travel.sdk.tours.facade.ToursViatorQuery
 import com.sygic.travel.sdk.tours.model.Tour
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import com.sygic.travel.sdk.utils.timeSeconds
 
 internal class ToursService(
 	private val apiClient: SygicTravelApiClient
@@ -26,8 +25,8 @@ internal class ToursService(
 			bounds = query.bounds?.toApiQuery(),
 			parentPlaceId = query.parentPlaceId,
 			tags = query.tags,
-			from = DateTimeHelper.timestampToDatetime(query.startDate?.timeSeconds),
-			to = DateTimeHelper.timestampToDatetime(query.endDate?.timeSeconds),
+			from = DateTimeHelper.timestampToDatetime(query.startDate),
+			to = DateTimeHelper.timestampToDatetime(query.endDate),
 			duration = query.getApiDurationQuery(),
 			page = query.page,
 			count = query.count,

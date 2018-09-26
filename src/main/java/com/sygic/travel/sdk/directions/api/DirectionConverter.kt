@@ -10,7 +10,6 @@ import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.DirectionTime
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import com.sygic.travel.sdk.utils.asDate
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse.Directions.Direction as ApiDirection
 
 internal class DirectionConverter {
@@ -70,8 +69,8 @@ internal class DirectionConverter {
 
 	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime {
 		return DirectionTime(
-			datetimeLocal = DateTimeHelper.datetimeLocalToTimestamp(time.datetime_local).asDate(),
-			datetime = DateTimeHelper.datetimeToTimestamp(time.datetime).asDate()
+			datetimeLocal = DateTimeHelper.datetimeLocalToTimestamp(time.datetime_local),
+			datetime = DateTimeHelper.datetimeToTimestamp(time.datetime)
 		)
 	}
 
