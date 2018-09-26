@@ -4,7 +4,6 @@ import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.places.model.Review
 import com.sygic.travel.sdk.places.model.ReviewList
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import com.sygic.travel.sdk.utils.asDate
 
 @JsonClass(generateAdapter = true)
 internal class ApiGetReviewsResponse(
@@ -38,8 +37,8 @@ internal class ApiGetReviewsResponse(
 				votesDown = votes_down,
 				votesScore = votes_score,
 				currentUserVote = current_user_vote,
-				createdAt = DateTimeHelper.datetimeToTimestamp(created_at).asDate()!!,
-				updatedAt = if (updated_at != null) DateTimeHelper.datetimeToTimestamp(updated_at).asDate() else null
+				createdAt = DateTimeHelper.datetimeToTimestamp(created_at)!!,
+				updatedAt = DateTimeHelper.datetimeToTimestamp(updated_at)
 			)
 		}
 	}

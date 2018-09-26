@@ -10,7 +10,6 @@ import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionQuery
 import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.utils.DateTimeHelper
-import com.sygic.travel.sdk.utils.timeSeconds
 import kotlin.math.roundToInt
 
 internal class ApiDirectionsService constructor(
@@ -41,8 +40,8 @@ internal class ApiDirectionsService constructor(
 	private fun getCalculatedDirections(requests: List<DirectionQuery>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
-				depart_at = DateTimeHelper.timestampToDatetime(it.departAt.timeSeconds),
-				arrive_at = DateTimeHelper.timestampToDatetime(it.arriveAt.timeSeconds),
+				depart_at = DateTimeHelper.timestampToDatetimeLocal(it.departAt),
+				arrive_at = DateTimeHelper.timestampToDatetimeLocal(it.arriveAt),
 				modes = it.modes?.map { mode -> mode.name },
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
 				destination = ApiDirectionRequest.Location(it.endLocation.lat, it.endLocation.lng),
