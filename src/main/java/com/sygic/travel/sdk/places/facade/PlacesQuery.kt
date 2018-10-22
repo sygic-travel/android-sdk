@@ -14,28 +14,28 @@ import com.sygic.travel.sdk.places.model.geo.LatLngBounds
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#endpoint-get-places-list).
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class PlacesQuery {
-	var query: String? = null
-	var bounds: LatLngBounds? = null
-	var categories: List<Category>? = null
-	var categoriesOperator = LogicalOperator.OR
-	var categoriesNot: List<Category>? = null
-	var categoriesNotOperator = LogicalOperator.OR
-	var tags: List<String>? = null
-	var tagsOperator = LogicalOperator.OR
-	var tagsNot: List<String>? = null
-	var tagsNotOperator = LogicalOperator.OR
-	var parentIds: List<String>? = null
-	var parentsOperator = LogicalOperator.OR
-	var mapSpread: Int? = null
-	var mapTiles: List<String>? = null
-	var limit: Int? = null
-	var levels: List<Level>? = null
-	var starRatingMin: Int? = null
-	var starRatingMax: Int? = null
-	var customerRatingMin: Int? = null
+data class PlacesQuery(
+	var query: String? = null,
+	var bounds: LatLngBounds? = null,
+	var categories: List<Category>? = null,
+	var categoriesOperator: LogicalOperator = LogicalOperator.OR,
+	var categoriesNot: List<Category>? = null,
+	var categoriesNotOperator: LogicalOperator = LogicalOperator.OR,
+	var tags: List<String>? = null,
+	var tagsOperator: LogicalOperator = LogicalOperator.OR,
+	var tagsNot: List<String>? = null,
+	var tagsNotOperator: LogicalOperator = LogicalOperator.OR,
+	var parentIds: List<String>? = null,
+	var parentsOperator: LogicalOperator = LogicalOperator.OR,
+	var mapSpread: Int? = null,
+	var mapTiles: List<String>? = null,
+	var limit: Int? = null,
+	var levels: List<Level>? = null,
+	var starRatingMin: Int? = null,
+	var starRatingMax: Int? = null,
+	var customerRatingMin: Int? = null,
 	var customerRatingMax: Int? = null
-
+) {
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
 			true -> null

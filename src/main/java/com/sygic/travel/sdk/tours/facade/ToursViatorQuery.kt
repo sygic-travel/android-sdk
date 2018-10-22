@@ -5,13 +5,12 @@ package com.sygic.travel.sdk.tours.facade
  * To see what the parameters mean check the
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
-class ToursViatorQuery(
-	var parentPlaceId: String
-) {
-	var page: Int? = null
-	var sortBy: SortBy? = null
+data class ToursViatorQuery(
+	var parentPlaceId: String,
+	var page: Int? = null,
+	var sortBy: SortBy? = null,
 	var sortDirection: SortDirection? = null
-
+) {
 	enum class SortBy constructor(internal val apiSortBy: String) {
 		PRICE("price"),
 		RATING("rating"),

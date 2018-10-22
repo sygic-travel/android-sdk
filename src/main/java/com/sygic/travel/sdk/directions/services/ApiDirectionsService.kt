@@ -5,9 +5,9 @@ import com.sygic.travel.sdk.common.api.model.ApiResponse
 import com.sygic.travel.sdk.directions.api.DirectionConverter
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionRequest
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse
+import com.sygic.travel.sdk.directions.facades.DirectionsQuery
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
-import com.sygic.travel.sdk.directions.model.DirectionQuery
 import com.sygic.travel.sdk.directions.model.DirectionResponse
 import com.sygic.travel.sdk.utils.DateTimeHelper
 import kotlin.math.roundToInt
@@ -16,7 +16,7 @@ internal class ApiDirectionsService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val directionConverter: DirectionConverter
 ) {
-	fun getDirections(requests: List<DirectionQuery>): List<DirectionResponse?> {
+	fun getDirections(requests: List<DirectionsQuery>): List<DirectionResponse?> {
 		val apiDirections = getCalculatedDirections(requests)
 		return apiDirections.mapIndexed { i, it ->
 			if (it == null || it.isEmpty()) {
@@ -37,7 +37,7 @@ internal class ApiDirectionsService constructor(
 		}
 	}
 
-	private fun getCalculatedDirections(requests: List<DirectionQuery>): List<List<Direction>?> {
+	private fun getCalculatedDirections(requests: List<DirectionsQuery>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
 				depart_at = DateTimeHelper.timestampToDatetimeLocal(it.departAt),
