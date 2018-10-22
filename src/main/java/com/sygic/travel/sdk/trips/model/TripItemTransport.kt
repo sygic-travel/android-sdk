@@ -8,5 +8,6 @@ data class TripItemTransport(
 	var startTime: Int? = null,
 	var duration: Int? = null,
 	var note: String? = null,
+	var routeId: String? = null,
 	var waypoints: List<TripItemTransportWaypoint> = emptyList()
 )

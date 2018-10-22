@@ -41,6 +41,7 @@ internal class ApiTripItemResponse(
 				val start_time: Int?,
 				val duration: Int?,
 				val note: String?,
+				val route_id: String?,
 				val waypoints: List<Waypoint>
 			) {
 				companion object {

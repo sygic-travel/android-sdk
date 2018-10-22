@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4
 import com.sygic.travel.sdk.common.database.migrations.migration1_2
 import com.sygic.travel.sdk.common.database.migrations.migration2_3
 import com.sygic.travel.sdk.common.database.migrations.migration3_4
+import com.sygic.travel.sdk.common.database.migrations.migration4_5
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -25,5 +26,6 @@ class MigrationsTest {
 		testHelper.runMigrationsAndValidate(dbName, 2, true, migration1_2)
 		testHelper.runMigrationsAndValidate(dbName, 3, true, migration2_3)
 		testHelper.runMigrationsAndValidate(dbName, 4, true, migration3_4)
+		testHelper.runMigrationsAndValidate(dbName, 5, true, migration4_5)
 	}
 }
