@@ -21,6 +21,9 @@ internal class TripDayItemTransport {
 	@ColumnInfo
 	var note: String? = null
 
+	@ColumnInfo(name = "route_id")
+	var routeId: String? = null
+
 	@ColumnInfo
 	var waypoints: ArrayList<TripItemTransportWaypoint> = arrayListOf()
 }

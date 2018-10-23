@@ -37,6 +37,7 @@ internal class TripItemTransportConverter {
 			startTime = apiTransport.start_time,
 			duration = apiTransport.duration,
 			note = apiTransport.note,
+			routeId = apiTransport.route_id,
 			waypoints = ArrayList(apiTransport.waypoints.map {
 				TripItemTransportWaypoint(
 					placeId = it.place_id,
@@ -76,6 +77,7 @@ internal class TripItemTransportConverter {
 			start_time = transport.startTime,
 			duration = transport.duration,
 			note = transport.note,
+			route_id = transport.routeId,
 			waypoints = transport.waypoints.map {
 				ApiTripItemResponse.Day.DayItem.Transport.Waypoint(
 					place_id = it.placeId,

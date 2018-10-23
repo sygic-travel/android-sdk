@@ -1,8 +1,12 @@
 package com.sygic.travel.sdk.places.service
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.sygic.travel.sdk.common.LogicalOperator
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.checkedExecute
+import com.sygic.travel.sdk.places.api.model.ApiPlaceItemResponse
+import com.sygic.travel.sdk.places.api.model.ApiPlaceListItemResponse
 import com.sygic.travel.sdk.places.facade.PlacesQuery
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Place
@@ -10,8 +14,9 @@ import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
 
-internal class PlacesService(
-	private val sygicTravelApiClient: SygicTravelApiClient
+internal class PlacesService constructor(
+	private val sygicTravelApiClient: SygicTravelApiClient,
+	private val moshi: Moshi
 ) {
 	fun getPlaces(
 		placesQuery: PlacesQuery
@@ -64,5 +69,15 @@ internal class PlacesService(
 			tiles = null
 		)
 		return request.checkedExecute().body()!!.data!!.fromApi()
+	}
+
+	fun parsePlacesList(json: String): List<Place> {
+		val apiPlaceType = Types.newParameterizedType(List::class.java, ApiPlaceListItemResponse::class.java)
+		return moshi.adapter<List<ApiPlaceListItemResponse>>(apiPlaceType).fromJson(json)!!.map { it.fromApi() }
+	}
+
+	fun parseDetailedPlacesList(json: String): List<DetailedPlace> {
+		val apiDetailedPlaceType = Types.newParameterizedType(List::class.java, ApiPlaceItemResponse::class.java)
+		return moshi.adapter<List<ApiPlaceItemResponse>>(apiDetailedPlaceType).fromJson(json)!!.map { it.fromApi() }
 	}
 }

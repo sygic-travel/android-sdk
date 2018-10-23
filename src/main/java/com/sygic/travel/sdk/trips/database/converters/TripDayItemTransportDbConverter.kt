@@ -12,6 +12,7 @@ internal class TripDayItemTransportDbConverter {
 			startTime = dbTransport.startTime,
 			duration = dbTransport.duration,
 			note = dbTransport.note,
+			routeId = dbTransport.routeId,
 			waypoints = dbTransport.waypoints
 		)
 	}
@@ -24,6 +25,7 @@ internal class TripDayItemTransportDbConverter {
 		dbTransport.startTime = transport.startTime
 		dbTransport.duration = transport.duration
 		dbTransport.note = transport.note
+		dbTransport.routeId = transport.routeId
 		dbTransport.waypoints = ArrayList(transport.waypoints)
 		return dbTransport
 	}

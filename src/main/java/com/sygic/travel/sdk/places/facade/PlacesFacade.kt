@@ -66,4 +66,22 @@ class PlacesFacade internal constructor(
 		checkNotRunningOnMainThread()
 		return placesService.detectPlacesForLocation(location)
 	}
+
+	/**
+	 * Parses list of places as Place instances.
+	 * @internal
+	 */
+	fun parsePlacesList(json: String): List<Place> {
+		checkNotRunningOnMainThread()
+		return placesService.parsePlacesList(json)
+	}
+
+	/**
+	 * Parses list of places as DetailedPlace instances.
+	 * @internal
+	 */
+	fun parseDetailedPlacesList(json: String): List<DetailedPlace> {
+		checkNotRunningOnMainThread()
+		return placesService.parseDetailedPlacesList(json)
+	}
 }
