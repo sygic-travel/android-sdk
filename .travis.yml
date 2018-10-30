@@ -13,8 +13,8 @@ cache:
 
 env:
   global:
-    - COMPILE_SDK_VERSION=27
-    - BUILD_TOOLS_VERSION=28.0.2
+    - COMPILE_SDK_VERSION=28
+    - BUILD_TOOLS_VERSION=28.0.3
     - EMULATOR_API=22
     - ABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=5 # minutes
