@@ -37,7 +37,7 @@ internal class DirectionConverter {
 				startTime = timeFromApi(it.start_time),
 				endTime = timeFromApi(it.end_time),
 				duration = it.duration,
-				distance = it.duration,
+				distance = it.distance,
 				mode = when (it.mode) {
 					ApiDirection.Legs.MODE_BIKE -> DirectionLegTransportType.BIKE
 					ApiDirection.Legs.MODE_BOAT -> DirectionLegTransportType.BOAT
