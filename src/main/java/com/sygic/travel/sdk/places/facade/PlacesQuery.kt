@@ -39,14 +39,14 @@ data class PlacesQuery(
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
 			true -> null
-			false -> levels!!.joinToString(LogicalOperator.OR.apiOperator) { TripLevelConverter.toApiLevel(it) }
+			false -> levels!!.joinToString(LogicalOperator.ANY.apiOperator) { TripLevelConverter.toApiLevel(it) }
 		}
 	}
 
 	internal fun getMapTilesApiQuery(): String? {
 		return when (mapTiles == null || mapTiles!!.isEmpty()) {
 			true -> null
-			false -> mapTiles!!.joinToString(LogicalOperator.OR.apiOperator)
+			false -> mapTiles!!.joinToString(LogicalOperator.ANY.apiOperator)
 		}
 	}
 

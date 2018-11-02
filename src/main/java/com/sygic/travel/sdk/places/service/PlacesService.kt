@@ -46,7 +46,7 @@ internal class PlacesService constructor(
 	}
 
 	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace> {
-		val queryIds = ids.joinToString(LogicalOperator.OR.apiOperator)
+		val queryIds = ids.joinToString(LogicalOperator.ANY.apiOperator)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}
