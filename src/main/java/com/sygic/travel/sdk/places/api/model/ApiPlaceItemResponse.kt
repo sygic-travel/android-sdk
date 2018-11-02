@@ -40,9 +40,13 @@ internal class ApiPlaceItemResponse(
 	val admission: String?,
 	val email: String?,
 	val opening_hours: String?,
+	val opening_hours_raw: String?,
 	val phone: String?,
 	val main_media: ApiMainMediaResponse?,
-	val references: List<ApiReference>
+	val references: List<ApiReference>,
+	val is_deleted: Boolean,
+	val area: Int?,
+	val collection_count: Int?
 ) {
 	@JsonClass(generateAdapter = true)
 	internal class ApiDescription(
@@ -116,13 +120,16 @@ internal class ApiPlaceItemResponse(
 			address = address,
 			admission = admission,
 			email = email,
-			openingHours = opening_hours,
+			openingHoursNote = opening_hours,
+			openingHoursRaw = opening_hours_raw,
 			phone = phone,
 			mediumSquare = media?.get(main_media?.usage?.square),
 			mediumLandscape = media?.get(main_media?.usage?.landscape),
 			mediumPortrait = media?.get(main_media?.usage?.portrait),
 			mediumVideoPreview = media?.get(main_media?.usage?.video_preview),
-			references = references.map { it.fromApi() }
+			references = references.map { it.fromApi() },
+			area = area,
+			collectionCount = collection_count ?: 0
 		)
 
 		return DetailedPlace(
@@ -146,8 +153,9 @@ internal class ApiPlaceItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			ownerId = owner_id,
 			duration = duration,
-			ownerId = owner_id
+			isDeleted = is_deleted
 		)
 	}
 }

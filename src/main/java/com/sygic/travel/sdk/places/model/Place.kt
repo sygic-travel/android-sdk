@@ -25,7 +25,8 @@ open class Place constructor(
 	val starRatingUnofficial: Float?,
 	val customerRating: Float?,
 	val duration: Int?,
-	val ownerId: String?
+	val ownerId: String?,
+	val isDeleted: Boolean
 ) {
 	override fun equals(other: Any?): Boolean {
 		return id == (other as? Place)?.id

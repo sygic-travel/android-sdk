@@ -24,8 +24,9 @@ class DetailedPlace constructor(
 	starRating: Float?,
 	starRatingUnofficial: Float?,
 	customerRating: Float?,
-	ownerId: String?,
 	duration: Int?,
+	ownerId: String?,
+	isDeleted: Boolean,
 	val detail: Detail
 ) : Place(
 	id,
@@ -48,5 +49,6 @@ class DetailedPlace constructor(
 	starRatingUnofficial,
 	customerRating,
 	duration,
-	ownerId
+	ownerId,
+	isDeleted
 )

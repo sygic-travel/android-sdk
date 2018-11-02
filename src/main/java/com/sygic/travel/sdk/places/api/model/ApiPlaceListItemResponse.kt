@@ -52,7 +52,8 @@ internal class ApiPlaceListItemResponse(
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
 			duration = duration,
-			ownerId = owner_id
+			ownerId = owner_id,
+			isDeleted = false
 		)
 	}
 }
