@@ -42,7 +42,8 @@ internal class ApiPlaceItemResponse(
 	val opening_hours: String?,
 	val phone: String?,
 	val main_media: ApiMainMediaResponse?,
-	val references: List<ApiReference>
+	val references: List<ApiReference>,
+	val is_deleted: Boolean
 ) {
 	@JsonClass(generateAdapter = true)
 	internal class ApiDescription(
@@ -146,8 +147,9 @@ internal class ApiPlaceItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
+			ownerId = owner_id,
 			duration = duration,
-			ownerId = owner_id
+			isDeleted = is_deleted
 		)
 	}
 }
