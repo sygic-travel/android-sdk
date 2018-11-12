@@ -20,6 +20,6 @@ class Detail constructor(
 	val mediumPortrait: Medium?,
 	val mediumVideoPreview: Medium?,
 	val references: List<Reference>,
-	val area: Int?,
+	val area: Long?,
 	val collectionCount: Int
 )

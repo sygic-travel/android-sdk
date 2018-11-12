@@ -45,7 +45,7 @@ internal class ApiPlaceItemResponse(
 	val main_media: ApiMainMediaResponse?,
 	val references: List<ApiReference>,
 	val is_deleted: Boolean,
-	val area: Int?,
+	val area: Long?,
 	val collection_count: Int?
 ) {
 	@JsonClass(generateAdapter = true)
