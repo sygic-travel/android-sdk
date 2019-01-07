@@ -5,8 +5,4 @@ enum class LogicalOperator constructor(
 ) {
 	ALL(","),
 	ANY("|"),
-	@Deprecated(replaceWith = ReplaceWith("ALL"), message = "use ALL operator")
-	AND(","),
-	@Deprecated(replaceWith = ReplaceWith("ANY"), message = "use ANY operator")
-	OR("|"),
 }
