@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.sygic.travel:sdk:2.0.0-beta-3'
+	implementation 'com.sygic.travel:sdk:2.0.0-rc-1'
 }
 ```
 
