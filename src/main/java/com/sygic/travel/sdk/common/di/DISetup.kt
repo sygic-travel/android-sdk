@@ -12,6 +12,7 @@ import com.sygic.travel.sdk.synchronization.di.synchronizationModule
 import com.sygic.travel.sdk.tours.di.toursModule
 import com.sygic.travel.sdk.trips.di.tripsModule
 import org.koin.core.Koin
+import org.koin.core.KoinProperties
 import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext
 
@@ -47,7 +48,7 @@ internal object DISetup {
 				toursModule,
 				tripsModule
 			),
-			extraProperties = properties
+			properties = KoinProperties(extraProperties = properties)
 		)
 	}
 }
