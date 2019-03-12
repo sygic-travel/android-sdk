@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.sygic.travel:sdk:2.0.0-rc-1'
+	implementation 'com.sygic.travel:sdk:2.0.0'
 }
 ```
 
@@ -35,7 +35,7 @@ Development builds may be obtained from [JitPack](https://jitpack.io/#sygic-trav
 ## Documentation
 
 - [SDK Wiki documentation](https://github.com/sygic-travel/android-sdk/wiki)
-- [SDK API documentation](http://docs.sygictravelapi.com/android-sdk/master)
+- [SDK API documentation](http://docs.sygictravelapi.com/android-sdk/2.0.0)
 - [JSON API documentation](http://docs.sygictravelapi.com/)
 
 ## License
