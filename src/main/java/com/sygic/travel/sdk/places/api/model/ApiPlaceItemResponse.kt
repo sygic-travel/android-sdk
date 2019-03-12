@@ -91,7 +91,8 @@ internal class ApiPlaceItemResponse(
 		val priority: Int,
 		val currency: String?,
 		val price: Float?,
-		val flags: List<String>
+		val flags: List<String>,
+		val offline_file: String?
 	) {
 		fun fromApi(): Reference {
 			return Reference(
@@ -104,7 +105,8 @@ internal class ApiPlaceItemResponse(
 				priority = priority,
 				currency = currency,
 				price = price,
-				flags = flags.toHashSet()
+				flags = flags.toHashSet(),
+				offlineFile = offline_file
 			)
 		}
 	}

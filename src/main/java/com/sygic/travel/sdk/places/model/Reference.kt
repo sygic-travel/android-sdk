@@ -13,5 +13,7 @@ data class Reference constructor(
 	val priority: Int,
 	val currency: String?,
 	val price: Float?,
-	val flags: Set<String>
+	val flags: Set<String>,
+	/** @internal */
+	val offlineFile: String?
 )

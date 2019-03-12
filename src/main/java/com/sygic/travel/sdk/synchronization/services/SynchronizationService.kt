@@ -65,7 +65,7 @@ internal class SynchronizationService constructor(
 		val addedFavoriteIds = mutableListOf<String>()
 		val deletedFavoriteIds = mutableListOf<String>()
 
-		for (change in changesResponse.data?.changes ?: arrayListOf()) {
+		for (change in (changesResponse.data?.changes ?: arrayListOf())) {
 			when (change.type) {
 				ApiChangesResponse.ChangeEntry.TYPE_TRIP -> {
 					if (change.change == ApiChangesResponse.ChangeEntry.CHANGE_UPDATED) {
