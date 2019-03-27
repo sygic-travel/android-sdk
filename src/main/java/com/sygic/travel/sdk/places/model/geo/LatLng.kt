@@ -24,4 +24,8 @@ data class LatLng(
 		)
 		return results[0]
 	}
+
+	internal fun toApiQuery(): String {
+		return "$lat,$lng"
+	}
 }

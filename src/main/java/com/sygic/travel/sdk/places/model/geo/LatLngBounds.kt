@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Suppress("unused")
 @Parcelize
 data class LatLngBounds(
 	val northeast: LatLng,

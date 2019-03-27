@@ -57,9 +57,7 @@ internal class PlacesService constructor(
 	}
 
 	fun detectPlacesForLocation(location: LatLng): List<Place> {
-		val request = sygicTravelApiClient.getPlacesDetectParents(
-			"${location.lat},${location.lng}"
-		)
+		val request = sygicTravelApiClient.getPlacesDetectParents(location.toApiQuery())
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}
 
