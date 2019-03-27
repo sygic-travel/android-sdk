@@ -6,6 +6,7 @@ import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Category
 import com.sygic.travel.sdk.places.model.Level
+import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 
 /**
@@ -34,7 +35,8 @@ data class PlacesQuery(
 	var starRatingMin: Int? = null,
 	var starRatingMax: Int? = null,
 	var customerRatingMin: Int? = null,
-	var customerRatingMax: Int? = null
+	var customerRatingMax: Int? = null,
+	var preferredLocation: LatLng? = null
 ) {
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {

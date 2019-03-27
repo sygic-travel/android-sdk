@@ -29,6 +29,7 @@ internal class PlacesService constructor(
 			mapTiles = placesQuery.getMapTilesApiQuery(),
 			mapSpread = placesQuery.mapSpread,
 			bounds = placesQuery.bounds?.toApiQuery(),
+			preferredLocation = placesQuery.preferredLocation?.toApiQuery(),
 			tags = placesQuery.getTagsApiQuery(),
 			tagsNot = placesQuery.getTagsNotApiQuery(),
 			parents = placesQuery.getParentsApiQuery(),
