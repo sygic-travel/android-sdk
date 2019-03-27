@@ -7,40 +7,37 @@ import java.util.TimeZone
 
 internal object DateTimeHelper {
 	private val timezone = TimeZone.getTimeZone("UTC")
-	private val outDateTimeFormatTz = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-	private val outDateTimeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-	private val outDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-	private val parseDateTimeFormatTz = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US)
-	private val parseDateTimeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-	private val parseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
-	init {
-		outDateTimeFormatTz.timeZone = timezone
-		outDateTimeFormat.timeZone = timezone
-		outDateFormat.timeZone = timezone
-		parseDateTimeFormatTz.timeZone = timezone
-		parseDateTimeFormat.timeZone = timezone
-		parseDateFormat.timeZone = timezone
-	}
 
 	fun timestampToDatetime(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateTimeFormatTz.format(timestamp)
+			else -> {
+				val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+				format.timeZone = timezone
+				format.format(timestamp)
+			}
 		}
 	}
 
 	fun timestampToDatetimeLocal(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateTimeFormat.format(timestamp)
+			else -> {
+				val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+				format.timeZone = timezone
+				format.format(timestamp)
+			}
 		}
 	}
 
 	fun timestampToDate(timestamp: Date?): String? {
 		return when (timestamp) {
 			null -> null
-			else -> outDateFormat.format(timestamp)
+			else -> {
+				val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+				format.timeZone = timezone
+				format.format(timestamp)
+			}
 		}
 	}
 
@@ -54,7 +51,9 @@ internal object DateTimeHelper {
 					// strip : in timezone part
 					string = string.substring(0, 22) + string.substring(23)
 				}
-				parseDateTimeFormatTz.parse(string)
+				val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US)
+				format.timeZone = timezone
+				format.parse(string)
 			}
 		}
 	}
@@ -62,14 +61,22 @@ internal object DateTimeHelper {
 	fun datetimeLocalToTimestamp(datetime: String?): Date? {
 		return when (datetime) {
 			null -> null
-			else -> parseDateTimeFormat.parse(datetime)
+			else -> {
+				val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+				format.timeZone = timezone
+				format.parse(datetime)
+			}
 		}
 	}
 
 	fun dateToTimestamp(date: String?): Date? {
 		return when (date) {
 			null -> null
-			else -> parseDateFormat.parse(date)
+			else -> {
+				val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+				format.timeZone = timezone
+				format.parse(date)
+			}
 		}
 	}
 
