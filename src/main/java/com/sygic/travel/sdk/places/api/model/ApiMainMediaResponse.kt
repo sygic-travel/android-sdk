@@ -7,7 +7,8 @@ internal class ApiMainMediaResponse(
 	val usage: Usage,
 	val media: List<ApiMediumResponse>
 ) {
-	class Usage(
+	@JsonClass(generateAdapter = true)
+	internal class Usage(
 		val square: String,
 		val landscape: String,
 		val portrait: String,
