@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.common.database
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.trips.model.TripItemTransportMode

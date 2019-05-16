@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.migrations
 
-import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory
-import android.arch.persistence.room.testing.MigrationTestHelper
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import androidx.room.testing.MigrationTestHelper
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import com.sygic.travel.sdk.common.database.migrations.migration1_2
 import com.sygic.travel.sdk.common.database.migrations.migration2_3
 import com.sygic.travel.sdk.common.database.migrations.migration3_4

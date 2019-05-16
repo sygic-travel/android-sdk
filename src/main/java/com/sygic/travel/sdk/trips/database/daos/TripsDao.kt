@@ -1,9 +1,9 @@
 package com.sygic.travel.sdk.trips.database.daos
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Update
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.sygic.travel.sdk.trips.database.entities.Trip
 
 @Dao

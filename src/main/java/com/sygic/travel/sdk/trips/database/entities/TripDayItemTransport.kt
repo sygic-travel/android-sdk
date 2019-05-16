@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.database.entities
 
-import android.arch.persistence.room.ColumnInfo
+import androidx.room.ColumnInfo
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint

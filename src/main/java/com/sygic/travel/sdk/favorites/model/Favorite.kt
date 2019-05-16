@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.favorites.model
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * Database entity, representing a table with one column referencing to a place marked as favorite.

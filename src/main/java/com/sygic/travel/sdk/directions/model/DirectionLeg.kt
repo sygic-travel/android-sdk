@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.directions.model
 
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 import java.io.Serializable
 
 @Suppress("unused")

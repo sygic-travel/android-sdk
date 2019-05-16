@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.common.database.di
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.sygic.travel.sdk.common.database.Database
 import com.sygic.travel.sdk.common.database.migrations.migration1_2
 import com.sygic.travel.sdk.common.database.migrations.migration2_3

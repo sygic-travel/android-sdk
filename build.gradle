@@ -53,7 +53,8 @@ repositories {
 }
 
 dependencies {
-	implementation "android.arch.persistence.room:runtime:1.1.1"
+	implementation "androidx.annotation:annotation:1.1.0-rc01"
+	implementation "androidx.room:room-runtime:2.0.0"
 	implementation "com.squareup.moshi:moshi:1.8.0"
 	implementation "com.squareup.okhttp3:okhttp:3.14.2"
 	implementation "com.squareup.okhttp3:logging-interceptor:3.14.2"
@@ -63,14 +64,14 @@ dependencies {
 	implementation "org.koin:koin-core:2.0.0"
 	implementation "org.koin:koin-android:2.0.0"
 
-	kapt "android.arch.persistence.room:compiler:1.1.1"
+	kapt "androidx.room:room-compiler:2.0.0"
 	kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
 
-	testImplementation "android.arch.persistence.room:testing:1.1.1"
+	testImplementation "androidx.room:room-testing:2.0.0"
 	testImplementation "io.mockk:mockk:1.8.4"
 	testImplementation "junit:junit:4.12"
 
-	androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
+	androidTestImplementation "androidx.room:room-testing:2.0.0"
 	androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 	androidTestImplementation("com.android.support.test.espresso:espresso-core:2.2.2", {
 		exclude group: 'com.android.support', module: 'support-annotations'
