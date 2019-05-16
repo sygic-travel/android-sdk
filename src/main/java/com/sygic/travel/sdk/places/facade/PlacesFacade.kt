@@ -7,6 +7,7 @@ import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
 import com.sygic.travel.sdk.places.service.PlacesService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
+import java.io.InputStream
 
 /**
  * Places facade provides interface for fetching places data from the API.
@@ -71,7 +72,7 @@ class PlacesFacade internal constructor(
 	 * Parses list of places as Place instances.
 	 * @internal
 	 */
-	fun parsePlacesList(json: String): List<Place> {
+	fun parsePlacesList(json: InputStream): List<Place> {
 		checkNotRunningOnMainThread()
 		return placesService.parsePlacesList(json)
 	}
@@ -80,7 +81,7 @@ class PlacesFacade internal constructor(
 	 * Parses list of places as DetailedPlace instances.
 	 * @internal
 	 */
-	fun parseDetailedPlacesList(json: String): List<DetailedPlace> {
+	fun parseDetailedPlacesList(json: InputStream): List<DetailedPlace> {
 		checkNotRunningOnMainThread()
 		return placesService.parseDetailedPlacesList(json)
 	}
