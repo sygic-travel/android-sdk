@@ -144,10 +144,10 @@ internal class TripsSynchronizationService constructor(
 					}
 				}
 			}
-			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED -> {
+			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED, ApiUpdateTripResponse.CONFLICT_RESOLUTION_OVERRODE -> {
 				updateLocalTrip(apiTripData, syncResult)
 			}
-			else -> {
+			ApiUpdateTripResponse.NO_CONFLICT -> {
 				// do not track a change, restore isChanged to false
 				tripsService.updateTrip(tripConverter.fromApi(apiTripData))
 			}
