@@ -13,6 +13,7 @@ import com.sygic.travel.sdk.session.facade.SessionFacade
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.tours.facade.ToursFacade
 import com.sygic.travel.sdk.trips.facades.TripsFacade
+import org.koin.core.KoinApplication
 
 /**
  * Provides public methods for requesting API.
@@ -22,22 +23,22 @@ class Sdk(
 	applicationContext: Context,
 	private val sdkConfig: SdkConfig
 ) {
-	private val koin = DISetup.setup(applicationContext, sdkConfig)
+	private val koinApplication: KoinApplication = DISetup.setup(applicationContext, sdkConfig)
 
 	var language: Language
 		get() = sdkConfig.language
 		set(value) {
 			sdkConfig.language = value
-			koin.koinContext.get<LocaleInterceptor>().updateLanguage(value)
+			koinApplication.koin.get<LocaleInterceptor>().updateLanguage(value)
 		}
 
-	val directionsFacade: DirectionsFacade by lazy { koin.koinContext.get<DirectionsFacade>() }
-	val eventsFacade: EventsFacade by lazy { koin.koinContext.get<EventsFacade>() }
-	val favoritesFacade: FavoritesFacade by lazy { koin.koinContext.get<FavoritesFacade>() }
-	val placesFacade: PlacesFacade by lazy { koin.koinContext.get<PlacesFacade>() }
-	val placeReviewsFacade: PlacesReviewsFacade by lazy { koin.koinContext.get<PlacesReviewsFacade>() }
-	val sessionFacade: SessionFacade by lazy { koin.koinContext.get<SessionFacade>() }
-	val synchronizationFacade: SynchronizationFacade by lazy { koin.koinContext.get<SynchronizationFacade>() }
-	val toursFacade: ToursFacade by lazy { koin.koinContext.get<ToursFacade>() }
-	val tripsFacade: TripsFacade by lazy { koin.koinContext.get<TripsFacade>() }
+	val directionsFacade: DirectionsFacade by lazy { koinApplication.koin.get<DirectionsFacade>() }
+	val eventsFacade: EventsFacade by lazy { koinApplication.koin.get<EventsFacade>() }
+	val favoritesFacade: FavoritesFacade by lazy { koinApplication.koin.get<FavoritesFacade>() }
+	val placesFacade: PlacesFacade by lazy { koinApplication.koin.get<PlacesFacade>() }
+	val placeReviewsFacade: PlacesReviewsFacade by lazy { koinApplication.koin.get<PlacesReviewsFacade>() }
+	val sessionFacade: SessionFacade by lazy { koinApplication.koin.get<SessionFacade>() }
+	val synchronizationFacade: SynchronizationFacade by lazy { koinApplication.koin.get<SynchronizationFacade>() }
+	val toursFacade: ToursFacade by lazy { koinApplication.koin.get<ToursFacade>() }
+	val tripsFacade: TripsFacade by lazy { koinApplication.koin.get<TripsFacade>() }
 }

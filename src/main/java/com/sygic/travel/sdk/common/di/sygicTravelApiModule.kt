@@ -11,7 +11,8 @@ import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -27,7 +28,7 @@ internal val sygicTravelApiModule = module {
 	single {
 		LocaleInterceptor(getProperty("defaultLanguage"))
 	}
-	single("sygicTravelHttpClient") {
+	single(named("sygicTravelHttpClient")) {
 		val builder = OkHttpClient.Builder()
 			.addInterceptor(get<HeadersInterceptor>())
 			.addInterceptor(get<LocaleInterceptor>())
@@ -42,14 +43,14 @@ internal val sygicTravelApiModule = module {
 			.readTimeout(60, TimeUnit.SECONDS)
 			.build()
 	}
-	single("sygicTravelApiRetrofit") {
+	single(named("sygicTravelApiRetrofit")) {
 		Retrofit.Builder()
-			.client(get<OkHttpClient>("sygicTravelHttpClient"))
+			.client(get<OkHttpClient>(named("sygicTravelHttpClient")))
 			.baseUrl(getProperty<String>("sygicTravelApiUrl") + "/$LOCALE_PLACEHOLDER/")
 			.addConverterFactory(MoshiConverterFactory.create(get<Moshi>()).withNullSerialization())
 			.build()
 	}
 	single {
-		get<Retrofit>("sygicTravelApiRetrofit").create(SygicTravelApiClient::class.java)
+		get<Retrofit>(named("sygicTravelApiRetrofit")).create(SygicTravelApiClient::class.java)
 	}
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val generalModule = module {
 	single {

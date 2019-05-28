@@ -11,13 +11,13 @@ import com.sygic.travel.sdk.session.di.sessionModule
 import com.sygic.travel.sdk.synchronization.di.synchronizationModule
 import com.sygic.travel.sdk.tours.di.toursModule
 import com.sygic.travel.sdk.trips.di.tripsModule
-import org.koin.core.Koin
-import org.koin.core.KoinProperties
-import org.koin.dsl.module.module
-import org.koin.standalone.StandAloneContext
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.KoinApplication
+import org.koin.dsl.koinApplication
 
 internal object DISetup {
-	fun setup(applicationContext: Context, sdkConfig: SdkConfig): Koin {
+	fun setup(applicationContext: Context, sdkConfig: SdkConfig): KoinApplication {
 		val properties = mapOf(
 			"userDataSupported" to (sdkConfig.clientId != null),
 			"clientId" to (sdkConfig.clientId ?: ""),
@@ -30,11 +30,14 @@ internal object DISetup {
 			"defaultLanguage" to sdkConfig.language
 		)
 
-		return StandAloneContext.startKoin(
-			list = listOf(
-				module {
-					single { applicationContext }
-				},
+		return koinApplication {
+			if (sdkConfig.debugMode) {
+				androidLogger()
+			}
+
+			androidContext(applicationContext)
+
+			modules(
 				sessionModule,
 				dbModule,
 				directionsModule,
@@ -47,8 +50,9 @@ internal object DISetup {
 				synchronizationModule,
 				toursModule,
 				tripsModule
-			),
-			properties = KoinProperties(extraProperties = properties)
-		)
+			)
+
+			properties(properties)
+		}
 	}
 }

@@ -16,7 +16,7 @@ import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val tripsModule = module {
 	single {

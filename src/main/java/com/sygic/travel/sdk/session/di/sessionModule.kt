@@ -10,7 +10,7 @@ import com.sygic.travel.sdk.session.service.SessionService
 import com.sygic.travel.sdk.synchronization.facades.SynchronizationFacade
 import com.sygic.travel.sdk.trips.facades.TripsFacade
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val sessionModule = module {
 	single {

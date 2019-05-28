@@ -4,12 +4,13 @@ import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.session.api.SygicSsoApiClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 internal val sygicAuthApiModule = module {
-	single("sygicAuthHttpClient") {
+	single(named("sygicAuthHttpClient")) {
 		val builder = OkHttpClient.Builder()
 
 		if (getProperty("debugMode")) {
@@ -18,14 +19,14 @@ internal val sygicAuthApiModule = module {
 
 		builder.build()
 	}
-	single("sygicAuthApiRetrofit") {
+	single(named("sygicAuthApiRetrofit")) {
 		Retrofit.Builder()
-			.client(get<OkHttpClient>("sygicAuthHttpClient"))
+			.client(get<OkHttpClient>(named("sygicAuthHttpClient")))
 			.baseUrl(getProperty<String>("sygicAuthUrl"))
 			.addConverterFactory(MoshiConverterFactory.create(get<Moshi>()))
 			.build()
 	}
 	single {
-		get<Retrofit>("sygicAuthApiRetrofit").create(SygicSsoApiClient::class.java)
+		get<Retrofit>(named("sygicAuthApiRetrofit")).create(SygicSsoApiClient::class.java)
 	}
 }

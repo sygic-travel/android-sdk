@@ -10,7 +10,7 @@ import com.sygic.travel.sdk.synchronization.services.TripsSynchronizationService
 import com.sygic.travel.sdk.trips.api.TripConverter
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkUserDataSupport
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val synchronizationModule = module {
 	single {

@@ -7,7 +7,7 @@ import com.sygic.travel.sdk.common.database.migrations.migration1_2
 import com.sygic.travel.sdk.common.database.migrations.migration2_3
 import com.sygic.travel.sdk.common.database.migrations.migration3_4
 import com.sygic.travel.sdk.common.database.migrations.migration4_5
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val dbModule = module {
 	single {

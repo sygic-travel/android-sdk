@@ -6,7 +6,7 @@ import com.sygic.travel.sdk.places.facade.PlacesFacade
 import com.sygic.travel.sdk.places.facade.PlacesReviewsFacade
 import com.sygic.travel.sdk.places.service.PlacesReviewsService
 import com.sygic.travel.sdk.places.service.PlacesService
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 internal val placesModule = module {
 	single {
