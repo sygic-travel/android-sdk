@@ -81,6 +81,11 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
+		val localPlaceIds = localTrip.getLocalPlaceIds()
+		if (localPlaceIds.isNotEmpty()) {
+			return
+		}
+
 		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).checkedExecute()
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
@@ -90,6 +95,11 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun updateServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
+		val localPlaceIds = localTrip.getLocalPlaceIds()
+		if (localPlaceIds.isNotEmpty()) {
+			return
+		}
+
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {

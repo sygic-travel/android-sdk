@@ -20,6 +20,9 @@ internal class FavoritesSynchronizationService constructor(
 		}
 
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
+			if (favorite.id.startsWith("*")) {
+				continue
+			}
 			if (favorite.state == Favorite.STATE_TO_ADD) {
 				val createResponse = apiClient.createFavorite(FavoriteRequest(favorite.id)).execute()
 				when {

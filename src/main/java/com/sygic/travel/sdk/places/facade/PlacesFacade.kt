@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.places.facade
 
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Place
+import com.sygic.travel.sdk.places.model.daos.PlacesDao
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
@@ -14,7 +15,8 @@ import java.io.InputStream
  */
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class PlacesFacade internal constructor(
-	private val placesService: PlacesService
+	private val placesService: PlacesService,
+	private val placesDao: () -> PlacesDao
 ) {
 	/**
 	 * Creates and sends a request to get places, e.g. for map or list.
@@ -66,6 +68,15 @@ class PlacesFacade internal constructor(
 	fun detectPlacesForLocation(location: LatLngBounds): List<Place> {
 		checkNotRunningOnMainThread()
 		return placesService.detectPlacesForLocation(location)
+	}
+
+	/**
+	 * Replaces place id with its public custom place id in SDK's local storage.
+	 * @internal
+	 */
+	fun replaceLocalPlaceId(oldPlaceId: String, newPlaceId: String) {
+		checkNotRunningOnMainThread()
+		placesDao().replacePlaceId(oldPlaceId, newPlaceId)
 	}
 
 	/**

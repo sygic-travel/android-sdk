@@ -33,7 +33,8 @@ internal val synchronizationModule = module {
 		TripsSynchronizationService(
 			get<SygicTravelApiClient>(),
 			get<TripConverter>(),
-			get<TripsService>()
+			get<TripsService>(),
+			getProperty("debugMode")
 		)
 	}
 	single {
