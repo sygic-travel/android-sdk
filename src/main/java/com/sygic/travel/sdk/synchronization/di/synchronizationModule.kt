@@ -38,9 +38,11 @@ internal val synchronizationModule = module {
 		)
 	}
 	single {
+
 		FavoritesSynchronizationService(
 			get<SygicTravelApiClient>(),
-			get<FavoriteService>()
+			get<FavoriteService>(),
+			getProperty("debugMode")
 		)
 	}
 }
