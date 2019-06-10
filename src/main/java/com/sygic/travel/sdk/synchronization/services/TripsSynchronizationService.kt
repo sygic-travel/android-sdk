@@ -177,8 +177,8 @@ internal class TripsSynchronizationService constructor(
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			ApiUpdateTripResponse.NO_CONFLICT -> {
-				// do not track a change, restore isChanged to false
-				tripsService.updateTrip(tripConverter.fromApi(apiTripData))
+				// propagate an update with new trip version
+				updateLocalTrip(apiTripData, syncResult)
 			}
 		}
 	}
