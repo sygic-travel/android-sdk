@@ -1,5 +1,6 @@
 package com.sygic.travel.sdk.synchronization.services
 
+import android.util.Log
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
@@ -16,7 +17,8 @@ import retrofit2.HttpException
 internal class TripsSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val tripConverter: TripConverter,
-	private val tripsService: TripsService
+	private val tripsService: TripsService,
+	private val debugMode: Boolean
 ) {
 	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)? = null
 	var tripUpdateConflictHandler: ((conflictInfo: TripConflictInfo) -> TripConflictResolution)? = null
@@ -81,6 +83,16 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
+		log() { "Creating trip ${localTrip.id}" }
+
+		val localPlaceIds = localTrip.getLocalPlaceIds()
+		if (localPlaceIds.isNotEmpty()) {
+			log() {
+				"Trip cannot be synced because contains places with local id: ${localPlaceIds.joinToString(", ")}"
+			}
+			return
+		}
+
 		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).checkedExecute()
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
@@ -90,17 +102,30 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun updateServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
+		log() { "Updating trip ${localTrip.id}" }
+
+		val localPlaceIds = localTrip.getLocalPlaceIds()
+		if (localPlaceIds.isNotEmpty()) {
+			log() {
+				"Trip cannot be synced because contain places with local id: ${localPlaceIds.joinToString(", ")}"
+			}
+			return
+		}
+
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {
+			log() { "Trip ${localTrip.id} deleted on server, removing in local store." }
 			tripsService.deleteTrip(localTrip.id)
 			syncResult.changedTripIds.add(localTrip.id)
 			return
 
 		} else if (updateResponse.code() == 403) {
+			log() { "Trip ${localTrip.id} is not allowed to be modified by current user, trying to fetch original." }
 			val tripResponse = apiClient.getTrip(localTrip.id).execute()
 			if (tripResponse.isSuccessful) {
 				val apiTripData = tripResponse.body()!!.data!!.trip
+				log() { "Trip ${localTrip.id} is not allowed to be modified by current user; re-fetched." }
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			return
@@ -113,6 +138,7 @@ internal class TripsSynchronizationService constructor(
 		var apiTripData = data.trip
 		when (data.conflict_resolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
+				log() { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
 				val conflictHandler = tripUpdateConflictHandler
 				val conflictResolution = when (conflictHandler) {
 					null -> TripConflictResolution.USE_SERVER_VERSION
@@ -126,6 +152,8 @@ internal class TripsSynchronizationService constructor(
 						conflictHandler.invoke(conflictInfo)
 					}
 				}
+
+				log() { "Trip ${localTrip.id} conflict resolution: $conflictResolution" }
 				when (conflictResolution) {
 					TripConflictResolution.NO_ACTION -> {
 						// do nothing and let user choose when he will use the app
@@ -145,12 +173,19 @@ internal class TripsSynchronizationService constructor(
 				}
 			}
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED, ApiUpdateTripResponse.CONFLICT_RESOLUTION_OVERRODE -> {
+				log() { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			ApiUpdateTripResponse.NO_CONFLICT -> {
 				// do not track a change, restore isChanged to false
 				tripsService.updateTrip(tripConverter.fromApi(apiTripData))
 			}
+		}
+	}
+
+	private inline fun log(cb: () -> String) {
+		if (debugMode) {
+			Log.i("STSync", cb())
 		}
 	}
 }

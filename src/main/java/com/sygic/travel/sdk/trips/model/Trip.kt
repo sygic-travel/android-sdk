@@ -7,7 +7,7 @@ import java.util.UUID
  * Trip entity representation.
  * It contains all metadata and days' definitions.
  */
-@Suppress("ConvertSecondaryConstructorToPrimary")
+@Suppress("ConvertSecondaryConstructorToPrimary", "MemberVisibilityCanBePrivate")
 class Trip internal constructor(id: String) : TripInfo(id) {
 	companion object {
 		/**
@@ -61,5 +61,9 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 
 	fun getPlaceIds(): Set<String> {
 		return days.map { it.getPlaceIds() }.flatten().toSet()
+	}
+
+	internal fun getLocalPlaceIds(): List<String> {
+		return getPlaceIds().filter { it.startsWith("*") }
 	}
 }
