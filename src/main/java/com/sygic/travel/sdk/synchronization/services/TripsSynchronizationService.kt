@@ -135,7 +135,7 @@ internal class TripsSynchronizationService constructor(
 		}
 
 		val data = updateResponse.body()!!.data!!
-		var apiTripData = data.trip
+		val apiTripData = data.trip
 		when (data.conflict_resolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
 				log() { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
@@ -164,8 +164,12 @@ internal class TripsSynchronizationService constructor(
 						// if request fails, user will not have to do the decision again
 						tripsService.updateTrip(localTrip)
 						val repeatedUpdateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).checkedExecute()
-						apiTripData = repeatedUpdateResponse.body()!!.data!!.trip
-						updateLocalTrip(apiTripData, syncResult)
+						if (repeatedUpdateResponse.body()!!.data!!.conflict_resolution != ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED) {
+							// update may result in ignored change, so the user's choice to keep local version cannot be
+							// replaced by server version; the conflict will be resolved in the next synchronization run
+							val updatedApiTripData = repeatedUpdateResponse.body()!!.data!!.trip
+							updateLocalTrip(updatedApiTripData, syncResult)
+						}
 					}
 					TripConflictResolution.USE_SERVER_VERSION -> {
 						updateLocalTrip(apiTripData, syncResult)
