@@ -83,11 +83,11 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
-		log() { "Creating trip ${localTrip.id}" }
+		log { "Creating trip ${localTrip.id}" }
 
 		val localPlaceIds = localTrip.getLocalPlaceIds()
 		if (localPlaceIds.isNotEmpty()) {
-			log() {
+			log {
 				"Trip cannot be synced because contains places with local id: ${localPlaceIds.joinToString(", ")}"
 			}
 			return
@@ -102,11 +102,11 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private fun updateServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
-		log() { "Updating trip ${localTrip.id}" }
+		log { "Updating trip ${localTrip.id}" }
 
 		val localPlaceIds = localTrip.getLocalPlaceIds()
 		if (localPlaceIds.isNotEmpty()) {
-			log() {
+			log {
 				"Trip cannot be synced because contain places with local id: ${localPlaceIds.joinToString(", ")}"
 			}
 			return
@@ -115,17 +115,17 @@ internal class TripsSynchronizationService constructor(
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {
-			log() { "Trip ${localTrip.id} deleted on server, removing in local store." }
+			log { "Trip ${localTrip.id} deleted on server, removing in local store." }
 			tripsService.deleteTrip(localTrip.id)
 			syncResult.changedTripIds.add(localTrip.id)
 			return
 
 		} else if (updateResponse.code() == 403) {
-			log() { "Trip ${localTrip.id} is not allowed to be modified by current user, trying to fetch original." }
+			log { "Trip ${localTrip.id} is not allowed to be modified by current user, trying to fetch original." }
 			val tripResponse = apiClient.getTrip(localTrip.id).execute()
 			if (tripResponse.isSuccessful) {
 				val apiTripData = tripResponse.body()!!.data!!.trip
-				log() { "Trip ${localTrip.id} is not allowed to be modified by current user; re-fetched." }
+				log { "Trip ${localTrip.id} is not allowed to be modified by current user; re-fetched." }
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			return
@@ -138,9 +138,8 @@ internal class TripsSynchronizationService constructor(
 		val apiTripData = data.trip
 		when (data.conflict_resolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
-				log() { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
-				val conflictHandler = tripUpdateConflictHandler
-				val conflictResolution = when (conflictHandler) {
+				log { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
+				val conflictResolution = when (val conflictHandler = tripUpdateConflictHandler) {
 					null -> TripConflictResolution.USE_SERVER_VERSION
 					else -> {
 						val conflictInfo = TripConflictInfo(
@@ -153,7 +152,7 @@ internal class TripsSynchronizationService constructor(
 					}
 				}
 
-				log() { "Trip ${localTrip.id} conflict resolution: $conflictResolution" }
+				log { "Trip ${localTrip.id} conflict resolution: $conflictResolution" }
 				when (conflictResolution) {
 					TripConflictResolution.NO_ACTION -> {
 						// do nothing and let user choose when he will use the app
@@ -177,7 +176,7 @@ internal class TripsSynchronizationService constructor(
 				}
 			}
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED, ApiUpdateTripResponse.CONFLICT_RESOLUTION_OVERRODE -> {
-				log() { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
+				log { "Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}" }
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			ApiUpdateTripResponse.NO_CONFLICT -> {
