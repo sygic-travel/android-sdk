@@ -1,7 +1,7 @@
 # Sygic Travel Android SDK
 
 [![Build Status](https://travis-ci.org/sygic-travel/android-sdk.svg?branch=master)](https://travis-ci.org/sygic-travel/android-sdk)
-![Minamal API version level 15](https://img.shields.io/badge/API_level-15-green.svg)
+![Minimal API version level 15](https://img.shields.io/badge/API_level-15-green.svg)
 
 Sygic Travel Android SDK is a framework for embedding a rich set of Sygic Travel data within your
 application. It gives you an access to millions of places covering the whole world.
@@ -10,13 +10,14 @@ application. It gives you an access to millions of places covering the whole wor
 ## Installation
 
 Add jCenter repository and dependency to your application's `build.gradle` file:
+
 ```gradle
 repositories {
 	jcenter()
 }
 
 dependencies {
-	implementation 'com.sygic.travel:sdk:2.0.1'
+	implementation 'com.sygic.travel:sdk:2.1.0'
 }
 ```
 
