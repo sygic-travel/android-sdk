@@ -1,11 +1,11 @@
 package com.sygic.travel.sdk.synchronization.services
 
-import android.util.Log
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.favorites.api.model.FavoriteRequest
 import com.sygic.travel.sdk.favorites.model.Favorite
 import com.sygic.travel.sdk.favorites.service.FavoriteService
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
+import timber.log.Timber
 
 internal class FavoritesSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
@@ -22,7 +22,7 @@ internal class FavoritesSynchronizationService constructor(
 
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
 			if (favorite.id.startsWith("*")) {
-				log { "Favorite ${favorite.id} cannot be synced because it has place with local id." }
+				Timber.i("Favorite ${favorite.id} cannot be synced because it has place with local id.")
 				continue
 			}
 			if (favorite.state == Favorite.STATE_TO_ADD) {
@@ -51,9 +51,5 @@ internal class FavoritesSynchronizationService constructor(
 		}
 
 		syncResult.changedFavoriteIds.addAll(addedFavoriteIds.union(deletedFavoriteIds))
-	}
-
-	private inline fun log(cb: () -> String) {
-		Log.i("STSync", cb())
 	}
 }
