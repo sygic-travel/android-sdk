@@ -40,7 +40,9 @@ internal class TripsSynchronizationService constructor(
 			syncApiChangedTrip(trip, syncResult)
 		}
 
-		syncLocalChangedTrips(syncResult)
+		for (tripId in tripsService.findAllChanged()) {
+			syncLocalChangedTrip(tripId, syncResult)
+		}
 	}
 
 	private fun syncApiChangedTrip(apiTrip: ApiTripItemResponse, syncResult: SynchronizationResult) {
@@ -53,19 +55,18 @@ internal class TripsSynchronizationService constructor(
 			updateLocalTrip(apiTrip, syncResult)
 
 		} else {
-			// we throw away the server data and try to push our changes first
+			// we throw away the server's data and try to push our changes first
 			// server will try a data merge
 			updateServerTrip(localTrip, syncResult)
 		}
 	}
 
-	private fun syncLocalChangedTrips(syncResult: SynchronizationResult) {
-		tripsService.findAllChanged().forEach { trip ->
-			if (trip.isLocal()) {
-				createServerTrip(trip, syncResult)
-			} else {
-				updateServerTrip(trip, syncResult)
-			}
+	private fun syncLocalChangedTrip(tripId: String, syncResult: SynchronizationResult) {
+		val localTrip = tripsService.getTrip(tripId) ?: return
+		if (localTrip.isLocal()) {
+			createServerTrip(localTrip, syncResult)
+		} else {
+			updateServerTrip(localTrip, syncResult)
 		}
 	}
 

@@ -64,8 +64,8 @@ internal interface TripsDao {
 	@Update
 	fun update(trip: Trip)
 
-	@Query("SELECT * FROM trips WHERE is_changed = 1")
-	fun findAllChanged(): List<Trip>
+	@Query("SELECT id FROM trips WHERE is_changed = 1")
+	fun findAllChanged(): List<String>
 
 	@Query("SELECT COUNT(*) FROM trips WHERE is_changed = 1")
 	fun getAllChangedCount(): Int

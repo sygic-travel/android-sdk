@@ -126,12 +126,8 @@ internal class TripsService constructor(
 		}
 	}
 
-	fun findAllChanged(): List<Trip> {
-		val trips = tripsDao.findAllChanged()
-		val ids = trips.map { it.id }
-		val tripDays = tripDaysDao.findByTripId(ids)
-		val tripItems = tripDayItemsDao.findByTripId(ids)
-		return classify(trips, tripDays, tripItems)
+	fun findAllChanged(): List<String> {
+		return tripsDao.findAllChanged()
 	}
 
 	fun hasChangesToSynchronize(): Boolean {
