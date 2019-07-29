@@ -9,8 +9,7 @@ import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
 
 internal class FavoritesSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
-	private val favoriteService: FavoriteService,
-	private val debugMode: Boolean
+	private val favoriteService: FavoriteService
 ) {
 	fun sync(addedFavoriteIds: List<String>, deletedFavoriteIds: List<String>, syncResult: SynchronizationResult) {
 		for (favoriteId in addedFavoriteIds) {
@@ -55,8 +54,6 @@ internal class FavoritesSynchronizationService constructor(
 	}
 
 	private inline fun log(cb: () -> String) {
-		if (debugMode) {
-			Log.i("STSync", cb())
-		}
+		Log.i("STSync", cb())
 	}
 }

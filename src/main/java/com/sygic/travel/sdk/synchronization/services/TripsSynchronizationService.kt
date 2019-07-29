@@ -17,8 +17,7 @@ import retrofit2.HttpException
 internal class TripsSynchronizationService constructor(
 	private val apiClient: SygicTravelApiClient,
 	private val tripConverter: TripConverter,
-	private val tripsService: TripsService,
-	private val debugMode: Boolean
+	private val tripsService: TripsService
 ) {
 	var tripIdUpdateHandler: ((oldTripId: String, newTripId: String) -> Unit)? = null
 	var tripUpdateConflictHandler: ((conflictInfo: TripConflictInfo) -> TripConflictResolution)? = null
@@ -187,8 +186,6 @@ internal class TripsSynchronizationService constructor(
 	}
 
 	private inline fun log(cb: () -> String) {
-		if (debugMode) {
-			Log.i("STSync", cb())
-		}
+		Log.i("STSync", cb())
 	}
 }

@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import timber.log.Timber
 
 internal val generalModule = module {
 	single {
@@ -12,7 +13,11 @@ internal val generalModule = module {
 		Cache(cacheFile, getProperty<Long>("httpCacheSize"))
 	}
 	single {
-		HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+		HttpLoggingInterceptor(
+			HttpLoggingInterceptor.Logger {
+				Timber.tag("OkHttp").d(it)
+			}
+		).setLevel(HttpLoggingInterceptor.Level.BODY)
 	}
 	single {
 		get<Context>().getSharedPreferences("SygicTravelSdk", 0)

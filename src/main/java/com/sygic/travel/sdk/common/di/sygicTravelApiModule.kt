@@ -32,13 +32,12 @@ internal val sygicTravelApiModule = module {
 		val builder = OkHttpClient.Builder()
 			.addInterceptor(get<HeadersInterceptor>())
 			.addInterceptor(get<LocaleInterceptor>())
-		if (getProperty("debugMode")) {
-			builder.addInterceptor(get<HttpLoggingInterceptor>())
-		}
+			.addInterceptor(get<HttpLoggingInterceptor>())
+
 		if (getProperty("httpCacheEnabled")) {
-			builder
-				.cache(get<Cache>())
+			builder.cache(get<Cache>())
 		}
+
 		builder
 			.readTimeout(60, TimeUnit.SECONDS)
 			.build()

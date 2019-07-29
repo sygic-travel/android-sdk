@@ -55,6 +55,7 @@ repositories {
 dependencies {
 	implementation "androidx.annotation:annotation:1.1.0"
 	implementation "androidx.room:room-runtime:2.0.0"
+	implementation "com.jakewharton.timber:timber:4.7.1"
 	implementation "com.squareup.moshi:moshi:1.8.0"
 	implementation "com.squareup.okhttp3:okhttp:3.14.2"
 	implementation "com.squareup.okhttp3:logging-interceptor:3.14.2"

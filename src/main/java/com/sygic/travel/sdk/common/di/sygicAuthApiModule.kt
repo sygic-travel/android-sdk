@@ -12,11 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 internal val sygicAuthApiModule = module {
 	single(named("sygicAuthHttpClient")) {
 		val builder = OkHttpClient.Builder()
-
-		if (getProperty("debugMode")) {
-			builder.addInterceptor(get<HttpLoggingInterceptor>())
-		}
-
+		builder.addInterceptor(get<HttpLoggingInterceptor>())
 		builder.build()
 	}
 	single(named("sygicAuthApiRetrofit")) {

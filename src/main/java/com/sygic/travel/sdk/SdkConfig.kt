@@ -8,9 +8,6 @@ abstract class SdkConfig {
 	open val clientId: String?
 		get() = null
 
-	open val debugMode: Boolean
-		get() = BuildConfig.DEBUG
-
 	open val sygicAuthUrl: String
 		get() = "https://auth.sygic.com"
 
