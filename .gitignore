@@ -1,6 +1,6 @@
 # IDEA
 *.iml
-/.idea
+/.idea/*
 
 # Gradle
 .gradle
@@ -12,4 +12,4 @@ build
 /captures
 
 # Exclude ignore for codestyle settings
-!/.idea/codeStyleSettings.xml
+!/.idea/codeStyles/
