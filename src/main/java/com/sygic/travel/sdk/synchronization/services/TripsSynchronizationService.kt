@@ -85,15 +85,9 @@ internal class TripsSynchronizationService constructor(
 	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
 		Timber.i("Creating trip ${localTrip.id}")
 
-		val localPlaceIds = localTrip.getLocalPlaceIds()
-		if (localPlaceIds.isNotEmpty()) {
-			Timber.e(
-				"Trip cannot be synced because contains places with local id: ${localPlaceIds.joinToString(", ")}"
-			)
-			return
-		}
-
+		sanitizeTrip(localTrip)
 		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).checkedExecute()
+
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
 		tripsService.replaceTripId(localTrip, trip.id)
@@ -104,14 +98,7 @@ internal class TripsSynchronizationService constructor(
 	private fun updateServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
 		Timber.i("Updating trip ${localTrip.id}")
 
-		val localPlaceIds = localTrip.getLocalPlaceIds()
-		if (localPlaceIds.isNotEmpty()) {
-			Timber.e(
-				"Trip cannot be synced because contain places with local id: ${localPlaceIds.joinToString(", ")}"
-			)
-			return
-		}
-
+		sanitizeTrip(localTrip)
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {
@@ -180,8 +167,19 @@ internal class TripsSynchronizationService constructor(
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			ApiUpdateTripResponse.NO_CONFLICT -> {
-				// propagate an update with new trip version
+				// propagate an update with new trip's version property
 				updateLocalTrip(apiTripData, syncResult)
+			}
+		}
+	}
+
+	private fun sanitizeTrip(trip: Trip) {
+		if (trip.getLocalPlaceIds().isEmpty()) return
+
+		Timber.e("Removing local places from trip ${trip.id} to allow synchronization.")
+		trip.days.forEach { tripDay ->
+			tripDay.itinerary = tripDay.itinerary.toMutableList().apply {
+				removeAll { it.placeId.startsWith("*") }
 			}
 		}
 	}
