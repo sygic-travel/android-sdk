@@ -86,7 +86,7 @@ internal class TripsSynchronizationService constructor(
 
 		val localPlaceIds = localTrip.getLocalPlaceIds()
 		if (localPlaceIds.isNotEmpty()) {
-			Timber.i(
+			Timber.e(
 				"Trip cannot be synced because contains places with local id: ${localPlaceIds.joinToString(", ")}"
 			)
 			return
@@ -105,7 +105,7 @@ internal class TripsSynchronizationService constructor(
 
 		val localPlaceIds = localTrip.getLocalPlaceIds()
 		if (localPlaceIds.isNotEmpty()) {
-			Timber.i(
+			Timber.e(
 				"Trip cannot be synced because contain places with local id: ${localPlaceIds.joinToString(", ")}"
 			)
 			return
@@ -114,17 +114,17 @@ internal class TripsSynchronizationService constructor(
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {
-			Timber.i("Trip ${localTrip.id} deleted on server, removing in local store.")
+			Timber.w("Trip ${localTrip.id} deleted on server, removing in local store.")
 			tripsService.deleteTrip(localTrip.id)
 			syncResult.changedTripIds.add(localTrip.id)
 			return
 
 		} else if (updateResponse.code() == 403) {
-			Timber.i("Trip ${localTrip.id} is not allowed to be modified by current user, trying to fetch original.")
+			Timber.w("Trip ${localTrip.id} is not allowed to be modified by current user, trying to fetch original.")
 			val tripResponse = apiClient.getTrip(localTrip.id).execute()
 			if (tripResponse.isSuccessful) {
 				val apiTripData = tripResponse.body()!!.data!!.trip
-				Timber.i("Trip ${localTrip.id} is not allowed to be modified by current user; re-fetched.")
+				Timber.w("Trip ${localTrip.id} is not allowed to be modified by current user; re-fetched.")
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			return
@@ -137,7 +137,7 @@ internal class TripsSynchronizationService constructor(
 		val apiTripData = data.trip
 		when (data.conflict_resolution) {
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED -> {
-				Timber.i("Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}")
+				Timber.w("Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}")
 				val conflictResolution = when (val conflictHandler = tripUpdateConflictHandler) {
 					null -> TripConflictResolution.USE_SERVER_VERSION
 					else -> {
@@ -175,7 +175,7 @@ internal class TripsSynchronizationService constructor(
 				}
 			}
 			ApiUpdateTripResponse.CONFLICT_RESOLUTION_MERGED, ApiUpdateTripResponse.CONFLICT_RESOLUTION_OVERRODE -> {
-				Timber.i("Trip ${localTrip.id} has conflict: ${data.conflict_resolution}; ${data.conflict_info}")
+				Timber.w("Trip ${localTrip.id} had conflict: ${data.conflict_resolution}; ${data.conflict_info}")
 				updateLocalTrip(apiTripData, syncResult)
 			}
 			ApiUpdateTripResponse.NO_CONFLICT -> {

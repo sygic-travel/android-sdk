@@ -22,7 +22,7 @@ internal class FavoritesSynchronizationService constructor(
 
 		for (favorite in favoriteService.getFavoritesForSynchronization()) {
 			if (favorite.id.startsWith("*")) {
-				Timber.i("Favorite ${favorite.id} cannot be synced because it has place with local id.")
+				Timber.e("Favorite ${favorite.id} cannot be synced because it has place with local id.")
 				continue
 			}
 			if (favorite.state == Favorite.STATE_TO_ADD) {
