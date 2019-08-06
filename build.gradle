@@ -41,7 +41,7 @@ android {
 			}
 		}
 
-		versionName System.getenv("SDK_VERSION") ?: "X.X-DEV"
+		versionName System.getenv("SDK_VERSION") ?: "2.2.0-DEV"
 	}
 
 	sourceSets {
