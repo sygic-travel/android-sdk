@@ -63,6 +63,7 @@ internal interface SygicTravelApiClient {
 
 	// ==== PLACES =================================================================================
 
+	@Headers(TIMEOUT_HEADER_PREFIX + TIMEOUT_QUICK)
 	@GET("places/list")
 	fun getPlaces(
 		@Query("query") query: String?,
@@ -81,11 +82,13 @@ internal interface SygicTravelApiClient {
 		@Query("limit") limit: Int?
 	): Call<ApiResponse<ApiPlacesListResponse>>
 
+	@Headers(TIMEOUT_HEADER_PREFIX + TIMEOUT_QUICK)
 	@GET("places/{id}")
 	fun getPlaceDetailed(
 		@Path("id") id: String
 	): Call<ApiResponse<ApiPlaceResponse>>
 
+	@Headers(TIMEOUT_HEADER_PREFIX + TIMEOUT_BATCH)
 	@GET("places")
 	fun getPlacesDetailed(
 		@Query("ids") ids: String
@@ -140,7 +143,10 @@ internal interface SygicTravelApiClient {
 	// ==== SYNCHRONIZATION=========================================================================
 
 	@GET("changes")
-	@Headers("Authorization: [toIntercept]")
+	@Headers(
+		"Authorization: [toIntercept]",
+		TIMEOUT_HEADER_PREFIX + TIMEOUT_CHANGES
+	)
 	fun getChanges(
 		@Query("since") since: String?
 	): Call<ApiResponse<ApiChangesResponse>>
@@ -181,7 +187,10 @@ internal interface SygicTravelApiClient {
 	): Call<ApiResponse<ApiTripsListResponse>>
 
 	@GET("trips")
-	@Headers("Authorization: [toIntercept]")
+	@Headers(
+		"Authorization: [toIntercept]",
+		TIMEOUT_HEADER_PREFIX + TIMEOUT_BATCH
+	)
 	fun getTrips(
 		@Query("ids") ids: String
 	): Call<ApiResponse<ApiGetTripsResponse>>

@@ -3,9 +3,11 @@ package com.sygic.travel.sdk.common.di
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.sygic.travel.sdk.common.api.SygicTravelApiClient
+import com.sygic.travel.sdk.common.api.TIMEOUT_DEFAULT
 import com.sygic.travel.sdk.common.api.interceptors.HeadersInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor
 import com.sygic.travel.sdk.common.api.interceptors.LocaleInterceptor.Companion.LOCALE_PLACEHOLDER
+import com.sygic.travel.sdk.common.api.interceptors.TimeoutInterceptor
 import com.sygic.travel.sdk.session.service.AuthStorageService
 import com.sygic.travel.sdk.utils.UserAgentUtil
 import okhttp3.Cache
@@ -28,19 +30,22 @@ internal val sygicTravelApiModule = module {
 	single {
 		LocaleInterceptor(getProperty("defaultLanguage"))
 	}
+	single {
+		TimeoutInterceptor()
+	}
 	single(named("sygicTravelHttpClient")) {
 		val builder = OkHttpClient.Builder()
 			.addInterceptor(get<HeadersInterceptor>())
 			.addInterceptor(get<LocaleInterceptor>())
+			.addInterceptor(get<TimeoutInterceptor>())
 			.addInterceptor(get<HttpLoggingInterceptor>())
+			.readTimeout(TIMEOUT_DEFAULT, TimeUnit.SECONDS)
 
 		if (getProperty("httpCacheEnabled")) {
 			builder.cache(get<Cache>())
 		}
 
-		builder
-			.readTimeout(60, TimeUnit.SECONDS)
-			.build()
+		builder.build()
 	}
 	single(named("sygicTravelApiRetrofit")) {
 		Retrofit.Builder()

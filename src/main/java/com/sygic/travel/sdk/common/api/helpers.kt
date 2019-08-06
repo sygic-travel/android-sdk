@@ -20,3 +20,10 @@ internal fun <T> Call<T>.checkedExecute(): Response<T> {
 	}
 	return response
 }
+
+internal const val TIMEOUT_HEADER = "Timeout"
+internal const val TIMEOUT_HEADER_PREFIX = "$TIMEOUT_HEADER:"
+internal const val TIMEOUT_QUICK = 8L
+internal const val TIMEOUT_DEFAULT = 16L
+internal const val TIMEOUT_BATCH = 32L
+internal const val TIMEOUT_CHANGES = 56L
