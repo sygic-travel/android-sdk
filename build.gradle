@@ -40,6 +40,8 @@ android {
 				]
 			}
 		}
+
+		versionName System.getenv("SDK_VERSION") ?: "X.X-DEV"
 	}
 
 	sourceSets {
