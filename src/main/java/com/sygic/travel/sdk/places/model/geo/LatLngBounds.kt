@@ -23,6 +23,13 @@ data class LatLngBounds(
 		return LatLng(lat, lng)
 	}
 
+	fun withPrecision(decimals: Int = 6): LatLngBounds {
+		return copy(
+			northeast = northeast.withPrecision(decimals),
+			southwest = southwest.withPrecision(decimals)
+		)
+	}
+
 	fun toApiExpression(): String {
 		return "${southwest.toApiExpression()},${northeast.toApiExpression()}"
 	}

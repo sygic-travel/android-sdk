@@ -4,6 +4,7 @@ import android.location.Location
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
+import java.math.RoundingMode
 
 @Parcelize
 data class LatLng(
@@ -23,6 +24,13 @@ data class LatLng(
 			results
 		)
 		return results[0]
+	}
+
+	fun withPrecision(decimals: Int = 6): LatLng {
+		return copy(
+			lat = lat.toBigDecimal().setScale(decimals, RoundingMode.HALF_DOWN).toDouble(),
+			lng = lng.toBigDecimal().setScale(decimals, RoundingMode.HALF_DOWN).toDouble()
+		)
 	}
 
 	fun toApiExpression(): String {
