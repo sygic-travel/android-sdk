@@ -1,5 +1,8 @@
 package com.sygic.travel.sdk.places.model
 
+import com.sygic.travel.sdk.places.api.TripCategoryConverter
+
+@Suppress("unused")
 enum class Category {
 	DISCOVERING,
 	EATING,
@@ -11,5 +14,9 @@ enum class Category {
 	SIGHTSEEING,
 	SLEEPING,
 	DOING_SPORTS,
-	TRAVELING,
+	TRAVELING;
+
+	fun toApiExpression(): String {
+		return TripCategoryConverter.toApiCategory(this)
+	}
 }

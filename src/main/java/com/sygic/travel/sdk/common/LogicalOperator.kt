@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.common
 
 enum class LogicalOperator constructor(
-	internal val apiOperator: String
+	val apiExpression: String
 ) {
 	ALL(","),
 	ANY("|"),

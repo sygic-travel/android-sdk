@@ -4,7 +4,7 @@ import retrofit2.Call
 import retrofit2.HttpException
 import retrofit2.Response
 
-internal fun rangeFormatter(min: Int?, max: Int?): String? {
+fun formatApiRangeExpression(min: Int?, max: Int?): String? {
 	return when {
 		min != null && max != null -> "$min:$max"
 		min != null -> "$min:"

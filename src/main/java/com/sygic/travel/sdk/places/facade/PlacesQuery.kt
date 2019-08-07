@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.places.facade
 
 import com.sygic.travel.sdk.common.LogicalOperator
-import com.sygic.travel.sdk.common.api.rangeFormatter
+import com.sygic.travel.sdk.common.api.formatApiRangeExpression
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Category
@@ -41,57 +41,57 @@ data class PlacesQuery(
 	internal fun getLevelsApiQuery(): String? {
 		return when (levels == null || levels!!.isEmpty()) {
 			true -> null
-			false -> levels!!.joinToString(LogicalOperator.ANY.apiOperator) { TripLevelConverter.toApiLevel(it) }
+			false -> levels!!.joinToString(LogicalOperator.ANY.apiExpression) { TripLevelConverter.toApiLevel(it) }
 		}
 	}
 
 	internal fun getMapTilesApiQuery(): String? {
 		return when (mapTiles == null || mapTiles!!.isEmpty()) {
 			true -> null
-			false -> mapTiles!!.joinToString(LogicalOperator.ANY.apiOperator)
+			false -> mapTiles!!.joinToString(LogicalOperator.ANY.apiExpression)
 		}
 	}
 
 	internal fun getCategoriesApiQuery(): String? {
 		return when (categories == null || categories!!.isEmpty()) {
 			true -> null
-			false -> categories!!.joinToString(categoriesOperator.apiOperator) { TripCategoryConverter.toApiCategory(it) }
+			false -> categories!!.joinToString(categoriesOperator.apiExpression) { TripCategoryConverter.toApiCategory(it) }
 		}
 	}
 
 	internal fun getCategoriesNotApiQuery(): String? {
 		return when (categoriesNot == null || categoriesNot!!.isEmpty()) {
 			true -> null
-			false -> categoriesNot!!.joinToString(categoriesNotOperator.apiOperator) { TripCategoryConverter.toApiCategory(it) }
+			false -> categoriesNot!!.joinToString(categoriesNotOperator.apiExpression) { TripCategoryConverter.toApiCategory(it) }
 		}
 	}
 
 	internal fun getTagsApiQuery(): String? {
 		return when (tags == null || tags!!.isEmpty()) {
 			true -> null
-			false -> tags!!.joinToString(tagsOperator.apiOperator)
+			false -> tags!!.joinToString(tagsOperator.apiExpression)
 		}
 	}
 
 	internal fun getTagsNotApiQuery(): String? {
 		return when (tagsNot == null || tagsNot!!.isEmpty()) {
 			true -> null
-			false -> tagsNot!!.joinToString(tagsNotOperator.apiOperator)
+			false -> tagsNot!!.joinToString(tagsNotOperator.apiExpression)
 		}
 	}
 
 	internal fun getParentsApiQuery(): String? {
 		return when (parentIds == null || parentIds!!.isEmpty()) {
 			true -> null
-			false -> parentIds!!.joinToString(parentsOperator.apiOperator)
+			false -> parentIds!!.joinToString(parentsOperator.apiExpression)
 		}
 	}
 
 	internal fun getStarRatingApiQuery(): String? {
-		return rangeFormatter(starRatingMin, starRatingMax)
+		return formatApiRangeExpression(starRatingMin, starRatingMax)
 	}
 
 	internal fun getCustomerRatingApiQuery(): String? {
-		return rangeFormatter(customerRatingMin, customerRatingMax)
+		return formatApiRangeExpression(customerRatingMin, customerRatingMax)
 	}
 }

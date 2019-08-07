@@ -22,7 +22,7 @@ internal class ToursService(
 	fun getToursGetYourGuide(query: ToursGetYourGuideQuery): List<Tour> {
 		return apiClient.getToursGetYourGuide(
 			query = query.query,
-			bounds = query.bounds?.toApiQuery(),
+			bounds = query.bounds?.toApiExpression(),
 			parentPlaceId = query.parentPlaceId,
 			tags = query.tags,
 			from = DateTimeHelper.timestampToDatetime(query.startDate),

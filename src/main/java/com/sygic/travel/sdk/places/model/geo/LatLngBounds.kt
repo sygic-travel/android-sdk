@@ -23,7 +23,7 @@ data class LatLngBounds(
 		return LatLng(lat, lng)
 	}
 
-	internal fun toApiQuery(): String {
-		return "${southwest.lat},${southwest.lng},${northeast.lat},${northeast.lng}"
+	fun toApiExpression(): String {
+		return "${southwest.toApiExpression()},${northeast.toApiExpression()}"
 	}
 }

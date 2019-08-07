@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.tours.facade
 
-import com.sygic.travel.sdk.common.api.rangeFormatter
+import com.sygic.travel.sdk.common.api.formatApiRangeExpression
 import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import java.util.Date
 
@@ -25,7 +25,7 @@ data class ToursGetYourGuideQuery(
 	var sortDirection: SortDirection? = null
 ) {
 	internal fun getApiDurationQuery(): String? {
-		return rangeFormatter(durationMin, durationMax)
+		return formatApiRangeExpression(durationMin, durationMax)
 	}
 
 	enum class SortBy constructor(internal val apiSortBy: String) {

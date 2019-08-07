@@ -30,8 +30,8 @@ internal class PlacesService constructor(
 			categoriesNot = placesQuery.getCategoriesNotApiQuery(),
 			mapTiles = placesQuery.getMapTilesApiQuery(),
 			mapSpread = placesQuery.mapSpread,
-			bounds = placesQuery.bounds?.toApiQuery(),
-			preferredLocation = placesQuery.preferredLocation?.toApiQuery(),
+			bounds = placesQuery.bounds?.toApiExpression(),
+			preferredLocation = placesQuery.preferredLocation?.toApiExpression(),
 			tags = placesQuery.getTagsApiQuery(),
 			tagsNot = placesQuery.getTagsNotApiQuery(),
 			parents = placesQuery.getParentsApiQuery(),
@@ -49,7 +49,7 @@ internal class PlacesService constructor(
 	}
 
 	fun getPlacesDetailed(ids: List<String>): List<DetailedPlace> {
-		val queryIds = ids.joinToString(LogicalOperator.ANY.apiOperator)
+		val queryIds = ids.joinToString(LogicalOperator.ANY.apiExpression)
 		val request = sygicTravelApiClient.getPlacesDetailed(queryIds)
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}
@@ -60,13 +60,13 @@ internal class PlacesService constructor(
 	}
 
 	fun detectPlacesForLocation(location: LatLng): List<Place> {
-		val request = sygicTravelApiClient.getPlacesDetectParents(location.toApiQuery())
+		val request = sygicTravelApiClient.getPlacesDetectParents(location.toApiExpression())
 		return request.checkedExecute().body()!!.data!!.fromApi()
 	}
 
 	fun detectPlacesForLocation(location: LatLngBounds): List<Place> {
 		val request = sygicTravelApiClient.getPlacesDetectParentsMainInBounds(
-			bounds = location.toApiQuery(),
+			bounds = location.toApiExpression(),
 			tiles = null
 		)
 		return request.checkedExecute().body()!!.data!!.fromApi()
