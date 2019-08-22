@@ -47,7 +47,7 @@ internal object DISetup {
 
 			androidContext(applicationContext)
 
-			modules(
+			modules(listOf(
 				sessionModule,
 				dbModule,
 				directionsModule,
@@ -60,7 +60,7 @@ internal object DISetup {
 				synchronizationModule,
 				toursModule,
 				tripsModule
-			)
+			))
 
 			properties(properties)
 		}
