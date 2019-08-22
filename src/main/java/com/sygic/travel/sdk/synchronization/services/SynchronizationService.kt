@@ -82,7 +82,14 @@ internal class SynchronizationService constructor(
 					}
 				}
 				ApiChangesResponse.ChangeEntry.TYPE_SETTINGS -> {
-				} // ignore
+					result.updatedUserSettings = true
+				}
+				ApiChangesResponse.ChangeEntry.TYPE_CUSTOM_PLACE -> {
+					result.changedCustomPlaceIds.add(change.id!!)
+				}
+				else -> {
+					// ignore
+				}
 			}
 		}
 

@@ -17,6 +17,7 @@ internal class ApiChangesResponse(
 			const val TYPE_TRIP = "trip"
 			const val TYPE_FAVORITE = "favorite"
 			const val TYPE_SETTINGS = "settings"
+			const val TYPE_CUSTOM_PLACE = "custom_place"
 			const val CHANGE_UPDATED = "updated"
 			const val CHANGE_DELETED = "deleted"
 		}
