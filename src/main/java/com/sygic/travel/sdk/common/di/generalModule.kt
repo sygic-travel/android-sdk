@@ -13,11 +13,15 @@ internal val generalModule = module {
 		Cache(cacheFile, getProperty<Long>("httpCacheSize"))
 	}
 	single {
-		HttpLoggingInterceptor(
-			HttpLoggingInterceptor.Logger {
-				Timber.tag("OkHttp").d(it)
+		return@single HttpLoggingInterceptor(
+			object : HttpLoggingInterceptor.Logger {
+				override fun log(message: String) {
+					Timber.tag("OkHttp").d(message)
+				}
 			}
-		).setLevel(HttpLoggingInterceptor.Level.BODY)
+		).apply {
+			level = HttpLoggingInterceptor.Level.BODY
+		}
 	}
 	single {
 		get<Context>().getSharedPreferences("SygicTravelSdk", 0)

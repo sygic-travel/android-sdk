@@ -9,7 +9,7 @@ internal class TimeoutInterceptor : Interceptor {
 	override fun intercept(chain: Interceptor.Chain): Response {
 		val original = chain.request()
 
-		val timeout = original.headers()[TIMEOUT_HEADER]?.toIntOrNull()
+		val timeout = original.headers[TIMEOUT_HEADER]?.toIntOrNull()
 		@Suppress("LiftReturnOrAssignment")
 		if (timeout != null) {
 			val request = original.newBuilder()

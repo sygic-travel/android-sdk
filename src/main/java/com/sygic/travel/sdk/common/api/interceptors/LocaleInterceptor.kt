@@ -22,13 +22,13 @@ internal class LocaleInterceptor(
 	@Throws(IOException::class)
 	override fun intercept(chain: Chain): Response {
 		val original = chain.request()
-		var url = original.url().toString()
+		var url = original.url.toString()
 
 		url = url.replace(LOCALE_PLACEHOLDER, locale)
 
 		val request = original.newBuilder()
 			.url(url)
-			.method(original.method(), original.body())
+			.method(original.method, original.body)
 			.build()
 
 		return chain.proceed(request)

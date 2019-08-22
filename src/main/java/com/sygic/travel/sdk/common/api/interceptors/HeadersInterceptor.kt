@@ -18,7 +18,7 @@ internal class HeadersInterceptor(
 			.addHeader("Content-Type", "application/json")
 			.addHeader("x-api-key", apiKey)
 			.addHeader("User-Agent", userAgent)
-			.method(original.method(), original.body())
+			.method(original.method, original.body)
 
 		if (original.header("Authorization") == "[toIntercept]") {
 			val accessToken = authStorageService().getUserSession()

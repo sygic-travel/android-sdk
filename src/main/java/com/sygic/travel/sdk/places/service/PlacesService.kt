@@ -13,7 +13,8 @@ import com.sygic.travel.sdk.places.model.Place
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.media.Medium
-import okio.Okio
+import okio.buffer
+import okio.source
 import java.io.InputStream
 
 internal class PlacesService constructor(
@@ -73,13 +74,13 @@ internal class PlacesService constructor(
 	}
 
 	fun parsePlacesList(json: InputStream): List<Place> {
-		val input = Okio.buffer(Okio.source(json))
+		val input = json.source().buffer()
 		val apiPlaceType = Types.newParameterizedType(List::class.java, ApiPlaceListItemResponse::class.java)
 		return moshi.adapter<List<ApiPlaceListItemResponse>>(apiPlaceType).fromJson(input)!!.map { it.fromApi() }
 	}
 
 	fun parseDetailedPlacesList(json: InputStream): List<DetailedPlace> {
-		val input = Okio.buffer(Okio.source(json))
+		val input = json.source().buffer()
 		val apiDetailedPlaceType = Types.newParameterizedType(List::class.java, ApiPlaceItemResponse::class.java)
 		return moshi.adapter<List<ApiPlaceItemResponse>>(apiDetailedPlaceType).fromJson(input)!!.map { it.fromApi() }
 	}
