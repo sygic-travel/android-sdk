@@ -5,15 +5,15 @@ import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import kotlinx.android.parcel.Parcelize
-import java.util.Date
+import org.threeten.bp.LocalDateTime
 
 @Parcelize
-data class DirectionsQuery(
+data class DirectionsQuery constructor(
 	var startLocation: LatLng,
 	var endLocation: LatLng,
 	var avoid: Set<DirectionAvoid> = emptySet(),
 	var waypoints: List<LatLng> = emptyList(),
 	var modes: Set<DirectionMode>? = null,
-	var departAt: Date? = null,
-	var arriveAt: Date? = null
+	var departAt: LocalDateTime? = null,
+	var arriveAt: LocalDateTime? = null
 ) : Parcelable

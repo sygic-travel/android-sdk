@@ -9,7 +9,7 @@ import com.sygic.travel.sdk.directions.facades.DirectionsQuery
 import com.sygic.travel.sdk.directions.model.Direction
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionResponse
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 internal class ApiDirectionsService constructor(
@@ -40,8 +40,8 @@ internal class ApiDirectionsService constructor(
 	private fun getCalculatedDirections(requests: List<DirectionsQuery>): List<List<Direction>?> {
 		val apiRequests = requests.map {
 			ApiDirectionRequest(
-				depart_at = DateTimeHelper.timestampToDatetimeLocal(it.departAt),
-				arrive_at = DateTimeHelper.timestampToDatetimeLocal(it.arriveAt),
+				depart_at = it.departAt?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+				arrive_at = it.arriveAt?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
 				modes = it.modes?.map { mode -> mode.name },
 				origin = ApiDirectionRequest.Location(it.startLocation.lat, it.startLocation.lng),
 				destination = ApiDirectionRequest.Location(it.endLocation.lat, it.endLocation.lng),
