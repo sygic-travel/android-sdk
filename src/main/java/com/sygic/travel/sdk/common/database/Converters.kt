@@ -6,8 +6,78 @@ import com.sygic.travel.sdk.places.model.geo.LatLng
 import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneOffset
 
 internal class Converters {
+	@TypeConverter
+	fun instantToLong(date: Instant?): Long? {
+		return when (date) {
+			null -> null
+			else -> date.epochSecond
+		}
+	}
+
+	@TypeConverter
+	fun longToInstant(date: Long?): Instant? {
+		return when (date) {
+			null -> null
+			else -> Instant.ofEpochSecond(date)
+		}
+	}
+
+	@TypeConverter
+	fun localDateToLong(date: LocalDate?): Long? {
+		return when (date) {
+			null -> null
+			else -> date.atStartOfDay().toEpochSecond(ZoneOffset.UTC)
+		}
+	}
+
+	@TypeConverter
+	fun longToLocalDate(date: Long?): LocalDate? {
+		return when (date) {
+			null -> null
+			else -> LocalDateTime.ofEpochSecond(date, 0, ZoneOffset.UTC).toLocalDate()
+		}
+	}
+
+	@TypeConverter
+	fun localTimeToInt(time: LocalTime?): Int? {
+		return when (time) {
+			null -> null
+			else -> time.toSecondOfDay()
+		}
+	}
+
+	@TypeConverter
+	fun intToLocalTime(time: Int?): LocalTime? {
+		return when (time) {
+			null -> null
+			else -> LocalTime.ofSecondOfDay(time.toLong())
+		}
+	}
+
+	@TypeConverter
+	fun durationToLong(duration: Duration?): Long? {
+		return when (duration) {
+			null -> null
+			else -> duration.seconds
+		}
+	}
+
+	@TypeConverter
+	fun longToDuration(duration: Long?): Duration? {
+		return when (duration) {
+			null -> null
+			else -> Duration.ofSeconds(duration)
+		}
+	}
+
 	@TypeConverter
 	fun stringListToString(list: ArrayList<String>?): String? {
 		return when (list) {
