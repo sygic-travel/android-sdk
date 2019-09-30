@@ -5,6 +5,6 @@ import org.threeten.bp.LocalDateTime
 import java.io.Serializable
 
 class DirectionTime constructor(
-	val datetimeLocal: LocalDateTime?,
-	val datetime: Instant?
+	val datetimeLocal: LocalDateTime,
+	val datetime: Instant
 ) : Serializable

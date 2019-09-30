@@ -69,10 +69,14 @@ internal class DirectionConverter {
 		}
 	}
 
-	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime {
+	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime? {
+		if (time.datetime == null || time.datetime_local == null) {
+			return null
+		}
+
 		return DirectionTime(
-			datetimeLocal = time.datetime_local?.let { LocalDateTime.parse(it) },
-			datetime = time.datetime?.let { OffsetDateTime.parse(it).toInstant() }
+			datetimeLocal = LocalDateTime.parse(time.datetime_local),
+			datetime = OffsetDateTime.parse(time.datetime).toInstant()
 		)
 	}
 

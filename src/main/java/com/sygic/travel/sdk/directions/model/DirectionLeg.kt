@@ -5,8 +5,8 @@ import java.io.Serializable
 
 @Suppress("unused")
 class DirectionLeg(
-	val startTime: DirectionTime,
-	val endTime: DirectionTime,
+	val startTime: DirectionTime?,
+	val endTime: DirectionTime?,
 	/** Duration in seconds */
 	val duration: Int,
 	/** Distance in meters */
