@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.session.model
 
-import java.util.Date
+import org.threeten.bp.Instant
 
-data class Session(
+data class Session constructor(
 	val accessToken: String,
-	val expiresAt: Date
+	val expiresAt: Instant
 )

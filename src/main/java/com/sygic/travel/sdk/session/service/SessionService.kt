@@ -10,6 +10,7 @@ import com.sygic.travel.sdk.session.facade.AuthenticationResponseCode
 import com.sygic.travel.sdk.session.facade.RegistrationResponseCode
 import com.sygic.travel.sdk.session.facade.ResetPasswordResponseCode
 import com.sygic.travel.sdk.session.model.Session
+import org.threeten.bp.Instant
 import retrofit2.HttpException
 import java.util.Date
 import java.util.concurrent.locks.ReentrantLock
@@ -144,7 +145,7 @@ internal class SessionService(
 
 		return Session(
 			accessToken = accessToken,
-			expiresAt = Date(authStorageService.getExpirationTime())
+			expiresAt = Instant.ofEpochMilli(authStorageService.getExpirationTime())
 		)
 	}
 
