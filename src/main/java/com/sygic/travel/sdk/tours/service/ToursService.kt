@@ -5,9 +5,9 @@ import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.tours.facade.ToursGetYourGuideQuery
 import com.sygic.travel.sdk.tours.facade.ToursViatorQuery
 import com.sygic.travel.sdk.tours.model.Tour
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.format.DateTimeFormatter
 
-internal class ToursService(
+internal class ToursService constructor(
 	private val apiClient: SygicTravelApiClient
 ) {
 	fun getToursViator(query: ToursViatorQuery): List<Tour> {
@@ -25,8 +25,8 @@ internal class ToursService(
 			bounds = query.bounds?.toApiExpression(),
 			parentPlaceId = query.parentPlaceId,
 			tags = query.tags,
-			from = DateTimeHelper.timestampToDatetime(query.startDate),
-			to = DateTimeHelper.timestampToDatetime(query.endDate),
+			from = query.startDate?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+			to = query.endDate?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
 			duration = query.getApiDurationQuery(),
 			page = query.page,
 			count = query.count,

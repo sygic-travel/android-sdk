@@ -1,5 +1,7 @@
 package com.sygic.travel.sdk.tours.model
 
+import org.threeten.bp.Duration
+
 /**
  * Model class for Tour.
  */
@@ -14,14 +16,14 @@ class Tour constructor(
 	val reviewCount: Int,
 	/**
 	 * In case of get_your_guide supplier the url contains a placeholder [format_id] which has to be replaced.
-	 * See documentation of API endpoin response on http://docs.sygictravelapi.com/1.1/#section-tours.
+	 * See documentation of API endpoint response on http://docs.sygictravelapi.com/1.1/#section-tours.
 	 */
 	val photoUrl: String,
 	val price: Float,
 	val originalPrice: Float,
 	val duration: String?,
-	val durationMin: Int?,
-	val durationMax: Int?,
+	val durationMin: Duration?,
+	val durationMax: Duration?,
 	val flags: Set<String>
 ) {
 	companion object {

@@ -2,6 +2,7 @@ package com.sygic.travel.sdk.tours.api.model
 
 import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.tours.model.Tour
+import org.threeten.bp.Duration
 
 @JsonClass(generateAdapter = true)
 internal class ApiTourItemResponse(
@@ -33,8 +34,8 @@ internal class ApiTourItemResponse(
 			price = price,
 			originalPrice = original_price,
 			duration = duration,
-			durationMin = duration_min,
-			durationMax = duration_max,
+			durationMin = duration_min?.let { Duration.ofSeconds(it.toLong()) },
+			durationMax = duration_max?.let { Duration.ofSeconds(it.toLong()) },
 			flags = flags.toHashSet()
 		)
 	}
