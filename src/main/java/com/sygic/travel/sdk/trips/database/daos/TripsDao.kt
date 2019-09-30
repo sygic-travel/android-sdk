@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.sygic.travel.sdk.trips.database.entities.Trip
+import org.threeten.bp.LocalDate
 
 @Dao
 internal interface TripsDao {
@@ -16,38 +17,38 @@ internal interface TripsDao {
 			"(starts_on >= :from) AND " +
 			"(starts_on + (days_count - 1) * 86400 <= :to)"
 	)
-	fun findByDates(from: Long, to: Long): List<Trip>
+	fun findByDates(from: LocalDate, to: LocalDate): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on >= :from OR starts_on + (days_count - 1) * 86400 >= :from) AND " +
 			"(starts_on <= :to OR starts_on + (days_count - 1) * 86400 <= :to)"
 	)
-	fun findByDatesWithOverlapping(from: Long, to: Long): List<Trip>
+	fun findByDatesWithOverlapping(from: LocalDate, to: LocalDate): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on >= :from)"
 	)
-	fun findByDateAfter(from: Long): List<Trip>
+	fun findByDateAfter(from: LocalDate): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on >= :from OR starts_on + (days_count - 1) * 86400 >= :from)"
 	)
-	fun findByDateAfterWithOverlapping(from: Long): List<Trip>
+	fun findByDateAfterWithOverlapping(from: LocalDate): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on + (days_count - 1) * 86400 <= :to)"
 	)
-	fun findByDateBefore(to: Long): List<Trip>
+	fun findByDateBefore(to: LocalDate): List<Trip>
 
 	@Query(
 		"SELECT * FROM trips WHERE starts_on IS NOT NULL AND is_deleted = 0 AND " +
 			"(starts_on <= :to OR starts_on + (days_count - 1) * 86400 <= :to)"
 	)
-	fun findByDateBeforeWithOverlapping(to: Long): List<Trip>
+	fun findByDateBeforeWithOverlapping(to: LocalDate): List<Trip>
 
 	@Query("SELECT * FROM trips WHERE starts_on IS NULL AND is_deleted = 0")
 	fun findUnscheduled(): List<Trip>

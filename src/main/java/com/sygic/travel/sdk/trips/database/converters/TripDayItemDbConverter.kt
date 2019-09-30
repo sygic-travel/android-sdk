@@ -1,7 +1,6 @@
 package com.sygic.travel.sdk.trips.database.converters
 
 import com.sygic.travel.sdk.trips.model.Trip
-import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.model.TripDayItem
 import com.sygic.travel.sdk.trips.database.entities.TripDayItem as DbTripDayItem
 

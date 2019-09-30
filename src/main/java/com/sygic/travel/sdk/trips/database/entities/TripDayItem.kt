@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalTime
 
 @Entity(
 	tableName = "trip_day_items",
@@ -36,10 +38,10 @@ internal class TripDayItem {
 	lateinit var placeId: String
 
 	@ColumnInfo
-	var startTime: Int? = null
+	var startTime: LocalTime? = null
 
 	@ColumnInfo
-	var duration: Int? = null
+	var duration: Duration? = null
 
 	@ColumnInfo
 	var note: String? = null

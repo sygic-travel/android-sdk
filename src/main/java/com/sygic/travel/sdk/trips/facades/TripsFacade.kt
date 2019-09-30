@@ -4,6 +4,7 @@ import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
+import org.threeten.bp.LocalDate
 
 /**
  * Trips facade provides interface for managing & processing user trips.
@@ -17,7 +18,7 @@ class TripsFacade internal constructor(
 		return tripsService.getTrips(null, null)
 	}
 
-	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
+	fun getTrips(from: LocalDate?, to: LocalDate?, includeOverlapping: Boolean = true): List<TripInfo> {
 		checkNotRunningOnMainThread()
 		return tripsService.getTrips(from, to, includeOverlapping)
 	}

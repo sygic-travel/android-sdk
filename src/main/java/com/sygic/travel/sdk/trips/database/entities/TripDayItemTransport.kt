@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalTime
 
 internal class TripDayItemTransport {
 	@ColumnInfo
@@ -13,10 +15,10 @@ internal class TripDayItemTransport {
 	var avoid: ArrayList<DirectionAvoid> = arrayListOf()
 
 	@ColumnInfo(name = "start_time")
-	var startTime: Int? = null
+	var startTime: LocalTime? = null
 
 	@ColumnInfo
-	var duration: Int? = null
+	var duration: Duration? = null
 
 	@ColumnInfo
 	var note: String? = null
