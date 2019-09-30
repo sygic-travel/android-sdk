@@ -10,8 +10,8 @@ import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiUpdateTripResponse
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.services.TripsService
-import com.sygic.travel.sdk.utils.DateTimeHelper
 import org.threeten.bp.Instant
+import org.threeten.bp.OffsetDateTime
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -134,7 +134,7 @@ internal class TripsSynchronizationService constructor(
 							localTrip = localTrip,
 							remoteTrip = tripConverter.fromApi(apiTripData),
 							remoteTripUserName = data.conflict_info!!.last_user_name,
-							remoteTripUpdatedAt = DateTimeHelper.datetimeToTimestamp(data.conflict_info.last_updated_at)!!
+							remoteTripUpdatedAt = OffsetDateTime.parse(data.conflict_info.last_updated_at).toInstant()
 						)
 						conflictHandler.invoke(conflictInfo)
 					}
