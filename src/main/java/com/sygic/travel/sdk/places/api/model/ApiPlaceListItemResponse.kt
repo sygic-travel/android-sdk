@@ -5,6 +5,7 @@ import com.sygic.travel.sdk.common.api.model.ApiLocationResponse
 import com.sygic.travel.sdk.places.api.TripCategoryConverter
 import com.sygic.travel.sdk.places.api.TripLevelConverter
 import com.sygic.travel.sdk.places.model.Place
+import org.threeten.bp.Duration
 
 @JsonClass(generateAdapter = true)
 internal class ApiPlaceListItemResponse(
@@ -51,7 +52,7 @@ internal class ApiPlaceListItemResponse(
 			starRating = star_rating,
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
-			duration = duration,
+			duration = duration?.let { Duration.ofSeconds(it.toLong()) },
 			ownerId = owner_id,
 			isDeleted = false
 		)

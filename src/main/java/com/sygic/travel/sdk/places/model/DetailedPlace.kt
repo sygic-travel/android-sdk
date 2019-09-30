@@ -1,7 +1,8 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
+import org.threeten.bp.Duration
 
 @Suppress("unused")
 class DetailedPlace constructor(
@@ -24,7 +25,7 @@ class DetailedPlace constructor(
 	starRating: Float?,
 	starRatingUnofficial: Float?,
 	customerRating: Float?,
-	duration: Int?,
+	duration: Duration?,
 	ownerId: String?,
 	isDeleted: Boolean,
 	val detail: Detail

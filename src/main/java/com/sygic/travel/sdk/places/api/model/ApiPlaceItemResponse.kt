@@ -9,6 +9,7 @@ import com.sygic.travel.sdk.places.model.Detail
 import com.sygic.travel.sdk.places.model.DetailedPlace
 import com.sygic.travel.sdk.places.model.Reference
 import com.sygic.travel.sdk.places.model.Tag
+import org.threeten.bp.Duration
 
 @Suppress("MemberVisibilityCanBePrivate")
 @JsonClass(generateAdapter = true)
@@ -156,7 +157,7 @@ internal class ApiPlaceItemResponse(
 			starRatingUnofficial = star_rating_unofficial,
 			customerRating = customer_rating,
 			ownerId = owner_id,
-			duration = duration,
+			duration = duration?.let { Duration.ofSeconds(it.toLong()) },
 			isDeleted = is_deleted
 		)
 	}
