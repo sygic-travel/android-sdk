@@ -3,7 +3,7 @@ package com.sygic.travel.sdk.places.api.model
 import com.squareup.moshi.JsonClass
 import com.sygic.travel.sdk.places.model.Review
 import com.sygic.travel.sdk.places.model.ReviewList
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.OffsetDateTime
 
 @JsonClass(generateAdapter = true)
 internal class ApiGetReviewsResponse(
@@ -37,8 +37,8 @@ internal class ApiGetReviewsResponse(
 				votesDown = votes_down,
 				votesScore = votes_score,
 				currentUserVote = current_user_vote,
-				createdAt = DateTimeHelper.datetimeToTimestamp(created_at)!!,
-				updatedAt = DateTimeHelper.datetimeToTimestamp(updated_at)
+				createdAt = OffsetDateTime.parse(created_at).toInstant(),
+				updatedAt = updated_at?.let { OffsetDateTime.parse(it).toInstant() }
 			)
 		}
 	}

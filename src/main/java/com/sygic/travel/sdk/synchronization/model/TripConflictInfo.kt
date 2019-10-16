@@ -1,11 +1,11 @@
 package com.sygic.travel.sdk.synchronization.model
 
 import com.sygic.travel.sdk.trips.model.Trip
-import java.util.Date
+import org.threeten.bp.Instant
 
-data class TripConflictInfo(
+data class TripConflictInfo constructor(
 	val localTrip: Trip,
 	val remoteTrip: Trip,
 	val remoteTripUserName: String?,
-	val remoteTripUpdatedAt: Date
+	val remoteTripUpdatedAt: Instant
 )

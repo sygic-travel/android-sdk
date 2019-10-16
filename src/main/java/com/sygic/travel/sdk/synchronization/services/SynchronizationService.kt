@@ -5,9 +5,10 @@ import com.sygic.travel.sdk.common.api.SygicTravelApiClient
 import com.sygic.travel.sdk.common.api.checkedExecute
 import com.sygic.travel.sdk.synchronization.api.model.ApiChangesResponse
 import com.sygic.travel.sdk.synchronization.model.SynchronizationResult
-import com.sygic.travel.sdk.utils.DateTimeHelper
-import com.sygic.travel.sdk.utils.asDate
-import com.sygic.travel.sdk.utils.timeSeconds
+import org.threeten.bp.Instant
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.thread
 
@@ -55,10 +56,12 @@ internal class SynchronizationService constructor(
 	}
 
 	private fun synchronizeWithResult(result: SynchronizationResult) {
-		val since = sharedPreferences.getLong(SINCE_KEY, 0).asDate()!!
-		val changesResponse = apiClient.getChanges(
-			DateTimeHelper.timestampToDatetime(since)
-		).checkedExecute().body()!!
+		val since = sharedPreferences.getLong(SINCE_KEY, 0)
+		val sinceFormatted = Instant.ofEpochMilli(since).atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+
+		val changesResponse = apiClient.getChanges(sinceFormatted)
+			.checkedExecute()
+			.body()!!
 
 		val changedTripIds = mutableListOf<String>()
 		val deletedTripIds = mutableListOf<String>()
@@ -96,7 +99,7 @@ internal class SynchronizationService constructor(
 		tripsSynchronizationResult.sync(changedTripIds, deletedTripIds, result)
 		favoritesSynchronizationService.sync(addedFavoriteIds, deletedFavoriteIds, result)
 
-		val changesFetchedAt = DateTimeHelper.datetimeToTimestamp(changesResponse.server_timestamp).timeSeconds!!
+		val changesFetchedAt = OffsetDateTime.parse(changesResponse.server_timestamp).toInstant().toEpochMilli()
 		sharedPreferences.edit()
 			.putLong(SINCE_KEY, changesFetchedAt)
 			.apply()

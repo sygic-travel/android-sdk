@@ -6,6 +6,8 @@ import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.model.TripItemTransport
 import com.sygic.travel.sdk.trips.model.TripItemTransportMode
 import com.sygic.travel.sdk.trips.model.TripItemTransportWaypoint
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalTime
 
 internal class TripItemTransportConverter {
 	fun fromApi(apiTransport: ApiTripItemResponse.Day.DayItem.Transport?): TripItemTransport? {
@@ -34,8 +36,8 @@ internal class TripItemTransportConverter {
 					else -> null
 				}
 			}),
-			startTime = apiTransport.start_time,
-			duration = apiTransport.duration,
+			startTime = apiTransport.start_time?.let { LocalTime.ofSecondOfDay(it.toLong()) },
+			duration = apiTransport.duration?.let { Duration.ofSeconds(it.toLong()) },
 			note = apiTransport.note,
 			routeId = apiTransport.route_id,
 			waypoints = ArrayList(apiTransport.waypoints.map {
@@ -74,8 +76,8 @@ internal class TripItemTransportConverter {
 					DirectionAvoid.UNPAVED -> ApiTripItemResponse.Day.DayItem.Transport.AVOID_UNPAVED
 				}
 			},
-			start_time = transport.startTime,
-			duration = transport.duration,
+			start_time = transport.startTime?.toSecondOfDay(),
+			duration = transport.duration?.seconds?.toInt(),
 			note = transport.note,
 			route_id = transport.routeId,
 			waypoints = transport.waypoints.map {

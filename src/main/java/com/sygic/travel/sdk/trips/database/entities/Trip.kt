@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 import com.sygic.travel.sdk.trips.model.TripMedia
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 import com.sygic.travel.sdk.trips.model.TripPrivileges
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
 
 @Entity(tableName = "trips")
 internal class Trip {
@@ -29,7 +31,7 @@ internal class Trip {
 	var url: String = ""
 
 	@ColumnInfo(name = "updated_at")
-	var updatedAt: Long = 0
+	var updatedAt: Instant = Instant.now()
 
 	@ColumnInfo(name = "is_deleted")
 	var isDeleted: Boolean = false
@@ -41,7 +43,7 @@ internal class Trip {
 	lateinit var privileges: TripPrivileges
 
 	@ColumnInfo(name = "starts_on")
-	var startsOn: Long? = null
+	var startsOn: LocalDate? = null
 
 	@ColumnInfo(name = "days_count")
 	var daysCount: Int = 0

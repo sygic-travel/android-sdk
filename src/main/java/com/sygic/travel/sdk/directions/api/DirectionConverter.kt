@@ -9,7 +9,9 @@ import com.sygic.travel.sdk.directions.model.DirectionLegTransportType
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.directions.model.DirectionTime
 import com.sygic.travel.sdk.places.model.geo.LatLng
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.OffsetDateTime
 import com.sygic.travel.sdk.directions.api.model.ApiDirectionsResponse.Directions.Direction as ApiDirection
 
 internal class DirectionConverter {
@@ -21,7 +23,7 @@ internal class DirectionConverter {
 				ApiDirection.MODE_PUBLIC_TRANSIT -> DirectionMode.PUBLIC_TRANSPORT
 				else -> return null
 			},
-			duration = direction.duration,
+			duration = Duration.ofSeconds(direction.duration.toLong()),
 			distance = direction.distance,
 			transferCount = direction.transfer_count,
 			routeId = direction.route_id,
@@ -67,10 +69,14 @@ internal class DirectionConverter {
 		}
 	}
 
-	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime {
+	private fun timeFromApi(time: ApiDirection.Legs.DirectionTime): DirectionTime? {
+		if (time.datetime == null || time.datetime_local == null) {
+			return null
+		}
+
 		return DirectionTime(
-			datetimeLocal = DateTimeHelper.datetimeLocalToTimestamp(time.datetime_local),
-			datetime = DateTimeHelper.datetimeToTimestamp(time.datetime)
+			datetimeLocal = LocalDateTime.parse(time.datetime_local),
+			datetime = OffsetDateTime.parse(time.datetime).toInstant()
 		)
 	}
 

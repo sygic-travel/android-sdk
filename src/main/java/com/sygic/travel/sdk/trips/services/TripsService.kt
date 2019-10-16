@@ -11,7 +11,8 @@ import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripInfo
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
 import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
 import com.sygic.travel.sdk.trips.database.entities.TripDay as DbTripDay
 import com.sygic.travel.sdk.trips.database.entities.TripDayItem as DbTripDayItem
@@ -26,7 +27,7 @@ internal class TripsService constructor(
 	private val tripDayItemDbConverter: TripDayItemDbConverter,
 	private val tripApiConverter: TripConverter
 ) {
-	fun getTrips(from: Long?, to: Long?, includeOverlapping: Boolean = true): List<TripInfo> {
+	fun getTrips(from: LocalDate?, to: LocalDate?, includeOverlapping: Boolean = true): List<TripInfo> {
 		val trips = if (includeOverlapping) {
 			when {
 				from != null && to != null -> tripsDao.findByDatesWithOverlapping(from, to)
@@ -62,14 +63,12 @@ internal class TripsService constructor(
 	}
 
 	fun checkEditPrivilege(trip: TripInfo) {
-		if (!trip.privileges.edit) {
-			throw IllegalStateException("You cannot save the trip without the edit privilege.")
-		}
+		check(trip.privileges.edit) { "You cannot save the trip without the edit privilege." }
 	}
 
 	fun saveTripAsChanged(trip: TripInfo) {
 		trip.isChanged = true
-		trip.updatedAt = DateTimeHelper.now()
+		trip.updatedAt = Instant.now()
 		if (tripsDao.exists(trip.id) == null) {
 			createTrip(trip)
 		} else {

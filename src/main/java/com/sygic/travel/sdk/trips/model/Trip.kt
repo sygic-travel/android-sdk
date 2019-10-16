@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.trips.model
 
-import com.sygic.travel.sdk.utils.asDate
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
 import java.util.UUID
 
 /**
@@ -24,13 +25,13 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		fun createFrom(
 			id: String,
 			name: String?,
-			startsOn: Long?,
+			startsOn: LocalDate?,
 			privacyLevel: TripPrivacyLevel,
 			url: String,
 			privileges: TripPrivileges,
 			isDeleted: Boolean,
 			media: TripMedia?,
-			updatedAt: Long,
+			updatedAt: Instant,
 			isChanged: Boolean,
 			daysCount: Int,
 			ownerId: String?,
@@ -38,12 +39,12 @@ class Trip internal constructor(id: String) : TripInfo(id) {
 		): Trip {
 			val trip = Trip(id)
 			trip.name = name
-			trip.startsOn = startsOn?.asDate()
+			trip.startsOn = startsOn
 			trip.privacyLevel = privacyLevel
 			trip.url = url
 			trip.isDeleted = isDeleted
 			trip.media = media
-			trip.updatedAt = updatedAt.asDate()
+			trip.updatedAt = updatedAt
 			trip.isChanged = isChanged
 			trip.daysCount = daysCount
 			trip.ownerId = ownerId

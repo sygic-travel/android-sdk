@@ -1,12 +1,12 @@
 package com.sygic.travel.sdk.directions.model
 
+import org.threeten.bp.Duration
 import java.io.Serializable
 
 @Suppress("unused")
 class Direction(
 	val mode: DirectionMode,
-	/** Duration in seconds */
-	val duration: Int?,
+	val duration: Duration?,
 	/** Distance in meters */
 	val distance: Int?,
 	val transferCount: Int,

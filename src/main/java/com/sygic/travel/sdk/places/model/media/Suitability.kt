@@ -4,5 +4,5 @@ enum class Suitability {
 	PORTRAIT,
 	LANDSCAPE,
 	SQUARE,
-	VIDEO_PREVIEW
+	VIDEO_PREVIEW,
 }

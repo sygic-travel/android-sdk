@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.places.model
 
-import java.util.Date
+import org.threeten.bp.Instant
 
 @Suppress("unused")
 class Review(
@@ -14,6 +14,6 @@ class Review(
 	val votesDown: Int,
 	val votesScore: Int,
 	val currentUserVote: Int,
-	val createdAt: Date,
-	val updatedAt: Date?
+	val createdAt: Instant,
+	val updatedAt: Instant?
 )

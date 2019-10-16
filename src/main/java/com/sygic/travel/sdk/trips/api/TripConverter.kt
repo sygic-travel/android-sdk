@@ -8,7 +8,10 @@ import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.model.TripMedia
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 import com.sygic.travel.sdk.trips.model.TripPrivileges
-import com.sygic.travel.sdk.utils.DateTimeHelper
+import org.threeten.bp.LocalDate
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.format.DateTimeFormatter
 
 @Suppress("DEPRECATION")
 internal class TripConverter constructor(
@@ -21,10 +24,10 @@ internal class TripConverter constructor(
 		localTrip.version = apiTrip.version
 		localTrip.url = apiTrip.url
 		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
-		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!
+		localTrip.updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant()
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
-		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)
+		localTrip.startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) }
 		localTrip.daysCount = apiTrip.day_count
 		localTrip.media = fromApiMedia(apiTrip.media)
 		localTrip.privileges = TripPrivileges(
@@ -42,10 +45,10 @@ internal class TripConverter constructor(
 		localTrip.version = apiTrip.version
 		localTrip.url = apiTrip.url
 		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
-		localTrip.updatedAt = DateTimeHelper.datetimeToTimestamp(apiTrip.updated_at)!!
+		localTrip.updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant()
 		localTrip.isDeleted = apiTrip.is_deleted
 		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
-		localTrip.startsOn = DateTimeHelper.dateToTimestamp(apiTrip.starts_on)
+		localTrip.startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) }
 		localTrip.daysCount = apiTrip.day_count
 		localTrip.media = fromApiMedia(apiTrip.media)
 		localTrip.destinations = ArrayList(apiTrip.destinations)
@@ -62,14 +65,14 @@ internal class TripConverter constructor(
 		return ApiTripItemRequest(
 			name = localTrip.name,
 			base_version = localTrip.version,
-			updated_at = DateTimeHelper.timestampToDatetime(localTrip.updatedAt!!)!!,
+			updated_at = localTrip.updatedAt!!.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
 			is_deleted = localTrip.isDeleted,
 			privacy_level = when (localTrip.privacyLevel) {
 				TripPrivacyLevel.PUBLIC -> ApiTripListItemResponse.PRIVACY_PUBLIC
 				TripPrivacyLevel.PRIVATE -> ApiTripListItemResponse.PRIVACY_PRIVATE
 				TripPrivacyLevel.SHAREABLE -> ApiTripListItemResponse.PRIVACY_SHAREABLE
 			},
-			starts_on = DateTimeHelper.timestampToDate(localTrip.startsOn),
+			starts_on = localTrip.startsOn?.format(DateTimeFormatter.ISO_LOCAL_DATE),
 			destinations = localTrip.destinations,
 			days = localTrip.days.map { tripDayConverter.toApi(it) }
 		)

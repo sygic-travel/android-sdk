@@ -7,8 +7,8 @@ import java.io.Serializable
 class DirectionLegStop(
 	val name: String?,
 	val location: LatLng,
-	val arrivalAt: DirectionTime,
-	val departureAt: DirectionTime,
-	val plannedArrivalAt: DirectionTime,
-	val plannedDepartureAt: DirectionTime
+	val arrivalAt: DirectionTime?,
+	val departureAt: DirectionTime?,
+	val plannedArrivalAt: DirectionTime?,
+	val plannedDepartureAt: DirectionTime?
 ) : Serializable

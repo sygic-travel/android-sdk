@@ -11,7 +11,6 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Test
 import retrofit2.Response
-import java.util.Date
 
 class SessionServiceTest {
 	@Test

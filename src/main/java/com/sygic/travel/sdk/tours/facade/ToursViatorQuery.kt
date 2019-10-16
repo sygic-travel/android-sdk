@@ -5,7 +5,8 @@ package com.sygic.travel.sdk.tours.facade
  * To see what the parameters mean check the
  * [API Documentation](http://docs.sygictravelapi.com/1.0/#section-tours).
  */
-data class ToursViatorQuery(
+@Suppress("unused")
+data class ToursViatorQuery constructor(
 	var parentPlaceId: String,
 	var page: Int? = null,
 	var sortBy: SortBy? = null,

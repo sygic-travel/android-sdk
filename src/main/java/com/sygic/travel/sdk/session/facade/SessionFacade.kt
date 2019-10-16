@@ -64,8 +64,6 @@ class SessionFacade internal constructor(
 	}
 
 	private fun checkEmptySession() {
-		if (getSession() != null) {
-			throw IllegalStateException("Sygic Travel SDK has already an initialized session. Sign out the session first.")
-		}
+		check(getSession() == null) { "Sygic Travel SDK has already an initialized session. Sign out the session first." }
 	}
 }

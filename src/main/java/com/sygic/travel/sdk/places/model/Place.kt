@@ -1,7 +1,8 @@
 package com.sygic.travel.sdk.places.model
 
-import com.sygic.travel.sdk.places.model.geo.LatLngBounds
 import com.sygic.travel.sdk.places.model.geo.LatLng
+import com.sygic.travel.sdk.places.model.geo.LatLngBounds
+import org.threeten.bp.Duration
 
 @Suppress("unused")
 open class Place constructor(
@@ -24,7 +25,7 @@ open class Place constructor(
 	val starRating: Float?,
 	val starRatingUnofficial: Float?,
 	val customerRating: Float?,
-	val duration: Int?,
+	val duration: Duration?,
 	val ownerId: String?,
 	val isDeleted: Boolean
 ) {
