@@ -67,32 +67,12 @@ internal class TripsService constructor(
 		check(trip.privileges.edit) { "You cannot save the trip without the edit privilege." }
 	}
 
-	fun saveTripAsChanged(trip: TripInfo): TripInfo {
-		val newTrip = when (trip) {
-			is Trip -> {
-				trip.copy(
-					isChanged = true,
-					updatedAt = Instant.now()
-				)
-			}
-			is TripBase -> {
-				trip.copy(
-					isChanged = true,
-					updatedAt = Instant.now()
-				)
-			}
-			else -> {
-				throw IllegalStateException()
-			}
-		}
-
-		if (tripsDao.exists(newTrip.id) == null) {
-			createTrip(newTrip)
+	fun saveTripAsChanged(trip: TripInfo) {
+		if (tripsDao.exists(trip.id) == null) {
+			createTrip(trip)
 		} else {
-			updateTrip(newTrip)
+			updateTrip(trip)
 		}
-
-		return newTrip
 	}
 
 	fun createTrip(trip: TripInfo) {

@@ -1,9 +1,11 @@
 package com.sygic.travel.sdk.trips.facades
 
 import com.sygic.travel.sdk.trips.model.Trip
+import com.sygic.travel.sdk.trips.model.TripBase
 import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.services.TripsService
 import com.sygic.travel.sdk.utils.checkNotRunningOnMainThread
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 
 /**
@@ -46,10 +48,26 @@ class TripsFacade internal constructor(
 		return tripsService.getTrip(id)
 	}
 
-	fun saveTrip(trip: TripInfo): TripInfo {
+	fun saveTrip(trip: TripBase): TripBase {
 		checkNotRunningOnMainThread()
 		tripsService.checkEditPrivilege(trip)
-		return tripsService.saveTripAsChanged(trip)
+		val changedTrip = trip.copy(
+			isChanged = true,
+			updatedAt = Instant.now()
+		)
+		tripsService.saveTripAsChanged(changedTrip)
+		return changedTrip
+	}
+
+	fun saveTrip(trip: Trip): Trip {
+		checkNotRunningOnMainThread()
+		tripsService.checkEditPrivilege(trip)
+		val changedTrip = trip.copy(
+			isChanged = true,
+			updatedAt = Instant.now()
+		)
+		tripsService.saveTripAsChanged(changedTrip)
+		return changedTrip
 	}
 
 	/**
