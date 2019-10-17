@@ -34,6 +34,17 @@ data class Trip constructor(
 		return days.map { it.getPlaceIds() }.flatten().toSet()
 	}
 
+	fun withDays(lambda: (days: MutableList<TripDay>) -> List<TripDay>): Trip {
+		val days = days.toMutableList()
+		return copy(days = lambda.invoke(days).toList())
+	}
+
+	fun withItinerary(dayIndex: Int, lambda: (itinerary: MutableList<TripDayItem>) -> List<TripDayItem>): Trip {
+		val days = days.toMutableList()
+		days[dayIndex] = days[dayIndex].withItinerary(lambda)
+		return copy(days = days)
+	}
+
 	internal fun getLocalPlaceIds(): List<String> {
 		return getPlaceIds().filter { it.startsWith("*") }
 	}
