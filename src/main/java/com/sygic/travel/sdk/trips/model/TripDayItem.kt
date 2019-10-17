@@ -4,9 +4,9 @@ import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
 
 data class TripDayItem constructor(
-	var placeId: String,
-	var startTime: LocalTime? = null,
-	var duration: Duration? = null,
-	var note: String? = null,
-	var transportFromPrevious: TripItemTransport? = null
+	val placeId: String,
+	val startTime: LocalTime? = null,
+	val duration: Duration? = null,
+	val note: String? = null,
+	val transportFromPrevious: TripItemTransport? = null
 )

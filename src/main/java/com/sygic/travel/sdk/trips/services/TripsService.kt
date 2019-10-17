@@ -144,45 +144,32 @@ internal class TripsService constructor(
 		tripsDao.deleteAll()
 	}
 
+	fun fetchTrip(id: String): Trip? {
+		val apiTrip = apiClient.getTrip(id).checkedExecute().body()!!.data!!.trip
+		return tripApiConverter.fromApi(apiTrip)
+	}
+
 	/**
 	 * Connects the loaded date together.
-	 * Days has to be sorted ASC by their day index.
-	 * Items has to be sorted ASC by their day index.
+	 * Days has to be ASC-sorted by their day index.
+	 * Items has to be ASC-sorted by their day index.
 	 */
 	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
 		val trips = dbTrips.map { tripDbConverter.fromAsTrip(it) }
 		val tripsMap = trips.associateBy { it.id }
 
-		dbDays
+		val tripDayItems = dbItems
 			.groupBy { it.tripId }
-			.forEach {
-				val trip = tripsMap[it.key]!!
-				trip.days = it.value.map {
-					tripDayDbConverter.from(it)
-				}
-			}
+			.mapValues { it.value.groupBy { tripDayItem -> tripDayItem.dayIndex } }
 
-		dbItems
-			.groupBy { it.tripId }
-			.mapValues { it.value.groupBy { it.dayIndex } }
-			.forEach {
-				val trip = tripsMap[it.key]!!
-				it.value.forEach {
-					val day = trip.days.getOrNull(it.key)
-					// workaround: we had not correctly deleted trip_day_items of removed days
-					if (day != null) {
-						day.itinerary = it.value.map {
-							tripDayItemDbConverter.from(it)
-						}
-					}
-				}
+		for ((tripId, dbTripDays) in dbDays.groupBy { it.tripId }) {
+			val days = dbTripDays.map { dbTripDay ->
+				val dbTripDayItems = tripDayItems.getValue(tripId).getValue(dbTripDay.dayIndex)
+				tripDayDbConverter.from(dbTripDay, dbTripDayItems)
 			}
+			tripsMap.getValue(tripId).days = days
+		}
 
 		return trips
-	}
-
-	fun fetchTrip(id: String): Trip? {
-		val apiTrip = apiClient.getTrip(id).checkedExecute().body()!!.data!!.trip
-		return tripApiConverter.fromApi(apiTrip)
 	}
 }

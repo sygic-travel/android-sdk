@@ -60,7 +60,7 @@ internal val tripsModule = module {
 		TripDbConverter()
 	}
 	single {
-		TripDayDbConverter()
+		TripDayDbConverter(get<TripDayItemDbConverter>())
 	}
 	single {
 		TripDayItemDbConverter(get<TripDayItemTransportDbConverter>())

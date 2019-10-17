@@ -178,10 +178,8 @@ internal class TripsSynchronizationService constructor(
 		if (trip.getLocalPlaceIds().isEmpty()) return
 
 		Timber.e("Removing local places from trip ${trip.id} to allow synchronization.")
-		trip.days.forEach { tripDay ->
-			tripDay.itinerary = tripDay.itinerary.toMutableList().apply {
-				removeAll { it.placeId.startsWith("*") }
-			}
+		trip.days = trip.days.map { tripDay ->
+			tripDay.copy(itinerary = tripDay.itinerary.filter { it.placeId.startsWith("*") })
 		}
 	}
 }
