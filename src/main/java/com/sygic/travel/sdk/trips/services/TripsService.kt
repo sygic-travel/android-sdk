@@ -10,6 +10,7 @@ import com.sygic.travel.sdk.trips.database.daos.TripDayItemsDao
 import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.model.Trip
+import com.sygic.travel.sdk.trips.model.TripBase
 import com.sygic.travel.sdk.trips.model.TripInfo
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
@@ -66,14 +67,32 @@ internal class TripsService constructor(
 		check(trip.privileges.edit) { "You cannot save the trip without the edit privilege." }
 	}
 
-	fun saveTripAsChanged(trip: TripInfo) {
-		trip.isChanged = true
-		trip.updatedAt = Instant.now()
-		if (tripsDao.exists(trip.id) == null) {
-			createTrip(trip)
-		} else {
-			updateTrip(trip)
+	fun saveTripAsChanged(trip: TripInfo): TripInfo {
+		val newTrip = when (trip) {
+			is Trip -> {
+				trip.copy(
+					isChanged = true,
+					updatedAt = Instant.now()
+				)
+			}
+			is TripBase -> {
+				trip.copy(
+					isChanged = true,
+					updatedAt = Instant.now()
+				)
+			}
+			else -> {
+				throw IllegalStateException()
+			}
 		}
+
+		if (tripsDao.exists(newTrip.id) == null) {
+			createTrip(newTrip)
+		} else {
+			updateTrip(newTrip)
+		}
+
+		return newTrip
 	}
 
 	fun createTrip(trip: TripInfo) {
@@ -135,7 +154,6 @@ internal class TripsService constructor(
 
 	fun replaceTripId(trip: Trip, newTripId: String) {
 		tripsDao.replaceTripId(trip.id, newTripId)
-		trip.id = newTripId
 	}
 
 	fun clearUserData() {
@@ -154,22 +172,19 @@ internal class TripsService constructor(
 	 * Days has to be ASC-sorted by their day index.
 	 * Items has to be ASC-sorted by their day index.
 	 */
-	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
-		val trips = dbTrips.map { tripDbConverter.fromAsTrip(it) }
-		val tripsMap = trips.associateBy { it.id }
+	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbDayItems: List<DbTripDayItem>): List<Trip> {
+		val dbDaysGrouped = dbDays.groupBy { it.tripId }
 
-		val tripDayItems = dbItems
+		val dbDayItemsGrouped = dbDayItems
 			.groupBy { it.tripId }
 			.mapValues { it.value.groupBy { tripDayItem -> tripDayItem.dayIndex } }
 
-		for ((tripId, dbTripDays) in dbDays.groupBy { it.tripId }) {
-			val days = dbTripDays.map { dbTripDay ->
-				val dbTripDayItems = tripDayItems.getValue(tripId).getValue(dbTripDay.dayIndex)
-				tripDayDbConverter.from(dbTripDay, dbTripDayItems)
-			}
-			tripsMap.getValue(tripId).days = days
+		return dbTrips.map { dbTrip ->
+			tripDbConverter.fromAsTrip(
+				dbTrip = dbTrip,
+				dbDays = dbDaysGrouped[dbTrip.id] ?: emptyList(),
+				dbDayItems = dbDayItemsGrouped[dbTrip.id] ?: emptyMap()
+			)
 		}
-
-		return trips
 	}
 }

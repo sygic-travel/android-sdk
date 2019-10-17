@@ -46,7 +46,7 @@ class TripsFacade internal constructor(
 		return tripsService.getTrip(id)
 	}
 
-	fun saveTrip(trip: TripInfo) {
+	fun saveTrip(trip: TripInfo): TripInfo {
 		checkNotRunningOnMainThread()
 		tripsService.checkEditPrivilege(trip)
 		return tripsService.saveTripAsChanged(trip)
