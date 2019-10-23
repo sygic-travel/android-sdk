@@ -6,9 +6,9 @@ import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-internal class HeadersInterceptor(
-	private val authStorageService: () -> AuthStorageService,
-	private val apiKey: String,
+internal class HeadersInterceptor constructor(
+	private val authStorageService: (() -> AuthStorageService)?,
+	private val apiKey: String?,
 	private val userAgent: String
 ) : Interceptor {
 	@Throws(IOException::class)
@@ -16,12 +16,15 @@ internal class HeadersInterceptor(
 		val original = chain.request()
 		val requestBuilder = original.newBuilder()
 			.addHeader("Content-Type", "application/json")
-			.addHeader("x-api-key", apiKey)
 			.addHeader("User-Agent", userAgent)
 			.method(original.method, original.body)
 
+		if (apiKey != null) {
+			requestBuilder.addHeader("x-api-key", apiKey)
+		}
+
 		if (original.header("Authorization") == "[toIntercept]") {
-			val accessToken = authStorageService().getUserSession()
+			val accessToken = authStorageService!!().getUserSession()
 				?: throw IllegalStateException("The request requires an active user session.")
 
 			requestBuilder

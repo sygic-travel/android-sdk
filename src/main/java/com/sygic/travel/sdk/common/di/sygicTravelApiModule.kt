@@ -21,13 +21,6 @@ import java.util.concurrent.TimeUnit
 
 internal val sygicTravelApiModule = module {
 	single {
-		HeadersInterceptor(
-			authStorageService = { get<AuthStorageService>() },
-			apiKey = getProperty("apiKey"),
-			userAgent = UserAgentUtil.createUserAgent(get<Context>())
-		)
-	}
-	single {
 		LocaleInterceptor(getProperty("defaultLanguage"))
 	}
 	single {
@@ -35,7 +28,11 @@ internal val sygicTravelApiModule = module {
 	}
 	single(named("sygicTravelHttpClient")) {
 		val builder = OkHttpClient.Builder()
-			.addInterceptor(get<HeadersInterceptor>())
+			.addInterceptor(HeadersInterceptor(
+				authStorageService = { get<AuthStorageService>() },
+				apiKey = getProperty("apiKey"),
+				userAgent = UserAgentUtil.createUserAgent(get<Context>())
+			))
 			.addInterceptor(get<LocaleInterceptor>())
 			.addInterceptor(get<TimeoutInterceptor>())
 			.addInterceptor(get<HttpLoggingInterceptor>())

@@ -6,7 +6,7 @@ import okhttp3.Interceptor.Chain
 import okhttp3.Response
 import java.io.IOException
 
-internal class LocaleInterceptor(
+internal class LocaleInterceptor constructor(
 	language: Language
 ) : Interceptor {
 	companion object {
