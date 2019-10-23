@@ -1,4 +1,4 @@
-package com.sygic.travel.sdk.places.geo
+package com.sygic.travel.sdk.places.model.geo
 
 import com.sygic.travel.sdk.places.model.geo.LatLng
 import org.junit.Assert.assertEquals
