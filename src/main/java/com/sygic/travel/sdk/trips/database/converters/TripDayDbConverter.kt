@@ -3,11 +3,15 @@ package com.sygic.travel.sdk.trips.database.converters
 import com.sygic.travel.sdk.trips.model.Trip
 import com.sygic.travel.sdk.trips.model.TripDay
 import com.sygic.travel.sdk.trips.database.entities.TripDay as DbTripDay
+import com.sygic.travel.sdk.trips.database.entities.TripDayItem as DbTripDayItem
 
-internal class TripDayDbConverter {
-	fun from(dbDay: DbTripDay): TripDay {
+internal class TripDayDbConverter constructor(
+	private val tripDayItemDbConverter: TripDayItemDbConverter
+) {
+	fun from(dbDay: DbTripDay, items: List<DbTripDayItem>): TripDay {
 		return TripDay(
-			note = dbDay.note
+			note = dbDay.note,
+			itinerary = items.map { tripDayItemDbConverter.from(it) }
 		)
 	}
 

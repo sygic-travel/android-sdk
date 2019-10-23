@@ -83,23 +83,24 @@ internal class TripsSynchronizationService constructor(
 		syncResult.changedTripIds.add(localTrip.id)
 	}
 
-	private fun createServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
-		Timber.i("Creating trip ${localTrip.id}")
+	private fun createServerTrip(_localTrip: Trip, syncResult: SynchronizationResult) {
+		Timber.i("Creating trip ${_localTrip.id}")
 
-		sanitizeTrip(localTrip)
+		val localTrip = sanitizeTrip(_localTrip)
 		val createResponse = apiClient.createTrip(tripConverter.toApi(localTrip)).checkedExecute()
 
 		val trip = createResponse.body()!!.data!!.trip
 		syncResult.createdTripIdsMapping[localTrip.id] = trip.id
-		tripsService.replaceTripId(localTrip, trip.id)
+		val newTripId = trip.id
+		tripsService.replaceTripId(localTrip, newTripId)
 		tripsService.updateTrip(tripConverter.fromApi(trip))
-		tripIdUpdateHandler?.invoke(localTrip.id, trip.id)
+		tripIdUpdateHandler?.invoke(newTripId, trip.id)
 	}
 
-	private fun updateServerTrip(localTrip: Trip, syncResult: SynchronizationResult) {
-		Timber.i("Updating trip ${localTrip.id}")
+	private fun updateServerTrip(_localTrip: Trip, syncResult: SynchronizationResult) {
+		Timber.i("Updating trip ${_localTrip.id}")
 
-		sanitizeTrip(localTrip)
+		val localTrip = sanitizeTrip(_localTrip)
 		val updateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).execute()
 
 		if (updateResponse.code() == 404) {
@@ -147,10 +148,10 @@ internal class TripsSynchronizationService constructor(
 						return
 					}
 					TripConflictResolution.USE_LOCAL_VERSION -> {
-						localTrip.updatedAt = Instant.now()
+						val forcedLocalTrip = localTrip.copy(updatedAt = Instant.now())
 						// if request fails, user will not have to do the decision again
-						tripsService.updateTrip(localTrip)
-						val repeatedUpdateResponse = apiClient.updateTrip(localTrip.id, tripConverter.toApi(localTrip)).checkedExecute()
+						tripsService.updateTrip(forcedLocalTrip)
+						val repeatedUpdateResponse = apiClient.updateTrip(forcedLocalTrip.id, tripConverter.toApi(forcedLocalTrip)).checkedExecute()
 						if (repeatedUpdateResponse.body()!!.data!!.conflict_resolution != ApiUpdateTripResponse.CONFLICT_RESOLUTION_IGNORED) {
 							// update may result in ignored change, so the user's choice to keep local version cannot be
 							// replaced by server version; the conflict will be resolved in the next synchronization run
@@ -174,14 +175,16 @@ internal class TripsSynchronizationService constructor(
 		}
 	}
 
-	private fun sanitizeTrip(trip: Trip) {
-		if (trip.getLocalPlaceIds().isEmpty()) return
+	private fun sanitizeTrip(trip: Trip): Trip {
+		if (trip.getLocalPlaceIds().isEmpty()) {
+			return trip
+		}
 
 		Timber.e("Removing local places from trip ${trip.id} to allow synchronization.")
-		trip.days.forEach { tripDay ->
-			tripDay.itinerary = tripDay.itinerary.toMutableList().apply {
-				removeAll { it.placeId.startsWith("*") }
+		return trip.copy(
+			days = trip.days.map { tripDay ->
+				tripDay.copy(itinerary = tripDay.itinerary.filter { it.placeId.startsWith("*") })
 			}
-		}
+		)
 	}
 }

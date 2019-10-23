@@ -1,39 +1,56 @@
 package com.sygic.travel.sdk.trips.database.converters
 
 import com.sygic.travel.sdk.trips.model.Trip
+import com.sygic.travel.sdk.trips.model.TripBase
 import com.sygic.travel.sdk.trips.model.TripInfo
 import com.sygic.travel.sdk.trips.database.entities.Trip as DbTrip
+import com.sygic.travel.sdk.trips.database.entities.TripDay as DbTripDay
+import com.sygic.travel.sdk.trips.database.entities.TripDayItem as DbTripDayItem
 
 @Suppress("DEPRECATION")
-internal class TripDbConverter {
-	fun fromAsTrip(dbTrip: DbTrip): Trip {
-		val trip = Trip(dbTrip.id)
-		from(dbTrip, trip)
-		return trip
+internal class TripDbConverter constructor(
+	private val tripDayDbConverter: TripDayDbConverter
+) {
+	fun fromAsTrip(dbTrip: DbTrip, dbDays: List<DbTripDay>, dbDayItems: Map<Int, List<DbTripDayItem>>): Trip {
+		return Trip(
+			id = dbTrip.id,
+			name = dbTrip.name,
+			startsOn = dbTrip.startsOn,
+			privacyLevel = dbTrip.privacyLevel,
+			url = dbTrip.url,
+			privileges = dbTrip.privileges,
+			isUserSubscribed = dbTrip.isUserSubscribed,
+			isDeleted = dbTrip.isDeleted,
+			media = dbTrip.media,
+			updatedAt = dbTrip.updatedAt,
+			isChanged = dbTrip.isChanged,
+			ownerId = dbTrip.ownerId,
+			version = dbTrip.version,
+			destinations = dbTrip.destinations,
+			days = dbDays.mapIndexed { index, dbDay ->
+				tripDayDbConverter.from(dbDay, dbDayItems[index] ?: emptyList())
+			}
+		)
 	}
 
-	fun fromAsTripInfo(dbTrip: DbTrip): TripInfo {
-		val trip = TripInfo(dbTrip.id)
-		from(dbTrip, trip)
-		return trip
-	}
-
-	private fun from(dbTrip: DbTrip, trip: TripInfo) {
-		trip.name = dbTrip.name
-		trip.startsOn = dbTrip.startsOn
-		trip.privacyLevel = dbTrip.privacyLevel
-		trip.url = dbTrip.url
-		trip.isUserSubscribed = dbTrip.isUserSubscribed
-		trip.isDeleted = dbTrip.isDeleted
-		trip.media = dbTrip.media
-		trip.updatedAt = dbTrip.updatedAt
-		trip.isChanged = dbTrip.isChanged
-		trip.daysCount = dbTrip.daysCount
-		trip.destinations = dbTrip.destinations
-		trip.ownerId = dbTrip.ownerId
-		trip.version = dbTrip.version
-
-		trip.privileges = dbTrip.privileges
+	fun fromAsTripInfo(dbTrip: DbTrip): TripBase {
+		return TripBase(
+			id = dbTrip.id,
+			name = dbTrip.name,
+			startsOn = dbTrip.startsOn,
+			privacyLevel = dbTrip.privacyLevel,
+			url = dbTrip.url,
+			privileges = dbTrip.privileges,
+			isUserSubscribed = dbTrip.isUserSubscribed,
+			isDeleted = dbTrip.isDeleted,
+			media = dbTrip.media,
+			updatedAt = dbTrip.updatedAt,
+			isChanged = dbTrip.isChanged,
+			ownerId = dbTrip.ownerId,
+			version = dbTrip.version,
+			daysCount = dbTrip.daysCount,
+			destinations = dbTrip.destinations
+		)
 	}
 
 	fun to(trip: TripInfo): DbTrip {
@@ -50,7 +67,7 @@ internal class TripDbConverter {
 		dbTrip.updatedAt = trip.updatedAt!!
 		dbTrip.isChanged = trip.isChanged
 		dbTrip.daysCount = trip.daysCount
-		dbTrip.destinations = trip.destinations
+		dbTrip.destinations = ArrayList(trip.destinations)
 		dbTrip.ownerId = trip.ownerId
 		dbTrip.version = trip.version
 		return dbTrip

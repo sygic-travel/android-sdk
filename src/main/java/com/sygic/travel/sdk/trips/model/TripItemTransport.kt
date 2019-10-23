@@ -5,11 +5,11 @@ import org.threeten.bp.Duration
 import org.threeten.bp.LocalTime
 
 data class TripItemTransport(
-	var mode: TripItemTransportMode,
-	var avoid: List<DirectionAvoid> = emptyList(),
-	var startTime: LocalTime? = null,
-	var duration: Duration? = null,
-	var note: String? = null,
-	var routeId: String? = null,
-	var waypoints: List<TripItemTransportWaypoint> = emptyList()
+	val mode: TripItemTransportMode,
+	val avoid: List<DirectionAvoid> = emptyList(),
+	val startTime: LocalTime? = null,
+	val duration: Duration? = null,
+	val note: String? = null,
+	val routeId: String? = null,
+	val waypoints: List<TripItemTransportWaypoint> = emptyList()
 )

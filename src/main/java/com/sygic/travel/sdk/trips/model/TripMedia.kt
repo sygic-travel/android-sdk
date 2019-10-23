@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.model
 
-class TripMedia(
+data class TripMedia constructor(
 	val squareMediaId: String,
 	val squareUrlTemplate: String,
 	val landscapeMediaId: String,

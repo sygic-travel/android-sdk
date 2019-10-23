@@ -1,6 +1,6 @@
 package com.sygic.travel.sdk.trips.model
 
-class TripPrivileges(
+data class TripPrivileges constructor(
 	val edit: Boolean,
 	val manage: Boolean,
 	val delete: Boolean

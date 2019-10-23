@@ -10,6 +10,7 @@ import com.sygic.travel.sdk.trips.database.daos.TripDayItemsDao
 import com.sygic.travel.sdk.trips.database.daos.TripDaysDao
 import com.sygic.travel.sdk.trips.database.daos.TripsDao
 import com.sygic.travel.sdk.trips.model.Trip
+import com.sygic.travel.sdk.trips.model.TripBase
 import com.sygic.travel.sdk.trips.model.TripInfo
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
@@ -67,8 +68,6 @@ internal class TripsService constructor(
 	}
 
 	fun saveTripAsChanged(trip: TripInfo) {
-		trip.isChanged = true
-		trip.updatedAt = Instant.now()
 		if (tripsDao.exists(trip.id) == null) {
 			createTrip(trip)
 		} else {
@@ -135,7 +134,6 @@ internal class TripsService constructor(
 
 	fun replaceTripId(trip: Trip, newTripId: String) {
 		tripsDao.replaceTripId(trip.id, newTripId)
-		trip.id = newTripId
 	}
 
 	fun clearUserData() {
@@ -144,45 +142,29 @@ internal class TripsService constructor(
 		tripsDao.deleteAll()
 	}
 
-	/**
-	 * Connects the loaded date together.
-	 * Days has to be sorted ASC by their day index.
-	 * Items has to be sorted ASC by their day index.
-	 */
-	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbItems: List<DbTripDayItem>): List<Trip> {
-		val trips = dbTrips.map { tripDbConverter.fromAsTrip(it) }
-		val tripsMap = trips.associateBy { it.id }
-
-		dbDays
-			.groupBy { it.tripId }
-			.forEach {
-				val trip = tripsMap[it.key]!!
-				trip.days = it.value.map {
-					tripDayDbConverter.from(it)
-				}
-			}
-
-		dbItems
-			.groupBy { it.tripId }
-			.mapValues { it.value.groupBy { it.dayIndex } }
-			.forEach {
-				val trip = tripsMap[it.key]!!
-				it.value.forEach {
-					val day = trip.days.getOrNull(it.key)
-					// workaround: we had not correctly deleted trip_day_items of removed days
-					if (day != null) {
-						day.itinerary = it.value.map {
-							tripDayItemDbConverter.from(it)
-						}
-					}
-				}
-			}
-
-		return trips
-	}
-
 	fun fetchTrip(id: String): Trip? {
 		val apiTrip = apiClient.getTrip(id).checkedExecute().body()!!.data!!.trip
 		return tripApiConverter.fromApi(apiTrip)
+	}
+
+	/**
+	 * Connects the loaded date together.
+	 * Days has to be ASC-sorted by their day index.
+	 * Items has to be ASC-sorted by their day index.
+	 */
+	private fun classify(dbTrips: List<DbTrip>, dbDays: List<DbTripDay>, dbDayItems: List<DbTripDayItem>): List<Trip> {
+		val dbDaysGrouped = dbDays.groupBy { it.tripId }
+
+		val dbDayItemsGrouped = dbDayItems
+			.groupBy { it.tripId }
+			.mapValues { it.value.groupBy { tripDayItem -> tripDayItem.dayIndex } }
+
+		return dbTrips.map { dbTrip ->
+			tripDbConverter.fromAsTrip(
+				dbTrip = dbTrip,
+				dbDays = dbDaysGrouped[dbTrip.id] ?: emptyList(),
+				dbDayItems = dbDayItemsGrouped[dbTrip.id] ?: emptyMap()
+			)
+		}
 	}
 }

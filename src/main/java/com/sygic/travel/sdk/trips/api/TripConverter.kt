@@ -4,7 +4,7 @@ import com.sygic.travel.sdk.trips.api.model.ApiTripItemRequest
 import com.sygic.travel.sdk.trips.api.model.ApiTripItemResponse
 import com.sygic.travel.sdk.trips.api.model.ApiTripListItemResponse
 import com.sygic.travel.sdk.trips.model.Trip
-import com.sygic.travel.sdk.trips.model.TripInfo
+import com.sygic.travel.sdk.trips.model.TripBase
 import com.sygic.travel.sdk.trips.model.TripMedia
 import com.sygic.travel.sdk.trips.model.TripPrivacyLevel
 import com.sygic.travel.sdk.trips.model.TripPrivileges
@@ -17,48 +17,51 @@ import org.threeten.bp.format.DateTimeFormatter
 internal class TripConverter constructor(
 	private val tripDayConverter: TripDayConverter
 ) {
-	fun fromApi(apiTrip: ApiTripListItemResponse): TripInfo {
-		val localTrip = TripInfo(apiTrip.id)
-		localTrip.ownerId = apiTrip.owner_id
-		localTrip.name = apiTrip.name
-		localTrip.version = apiTrip.version
-		localTrip.url = apiTrip.url
-		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
-		localTrip.updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant()
-		localTrip.isDeleted = apiTrip.is_deleted
-		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
-		localTrip.startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) }
-		localTrip.daysCount = apiTrip.day_count
-		localTrip.media = fromApiMedia(apiTrip.media)
-		localTrip.privileges = TripPrivileges(
-			edit = apiTrip.privileges.edit,
-			manage = apiTrip.privileges.manage,
-			delete = apiTrip.privileges.delete
+	fun fromApi(apiTrip: ApiTripListItemResponse): TripBase {
+		return TripBase(
+			id = apiTrip.id,
+			name = apiTrip.name,
+			startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) },
+			privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level),
+			url = apiTrip.url,
+			privileges = TripPrivileges(
+				edit = apiTrip.privileges.edit,
+				manage = apiTrip.privileges.manage,
+				delete = apiTrip.privileges.delete
+			),
+			isUserSubscribed = apiTrip.user_is_subscribed,
+			isDeleted = apiTrip.is_deleted,
+			media = fromApiMedia(apiTrip.media),
+			updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant(),
+			isChanged = false,
+			ownerId = apiTrip.owner_id,
+			version = apiTrip.version,
+			daysCount = apiTrip.day_count
 		)
-		return localTrip
 	}
 
 	fun fromApi(apiTrip: ApiTripItemResponse): Trip {
-		val localTrip = Trip(apiTrip.id)
-		localTrip.ownerId = apiTrip.owner_id
-		localTrip.name = apiTrip.name
-		localTrip.version = apiTrip.version
-		localTrip.url = apiTrip.url
-		localTrip.isUserSubscribed = apiTrip.user_is_subscribed
-		localTrip.updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant()
-		localTrip.isDeleted = apiTrip.is_deleted
-		localTrip.privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level)
-		localTrip.startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) }
-		localTrip.daysCount = apiTrip.day_count
-		localTrip.media = fromApiMedia(apiTrip.media)
-		localTrip.destinations = ArrayList(apiTrip.destinations)
-		localTrip.days = apiTrip.days.map { tripDayConverter.fromApi(it) }
-		localTrip.privileges = TripPrivileges(
-			edit = apiTrip.privileges.edit,
-			manage = apiTrip.privileges.manage,
-			delete = apiTrip.privileges.delete
+		return Trip(
+			id = apiTrip.id,
+			name = apiTrip.name,
+			startsOn = apiTrip.starts_on?.let { LocalDate.parse(it) },
+			privacyLevel = fromApiPrivacyLevel(apiTrip.privacy_level),
+			url = apiTrip.url,
+			privileges = TripPrivileges(
+				edit = apiTrip.privileges.edit,
+				manage = apiTrip.privileges.manage,
+				delete = apiTrip.privileges.delete
+			),
+			isUserSubscribed = apiTrip.user_is_subscribed,
+			isDeleted = apiTrip.is_deleted,
+			media = fromApiMedia(apiTrip.media),
+			updatedAt = OffsetDateTime.parse(apiTrip.updated_at).toInstant(),
+			isChanged = false,
+			ownerId = apiTrip.owner_id,
+			version = apiTrip.version,
+			destinations = ArrayList(apiTrip.destinations),
+			days = apiTrip.days.map { tripDayConverter.fromApi(it) }
 		)
-		return localTrip
 	}
 
 	fun toApi(localTrip: Trip): ApiTripItemRequest {
