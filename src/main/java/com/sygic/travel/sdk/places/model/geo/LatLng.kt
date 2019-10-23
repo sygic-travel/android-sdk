@@ -1,10 +1,13 @@
 package com.sygic.travel.sdk.places.model.geo
 
-import android.location.Location
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 import java.math.RoundingMode
+import kotlin.math.PI
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.sqrt
 
 @Parcelize
 data class LatLng(
@@ -12,18 +15,18 @@ data class LatLng(
 	val lng: Double
 ) : Parcelable, Serializable {
 	/**
-	 * Returns the approximate shortest distance to the point in meters. Uses WGS84 ellipsoid.
+	 * Returns the approximate shortest distance to the point in meters. Uses Haversine_formula.
 	 */
-	fun distanceTo(point: LatLng): Float {
-		val results = floatArrayOf(0f, 0f, 0f)
-		Location.distanceBetween(
-			lat,
-			lng,
-			point.lat,
-			point.lng,
-			results
-		)
-		return results[0]
+	fun distanceTo(point: LatLng): Double {
+		// see https://stackoverflow.com/a/21623206/859688
+		//     https://en.wikipedia.org/wiki/Haversine_formula
+		val lat1 = lat
+		val lon1 = lng
+		val lat2 = point.lat
+		val lon2 = point.lng
+		val p = PI / 180
+		val a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2
+		return 12742 * asin(sqrt(a))
 	}
 
 	fun withPrecision(decimals: Int = 6): LatLng {
