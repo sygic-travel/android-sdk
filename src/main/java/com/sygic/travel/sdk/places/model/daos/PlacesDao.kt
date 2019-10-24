@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 
 @Dao
-abstract class PlacesDao {
+internal abstract class PlacesDao {
 	@Transaction
 	open fun replacePlaceId(oldPlaceId: String, newPlaceId: String) {
 		replacePlaceIdInTrips(oldPlaceId, newPlaceId)
