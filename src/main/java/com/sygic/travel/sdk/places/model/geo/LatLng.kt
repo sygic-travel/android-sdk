@@ -26,7 +26,7 @@ data class LatLng(
 		val lon2 = point.lng
 		val p = PI / 180
 		val a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2
-		return 12742 * asin(sqrt(a))
+		return 12742 * asin(sqrt(a)) * 1000
 	}
 
 	fun withPrecision(decimals: Int = 6): LatLng {

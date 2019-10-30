@@ -1,8 +1,8 @@
 package com.sygic.travel.sdk.places.model.geo
 
-import com.sygic.travel.sdk.places.model.geo.LatLng
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.math.roundToInt
 
 class LatLngTest {
 	@Test
@@ -23,5 +23,13 @@ class LatLngTest {
 			"50.0786358,14.4593813",
 			latLng.withPrecision(10).toApiExpression()
 		)
+	}
+
+	@Test
+	fun testDistance() {
+		val from = LatLng(49.233461, 16.572517)
+		val to = LatLng(49.231109, 16.573447)
+
+		assertEquals(270, from.distanceTo(to).roundToInt())
 	}
 }
