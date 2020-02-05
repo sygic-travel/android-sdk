@@ -1,6 +1,7 @@
 package com.sygic.travel.sdk.places.model
 
 import com.sygic.travel.sdk.places.model.media.Medium
+import org.threeten.bp.ZoneId
 
 /**
  * Place detailed information.
@@ -10,6 +11,7 @@ class Detail constructor(
 	val tags: List<Tag>,
 	val description: Description?,
 	val address: String?,
+	val addressApproximated: Boolean,
 	val admission: String?,
 	val email: String?,
 	val openingHoursRaw: String?,
@@ -21,5 +23,7 @@ class Detail constructor(
 	val mediumVideoPreview: Medium?,
 	val references: List<Reference>,
 	val area: Long?,
-	val collectionCount: Int
+	val collectionCount: Int,
+	val timezone: ZoneId?,
+	val attributes: Map<String, String>?
 )

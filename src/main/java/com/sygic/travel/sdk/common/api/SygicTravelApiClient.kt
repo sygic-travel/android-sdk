@@ -73,11 +73,11 @@ internal interface SygicTravelApiClient {
 		@Query("map_tiles") mapTiles: String?,
 		@Query("map_spread") mapSpread: Int?,
 		@Query("bounds") bounds: String?,
-		@Query("location") preferredLocation: String?,
+		@Query("preferred_location") preferredLocation: String?,
 		@Query("tags") tags: String?,
 		@Query("tags_not") tagsNot: String?,
 		@Query("parents") parents: String?,
-		@Query("star_rating") starRating: String?,
+		@Query("hotel_star_rating") hotelStarRating: String?,
 		@Query("customer_rating") customerRating: String?,
 		@Query("limit") limit: Int?
 	): Call<ApiResponse<ApiPlacesListResponse>>
