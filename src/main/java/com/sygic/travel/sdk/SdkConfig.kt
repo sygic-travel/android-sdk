@@ -12,7 +12,7 @@ abstract class SdkConfig {
 		get() = "https://auth.sygic.com"
 
 	open val sygicTravelApiUrl: String
-		get() = "https://api.sygictravelapi.com/1.1"
+		get() = "https://api.sygictravelapi.com/1.2"
 
 	open val httpCacheEnabled: Boolean
 		get() = true

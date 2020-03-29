@@ -32,8 +32,8 @@ data class PlacesQuery(
 	var mapTiles: List<String>? = null,
 	var limit: Int? = null,
 	var levels: List<Level>? = null,
-	var starRatingMin: Int? = null,
-	var starRatingMax: Int? = null,
+	var hotelStarRatingMin: Int? = null,
+	var hotelStarRatingMax: Int? = null,
 	var customerRatingMin: Int? = null,
 	var customerRatingMax: Int? = null,
 	var preferredLocation: LatLng? = null
@@ -87,8 +87,8 @@ data class PlacesQuery(
 		}
 	}
 
-	internal fun getStarRatingApiQuery(): String? {
-		return formatApiRangeExpression(starRatingMin, starRatingMax)
+	internal fun getHotelStarRatingApiQuery(): String? {
+		return formatApiRangeExpression(hotelStarRatingMin, hotelStarRatingMax)
 	}
 
 	internal fun getCustomerRatingApiQuery(): String? {

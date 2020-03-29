@@ -36,7 +36,7 @@ internal class PlacesService constructor(
 			tags = placesQuery.getTagsApiQuery(),
 			tagsNot = placesQuery.getTagsNotApiQuery(),
 			parents = placesQuery.getParentsApiQuery(),
-			starRating = placesQuery.getStarRatingApiQuery(),
+			hotelStarRating = placesQuery.getHotelStarRatingApiQuery(),
 			customerRating = placesQuery.getCustomerRatingApiQuery(),
 			limit = placesQuery.limit
 		)

@@ -9,25 +9,30 @@ open class Place constructor(
 	val id: String,
 	val level: Level,
 	val categories: Set<Category>,
+	val marker: String,
+	val classSlug: String,
+	val className: String?,
 	val rating: Double,
 	val ratingLocal: Double,
 	val quadkey: String,
 	val location: LatLng,
 	val name: String,
 	val nameSuffix: String?,
-	val originalName: String?,
+	val nameLocal: String?,
+	val nameEn: String?,
+	val nameTranslated: String?,
 	val boundingBox: LatLngBounds?,
 	val perex: String?,
 	val url: String?,
 	val thumbnailUrl: String?,
-	val marker: String,
-	val parentIds: Set<String>,
-	val starRating: Float?,
-	val starRatingUnofficial: Float?,
+	val parents: List<Parent>,
+	val hotelStarRating: Float?,
+	val hotelStarRatingUnofficial: Float?,
 	val customerRating: Float?,
-	val duration: Duration?,
-	val ownerId: String?,
-	val isDeleted: Boolean
+	val durationEstimate: Duration?,
+	val tagKeys: List<TagKey>,
+	val isDeleted: Boolean,
+	val ownerId: String?
 ) {
 	override fun equals(other: Any?): Boolean {
 		return id == (other as? Place)?.id
@@ -36,4 +41,10 @@ open class Place constructor(
 	override fun hashCode(): Int {
 		return id.hashCode()
 	}
+
+	data class Parent(
+		val id: String,
+		val name: String?,
+		val level: Level
+	)
 }
