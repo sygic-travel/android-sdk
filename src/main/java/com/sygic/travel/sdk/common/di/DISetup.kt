@@ -40,6 +40,7 @@ internal object DISetup {
 							Level.DEBUG -> Timber.d(msg)
 							Level.INFO -> Timber.i(msg)
 							Level.ERROR -> Timber.e(msg)
+							Level.NONE -> Timber.i(msg)
 						}
 					}
 				}
