@@ -33,8 +33,12 @@ internal object DISetup {
 		)
 
 		return koinApplication {
+			val loggerLevel = when (sdkConfig.debug) {
+				true -> Level.INFO
+				false -> Level.ERROR
+			}
 			logger(
-				object : Logger() {
+				object : Logger(loggerLevel) {
 					override fun log(level: Level, msg: MESSAGE) {
 						when (level) {
 							Level.DEBUG -> Timber.d(msg)

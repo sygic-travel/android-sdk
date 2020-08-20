@@ -20,5 +20,8 @@ abstract class SdkConfig {
 	open val httpCacheSize: Long
 		get() = 10 * 1024 * 1024L // 10 MB Cache
 
+	open val debug: Boolean
+		get() = false
+
 	open var language: Language = Language.EN
 }
