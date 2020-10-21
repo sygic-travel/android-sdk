@@ -10,7 +10,7 @@ import timber.log.Timber
 internal val generalModule = module {
 	single {
 		val cacheFile = get<Context>().cacheDir
-		Cache(cacheFile, getProperty<Long>("httpCacheSize"))
+		Cache(cacheFile, getProperty("httpCacheSize").toLong())
 	}
 	single {
 		return@single HttpLoggingInterceptor(

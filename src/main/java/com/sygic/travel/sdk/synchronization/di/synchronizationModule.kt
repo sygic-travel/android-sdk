@@ -14,7 +14,7 @@ import org.koin.dsl.module
 
 internal val synchronizationModule = module {
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Synchronization")
+		checkUserDataSupport("Synchronization")
 		SynchronizationFacade(
 			get<SynchronizationService>(),
 			get<TripsService>(),

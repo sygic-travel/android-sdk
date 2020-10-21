@@ -38,7 +38,7 @@ internal val sygicTravelApiModule = module {
 			.addInterceptor(get<HttpLoggingInterceptor>())
 			.readTimeout(TIMEOUT_DEFAULT, TimeUnit.SECONDS)
 
-		if (getProperty("httpCacheEnabled")) {
+		if (getProperty("httpCacheEnabled").toBoolean()) {
 			builder.cache(get<Cache>())
 		}
 
@@ -47,7 +47,7 @@ internal val sygicTravelApiModule = module {
 	single(named("sygicTravelApiRetrofit")) {
 		Retrofit.Builder()
 			.client(get<OkHttpClient>(named("sygicTravelHttpClient")))
-			.baseUrl(getProperty<String>("sygicTravelApiUrl") + "/$LOCALE_PLACEHOLDER/")
+			.baseUrl(getProperty("sygicTravelApiUrl") + "/$LOCALE_PLACEHOLDER/")
 			.addConverterFactory(MoshiConverterFactory.create(get<Moshi>()).withNullSerialization())
 			.build()
 	}

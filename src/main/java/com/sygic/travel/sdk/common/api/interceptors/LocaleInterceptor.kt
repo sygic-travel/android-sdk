@@ -7,13 +7,13 @@ import okhttp3.Response
 import java.io.IOException
 
 internal class LocaleInterceptor constructor(
-	language: Language
+	defaultLanguageCode: String
 ) : Interceptor {
 	companion object {
 		const val LOCALE_PLACEHOLDER = "[api_locale]"
 	}
 
-	private var locale = language.isoCode
+	private var locale: String = defaultLanguageCode
 
 	fun updateLanguage(language: Language) {
 		locale = language.isoCode

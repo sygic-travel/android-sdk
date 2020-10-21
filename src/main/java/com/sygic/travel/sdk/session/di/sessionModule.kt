@@ -20,12 +20,12 @@ internal val sessionModule = module {
 		SessionService(
 			get<SygicSsoApiClient>(),
 			get<AuthStorageService>(),
-			getProperty<String>("clientId"),
+			getProperty("clientId"),
 			get<Moshi>()
 		)
 	}
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Session")
+		checkUserDataSupport("Session")
 		val authFacade = SessionFacade(
 			get<SessionService>()
 		)

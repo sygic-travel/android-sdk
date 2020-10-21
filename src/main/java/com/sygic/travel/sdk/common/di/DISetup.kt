@@ -22,14 +22,14 @@ import timber.log.Timber
 internal object DISetup {
 	fun setup(applicationContext: Context, sdkConfig: SdkConfig): KoinApplication {
 		val properties = mapOf(
-			"userDataSupported" to (sdkConfig.clientId != null),
+			"userDataSupported" to (sdkConfig.clientId != null).toString(),
 			"clientId" to (sdkConfig.clientId ?: ""),
 			"apiKey" to sdkConfig.apiKey,
 			"sygicAuthUrl" to sdkConfig.sygicAuthUrl,
 			"sygicTravelApiUrl" to sdkConfig.sygicTravelApiUrl,
-			"httpCacheEnabled" to sdkConfig.httpCacheEnabled,
-			"httpCacheSize" to sdkConfig.httpCacheSize,
-			"defaultLanguage" to sdkConfig.language
+			"httpCacheEnabled" to sdkConfig.httpCacheEnabled.toString(),
+			"httpCacheSize" to sdkConfig.httpCacheSize.toString(),
+			"defaultLanguage" to sdkConfig.language.isoCode
 		)
 
 		return koinApplication {
