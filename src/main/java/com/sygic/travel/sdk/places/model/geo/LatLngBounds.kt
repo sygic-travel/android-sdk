@@ -1,7 +1,7 @@
 package com.sygic.travel.sdk.places.model.geo
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @Suppress("unused")
