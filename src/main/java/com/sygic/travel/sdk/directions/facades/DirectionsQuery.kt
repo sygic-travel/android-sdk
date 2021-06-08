@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.sygic.travel.sdk.directions.model.DirectionAvoid
 import com.sygic.travel.sdk.directions.model.DirectionMode
 import com.sygic.travel.sdk.places.model.geo.LatLng
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.threeten.bp.LocalDateTime
 
 @Parcelize
