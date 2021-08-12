@@ -26,7 +26,7 @@ internal val sygicAuthApiModule = module {
 	single(named("sygicAuthApiRetrofit")) {
 		Retrofit.Builder()
 			.client(get<OkHttpClient>(named("sygicAuthHttpClient")))
-			.baseUrl(getProperty("sygicAuthUrl"))
+			.baseUrl(getProperty<String>("sygicAuthUrl"))
 			.addConverterFactory(MoshiConverterFactory.create(get<Moshi>()))
 			.build()
 	}

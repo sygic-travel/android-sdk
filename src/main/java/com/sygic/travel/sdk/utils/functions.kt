@@ -10,7 +10,7 @@ internal fun checkNotRunningOnMainThread() {
 }
 
 internal fun Scope.checkUserDataSupport(module: String) {
-	val userDataSupported = getProperty("userDataSupported").toBoolean()
+	val userDataSupported = getProperty<String>("userDataSupported").toBoolean()
 	if (!userDataSupported) {
 		throw IllegalStateException("$module module can be used only with enabled user-data support. To enable it, configure Sdk with clientId.")
 	}
