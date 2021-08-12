@@ -19,7 +19,7 @@ internal val placesModule = module {
 		)
 	}
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Places.replaceLocalPlaceId")
+		checkUserDataSupport("Places.replaceLocalPlaceId")
 		get<Database>().placesDao()
 	}
 	single {

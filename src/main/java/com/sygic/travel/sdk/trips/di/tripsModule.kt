@@ -20,7 +20,7 @@ import org.koin.dsl.module
 
 internal val tripsModule = module {
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Trips")
+		checkUserDataSupport("Trips")
 		TripsFacade(get<TripsService>())
 	}
 	single {

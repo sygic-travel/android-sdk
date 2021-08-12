@@ -38,7 +38,7 @@ internal val sygicTravelApiModule = module {
 			.addInterceptor(get<HttpLoggingInterceptor>())
 			.readTimeout(TIMEOUT_DEFAULT, TimeUnit.SECONDS)
 
-		if (getProperty("httpCacheEnabled")) {
+		if (getProperty<String>("httpCacheEnabled").toBoolean()) {
 			builder.cache(get<Cache>())
 		}
 

@@ -25,7 +25,7 @@ internal val sessionModule = module {
 		)
 	}
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Session")
+		checkUserDataSupport("Session")
 		val authFacade = SessionFacade(
 			get<SessionService>()
 		)

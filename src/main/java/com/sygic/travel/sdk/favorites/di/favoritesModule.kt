@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 internal val favoritesModule = module {
 	single {
-		checkUserDataSupport(getProperty("userDataSupported"), "Favorites")
+		checkUserDataSupport("Favorites")
 		FavoritesFacade(get<FavoriteService>())
 	}
 	single {
