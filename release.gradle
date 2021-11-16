@@ -1,6 +1,5 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-apply from: 'dokka.gradle'
 
 ext {
 	sdkGroupId = "com.sygic.travel"
@@ -46,7 +45,7 @@ task sourcesJar(type: Jar) {
 	from android.sourceSets.main.java.srcDirs
 }
 
-task javadoc(type: Javadoc, dependsOn: dokka) {
+task javadoc(type: Javadoc) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
